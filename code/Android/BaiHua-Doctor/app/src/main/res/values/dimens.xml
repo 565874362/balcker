@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_hdpi_6">6dp</dimen>
+    <dimen name="margin_hdpi_8">6dp</dimen>
+    <dimen name="margin_hdpi_10">10dp</dimen>
+    <dimen name="margin_hdpi_12">12dp</dimen>
+    <dimen name="margin_hdpi_16">16dp</dimen>
+    <dimen name="spacing_module">16dp</dimen>
+
+    <!-- 全局用到的四种字体 -->
+    <dimen name="dimen_big_text">18sp</dimen>
+    <dimen name="dimen_mid_text">14sp</dimen>
+    <dimen name="dimen_small_text">12sp</dimen>
+    <dimen name="dimen_mini_small_text">10sp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+</resources>

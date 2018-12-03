@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/dialog_iv_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_hdpi_16"
+        android:paddingTop="@dimen/margin_hdpi_16"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/dialog_tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_hdpi_16"
+        android:textColor="@color/color_font_gray"
+        android:textSize="@dimen/dimen_mid_text"
+        tools:text="扫描二维码" />
+
+</LinearLayout>

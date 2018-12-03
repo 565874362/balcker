@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">百花医疗</string>
+
+    <string name="common_sure">确定</string>
+    <string name="common_confrim">确认</string>
+    <string name="common_editor">编辑</string>
+    <string name="common_delete">删除</string>
+    <string name="common_delete_success">删除成功</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_complete">完成</string>
+    <string name="net_loading">请求网络中…</string>
+
+    <string name="permission_need">请设置权限</string>
+    <string name="permission_settings">设置</string>
+
+    <!--Default Text-->
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!--Permission-->
+    <string name="permission_rationale_message">You have rejected us to apply for authorization, please agree to authorization, otherwise the function can\'t be used normally!</string>
+    <string name="permission_denied_forever_message">We need some of the permissions you rejected or the system failed to apply failed, please manually set to the page authorize, otherwise the function can\'t be used normally!</string>
+</resources>

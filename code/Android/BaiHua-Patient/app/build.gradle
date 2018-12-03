@@ -1,0 +1,162 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "23c5fd98c1f28"
+    appSecret "b9a3dc6fad6a1c22e96dc5276e953460"
+    SMSSDK {}
+    ShareSDK {
+//        gui false//需要修改ui,所以不需要原生OneKeyShare
+        //平台配置信息
+        devInfo {
+//            SinaWeibo {
+//                sortId 1
+//                appKey "568898243"
+//                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
+//                callbackUri "http://www.sharesdk.cn"
+//                shareByAppClient true
+//            }
+//            Wechat {
+//                sortId 1
+//                appId "wx4868b35061f87885"
+//                appSecret "64020361b8ec4c99936c0e3999a9f249"
+//                shareByAppClient true
+//            }
+            Wechat {
+                sortId 1
+                appId ""
+                appSecret ""
+                shareByAppClient true
+            }
+            QQ {
+                sortId 2
+                appId ""
+                appKey ""
+                shareByAppClient true
+            }
+        }
+    }
+
+}
+
+android {
+    def sdkVersion = rootProject.ext
+
+    compileSdkVersion sdkVersion.androidCompileSdkVersion
+    defaultConfig {
+        applicationId "com.joymates.flowers"
+        minSdkVersion sdkVersion.androidMinSdkVersion
+        targetSdkVersion sdkVersion.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            debuggable true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    //支持Java8特性
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+
+    def appDependence = rootProject.ext.app
+    def supportVersion = rootProject.ext.support
+
+    configurations.all {
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation supportVersion.appcompatV7
+    implementation supportVersion.design
+    implementation supportVersion.constraint
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test:runner:1.0.2') {
+        exclude group: 'com.android.support.test'
+    }
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(':IMKit')
+
+    // 工具类
+    implementation appDependence.multidex
+    // Android Util Code
+    implementation appDependence.utilcode
+    // 网络请求
+    implementation appDependence.okgo
+    // butterKnife
+    implementation appDependence.buterKnife
+    annotationProcessor appDependence.butterKnifeCompiler
+    // loading view
+    implementation appDependence.zloading
+    //smartRefresh
+    implementation appDependence.smartRefreshLayout
+    //zxing
+    implementation appDependence.zxing
+    //状态栏工具类
+    implementation appDependence.statusBarUtil
+    // Material Dialog
+    implementation appDependence.materialDialogs
+    //json处理
+    implementation appDependence.fastjson
+    // Google 图片加载库
+    implementation appDependence.glide
+    // Glide Transformations
+    implementation appDependence.transformations
+    // DBFlow
+    implementation appDependence.dbflowCore
+    implementation appDependence.dbflowRx2
+    implementation appDependence.dbflow
+    annotationProcessor appDependence.dbflowProcessor
+    // BaseRecyclerView
+    implementation appDependence.baseRecyclerViewAdapterHelper
+    // banner
+    implementation appDependence.banner
+    // RxJava + Retrofit
+    implementation appDependence.loggingInterceptor
+    implementation appDependence.retrofit
+    implementation appDependence.converterGson
+    implementation appDependence.adapterRxJava2
+    implementation appDependence.rxJava2
+    implementation appDependence.rxAndroid
+    implementation appDependence.rxLifecycle
+
+    // 音频录制
+    implementation appDependence.zlwAudioRecorder
+    implementation appDependence.waveLineView
+}
