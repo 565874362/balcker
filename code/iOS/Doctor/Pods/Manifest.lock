@@ -1,0 +1,72 @@
+PODS:
+  - BGFMDB (2.0.10):
+    - BGFMDB/BG (= 2.0.10)
+    - BGFMDB/FMDB (= 2.0.10)
+  - BGFMDB/BG (2.0.10):
+    - BGFMDB/FMDB
+  - BGFMDB/FMDB (2.0.10)
+  - DZNEmptyDataSet (1.8.1)
+  - IQKeyboardManager (6.0.4)
+  - JKCountDownButton (1.2.0)
+  - Masonry (1.1.0)
+  - MJExtension (3.0.15.1)
+  - MJRefresh (3.1.15.3)
+  - MZTimerLabel (0.5.4)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
+  - RKNotificationHub (2.0.5)
+  - RongCloudIM/IMKit (2.8.32):
+    - RongCloudIM/IMLib
+  - RongCloudIM/IMLib (2.8.32)
+  - SDAutoLayout (2.2.0)
+  - SDCycleScrollView (1.75):
+    - SDWebImage (>= 4.0.0)
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
+  - SVProgressHUD (2.2.5)
+  - TZImagePickerController (2.1.6)
+
+DEPENDENCIES:
+  - BGFMDB
+  - DZNEmptyDataSet
+  - IQKeyboardManager
+  - JKCountDownButton
+  - Masonry
+  - MJExtension
+  - MJRefresh
+  - MZTimerLabel
+  - NJKWebViewProgress
+  - RKNotificationHub
+  - RongCloudIM/IMKit (~> 2.8.3)
+  - RongCloudIM/IMLib (~> 2.8.3)
+  - SDAutoLayout
+  - SDCycleScrollView (~> 1.75)
+  - SDWebImage
+  - SVProgressHUD
+  - TZImagePickerController
+
+SPEC CHECKSUMS:
+  BGFMDB: d749a11ec2406576c2a52e47fec0b14ab7fe14e2
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  IQKeyboardManager: 29514134ef0334a6fa33cf4eee11c36c064baeaf
+  JKCountDownButton: cc72e24c8b73f232b15cc348277422b089d43bff
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  MZTimerLabel: cd9bfb9304540ef2a9e163384fca9c978f0dbf83
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  RKNotificationHub: e926748820d719f21ff374657a47fceefa1796b4
+  RongCloudIM: 48bfc2fcb8d7cae8ce1e19cb5fb26d6d90616375
+  SDAutoLayout: c5509e77ae75735d9a39f7bc83dba6d3f75d49d8
+  SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  TZImagePickerController: bc25e933c9d970a622d052f0d4de16202bbcd863
+
+PODFILE CHECKSUM: e2676d7e0dc1c6da495b333d3de1d9a3729db011
+
+COCOAPODS: 1.4.0
