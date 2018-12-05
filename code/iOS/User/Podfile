@@ -1,0 +1,21 @@
+target 'User' do
+    pod 'IQKeyboardManager'             #键盘处理
+    pod 'SVProgressHUD'                 #加载提示框
+    pod 'MJExtension'                   #数据转模型
+    pod 'MJRefresh'                     #刷新
+    pod 'SDAutoLayout'                  #自动布局
+    pod 'Masonry'                       #自动布局
+    pod 'SDWebImage'                    #网络图片加载
+    pod 'DZNEmptyDataSet'               #空数据显示页面
+    pod 'JKCountDownButton'             #倒计时按钮
+   pod 'TZImagePickerController'       #选择图片
+#   pod 'HUPhotoBrowser'                #图片浏览器
+   pod 'SDCycleScrollView','~> 1.75'   #循环滚动
+   pod 'MZTimerLabel'                  #倒计时
+   pod 'NJKWebViewProgress'            #webview加载进度
+   pod 'BGFMDB'                        #本地数据库缓存
+   pod 'RKNotificationHub'             #未读红点&未读数
+   pod 'RongCloudIM/IMLib', '~> 2.8.3'
+   pod 'RongCloudIM/IMKit', '~> 2.8.3'
+
+end

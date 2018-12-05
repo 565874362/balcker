@@ -1,0 +1,45 @@
+//
+//  PrefixHeader.pch
+//  Doctor
+//
+//  Created by niuyao on 2018/11/13.
+//  Copyright © 2018年 joymates. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+
+#import <SDAutoLayout.h>
+#import <UIScrollView+EmptyDataSet.h>
+#import <SVProgressHUD.h>
+#import <MJExtension.h>
+#import <UIImageView+WebCache.h>
+#import <MJRefresh.h>
+#import <RongIMKit/RongIMKit.h>
+
+
+#define NYScreenW   [UIScreen mainScreen].bounds.size.width
+#define NYScreenH   [UIScreen mainScreen].bounds.size.height
+#define WEAKSELF __weak typeof(self) weakSelf = self; // 弱引用
+#define SafeAreaTopHeight (NYScreenH == 812.0 ? 140 : 116) // 在 iPhoneX 上的时候
+#define SafeAreaBottomHeight (NYScreenH == 812.0 ? 34 + 49 : 49)
+#define SafaBH (NYScreenH == 812.0 ? 132 : 110)
+#define SafaTH (NYScreenH == 812.0 ? 52 : 30)
+
+#define BOTTOMH (NYScreenH == 812.0 ? 34 : 0)
+
+
+#define FONT(z) [UIFont systemFontOfSize:z];
+
+#define MYALERT(string) [[MyAlertCenter defaultCenter] postAlertWithMessage:string] // 提示
+
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+#define MAINCOLOR RGBA(45,180,183,1.0) // 第二版主打色
+
+
+
