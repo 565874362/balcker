@@ -14,7 +14,7 @@
 
 @property (nonatomic,copy) NSString * content;
 
-@property (nonatomic,copy) NSString * state;
+@property (nonatomic,copy) NSString * state; //0待抢单 1未回复 2 已回复
 @end
 
 //NS_ASSUME_NONNULL_END

@@ -9,6 +9,7 @@
 #import "NYHomeViewController.h"
 #import "NYHomeListCell.h"
 #import "NYHomeListModel.h"
+#import "NYHomeHuanZheInfoDetailViewController.h"
 
 @interface NYHomeViewController ()<UITableViewDelegate,UITableViewDataSource>
     
@@ -91,6 +92,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NYHomeHuanZheInfoDetailViewController * vc = [[NYHomeHuanZheInfoDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 @end

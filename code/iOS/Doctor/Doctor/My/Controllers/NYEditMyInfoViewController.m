@@ -173,7 +173,7 @@
         .rightSpaceToView(bgView, 30)
         .heightIs(50);
         doneButton.sd_cornerRadius = @5;
-        [doneButton addTarget:self action:@selector(clickRegisterButton:) forControlEvents:UIControlEventTouchUpInside];
+        [doneButton addTarget:self action:@selector(clickDoneButton:) forControlEvents:UIControlEventTouchUpInside];
         
         
         return bgView;
@@ -181,9 +181,9 @@
     return [UIView new];
 }
 
-#pragma mark - 点击注册
+#pragma mark - 点击提交按钮
 
-- (void)clickRegisterButton:(UIButton *)button
+- (void)clickDoneButton:(UIButton *)button
 {
     
 }
