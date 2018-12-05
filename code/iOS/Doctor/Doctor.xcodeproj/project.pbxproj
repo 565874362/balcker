@@ -55,6 +55,13 @@
 		4C162CE9219A759400CDB410 /* NYMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C162CE8219A759400CDB410 /* NYMineViewController.m */; };
 		4C162CEC219A76AE00CDB410 /* NYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C162CEB219A76AE00CDB410 /* NYLoginViewController.m */; };
 		4C1EB36921B766E20007CB4F /* NYMyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB36821B766E20007CB4F /* NYMyView.m */; };
+		4C1EB36C21B76A860007CB4F /* NYMyJieZhenListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB36B21B76A860007CB4F /* NYMyJieZhenListViewController.m */; };
+		4C1EB36F21B76C2B0007CB4F /* NYJieZhenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB36E21B76C2B0007CB4F /* NYJieZhenDetailViewController.m */; };
+		4C1EB37221B76FCE0007CB4F /* NYJieZhenDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB37121B76FCE0007CB4F /* NYJieZhenDetailCell.m */; };
+		4C1EB37521B775850007CB4F /* NYMyInfoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB37421B775850007CB4F /* NYMyInfoDetailViewController.m */; };
+		4C1EB37821B777AB0007CB4F /* NYMyInfoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB37721B777AB0007CB4F /* NYMyInfoDetailCell.m */; };
+		4C1EB37B21B779200007CB4F /* NYMyInfoDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB37A21B779200007CB4F /* NYMyInfoDetailModel.m */; };
+		4C1EB37E21B788F30007CB4F /* NYEditMyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB37D21B788F20007CB4F /* NYEditMyInfoViewController.m */; };
 		4CF5AB8A21B4DF6F00536362 /* NYHomeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8921B4DF6F00536362 /* NYHomeListCell.m */; };
 		4CF5AB8D21B4DF8F00536362 /* NYHomeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8C21B4DF8F00536362 /* NYHomeListModel.m */; };
 		4CF5AB9021B508E200536362 /* NYMyTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8F21B508E200536362 /* NYMyTypeCell.m */; };
@@ -182,6 +189,20 @@
 		4C162CEB219A76AE00CDB410 /* NYLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYLoginViewController.m; sourceTree = "<group>"; };
 		4C1EB36721B766E20007CB4F /* NYMyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYMyView.h; sourceTree = "<group>"; };
 		4C1EB36821B766E20007CB4F /* NYMyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYMyView.m; sourceTree = "<group>"; };
+		4C1EB36A21B76A860007CB4F /* NYMyJieZhenListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYMyJieZhenListViewController.h; sourceTree = "<group>"; };
+		4C1EB36B21B76A860007CB4F /* NYMyJieZhenListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYMyJieZhenListViewController.m; sourceTree = "<group>"; };
+		4C1EB36D21B76C2B0007CB4F /* NYJieZhenDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJieZhenDetailViewController.h; sourceTree = "<group>"; };
+		4C1EB36E21B76C2B0007CB4F /* NYJieZhenDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJieZhenDetailViewController.m; sourceTree = "<group>"; };
+		4C1EB37021B76FCE0007CB4F /* NYJieZhenDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJieZhenDetailCell.h; sourceTree = "<group>"; };
+		4C1EB37121B76FCE0007CB4F /* NYJieZhenDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJieZhenDetailCell.m; sourceTree = "<group>"; };
+		4C1EB37321B775850007CB4F /* NYMyInfoDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYMyInfoDetailViewController.h; sourceTree = "<group>"; };
+		4C1EB37421B775850007CB4F /* NYMyInfoDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYMyInfoDetailViewController.m; sourceTree = "<group>"; };
+		4C1EB37621B777AB0007CB4F /* NYMyInfoDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYMyInfoDetailCell.h; sourceTree = "<group>"; };
+		4C1EB37721B777AB0007CB4F /* NYMyInfoDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYMyInfoDetailCell.m; sourceTree = "<group>"; };
+		4C1EB37921B779200007CB4F /* NYMyInfoDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYMyInfoDetailModel.h; sourceTree = "<group>"; };
+		4C1EB37A21B779200007CB4F /* NYMyInfoDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYMyInfoDetailModel.m; sourceTree = "<group>"; };
+		4C1EB37C21B788F20007CB4F /* NYEditMyInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYEditMyInfoViewController.h; sourceTree = "<group>"; };
+		4C1EB37D21B788F20007CB4F /* NYEditMyInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYEditMyInfoViewController.m; sourceTree = "<group>"; };
 		4CF5AB8821B4DF6F00536362 /* NYHomeListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeListCell.h; sourceTree = "<group>"; };
 		4CF5AB8921B4DF6F00536362 /* NYHomeListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYHomeListCell.m; sourceTree = "<group>"; };
 		4CF5AB8B21B4DF8F00536362 /* NYHomeListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeListModel.h; sourceTree = "<group>"; };
@@ -615,6 +636,8 @@
 			children = (
 				4CF5AB9A21B5175100536362 /* NYChuZhenListModel.h */,
 				4CF5AB9B21B5175100536362 /* NYChuZhenListModel.m */,
+				4C1EB37921B779200007CB4F /* NYMyInfoDetailModel.h */,
+				4C1EB37A21B779200007CB4F /* NYMyInfoDetailModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -636,6 +659,10 @@
 				4CF5ABA721B528BD00536362 /* NYChoiceWeekCell.m */,
 				4CF5ABAD21B60EFD00536362 /* NYMyHeaderView.h */,
 				4CF5ABAE21B60EFD00536362 /* NYMyHeaderView.m */,
+				4C1EB37021B76FCE0007CB4F /* NYJieZhenDetailCell.h */,
+				4C1EB37121B76FCE0007CB4F /* NYJieZhenDetailCell.m */,
+				4C1EB37621B777AB0007CB4F /* NYMyInfoDetailCell.h */,
+				4C1EB37721B777AB0007CB4F /* NYMyInfoDetailCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -651,6 +678,14 @@
 				4CF5AB9E21B51EA500536362 /* NYChoiceChuZhenTimeViewController.m */,
 				4CF5ABB021B6151000536362 /* NYHuanZheInfoListViewController.h */,
 				4CF5ABB121B6151000536362 /* NYHuanZheInfoListViewController.m */,
+				4C1EB36A21B76A860007CB4F /* NYMyJieZhenListViewController.h */,
+				4C1EB36B21B76A860007CB4F /* NYMyJieZhenListViewController.m */,
+				4C1EB36D21B76C2B0007CB4F /* NYJieZhenDetailViewController.h */,
+				4C1EB36E21B76C2B0007CB4F /* NYJieZhenDetailViewController.m */,
+				4C1EB37321B775850007CB4F /* NYMyInfoDetailViewController.h */,
+				4C1EB37421B775850007CB4F /* NYMyInfoDetailViewController.m */,
+				4C1EB37C21B788F20007CB4F /* NYEditMyInfoViewController.h */,
+				4C1EB37D21B788F20007CB4F /* NYEditMyInfoViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -847,6 +882,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C162CC7219A736500CDB410 /* UIButton+AFNetworking.m in Sources */,
+				4C1EB37E21B788F30007CB4F /* NYEditMyInfoViewController.m in Sources */,
 				4C162CBE219A736500CDB410 /* AFURLRequestSerialization.m in Sources */,
 				4C162C77219A733B00CDB410 /* BRDatePickerView.m in Sources */,
 				4C162C79219A733B00CDB410 /* BRPlaceholderTextView.m in Sources */,
@@ -856,11 +892,14 @@
 				4C1EB36921B766E20007CB4F /* NYMyView.m in Sources */,
 				4C162CD4219A742E00CDB410 /* NYCustomTabBarViewController.m in Sources */,
 				4CF5ABCE21B639F400536362 /* NYRegisterUploadCardCell.m in Sources */,
+				4C1EB37521B775850007CB4F /* NYMyInfoDetailViewController.m in Sources */,
 				4C162C55219A72A200CDB410 /* MyAlertCenter.m in Sources */,
+				4C1EB37221B76FCE0007CB4F /* NYJieZhenDetailCell.m in Sources */,
 				4C162CCA219A736500CDB410 /* UIRefreshControl+AFNetworking.m in Sources */,
 				4C162CC0219A736500CDB410 /* AFURLSessionManager.m in Sources */,
 				4C162C52219A72A200CDB410 /* HHTextField.m in Sources */,
 				4C162C74219A733B00CDB410 /* BRAddressPickerView.m in Sources */,
+				4C1EB36C21B76A860007CB4F /* NYMyJieZhenListViewController.m in Sources */,
 				4C162CE6219A757F00CDB410 /* NYAnswerViewController.m in Sources */,
 				4CF5ABB221B6151000536362 /* NYHuanZheInfoListViewController.m in Sources */,
 				4CF5ABC521B62F9F00536362 /* NYRegisterChoicePictureCell.m in Sources */,
@@ -878,6 +917,7 @@
 				4CF5ABA821B528BD00536362 /* NYChoiceWeekCell.m in Sources */,
 				4C162CC3219A736500CDB410 /* AFAutoPurgingImageCache.m in Sources */,
 				4C162C54219A72A200CDB410 /* NSObject+HaiTian.m in Sources */,
+				4C1EB37821B777AB0007CB4F /* NYMyInfoDetailCell.m in Sources */,
 				4CF5ABCB21B6357300536362 /* UIImage+ZDExtension.m in Sources */,
 				4C162CE3219A756100CDB410 /* NYHomeViewController.m in Sources */,
 				4CF5ABBF21B6266A00536362 /* NYRegisterChoiceSexCell.m in Sources */,
@@ -888,6 +928,7 @@
 				4CF5ABB521B6180000536362 /* NYRegisterViewController.m in Sources */,
 				4CF5AB9C21B5175100536362 /* NYChuZhenListModel.m in Sources */,
 				4CF5AB9021B508E200536362 /* NYMyTypeCell.m in Sources */,
+				4C1EB36F21B76C2B0007CB4F /* NYJieZhenDetailViewController.m in Sources */,
 				4C162C53219A72A200CDB410 /* NSDate+BRAdd.m in Sources */,
 				4CF5AB8A21B4DF6F00536362 /* NYHomeListCell.m in Sources */,
 				4CF5AB9621B5157400536362 /* NYChuZhenTitleCell.m in Sources */,
@@ -904,6 +945,7 @@
 				4C162C72219A733B00CDB410 /* RankButton.m in Sources */,
 				4C162C7B219A733B00CDB410 /* UIViewController+RTRootNavigationController.m in Sources */,
 				4CF5ABB921B61D9700536362 /* NYNameInputCell.m in Sources */,
+				4C1EB37B21B779200007CB4F /* NYMyInfoDetailModel.m in Sources */,
 				4C162CBD219A736500CDB410 /* AFSecurityPolicy.m in Sources */,
 				4CF5AB9F21B51EA500536362 /* NYChoiceChuZhenTimeViewController.m in Sources */,
 				4CF5AB9921B5165D00536362 /* NYChuZhenListCell.m in Sources */,
@@ -1044,7 +1086,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Doctor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baihua.yayayisheng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1065,7 +1107,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Doctor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baihua.yayayisheng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

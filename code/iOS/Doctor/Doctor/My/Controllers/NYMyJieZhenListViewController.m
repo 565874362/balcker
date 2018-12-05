@@ -1,24 +1,23 @@
 //
-//  NYChuZhenTimeListViewController.m
+//  NYMyJieZhenListViewController.m
 //  Doctor
 //
-//  Created by niuyao on 2018/12/3.
+//  Created by niuyao on 2018/12/5.
 //  Copyright © 2018 joymates. All rights reserved.
 //
 
-#import "NYChuZhenTimeListViewController.h"
-#import "NYChuZhenTitleCell.h"
-#import "NYChuZhenListCell.h"
-#import "NYChuZhenListModel.h"
-#import "NYChoiceChuZhenTimeViewController.h"
-
-@interface NYChuZhenTimeListViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "NYMyJieZhenListViewController.h"
+#import "NYHomeListCell.h"
+#import "NYHomeListModel.h"
+#import "NYJieZhenDetailViewController.h"
+@interface NYMyJieZhenListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
+
 @end
 
-@implementation NYChuZhenTimeListViewController
+@implementation NYMyJieZhenListViewController
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -42,24 +41,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"接诊时间表";
-    [self.tableView registerClass:[NYChuZhenTitleCell class] forCellReuseIdentifier:@"TitleCell"];
-    [self.tableView registerClass:[NYChuZhenListCell class] forCellReuseIdentifier:@"ListCell"];
-
-    [self setRightItem];
-}
-
-#pragma mark - 右边item
-- (void)setRightItem
-{
-    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Common_back_n"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightItem:)];
-    self.navigationItem.rightBarButtonItem = item;
-}
-
-- (void)clickRightItem:(UIBarButtonItem *)item
-{
-    NYChoiceChuZhenTimeViewController * vc = [[NYChoiceChuZhenTimeViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    self.navigationItem.title = @"我的接诊";
+    [self.tableView registerClass:[NYHomeListCell class] forCellReuseIdentifier:@"Cell"];
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -69,22 +53,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 2;
-    }
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return 50;
-        }else{
-            return 95;
-        }
-    }
-    return 95;
+    NYHomeListModel * model = [[NYHomeListModel alloc] init];
+    model.content = @"这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"homeListModel" cellClass:[NYHomeListCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -107,26 +83,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
-            cell.titleLB.text = @"接诊时间";
-            return cell;
-        }else if (indexPath.row == 1){
-            NYChuZhenListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell"];
-            cell.chuZhenListModel = nil;
-            return cell;
-        }
-    }
-    NYChuZhenListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell"];
-    cell.chuZhenListModel = nil;
+    NYHomeListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell.stateLB.hidden = YES;
+    cell.pointView.hidden = YES;
+    NYHomeListModel * model = [[NYHomeListModel alloc] init];
+    model.state = @"1";
+    cell.homeListModel = model;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NYJieZhenDetailViewController * vc = [[NYJieZhenDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
-
 
 @end

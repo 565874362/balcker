@@ -13,8 +13,6 @@
 {
     UILabel * _nameLB;
     UILabel * _sexAndAgeLB;
-    UILabel * _stateLB;
-    UIView * _pointView;
     UILabel * _contentLB;
     UILabel * _timeLB;
 }

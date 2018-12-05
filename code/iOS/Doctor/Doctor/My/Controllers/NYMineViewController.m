@@ -14,6 +14,8 @@
 #import "UINavigationBar+Awesome.h"
 #import "NYMyHeaderView.h"
 #import "NYHuanZheInfoListViewController.h"
+#import "NYMyJieZhenListViewController.h"
+#import "NYMyInfoDetailViewController.h"
 
 #define NAVBAR_CHANGE_POINT 50
 
@@ -190,12 +192,22 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) { //患者信息
             NYHuanZheInfoListViewController * vc = [[NYHuanZheInfoListViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 1) {
+        }else if (indexPath.row == 1) {//我的接诊
+            NYMyJieZhenListViewController * vc = [[NYMyJieZhenListViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 2){ //接诊时间
             NYChuZhenTimeListViewController * vc = [[NYChuZhenTimeListViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            NYMyInfoDetailViewController * vc = [[NYMyInfoDetailViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }

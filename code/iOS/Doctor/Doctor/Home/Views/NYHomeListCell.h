@@ -14,6 +14,10 @@
 
 @interface NYHomeListCell : UITableViewCell
 
+@property(nonatomic,strong) UILabel * stateLB;
+@property(nonatomic,strong) UIView * pointView;
+
+
 @property (nonatomic,strong) NYHomeListModel * homeListModel;
 
 @end
