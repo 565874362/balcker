@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"问答";
+    self.navigationItem.title = @"我的咨询";
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
     self.conversationListTableView.tableFooterView = [UIView new];
     self.showConnectingStatusOnNavigatorBar = YES;

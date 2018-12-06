@@ -7,6 +7,9 @@
 //
 
 #import "NYDoctorListViewController.h"
+#import "NYDoctorListCell.h"
+#import "NYDoctorModel.h"
+#import "NYDoctorInfoDetailViewController.h"
 
 @interface NYDoctorListViewController ()<UITableViewDelegate,UITableViewDataSource>
     
@@ -39,8 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"医生";
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    self.navigationItem.title = @"医生列表";
+    [self.tableView registerClass:[NYDoctorListCell class] forCellReuseIdentifier:@"Cell"];
     
 }
     
@@ -56,7 +59,9 @@
     
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 150;
+    NYDoctorModel * model = [[NYDoctorModel alloc] init];
+    model.content = @"擅长：孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产";
+    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"doctorModel" cellClass:[NYDoctorListCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
 }
     
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -79,13 +84,17 @@
     
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    NYDoctorListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell.doctorModel = nil;
     return cell;
 }
     
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NYDoctorInfoDetailViewController * vc = [[NYDoctorInfoDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

@@ -41,7 +41,7 @@
     
     NYBaseNavViewController * homeNav=[[NYBaseNavViewController alloc] initWithRootViewController:homevc];
     homeNav.tabBarItem.tag = 0;
-    homeNav.tabBarItem.title = @"百花医疗";
+    homeNav.tabBarItem.title = @"首页";
     
     
     NYAnswerViewController * cardVC = [[NYAnswerViewController alloc] init];
@@ -72,7 +72,7 @@
     mineNav.tabBarItem.tag = 3;
     mineNav.tabBarItem.title = @"我的";
     
-    self.viewControllers=@[homeNav,cardNav,doctorNav,mineNav];
+    self.viewControllers=@[homeNav,doctorNav,mineNav];
     
 }
 

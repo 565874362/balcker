@@ -60,6 +60,9 @@
     [self addSubview:_PlaceholderLabel];
     
     
+    
+    
+    
     [self defaultConfig];
     
 }
@@ -246,6 +249,16 @@
     {
         _PlaceholderLabel.text=placeholder;
         _placeholder=placeholder;
+        
+#warning 设置行间距
+        NSString *labelText = _PlaceholderLabel.text;
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:labelText];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:5.0];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
+        _PlaceholderLabel.attributedText = attributedString;
+        [_PlaceholderLabel sizeToFit];
+
         
 //        float  height=  [BRPlaceholderTextView boundingRectWithSize:CGSizeMake(_placeholdeWidth, MAXFLOAT) withLabel:_placeholder withFont:_PlaceholderLabel.font];
 //        if (height>CGRectGetHeight(_PlaceholderLabel.frame) && height< CGRectGetHeight(self.frame)) {

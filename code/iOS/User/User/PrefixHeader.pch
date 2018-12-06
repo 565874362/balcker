@@ -22,6 +22,8 @@
 #import <MJRefresh.h>
 #import <RongIMKit/RongIMKit.h>
 
+#import "HHTextField.h"
+#import "BRPickerView.h"
 
 #define NYScreenW   [UIScreen mainScreen].bounds.size.width
 #define NYScreenH   [UIScreen mainScreen].bounds.size.height
@@ -33,13 +35,18 @@
 
 #define BOTTOMH (NYScreenH == 812.0 ? 34 : 0)
 
-
 #define FONT(z) [UIFont systemFontOfSize:z];
 
 #define MYALERT(string) [[MyAlertCenter defaultCenter] postAlertWithMessage:string] // 提示
 
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
-#define MAINCOLOR RGBA(45,180,183,1.0) // 第二版主打色
+#define MAINCOLOR RGBA(23,132,243,1.0) //主打色
+#define BGCOLOR RGBA(243,243,243,1.0) //背景色
+
+
+#define COLOR_BIG RGBA(75,87,100,1.0) //字体色--深
+#define COLOR_LOW RGBA(175,177,189,1.0) //字体色--浅色
+#define COLOR_RED RGBA(255,74,82,1.0) //字体色--偏红
 
 
 
