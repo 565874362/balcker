@@ -74,6 +74,10 @@
 		4C1EB3A421B7AEAF0007CB4F /* UIImage+HUExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB39821B7AEAF0007CB4F /* UIImage+HUExtension.m */; };
 		4C1EB3A521B7AEAF0007CB4F /* UIImageView+HUWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB39921B7AEAF0007CB4F /* UIImageView+HUWebImage.m */; };
 		4C1EB3A621B7AEAF0007CB4F /* HUPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB39F21B7AEAF0007CB4F /* HUPhotoBrowser.m */; };
+		4C1EB46521BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */; };
+		4CB0BB6C21BDF89E0060BF39 /* NYNeedCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB6B21BDF89E0060BF39 /* NYNeedCheckViewController.m */; };
+		4CB0BB6F21BDF99C0060BF39 /* NYNeedCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB6E21BDF99C0060BF39 /* NYNeedCheckCell.m */; };
+		4CB0BB7221BDFAF80060BF39 /* NYNeedCheckModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB7121BDFAF80060BF39 /* NYNeedCheckModel.m */; };
 		4CF5AB8A21B4DF6F00536362 /* NYHomeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8921B4DF6F00536362 /* NYHomeListCell.m */; };
 		4CF5AB8D21B4DF8F00536362 /* NYHomeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8C21B4DF8F00536362 /* NYHomeListModel.m */; };
 		4CF5AB9021B508E200536362 /* NYMyTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF5AB8F21B508E200536362 /* NYMyTypeCell.m */; };
@@ -241,6 +245,14 @@
 		4C1EB39D21B7AEAF0007CB4F /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		4C1EB39E21B7AEAF0007CB4F /* hu_const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hu_const.h; sourceTree = "<group>"; };
 		4C1EB39F21B7AEAF0007CB4F /* HUPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPhotoBrowser.m; sourceTree = "<group>"; };
+		4C1EB46321BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeHuanZheChoiceCheckCell.h; sourceTree = "<group>"; };
+		4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYHomeHuanZheChoiceCheckCell.m; sourceTree = "<group>"; };
+		4CB0BB6A21BDF89E0060BF39 /* NYNeedCheckViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYNeedCheckViewController.h; sourceTree = "<group>"; };
+		4CB0BB6B21BDF89E0060BF39 /* NYNeedCheckViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYNeedCheckViewController.m; sourceTree = "<group>"; };
+		4CB0BB6D21BDF99C0060BF39 /* NYNeedCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYNeedCheckCell.h; sourceTree = "<group>"; };
+		4CB0BB6E21BDF99C0060BF39 /* NYNeedCheckCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYNeedCheckCell.m; sourceTree = "<group>"; };
+		4CB0BB7021BDFAF80060BF39 /* NYNeedCheckModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYNeedCheckModel.h; sourceTree = "<group>"; };
+		4CB0BB7121BDFAF80060BF39 /* NYNeedCheckModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYNeedCheckModel.m; sourceTree = "<group>"; };
 		4CF5AB8821B4DF6F00536362 /* NYHomeListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeListCell.h; sourceTree = "<group>"; };
 		4CF5AB8921B4DF6F00536362 /* NYHomeListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYHomeListCell.m; sourceTree = "<group>"; };
 		4CF5AB8B21B4DF8F00536362 /* NYHomeListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeListModel.h; sourceTree = "<group>"; };
@@ -605,6 +617,8 @@
 			children = (
 				4CF5AB8B21B4DF8F00536362 /* NYHomeListModel.h */,
 				4CF5AB8C21B4DF8F00536362 /* NYHomeListModel.m */,
+				4CB0BB7021BDFAF80060BF39 /* NYNeedCheckModel.h */,
+				4CB0BB7121BDFAF80060BF39 /* NYNeedCheckModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -622,6 +636,10 @@
 				4C1EB38921B7AACB0007CB4F /* NYHomeHuanZheInfoVoiceCell.m */,
 				4C1EB38B21B7AAF80007CB4F /* NYHomeHuanZheInfoImgCell.h */,
 				4C1EB38C21B7AAF80007CB4F /* NYHomeHuanZheInfoImgCell.m */,
+				4C1EB46321BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.h */,
+				4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */,
+				4CB0BB6D21BDF99C0060BF39 /* NYNeedCheckCell.h */,
+				4CB0BB6E21BDF99C0060BF39 /* NYNeedCheckCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +651,8 @@
 				4C162CE2219A756100CDB410 /* NYHomeViewController.m */,
 				4C1EB37F21B7A5ED0007CB4F /* NYHomeHuanZheInfoDetailViewController.h */,
 				4C1EB38021B7A5ED0007CB4F /* NYHomeHuanZheInfoDetailViewController.m */,
+				4CB0BB6A21BDF89E0060BF39 /* NYNeedCheckViewController.h */,
+				4CB0BB6B21BDF89E0060BF39 /* NYNeedCheckViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -969,12 +989,14 @@
 				4C162CC9219A736500CDB410 /* UIProgressView+AFNetworking.m in Sources */,
 				4CF5ABA521B5282D00536362 /* NYChoiceChuZhenTimeCell.m in Sources */,
 				4C162CC6219A736500CDB410 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				4CB0BB6F21BDF99C0060BF39 /* NYNeedCheckCell.m in Sources */,
 				4C1EB3A021B7AEAF0007CB4F /* UIView+frame.m in Sources */,
 				4C1EB36921B766E20007CB4F /* NYMyView.m in Sources */,
 				4C162CD4219A742E00CDB410 /* NYCustomTabBarViewController.m in Sources */,
 				4CF5ABCE21B639F400536362 /* NYRegisterUploadCardCell.m in Sources */,
 				4C1EB37521B775850007CB4F /* NYMyInfoDetailViewController.m in Sources */,
 				4C1EB3A121B7AEAF0007CB4F /* HUPhotoBrowserCell.m in Sources */,
+				4CB0BB6C21BDF89E0060BF39 /* NYNeedCheckViewController.m in Sources */,
 				4C162C55219A72A200CDB410 /* MyAlertCenter.m in Sources */,
 				4C1EB37221B76FCE0007CB4F /* NYJieZhenDetailCell.m in Sources */,
 				4C162CCA219A736500CDB410 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1002,6 +1024,7 @@
 				4CF5ABA821B528BD00536362 /* NYChoiceWeekCell.m in Sources */,
 				4C162CC3219A736500CDB410 /* AFAutoPurgingImageCache.m in Sources */,
 				4C162C54219A72A200CDB410 /* NSObject+HaiTian.m in Sources */,
+				4C1EB46521BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m in Sources */,
 				4C1EB37821B777AB0007CB4F /* NYMyInfoDetailCell.m in Sources */,
 				4C1EB38721B7A8D30007CB4F /* NYHomeHuanZheInfoTimeCell.m in Sources */,
 				4CF5ABCB21B6357300536362 /* UIImage+ZDExtension.m in Sources */,
@@ -1015,6 +1038,7 @@
 				4C1EB3A421B7AEAF0007CB4F /* UIImage+HUExtension.m in Sources */,
 				4CF5ABB521B6180000536362 /* NYRegisterViewController.m in Sources */,
 				4CF5AB9C21B5175100536362 /* NYChuZhenListModel.m in Sources */,
+				4CB0BB7221BDFAF80060BF39 /* NYNeedCheckModel.m in Sources */,
 				4CF5AB9021B508E200536362 /* NYMyTypeCell.m in Sources */,
 				4C1EB36F21B76C2B0007CB4F /* NYJieZhenDetailViewController.m in Sources */,
 				4C1EB3A321B7AEAF0007CB4F /* HUWebImageDownloader.m in Sources */,

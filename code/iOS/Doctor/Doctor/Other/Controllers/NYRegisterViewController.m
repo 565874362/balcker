@@ -18,6 +18,7 @@
 #import <TZImageManager.h>
 #import "NYRegisterUploadCardImgCell.h"
 #import "NYRegisterUploadCardCell.h"
+#import "BRPlaceholderTextView.h"
 
 @interface NYRegisterViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate,TZImagePickerControllerDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 {
@@ -266,6 +267,7 @@
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
+            cell.infoTextView.placeholder = @"临床症状表现";
             return cell;
         }
     }else if (indexPath.section == 4){ //擅长2
@@ -276,6 +278,7 @@
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
+            cell.infoTextView.placeholder = @"临床症状表现";
             return cell;
         }
     }else if (indexPath.section == 5){ //擅长3
@@ -286,6 +289,7 @@
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
+            cell.infoTextView.placeholder = @"临床症状表现";
             return cell;
         }
     }else if (indexPath.section == 6){ //上传本人照片

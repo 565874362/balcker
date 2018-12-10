@@ -13,6 +13,10 @@
 #import "NYHomeHuanZheInfoImgCell.h"
 #import "NYHomeHuanZheInfoVoiceCell.h"
 #import "HUPhotoBrowser.h"
+#import "NYRegisterShanChangCell.h"
+#import "BRPlaceholderTextView.h"
+#import "NYHomeHuanZheChoiceCheckCell.h"
+#import "NYNeedCheckViewController.h"
 
 @interface NYHomeHuanZheInfoDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -54,6 +58,8 @@
     [self.tableView registerClass:[NYHomeHuanZheInfoTimeCell class] forCellReuseIdentifier:@"HomeHuanZheInfoTimeCellID"];
     [self.tableView registerClass:[NYHomeHuanZheInfoImgCell class] forCellReuseIdentifier:@"HomeHuanZheInfoImgCellID"];
     [self.tableView registerClass:[NYHomeHuanZheInfoVoiceCell class] forCellReuseIdentifier:@"HomeHuanZheInfoVoiceCellID"];
+    [self.tableView registerClass:[NYRegisterShanChangCell class] forCellReuseIdentifier:@"NYRegisterShanChangCellID"];
+    [self.tableView registerClass:[NYHomeHuanZheChoiceCheckCell class] forCellReuseIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
     
     _model = [[NYHomeListModel alloc] init];
     _model.state = @"0"; 
@@ -186,6 +192,9 @@
     }
 
     if ([_model.state integerValue] == 1){
+        if (indexPath.section == 1 || indexPath.section == 3) {
+            return 100;
+        }
         return 50;
     }else if ([_model.state integerValue] == 2){
         return 50;
@@ -245,7 +254,18 @@
     }
 
     if ([_model.state integerValue] == 1){
-        
+        if (indexPath.section == 1) {
+            NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
+            cell.infoTextView.placeholder = @"初步诊断:";
+            return cell;
+        }else if (indexPath.section == 2){
+            NYHomeHuanZheChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
+            return cell;
+        }else if (indexPath.section == 3){
+            NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
+            cell.infoTextView.placeholder = @"温馨医嘱:";
+            return cell;
+        }
     }else if ([_model.state integerValue] == 2){
         
     }
@@ -257,6 +277,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            NYNeedCheckViewController * vc = [[NYNeedCheckViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 
 @end

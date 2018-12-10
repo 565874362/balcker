@@ -36,6 +36,8 @@
     _headerImg.contentMode = UIViewContentModeScaleAspectFill;
     _headerImg.layer.masksToBounds = YES;
     _headerImg.clipsToBounds = YES;
+    _headerImg.layer.borderColor = MAINCOLOR.CGColor;
+    _headerImg.layer.borderWidth = 2;
     _headerImg.image = [UIImage imageNamed:@"LaunchImage"];
     [self addSubview:_headerImg];
     

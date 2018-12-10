@@ -29,7 +29,7 @@
     _infoTextView.font = [UIFont systemFontOfSize:17];
     [_infoTextView setPlaceholderFont:[UIFont systemFontOfSize:17]];
     [self.contentView addSubview:_infoTextView];
-    _infoTextView.placeholder = @"临床症状表现";
+//    _infoTextView.placeholder = @"临床症状表现";
     _infoTextView.sd_layout
     .leftSpaceToView(self.contentView, 10)
     .topSpaceToView(self.contentView, 15)
