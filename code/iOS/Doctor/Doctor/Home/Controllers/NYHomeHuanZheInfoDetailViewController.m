@@ -17,6 +17,9 @@
 #import "BRPlaceholderTextView.h"
 #import "NYHomeHuanZheChoiceCheckCell.h"
 #import "NYNeedCheckViewController.h"
+#import "NYAlreadyChoiceCheckCell.h"
+#import "NYAlreadyChoiceCheckTitleCell.h"
+#import "NYAlreadyChoiceCheckAllPriceCell.h"
 
 @interface NYHomeHuanZheInfoDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -60,6 +63,9 @@
     [self.tableView registerClass:[NYHomeHuanZheInfoVoiceCell class] forCellReuseIdentifier:@"HomeHuanZheInfoVoiceCellID"];
     [self.tableView registerClass:[NYRegisterShanChangCell class] forCellReuseIdentifier:@"NYRegisterShanChangCellID"];
     [self.tableView registerClass:[NYHomeHuanZheChoiceCheckCell class] forCellReuseIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
+    [self.tableView registerClass:[NYAlreadyChoiceCheckCell class] forCellReuseIdentifier:@"NYAlreadyChoiceCheckCellID"];
+    [self.tableView registerClass:[NYAlreadyChoiceCheckTitleCell class] forCellReuseIdentifier:@"NYAlreadyChoiceCheckTitleCellID"];
+    [self.tableView registerClass:[NYAlreadyChoiceCheckAllPriceCell class] forCellReuseIdentifier:@"NYAlreadyChoiceCheckAllPriceCellID"];
     
     _model = [[NYHomeListModel alloc] init];
     _model.state = @"0"; 
@@ -75,7 +81,7 @@
 - (void)initJieZhenButton
 {
     UIImageView * imageV = [[UIImageView alloc] init];
-    imageV.image = [UIImage imageNamed:@"placeholderImage"];
+    imageV.image = [UIImage imageNamed:@"accepts_btn"];
     imageV.clipsToBounds = YES;
     imageV.userInteractionEnabled = YES;
     [self.view addSubview:imageV];
@@ -90,16 +96,16 @@
 
     imageV.sd_cornerRadius = @50;
     
-    UILabel * label = [[UILabel alloc] init];
-    label.font = FONT(20);
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    [imageV addSubview:label];
-    
-    label.sd_layout
-    .spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
-    
-    label.text = @"接诊";
+//    UILabel * label = [[UILabel alloc] init];
+//    label.font = FONT(20);
+//    label.textAlignment = NSTextAlignmentCenter;
+//    label.textColor = [UIColor whiteColor];
+//    [imageV addSubview:label];
+//    
+//    label.sd_layout
+//    .spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
+//    
+//    label.text = @"接诊";
 }
 
 #pragma mark - 点击抢单按钮
@@ -161,7 +167,7 @@
         if (section == 1){
             return 1;
         }else if (section == 2){
-            return 1;
+            return 6;
         }else if (section == 3){
             return 1;
         }
@@ -169,7 +175,7 @@
         if (section == 1){
             return 1;
         }else if (section == 2){
-            return 1;
+            return 6;
         }else if (section == 3){
             return 1;
         }
@@ -259,8 +265,19 @@
             cell.infoTextView.placeholder = @"初步诊断:";
             return cell;
         }else if (indexPath.section == 2){
-            NYHomeHuanZheChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
-            return cell;
+            if (indexPath.row == 0) {
+                NYHomeHuanZheChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
+                return cell;
+            }else if (indexPath.row == 1){
+                NYAlreadyChoiceCheckTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckTitleCellID"];
+                return cell;
+            }else if (indexPath.row == 5){
+                NYAlreadyChoiceCheckAllPriceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckAllPriceCellID"];
+                return cell;
+            }else{
+                NYAlreadyChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckCellID"];
+                return cell;
+            }
         }else if (indexPath.section == 3){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"温馨医嘱:";

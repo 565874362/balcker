@@ -75,6 +75,9 @@
 		4C1EB3A521B7AEAF0007CB4F /* UIImageView+HUWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB39921B7AEAF0007CB4F /* UIImageView+HUWebImage.m */; };
 		4C1EB3A621B7AEAF0007CB4F /* HUPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB39F21B7AEAF0007CB4F /* HUPhotoBrowser.m */; };
 		4C1EB46521BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */; };
+		4C86A73F21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C86A73E21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.m */; };
+		4C86A74221BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C86A74121BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.m */; };
+		4C86A74521BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C86A74421BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.m */; };
 		4CB0BB6C21BDF89E0060BF39 /* NYNeedCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB6B21BDF89E0060BF39 /* NYNeedCheckViewController.m */; };
 		4CB0BB6F21BDF99C0060BF39 /* NYNeedCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB6E21BDF99C0060BF39 /* NYNeedCheckCell.m */; };
 		4CB0BB7221BDFAF80060BF39 /* NYNeedCheckModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0BB7121BDFAF80060BF39 /* NYNeedCheckModel.m */; };
@@ -247,6 +250,12 @@
 		4C1EB39F21B7AEAF0007CB4F /* HUPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPhotoBrowser.m; sourceTree = "<group>"; };
 		4C1EB46321BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYHomeHuanZheChoiceCheckCell.h; sourceTree = "<group>"; };
 		4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYHomeHuanZheChoiceCheckCell.m; sourceTree = "<group>"; };
+		4C86A73D21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYAlreadyChoiceCheckCell.h; sourceTree = "<group>"; };
+		4C86A73E21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYAlreadyChoiceCheckCell.m; sourceTree = "<group>"; };
+		4C86A74021BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYAlreadyChoiceCheckTitleCell.h; sourceTree = "<group>"; };
+		4C86A74121BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYAlreadyChoiceCheckTitleCell.m; sourceTree = "<group>"; };
+		4C86A74321BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYAlreadyChoiceCheckAllPriceCell.h; sourceTree = "<group>"; };
+		4C86A74421BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYAlreadyChoiceCheckAllPriceCell.m; sourceTree = "<group>"; };
 		4CB0BB6A21BDF89E0060BF39 /* NYNeedCheckViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYNeedCheckViewController.h; sourceTree = "<group>"; };
 		4CB0BB6B21BDF89E0060BF39 /* NYNeedCheckViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYNeedCheckViewController.m; sourceTree = "<group>"; };
 		4CB0BB6D21BDF99C0060BF39 /* NYNeedCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYNeedCheckCell.h; sourceTree = "<group>"; };
@@ -640,6 +649,12 @@
 				4C1EB46421BA59A30007CB4F /* NYHomeHuanZheChoiceCheckCell.m */,
 				4CB0BB6D21BDF99C0060BF39 /* NYNeedCheckCell.h */,
 				4CB0BB6E21BDF99C0060BF39 /* NYNeedCheckCell.m */,
+				4C86A74021BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.h */,
+				4C86A74121BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.m */,
+				4C86A73D21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.h */,
+				4C86A73E21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.m */,
+				4C86A74321BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.h */,
+				4C86A74421BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -996,6 +1011,7 @@
 				4CF5ABCE21B639F400536362 /* NYRegisterUploadCardCell.m in Sources */,
 				4C1EB37521B775850007CB4F /* NYMyInfoDetailViewController.m in Sources */,
 				4C1EB3A121B7AEAF0007CB4F /* HUPhotoBrowserCell.m in Sources */,
+				4C86A74521BE424E0034F1FC /* NYAlreadyChoiceCheckAllPriceCell.m in Sources */,
 				4CB0BB6C21BDF89E0060BF39 /* NYNeedCheckViewController.m in Sources */,
 				4C162C55219A72A200CDB410 /* MyAlertCenter.m in Sources */,
 				4C1EB37221B76FCE0007CB4F /* NYJieZhenDetailCell.m in Sources */,
@@ -1031,6 +1047,7 @@
 				4C162CE3219A756100CDB410 /* NYHomeViewController.m in Sources */,
 				4CF5ABBF21B6266A00536362 /* NYRegisterChoiceSexCell.m in Sources */,
 				4CF5ABC821B633B100536362 /* NYRegisterUploadCardImgCell.m in Sources */,
+				4C86A74221BE40360034F1FC /* NYAlreadyChoiceCheckTitleCell.m in Sources */,
 				4CF5ABAF21B60EFE00536362 /* NYMyHeaderView.m in Sources */,
 				4C1EB38A21B7AACB0007CB4F /* NYHomeHuanZheInfoVoiceCell.m in Sources */,
 				4C162C73219A733B00CDB410 /* BRAddressModel.m in Sources */,
@@ -1050,6 +1067,7 @@
 				4C1EB3A621B7AEAF0007CB4F /* HUPhotoBrowser.m in Sources */,
 				4C162CBB219A736500CDB410 /* AFHTTPSessionManager.m in Sources */,
 				4C162CB7219A736500CDB410 /* YYCache.m in Sources */,
+				4C86A73F21BE3D830034F1FC /* NYAlreadyChoiceCheckCell.m in Sources */,
 				4C162CB8219A736500CDB410 /* YYDiskCache.m in Sources */,
 				4C162CEC219A76AE00CDB410 /* NYLoginViewController.m in Sources */,
 				4C162CC8219A736500CDB410 /* UIImageView+AFNetworking.m in Sources */,

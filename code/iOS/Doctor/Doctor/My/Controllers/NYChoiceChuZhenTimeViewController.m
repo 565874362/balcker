@@ -194,7 +194,7 @@
     // 自定义多列字符串
     NSArray *dataSource = @[@[@"00", @"01", @"02", @"03", @"04", @"05", @"06",@"07", @"08", @"09", @"10", @"11", @"12", @"13",@"14", @"15", @"16", @"17", @"18", @"19", @"20",@"21", @"22", @"23"], @[@"00", @"30"]];
     NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@":"];
-    [BRStringPickerView showStringPickerWithTitle:@"自定义多列字符串" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+    [BRStringPickerView showStringPickerWithTitle:@"选择时间" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
         textField.text = [NSString stringWithFormat:@"%@:%@", selectValue[0], selectValue[1]];
     } cancelBlock:^{
         NSLog(@"点击了背景视图或取消按钮");

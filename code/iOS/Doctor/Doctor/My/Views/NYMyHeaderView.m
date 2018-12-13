@@ -21,7 +21,7 @@
 - (void)setup
 {
     UIImageView * imgView = [[UIImageView alloc] init];
-    imgView.image = [UIImage imageNamed:@"placeholderImage"];
+    imgView.image = [UIImage imageNamed:@"yisheng_my_bj"];
     imgView.contentMode = UIViewContentModeScaleAspectFill;
     imgView.clipsToBounds = YES;
     [self addSubview:imgView];
@@ -36,9 +36,9 @@
     _headerImg.contentMode = UIViewContentModeScaleAspectFill;
     _headerImg.layer.masksToBounds = YES;
     _headerImg.clipsToBounds = YES;
-    _headerImg.layer.borderColor = MAINCOLOR.CGColor;
-    _headerImg.layer.borderWidth = 2;
-    _headerImg.image = [UIImage imageNamed:@"LaunchImage"];
+    _headerImg.layer.borderColor = RGBA(47, 168, 251, 1).CGColor;
+    _headerImg.layer.borderWidth = 2.5;
+    _headerImg.image = [UIImage imageNamed:@"no_image"];
     [self addSubview:_headerImg];
     
     _headerImg.sd_layout

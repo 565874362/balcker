@@ -27,7 +27,7 @@
 {
     _leftIMG = [[UIImageView alloc] init];
     _leftIMG.contentMode = UIViewContentModeScaleAspectFill;
-    _leftIMG.image = [UIImage imageNamed:@"placeholderImage"];
+    _leftIMG.image = [UIImage imageNamed:@"radio"];
     _leftIMG.clipsToBounds = YES;
     [self.contentView addSubview:_leftIMG];
     

@@ -52,7 +52,7 @@
 #pragma mark - 右边item
 - (void)setRightItem
 {
-    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Common_back_n"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightItem:)];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"schedule_white"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightItem:)];
     self.navigationItem.rightBarButtonItem = item;
 }
 

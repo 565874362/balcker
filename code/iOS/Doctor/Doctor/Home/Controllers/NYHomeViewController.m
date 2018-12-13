@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"接诊";
+    self.navigationItem.title = @"患者信息";
     [self.tableView registerClass:[NYHomeListCell class] forCellReuseIdentifier:@"Cell"];
     
 }

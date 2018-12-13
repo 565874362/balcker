@@ -175,14 +175,18 @@
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.typeLB.text = @"患者信息";
+            cell.leftIMG.image = [UIImage imageNamed:@"visits"];
         }else if (indexPath.row == 1) {
             cell.typeLB.text = @"我的接诊";
+            cell.leftIMG.image = [UIImage imageNamed:@"accepts"];
         }else if (indexPath.row == 2) {
             cell.typeLB.text = @"接诊时间";
+            cell.leftIMG.image = [UIImage imageNamed:@"schedule"];
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             cell.typeLB.text = @"我的信息";
+            cell.leftIMG.image = [UIImage imageNamed:@"Personal"];
         }
     }
     return cell;
