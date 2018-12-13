@@ -30,7 +30,7 @@
     _leftIMG.sd_layout
     .leftSpaceToView(self.contentView, 15)
     .centerYEqualToView(self.contentView)
-    .widthIs(30)
+    .widthIs(26)
     .heightEqualToWidth();
     
     _typeLB = [[UILabel alloc] init];

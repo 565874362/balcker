@@ -53,9 +53,8 @@
     .heightIs(22);
     [deleteBtn addTarget:self action:@selector(clickDeletedBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    
     D3RecordButton * voiceBtn = [D3RecordButton buttonWithType:UIButtonTypeCustom];
-    [voiceBtn setBackgroundImage:[UIImage imageNamed:@"home_fabu_yuyin"] forState:UIControlStateNormal];
+    [voiceBtn setBackgroundImage:[UIImage imageNamed:@"voice_blue"] forState:UIControlStateNormal];
     voiceBtn.adjustsImageWhenHighlighted = NO;
     self.voiceBtn = voiceBtn;
     [self.contentView addSubview:voiceBtn];

@@ -21,7 +21,7 @@
 - (void)setup
 {
     UIImageView * imgView = [[UIImageView alloc] init];
-    imgView.image = [UIImage imageNamed:@"placeholderImage"];
+    imgView.image = [UIImage imageNamed:@"huanzhe_my_bj"];
     imgView.contentMode = UIViewContentModeScaleAspectFill;
     imgView.clipsToBounds = YES;
     [self addSubview:imgView];
@@ -34,11 +34,12 @@
     //头像
     _headerImg = [[UIImageView alloc] init];
     _headerImg.contentMode = UIViewContentModeScaleAspectFill;
+    _headerImg.userInteractionEnabled = YES;
     _headerImg.layer.masksToBounds = YES;
     _headerImg.clipsToBounds = YES;
-    _headerImg.layer.borderColor = MAINCOLOR.CGColor;
-    _headerImg.layer.borderWidth = 2;
-    _headerImg.image = [UIImage imageNamed:@"LaunchImage"];
+    _headerImg.layer.borderColor = RGBA(48, 167, 251, 1).CGColor;
+    _headerImg.layer.borderWidth = 2.5;
+    _headerImg.image = [UIImage imageNamed:@"placeholderImage"];
     [self addSubview:_headerImg];
     
     _headerImg.sd_layout
@@ -49,5 +50,15 @@
 
     _headerImg.sd_cornerRadius = @40;
     
+    [_headerImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickHeaderImg:)]];
+    
 }
+
+- (void)clickHeaderImg:(UITapGestureRecognizer *)tap
+{
+    if (_clickHeader) {
+        _clickHeader();
+    }
+}
+
 @end

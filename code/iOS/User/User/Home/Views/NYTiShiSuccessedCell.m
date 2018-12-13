@@ -26,7 +26,7 @@
     
     //头像
     _headerImg = [[UIImageView alloc] init];
-    _headerImg.image = [UIImage imageNamed:@"placeholderImage"];
+    _headerImg.image = [UIImage imageNamed:@"submit"];
     _headerImg.clipsToBounds = YES;
     [self.contentView addSubview:_headerImg];
     

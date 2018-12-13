@@ -66,7 +66,7 @@
     _keshiLB = [[UILabel alloc] init];
     _keshiLB.textAlignment = NSTextAlignmentRight;
     _keshiLB.font = FONT(15);
-    _keshiLB.textColor = COLOR_RED;
+    _keshiLB.textColor = COLOR_BIG;
     [bgView addSubview:_keshiLB];
     
     _keshiLB.sd_layout
@@ -173,7 +173,7 @@
     [_shanChangInfoLB3 setMaxNumberOfLinesToShow:0];
     
     
-    [self setupAutoHeightWithBottomView:_shanChangInfoLB3 bottomMargin:30];
+    [self setupAutoHeightWithBottomView:_shanChangInfoLB3 bottomMargin:15];
     
 }
 

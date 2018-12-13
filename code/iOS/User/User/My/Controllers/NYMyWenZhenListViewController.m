@@ -9,6 +9,7 @@
 #import "NYMyWenZhenListViewController.h"
 #import "NYMyWenZhenModel.h"
 #import "NYMyWenZhenListCell.h"
+#import "NYWenZhenDetailViewController.h"
 
 @interface NYMyWenZhenListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -92,6 +93,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NYWenZhenDetailViewController * vc = [[NYWenZhenDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

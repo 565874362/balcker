@@ -15,12 +15,17 @@
 #import "NYYuYueJiuZhenListViewController.h"
 #import "NYAnswerViewController.h"
 
+#import <TZImagePickerController.h>
+#import <TZImageManager.h>
 
 #define NAVBAR_CHANGE_POINT 50
 
-@interface NYMineViewController ()<UITableViewDelegate,UITableViewDataSource>
-    
+@interface NYMineViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate, UINavigationControllerDelegate,TZImagePickerControllerDelegate,UIAlertViewDelegate>
+{
+    UIImageView * _headerImageView;
+}
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 
 
 @end
@@ -113,7 +118,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 200;
+        return NYScreenW*0.5;
     }
     return 0.0001f;
 }
@@ -127,8 +132,13 @@
 }
     
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    WEAKSELF
     if (section == 0) {
         NYMyHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HeaderViewID"];
+        _headerImageView = headerView.headerImg;
+        headerView.clickHeader = ^{
+            [weakSelf clickHeaderImg];
+        };
         return headerView;
     }
     return [UIView new];
@@ -174,10 +184,13 @@
         if (indexPath.section == 1) {
             if (indexPath.row == 0) {
                 cell.typeLB.text = @"我的问诊";
+                cell.leftIMG.image = [UIImage imageNamed:@"visits"];
             }else if (indexPath.row == 1) {
                 cell.typeLB.text = @"预约就诊";
+                cell.leftIMG.image = [UIImage imageNamed:@"accepts"];
             }else if (indexPath.row == 2) {
                 cell.typeLB.text = @"我的咨询";
+                cell.leftIMG.image = [UIImage imageNamed:@"consulting_green"];
             }
         }
         return cell;
@@ -201,6 +214,101 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+}
+
+
+#pragma mark - 选择头像
+- (void)clickHeaderImg
+{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:0 handler:^(UIAlertAction * _Nonnull action) {
+        [self pushImagePickerController];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"相机" style:0 handler:^(UIAlertAction * _Nonnull action) {
+        [self takePhoto];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (UIImagePickerController *)imagePickerVc {
+    if (_imagePickerVc == nil) {
+        _imagePickerVc = [[UIImagePickerController alloc] init];
+        _imagePickerVc.delegate = self;
+        // set appearance / 改变相册选择页的导航栏外观
+        _imagePickerVc.navigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+        _imagePickerVc.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+        UIBarButtonItem *tzBarItem, *BarItem;
+        if (iOS9Later) {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[TZImagePickerController class]]];
+            BarItem = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIImagePickerController class]]];
+        } else {
+            tzBarItem = [UIBarButtonItem appearanceWhenContainedIn:[TZImagePickerController class], nil];
+            BarItem = [UIBarButtonItem appearanceWhenContainedIn:[UIImagePickerController class], nil];
+        }
+        NSDictionary *titleTextAttributes = [tzBarItem titleTextAttributesForState:UIControlStateNormal];
+        [BarItem setTitleTextAttributes:titleTextAttributes forState:UIControlStateNormal];
+    }
+    return _imagePickerVc;
+}
+
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto infos:(NSArray<NSDictionary *> *)infos {
+    UIImage *image = photos[0];
+    _headerImageView.image = image;
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    //    [self uploadHeadImage:image];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    _headerImageView.image = image;
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    //    [self uploadHeadImage:image];
+}
+#pragma mark - 拍照
+- (void)takePhoto {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
+        // 无相机权限 做一个友好的提示
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+        alert.delegate = self;
+        [alert show];
+        // 拍照之前还需要检查相册权限
+    } else if ([TZImageManager authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+        alert.delegate = self;
+        alert.tag = 1;
+        [alert show];
+    } else { // 调用相机
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+            self.imagePickerVc.sourceType = sourceType;
+            if(iOS8Later) {
+                _imagePickerVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            }
+            [self presentViewController:_imagePickerVc animated:YES completion:nil];
+        } else {
+            NSLog(@"模拟器中无法打开照相机,请在真机中使用");
+        }
+    }
+}
+#pragma mark - 选择照片
+- (void)pushImagePickerController {
+    
+    TZImagePickerController *pvc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 columnNumber:3 delegate:self];
+    pvc.allowPickingVideo = NO;
+    pvc.allowPickingImage = YES;
+    pvc.allowPickingOriginalPhoto = NO;
+    pvc.allowPickingGif = NO;
+    pvc.delegate = self;
+    pvc.showSelectBtn = NO;
+    pvc.allowCrop = YES;
+    pvc.cropRect = CGRectMake(0, (NYScreenH - NYScreenW)/2, NYScreenW, NYScreenW);
+    [self presentViewController:pvc animated:YES completion:nil];
 }
 
 @end

@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) UIImageView * headerImg;
 
+@property (nonatomic,copy) void(^clickHeader)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -288,8 +288,8 @@
         }
     }else if (indexPath.section == 3){
         if (indexPath.row == 0) {
-            NYHomeInfoTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeInfoTitleCellID"];
-            cell.typeLB.text = @"症状描述";
+            NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
+            cell.titleLB.text = @"症状描述";
             return cell;
         }else if (indexPath.row == 1){
             NYHomeInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeInfoCellID"];
@@ -299,6 +299,7 @@
         }else if (indexPath.row == 2){
             NYHomeInfoTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeInfoTitleCellID"];
             cell.typeLB.text = @"语音描述（语音描述病情,促进医生诊断）";
+            cell.leftIMG.image = [UIImage imageNamed:@"voice_red"];
             return cell;
         }else if (indexPath.row == 3){
             NYHomeVoiceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeVoiceCellID"];

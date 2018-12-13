@@ -35,9 +35,9 @@
 -(void)initViewControllers {
     
     NYHomeViewController * homevc = [[NYHomeViewController alloc] init];
-    homevc.tabBarItem.image=[UIImage imageNamed:@"menu_home"];
-    homevc.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_home_hover"];
-    homevc.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
+    homevc.tabBarItem.image=[UIImage imageNamed:@"home"];
+    homevc.tabBarItem.selectedImage=[UIImage imageNamed:@"home_fille"];
+//    homevc.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
     
     NYBaseNavViewController * homeNav=[[NYBaseNavViewController alloc] initWithRootViewController:homevc];
     homeNav.tabBarItem.tag = 0;
@@ -45,7 +45,7 @@
     
     
     NYAnswerViewController * cardVC = [[NYAnswerViewController alloc] init];
-    cardVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
+//    cardVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
     cardVC.tabBarItem.image=[UIImage imageNamed:@"menu_coupon"];
     cardVC.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_coupon_hover"];
     
@@ -54,9 +54,9 @@
     cardNav.tabBarItem.title = @"问答";
     
     NYDoctorListViewController * doctorVC = [[NYDoctorListViewController alloc] init];
-    doctorVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
-    doctorVC.tabBarItem.image=[UIImage imageNamed:@"menu_coupon"];
-    doctorVC.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_coupon_hover"];
+//    doctorVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
+    doctorVC.tabBarItem.image=[UIImage imageNamed:@"doctor"];
+    doctorVC.tabBarItem.selectedImage=[UIImage imageNamed:@"doctor_fille"];
     
     NYBaseNavViewController * doctorNav=[[NYBaseNavViewController alloc] initWithRootViewController:doctorVC];
     doctorNav.tabBarItem.tag = 2;
@@ -64,9 +64,9 @@
 
     
     NYMineViewController * mineVC =[[NYMineViewController alloc] init];
-    mineVC.tabBarItem.image=[UIImage imageNamed:@"menu_my"];
-    mineVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
-    mineVC.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_my_hover"];
+    mineVC.tabBarItem.image=[UIImage imageNamed:@"people"];
+//    mineVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
+    mineVC.tabBarItem.selectedImage=[UIImage imageNamed:@"people_fill"];
     
     NYBaseNavViewController *mineNav=[[NYBaseNavViewController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem.tag = 3;
