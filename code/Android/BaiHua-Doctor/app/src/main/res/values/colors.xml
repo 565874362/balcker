@@ -1,55 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#1784f3</color>
+    <color name="colorPrimaryDark">#1784f3</color>
+    <color name="colorAccent">#1784f3</color>
+    <color name="windowBackground">#f3f3f3</color>
 
-    <!-- 基本色 -->
-    <!-- 白色 -->
-    <color name="white">#ffffff</color>
-    <!-- 黑色 -->
-    <color name="black">#000000</color>
-    <!-- 透明 -->
-    <color name="transparent">#00000000</color>
-    <!-- 半透明 -->
-    <color name="harf_transparent">#a0000000</color>
-    <color name="light_blue">#6593cb</color>
-
-    <!--下拉刷新的颜色-->
-    <color name="refresh_color">#2FDFBD</color>
-
-
-    <!-- 正文内容与底部导航的间隔色 -->
-    <color name="line_top_bottom">#ccd8d1</color>
-
-    <!-- 分割线颜色 -->
-    <color name="dividing_line_color">#ebebeb</color>
-
-    <!-- App Base Color -->
-    <color name="color_app_base">#F36718</color>
-
-    <color name="color_app_base_new">#EB0000</color>
-
-    <!---->
-    <color name="color_title_right_text">#f5aca2</color>
-
-    <!-- 标题栏背景颜色 -->
-
-    <color name="color_title_bar_bg_color">#f36718</color>
-    <!-- 标题栏标题颜色 -->
-    <color name="color_title_bar_title_color">#ffffff</color>
-    <!-- 改变字体的颜色 -->
-    <color name="color_common_text">#FD2B00</color>
-    <!-- 初始底部导航按钮颜色 -->
-    <color name="color_common_light_gray">#919191</color>
-
-    <!-- app基本色 -->
-    <!--<color name="color_common_base_color">#45C01A</color>-->
-    <color name="color_common_base_color">#EC8F81</color>
-    <color name="color_common_green">#61B235</color>
-
-    <!-- app底层背景色 -->
-    <color name="color_common_base_bg_color">#f3f3f3</color>
+    <!--辅助色-->
+    <color name="color_black_dark_4b5764">#4b5764</color>
+    <color name="color_black_light_91939f">#91939f</color>
+    <color name="color_gray_light_afb1bd">#afb1bd</color>
+    <color name="color_white_light_efefef">#efefef</color>
+    <color name="color_red_light_f8f8f9">#ff4a52</color>
 
     <!-- 二维码中用到的颜色 -->
     <color name="zxing_contents_text">#ff000000</color>
@@ -68,11 +29,5 @@
     <color name="zxing_viewfinder_mask">#60000000</color>
     <!-- 二维码四个边角的颜色 -->
     <color name="zxing_frame_color">#00AAEF</color>
-
-    <!--新字体色-->
-    <color name="color_font_app">#F36718</color>
-    <color name="color_font_black_464b55">#464b55</color>
-    <color name="color_font_gray">#737373</color>
-    <color name="color_font_ffb400">#ffb400</color>
 
 </resources>

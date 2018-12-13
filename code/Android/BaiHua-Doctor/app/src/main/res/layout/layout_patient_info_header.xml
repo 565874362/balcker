@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dimen_dp_12"
+    android:paddingTop="@dimen/dimen_dp_18"
+    android:paddingEnd="@dimen/dimen_dp_12"
+    android:paddingBottom="@dimen/dimen_dp_18">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/layout_patient_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            tools:text="小小请" />
+
+        <TextView
+            android:id="@+id/layout_patient_tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:layout_toEndOf="@+id/layout_patient_tv_name"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="男" />
+
+        <TextView
+            android:id="@+id/layout_patient_tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:layout_toEndOf="@+id/layout_patient_tv_gender"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="5岁" />
+
+        <TextView
+            android:id="@+id/layout_patient_tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:drawableStart="@drawable/shape_blue_circle_dot"
+            android:drawablePadding="@dimen/dimen_dp_6"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_14sp"
+            android:visibility="gone"
+            tools:text="待回复" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/layout_patient_tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_18"
+        android:layout_marginBottom="@dimen/dimen_dp_18"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里" />
+
+    <RelativeLayout
+        android:id="@+id/play_voice_layout"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:background="@drawable/shape_voice_bg">
+
+        <ImageView
+            android:id="@+id/iv_play_voice_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_16"
+            android:src="@drawable/voice_anim" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:layout_toEndOf="@+id/iv_play_voice_anim"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_12sp"
+            tools:text="2″" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/layout_patient_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_18" />
+
+    <TextView
+        android:id="@+id/layout_patient_tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_18"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="2018年12月4日 11点06分" />
+
+</LinearLayout>

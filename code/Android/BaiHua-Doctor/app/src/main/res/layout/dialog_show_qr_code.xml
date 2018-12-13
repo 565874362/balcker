@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_hdpi_16"
-        android:textColor="@color/color_font_gray"
+        android:textColor="@color/color_black_dark_4b5764"
         android:textSize="@dimen/dimen_mid_text"
         tools:text="扫描二维码" />
 

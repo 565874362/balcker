@@ -40,11 +40,22 @@ MobSDK {
 }
 
 android {
+
+    signingConfigs {
+        release {
+            keyAlias 'yayayisheng'
+            keyPassword 'android'
+            storeFile file('../yayayisheng.jks')
+            storePassword 'android'
+        }
+    }
+
     def sdkVersion = rootProject.ext
 
     compileSdkVersion sdkVersion.androidCompileSdkVersion
+
     defaultConfig {
-        applicationId "com.joymates.flowers"
+        applicationId "com.baihua.yayayisheng"
         minSdkVersion sdkVersion.androidMinSdkVersion
         targetSdkVersion sdkVersion.androidTargetSdkVersion
         versionCode 1
@@ -61,13 +72,15 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
-            debuggable true
-            shrinkResources true
-            zipAlignEnabled true
+            minifyEnabled false
+//            debuggable true
+//            shrinkResources true
+//            zipAlignEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -159,4 +172,15 @@ dependencies {
     // 音频录制
     implementation appDependence.zlwAudioRecorder
     implementation appDependence.waveLineView
+
+    // FlowLayout
+    implementation('com.hyman:flowlayout-lib:1.1.2') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    // Android-PickerView(https://github.com/Bigkoo/Android-PickerView)
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    // https://github.com/chrisbanes/PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    // https://github.com/LuckSiege/PictureSelector
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }

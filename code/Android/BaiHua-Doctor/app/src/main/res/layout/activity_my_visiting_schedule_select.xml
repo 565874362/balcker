@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@color/windowBackground"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_for_visiting_schedule" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tag_flow_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_dp_2"
+            android:background="@android:color/white"
+            android:paddingBottom="@dimen/dimen_dp_22"
+            app:max_select="-1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_10"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12"
+            android:text="上午"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_2"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="接诊时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/schedule_select_morning_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="开始时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="至"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/schedule_select_morning_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="结束时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="接诊人数"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <EditText
+                android:id="@+id/schedule_select_morning_people_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="请输入接诊人数"
+                android:inputType="number"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_10"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12"
+            android:text="下午"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_2"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="接诊时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/schedule_select_afternoon_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="开始时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="至"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/schedule_select_afternoon_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="结束时间"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dimen_dp_12"
+            android:paddingEnd="@dimen/dimen_dp_12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:text="接诊人数"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <EditText
+                android:id="@+id/schedule_select_afternoon_people_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_22"
+                android:layout_marginEnd="@dimen/dimen_dp_22"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:hint="请输入接诊人数"
+                android:inputType="number"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/schedule_select_tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp_44"
+            android:layout_marginStart="@dimen/dimen_dp_8"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="@dimen/dimen_dp_8"
+            android:layout_marginBottom="@dimen/dimen_dp_16"
+            android:background="@drawable/shape_for_blue_button_bg"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_18sp" />
+
+    </LinearLayout>
+
+</ScrollView>

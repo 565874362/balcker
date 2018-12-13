@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">百花医疗</string>
+    <string name="app_name">吖吖医生</string>
 
     <string name="common_sure">确定</string>
     <string name="common_confrim">确认</string>
@@ -14,11 +14,47 @@
     <string name="permission_settings">设置</string>
 
     <!--Default Text-->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">患者信息</string>
+    <string name="title_consulting">咨询</string>
+    <string name="title_mine">我的</string>
+    <string name="title_home_title">患者信息</string>
+    <string name="title_consulting_title">咨询</string>
+    <string name="title_mine_title">我的中心</string>
 
     <!--Permission-->
     <string name="permission_rationale_message">You have rejected us to apply for authorization, please agree to authorization, otherwise the function can\'t be used normally!</string>
     <string name="permission_denied_forever_message">We need some of the permissions you rejected or the system failed to apply failed, please manually set to the page authorize, otherwise the function can\'t be used normally!</string>
+    <string name="login_user_name">姓名</string>
+    <string name="login_tips_plz_input_name">请输入姓名</string>
+    <string name="login_gender">性别</string>
+    <string name="login_female">女</string>
+    <string name="login_male">男</string>
+    <string name="login_mobile_number">手机号</string>
+    <string name="login_tips_plz_input_mobile_number">请输入手机号</string>
+    <string name="login_get_code">获取验证码</string>
+    <string name="login_code">验证码</string>
+    <string name="login_tips_input_msg_code">请输入短信验证码</string>
+    <string name="login_login">登录</string>
+    <string name="login_register">注册</string>
+    <string name="login_company">单位</string>
+    <string name="login_tips_plz_input_company">请输入工作单位</string>
+    <string name="login_job">职位</string>
+    <string name="login_tips_plz_input_job">请输入职位</string>
+    <string name="login_department">科室</string>
+    <string name="login_tips_plz_input_department">请输入工作单位</string>
+    <string name="login_registration_fee">挂号费</string>
+    <string name="login_tips_plz_input_registration_fee">请输入挂号费金额</string>
+    <string name="login_good_at_1">擅长1</string>
+    <string name="login_tips_plz_input_good_at_name">请输入名称</string>
+    <string name="login_tips_description">病状描述</string>
+    <string name="login_good_at_2">擅长2</string>
+    <string name="login_good_at_3">擅长3</string>
+    <string name="login_upload_image">上传图片</string>
+    <string name="login_upload_yourself_photo">+上传本人照片</string>
+    <string name="login_upload_doctors_qualification_certificate">上传医师资格证</string>
+    <string name="login_add_doctors_qualification_certificate">+上传医师资格证</string>
+    <string name="login_upload_the_front_photo_of_id_card">+上传身份证正面照</string>
+    <string name="login_upload_the_back_photo_of_id_card">+上传身份证反面照</string>
+    <string name="login_upload_id_code">上传身份证图片</string>
+
 </resources>

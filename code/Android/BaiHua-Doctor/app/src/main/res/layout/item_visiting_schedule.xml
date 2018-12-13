@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_dp_1"
+    android:background="@android:color/white"
+    android:gravity="start|center|center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_dp_12">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/visiting_schedule_tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp"
+            tools:text="周一" />
+
+        <TextView
+            android:id="@+id/visiting_schedule_tv_morning_or_afternoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_dp_16"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp"
+            tools:text="上午" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="@dimen/dimen_dp_1"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/dimen_dp_24"
+        android:layout_marginEnd="@dimen/dimen_dp_24"
+        android:background="@color/windowBackground"
+        android:paddingTop="@dimen/dimen_dp_12"
+        android:paddingBottom="@dimen/dimen_dp_12" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/visiting_schedule_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp"
+            tools:text="08:00-11:00" />
+
+        <TextView
+            android:id="@+id/visiting_schedule_tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/dimen_dp_16"
+            android:textColor="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_12sp"
+            tools:text="接诊人数：80人" />
+
+    </LinearLayout>
+
+</LinearLayout>

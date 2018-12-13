@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/header_tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textSize="@dimen/text_size_16sp"
+        tools:text="接诊时间" />
+
+</FrameLayout>

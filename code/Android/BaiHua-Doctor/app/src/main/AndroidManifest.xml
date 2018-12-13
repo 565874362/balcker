@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.joymates.flowers">
+    package="com.baihua.yayayisheng">
 
     <!-- 二维码所需权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.joymates.common.base.BaseApplication"
+        android:name="com.baihua.common.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +29,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.joymates.flowers.FileProvider"
+            android:authorities="com.baihua.yayayisheng.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -38,7 +37,10 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-        <activity android:name="com.joymates.flowers.MainActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +60,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.joymates.flowers"
+                    android:host="com.baihua.yayayisheng"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
@@ -76,11 +78,28 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.joymates.flowers"
+                    android:host="com.baihua.yayayisheng"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".my.MyVisitingScheduleActivity" />
+        <activity android:name=".my.MyVisitingScheduleSelectActivity" />
+        <activity android:name=".home.PatientInfoPendingReplyDetailsActivity" />
+        <activity android:name=".home.PatientInfoVisitingDetailsActivity" />
+        <activity android:name=".home.PhotoViewActivity" />
+        <activity android:name=".home.PatientInfoAnsweredDetailsActivity" />
+        <activity android:name=".my.MyPatientInfoActivity" />
+        <activity android:name=".my.MyVisitingActivity" />
+        <activity android:name=".my.MyVisitingDetailsActivity" />
+        <activity android:name=".my.MyInformationActivity" />
+        <activity android:name=".my.MyInfoEditActivity" />
+        <activity
+            android:name=".home.PatientInfoDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".login.LoginActivity" />
 
         <service
             android:name="com.zlw.main.recorderlib.recorder.RecordService"

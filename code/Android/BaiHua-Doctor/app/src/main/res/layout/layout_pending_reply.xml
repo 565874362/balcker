@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/layout_reply_initial_diagnosis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_8"
+        android:background="@android:color/white"
+        android:hint="初步诊断："
+        android:inputType="textMultiLine"
+        android:minHeight="@dimen/dimen_dp_50"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingTop="@dimen/dimen_dp_16"
+        android:paddingEnd="@dimen/dimen_dp_16"
+        android:paddingBottom="@dimen/dimen_dp_16"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textColorHint="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_16sp" />
+
+    <LinearLayout
+        android:id="@+id/layout_reply_need_to_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_10"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/dimen_dp_50"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingEnd="@dimen/dimen_dp_16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="需做检查："
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <ImageView
+            android:id="@+id/layout_reply_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/layout_reply_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingTop="@dimen/dimen_dp_18"
+        android:paddingEnd="@dimen/dimen_dp_12"
+        android:paddingBottom="@dimen/dimen_dp_18" />
+
+    <EditText
+        android:id="@+id/layout_reply_warm_doctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_8"
+        android:background="@android:color/white"
+        android:hint="温馨医嘱："
+        android:inputType="textMultiLine"
+        android:minHeight="@dimen/dimen_dp_50"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingTop="@dimen/dimen_dp_16"
+        android:paddingEnd="@dimen/dimen_dp_16"
+        android:paddingBottom="@dimen/dimen_dp_16"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textColorHint="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_16sp" />
+
+</LinearLayout>

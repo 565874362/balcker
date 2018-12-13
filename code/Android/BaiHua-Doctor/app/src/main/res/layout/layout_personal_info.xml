@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_user_name"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_name"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_gender"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <RadioGroup
+            android:id="@+id/register_rb_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-8dp"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/register_rb_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/login_female" />
+
+            <RadioButton
+                android:id="@+id/register_rb_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_dp_10"
+                android:checked="false"
+                android:text="@string/login_male" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_company"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_company"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_company"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_job"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_job"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_job"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_department"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/register_sp_department"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:spinnerMode="dropdown"
+            android:dropDownVerticalOffset="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:entries="@array/actionArray"
+            android:prompt="@string/login_tips_plz_input_department"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_registration_fee"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_registration_fee"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_registration_fee"
+            android:inputType="numberDecimal"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_good_at_1"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_good_at_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_good_at_name"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/register_et_good_at_one_desc"
+        style="@style/LoginWithMinHeightEditTextStyle"
+        android:hint="@string/login_tips_description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_good_at_2"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_et_good_at_two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_good_at_name"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/register_et_good_at_two_desc"
+        style="@style/LoginWithMinHeightEditTextStyle"
+        android:hint="@string/login_tips_description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_dp_10"
+            android:layout_weight="1"
+            android:text="@string/login_good_at_3"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+        <EditText
+            android:id="@+id/register_tv_good_at_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@android:color/white"
+            android:hint="@string/login_tips_plz_input_good_at_name"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/register_tv_good_at_three_desc"
+        style="@style/LoginWithMinHeightEditTextStyle"
+        android:hint="@string/login_tips_description" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10"
+        android:text="@string/login_upload_image"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textSize="@dimen/text_size_16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dimen_dp_10"
+            android:paddingTop="@dimen/dimen_dp_16"
+            android:paddingEnd="@dimen/dimen_dp_10"
+            android:paddingBottom="@dimen/dimen_dp_16">
+
+            <ImageView
+                android:id="@+id/register_iv_yourself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_gray_light_afb1bd"
+                android:minHeight="120dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/pic" />
+
+            <TextView
+                android:id="@+id/register_tv_upload_yourself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp_16"
+                android:background="@drawable/shape_for_dash_button_bg"
+                android:gravity="center|center_vertical"
+                android:padding="@dimen/dimen_dp_10"
+                android:text="@string/login_upload_yourself_photo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dimen_dp_10"
+            android:paddingTop="@dimen/dimen_dp_16"
+            android:paddingEnd="@dimen/dimen_dp_10"
+            android:paddingBottom="@dimen/dimen_dp_16">
+
+            <ImageView
+                android:id="@+id/register_iv_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_gray_light_afb1bd"
+                android:minHeight="120dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/pic" />
+
+            <TextView
+                android:id="@+id/register_tv_upload_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp_16"
+                android:background="@drawable/shape_for_dash_button_bg"
+                android:gravity="center|center_vertical"
+                android:padding="@dimen/dimen_dp_10"
+                android:text="@string/login_add_doctors_qualification_certificate" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/dimen_dp_6"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_10"
+        android:text="@string/login_upload_id_code"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textSize="@dimen/text_size_16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dimen_dp_10"
+            android:paddingTop="@dimen/dimen_dp_16"
+            android:paddingEnd="@dimen/dimen_dp_10"
+            android:paddingBottom="@dimen/dimen_dp_16">
+
+            <ImageView
+                android:id="@+id/register_iv_front_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_gray_light_afb1bd"
+                android:minHeight="120dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/pic" />
+
+            <TextView
+                android:id="@+id/register_tv_upload_front_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp_16"
+                android:background="@drawable/shape_for_dash_button_bg"
+                android:gravity="center|center_vertical"
+                android:padding="@dimen/dimen_dp_10"
+                android:text="@string/login_upload_the_front_photo_of_id_card" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_dp_1"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dimen_dp_10"
+            android:paddingTop="@dimen/dimen_dp_16"
+            android:paddingEnd="@dimen/dimen_dp_10"
+            android:paddingBottom="@dimen/dimen_dp_16">
+
+            <ImageView
+                android:id="@+id/register_iv_back_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_gray_light_afb1bd"
+                android:minHeight="120dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/pic" />
+
+            <TextView
+                android:id="@+id/register_tv_upload_back_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_dp_16"
+                android:background="@drawable/shape_for_dash_button_bg"
+                android:gravity="center|center_vertical"
+                android:padding="@dimen/dimen_dp_10"
+                android:text="@string/login_upload_the_back_photo_of_id_card" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
