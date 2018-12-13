@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/doctor_ll_bottom_layout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/doctor_details_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/doctor_details_image"
+                android:layout_marginStart="@dimen/dimen_dp_10"
+                android:layout_marginTop="-40dp"
+                android:layout_marginEnd="@dimen/dimen_dp_10"
+                android:background="@drawable/shape_for_my_info_bg"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dimen_dp_10"
+                android:paddingTop="@dimen/dimen_dp_16"
+                android:paddingEnd="@dimen/dimen_dp_10"
+                android:paddingBottom="@dimen/dimen_dp_22">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/doctor_details_tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_black_dark_4b5764"
+                        android:textSize="@dimen/text_size_16sp"
+                        tools:text="令狐小影" />
+
+                    <TextView
+                        android:id="@+id/doctor_details_tv_job"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/doctor_details_tv_name"
+                        android:layout_marginStart="@dimen/dimen_dp_10"
+                        android:layout_toEndOf="@+id/doctor_details_tv_name"
+                        android:textColor="@color/color_black_dark_4b5764"
+                        android:textSize="@dimen/text_size_14sp"
+                        tools:text="主任医师" />
+
+                    <TextView
+                        android:id="@+id/doctor_details_tv_department"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/dimen_dp_10"
+                        android:textColor="@color/color_black_dark_4b5764"
+                        android:textSize="@dimen/text_size_14sp"
+                        tools:text="儿科" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/doctor_details_tv_hospital"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_12"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_14sp"
+                    tools:text="西安儿童医院" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:text="擅长"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <TextView
+                    android:id="@+id/doctor_details_tv_good_at_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:textColor="@color/color_gray_dark_91939f"
+                    android:textSize="@dimen/text_size_14sp"
+                    tools:text="咳嗽：过敏性咳嗽（咳嗽变异小船）、反复咳嗽不与、慢性咳嗽等。" />
+
+                <TextView
+                    android:id="@+id/doctor_details_tv_good_at_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:textColor="@color/color_gray_dark_91939f"
+                    android:textSize="@dimen/text_size_14sp"
+                    tools:text="咳嗽：过敏性咳嗽（咳嗽变异小船）、反复咳嗽不与、慢性咳嗽等。" />
+
+                <TextView
+                    android:id="@+id/doctor_details_tv_good_at_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:textColor="@color/color_gray_dark_91939f"
+                    android:textSize="@dimen/text_size_14sp"
+                    tools:text="咳嗽：过敏性咳嗽（咳嗽变异小船）、反复咳嗽不与、慢性咳嗽等。" />
+
+                <TextView
+                    android:id="@+id/doctor_details_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:text="评价（99）"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/doctor_details_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_16"
+                    android:background="@android:color/white" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/doctor_ll_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/doctor_details_tv_advisory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="咨询"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/doctor_details_tv_visiting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="就诊（20.00元）"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

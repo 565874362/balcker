@@ -8,6 +8,31 @@
     <dimen name="margin_hdpi_16">16dp</dimen>
     <dimen name="spacing_module">16dp</dimen>
 
+    <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_12sp">12sp</dimen>
+    <dimen name="text_size_10sp">10sp</dimen>
+
+    <dimen name="dimen_dp_1">1dp</dimen>
+    <dimen name="dimen_dp_2">2dp</dimen>
+    <dimen name="dimen_dp_3">3dp</dimen>
+    <dimen name="dimen_dp_4">4dp</dimen>
+    <dimen name="dimen_dp_6">6dp</dimen>
+    <dimen name="dimen_dp_8">8dp</dimen>
+    <dimen name="dimen_dp_10">10dp</dimen>
+    <dimen name="dimen_dp_12">12dp</dimen>
+    <dimen name="dimen_dp_16">16dp</dimen>
+    <dimen name="dimen_dp_18">18dp</dimen>
+    <dimen name="dimen_dp_22">22dp</dimen>
+    <dimen name="dimen_dp_24">24dp</dimen>
+    <dimen name="dimen_dp_28">28dp</dimen>
+    <dimen name="dimen_dp_40">40dp</dimen>
+    <dimen name="dimen_dp_44">44dp</dimen>
+    <dimen name="dimen_dp_46">46dp</dimen>
+    <dimen name="dimen_dp_50">50dp</dimen>
+
     <!-- 全局用到的四种字体 -->
     <dimen name="dimen_big_text">18sp</dimen>
     <dimen name="dimen_mid_text">14sp</dimen>

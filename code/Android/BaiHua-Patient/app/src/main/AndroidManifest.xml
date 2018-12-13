@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.joymates.flowers">
+    package="com.baihua.yaya">
 
     <!-- 二维码所需权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.joymates.common.base.BaseApplication"
+        android:name="com.baihua.common.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +29,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.joymates.flowers.FileProvider"
+            android:authorities="com.baihua.yaya.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -38,7 +37,10 @@
                 android:resource="@xml/rc_file_path" />
         </provider>
 
-        <activity android:name="com.joymates.flowers.MainActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,7 +50,7 @@
 
         <!-- 会话列表 -->
         <activity
-            android:name=".rcloud.ConversationListActivity"
+            android:name="com.baihua.yaya.rcloud.ConversationListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -58,7 +60,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.joymates.flowers"
+                    android:host="com.baihua.yaya"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
@@ -66,7 +68,7 @@
 
         <!-- 会话界面 -->
         <activity
-            android:name=".rcloud.ConversationActivity"
+            android:name="com.baihua.yaya.rcloud.ConversationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -76,11 +78,25 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.joymates.flowers"
+                    android:host="com.baihua.yaya"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".doctor.DoctorDetailsActivity" />
+        <activity android:name=".doctor.CommentActivity" />
+        <activity android:name=".doctor.AppointmentActivity" />
+        <activity android:name=".home.TipsActivity" />
+        <activity android:name=".doctor.AppointmentConfirmActivity" />
+        <activity android:name=".my.MyVisitActivity" />
+        <activity android:name=".my.MyVisitDetailsActivity" />
+        <activity android:name=".my.MyAppointmentActivity" />
+        <activity android:name=".my.MyAppointmentDetailsActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".my.PhotoViewActivity" />
+        <activity android:name=".login.LoginActivity" />
 
         <service
             android:name="com.zlw.main.recorderlib.recorder.RecordService"

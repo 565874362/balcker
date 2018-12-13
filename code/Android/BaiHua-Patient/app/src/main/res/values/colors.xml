@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#1784f3</color>
+    <color name="colorPrimaryDark">#1784f3</color>
+    <color name="colorAccent">#1784f3</color>
+    <color name="windowBackground">#f3f3f3</color>
+
+    <!--辅助色-->
+    <color name="color_black_dark_4b5764">#4b5764</color>
+    <color name="color_black_light_91939f">#91939f</color>
+    <color name="color_gray_light_afb1bd">#afb1bd</color>
+    <color name="color_white_light_efefef">#efefef</color>
+    <color name="color_red_light_f8f8f9">#ff4a52</color>
+    <color name="color_gray_dark_91939f">#91939f</color>
+    <color name="color_e3e3e3">#e3e3e3</color>
+    <color name="color_dbdbdb">#dbdbdb</color>
 
     <!-- 基本色 -->
     <!-- 白色 -->

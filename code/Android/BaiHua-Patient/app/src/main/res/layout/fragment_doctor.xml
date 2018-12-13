@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/doctor_ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingEnd="@dimen/dimen_dp_16">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginStart="@dimen/dimen_dp_12"
+            android:background="@drawable/shape_for_doctor_search"
+            android:drawableStart="@drawable/ic_search_afb1bd_24dp"
+            android:drawablePadding="@dimen/dimen_dp_12"
+            android:gravity="center_vertical"
+            android:hint="医院、科室、擅长"
+            android:inputType="text"
+            android:paddingStart="@dimen/dimen_dp_16"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/doctor_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_dp_8"
+        android:background="@color/windowBackground" />
+
+
+</LinearLayout>

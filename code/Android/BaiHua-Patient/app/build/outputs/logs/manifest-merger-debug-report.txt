@@ -1,0 +1,816 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+MERGED from [cn.smssdk:SMSSDK:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SMSSDK-3.2.1.1.aar\d00e5713ddc1cc3941af3d3a77e720a6\AndroidManifest.xml:2:1-11:12
+MERGED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:2:1-16:12
+MERGED from [cn.sharesdk:ShareSDK:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShareSDK-3.4.0.aar\c2e032c782cd91712e3482d88575932e\AndroidManifest.xml:2:1-11:12
+MERGED from [cn.sharesdk:OneKeyShare:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\OneKeyShare-3.4.0.aar\7877434ab46e149c357eb09d8bb0c05e\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\bde1bc25d3105ab379bca99540f3a0f8\AndroidManifest.xml:17:1-22:12
+MERGED from [com.jaeger.statusbarutil:library:1.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.0.aar\6f60956a2d379e36c210c2d23c055851\AndroidManifest.xml:2:1-13:12
+MERGED from [com.afollestad.material-dialogs:core:0.9.4.5] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\core-0.9.4.5.aar\ad29ff41ae795767f25476082c2031ea\AndroidManifest.xml:2:1-15:12
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-components:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-components-2.2.2.aar\614d7f373ab50ebf9787bf17c1fe77a3\AndroidManifest.xml:13:1-18:12
+MERGED from [com.github.zhaolewei:ZlwAudioRecorder:1.0.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ZlwAudioRecorder-1.0.2.aar\47c921ad0e277578402a715b2a6f06a8\AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.Jay-Goo:WaveLineView:v1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\WaveLineView-v1.0.3.aar\2b6ea6f52f4e7b04e6abd2ecae236bcc\AndroidManifest.xml:2:1-17:12
+MERGED from [com.mirkowu:BaseToolbar:0.0.7] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseToolbar-0.0.7.aar\cc8359365377839620d0b8d8250ccaae\AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:2:1-36:12
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.1.aar\eeae94dd6c76c8456c839a0d6e2d338d\AndroidManifest.xml:6:1-16:12
+MERGED from [com.github.LuckSiege.PictureSelector:ucrop:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ucrop-v2.2.3.aar\e67d1e699d35d38b745f5685ad85bc64\AndroidManifest.xml:2:1-12:12
+MERGED from [com.android.support:design:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\a75f3bcc3088ed9fb53b8b80b4189ad7\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\3f1d471d32ebe909ff73c5b0eb080a80\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\56360a56d725dbd7997f23d3b9860834\AndroidManifest.xml:2:1-11:12
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-106:12
+MERGED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:2:1-29:12
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:17:1-31:12
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\7c9aac890ad12da71f18a602e87e162e\AndroidManifest.xml:2:1-7:12
+MERGED from [com.zyao89:zloading:1.1.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\zloading-1.1.2.aar\364f1dd38a119db76f06618b29ab0f9c\AndroidManifest.xml:2:1-17:12
+MERGED from [com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SmartRefreshLayout-1.0.5.1.aar\962db8c041e872d2c05e0a2192e2a43c\AndroidManifest.xml:2:1-17:12
+MERGED from [jp.wasabeef:glide-transformations:3.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-transformations-3.1.1.aar\cf133219ef6c6f73de325520d2d798b6\AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.bumptech.glide:glide:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-4.7.1.aar\c102003efeafa636fc21f5fef58188e9\AndroidManifest.xml:2:1-13:12
+MERGED from [com.github.Raizlabs.DBFlow:dbflow-rx2:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-rx2-4.2.4.aar\1ca9585e1fcaebde480a72fb3c753584\AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.Raizlabs.DBFlow:dbflow:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-4.2.4.aar\bc05351c8502fd2970d5550378af1919\AndroidManifest.xml:2:1-13:12
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseRecyclerViewAdapterHelper-2.9.40.aar\ea574cc58ed34386cc0f238cc2896fca\AndroidManifest.xml:2:1-11:12
+MERGED from [com.youth.banner:banner:1.4.10] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\banner-1.4.10.aar\f46c4f16bfef813588d54b9b7a655e24\AndroidManifest.xml:2:1-11:12
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-android:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-android-2.2.2.aar\3b990f7df231b73411d756894b2db127\AndroidManifest.xml:13:1-18:12
+MERGED from [io.reactivex.rxjava2:rxandroid:2.1.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxandroid-2.1.0.aar\5a04e3c72a3f1628a9df86a353aae40d\AndroidManifest.xml:15:1-20:12
+MERGED from [com.github.chrisbanes:PhotoView:2.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\PhotoView-2.0.0.aar\e07a9629c8e3c4b982c0db558fbc94a0\AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.lygttpod:SuperTextView:2.1.8] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SuperTextView-2.1.8.aar\76ea6879cd92cd2f6b9bdbb1d225cbfd\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\1ad8ed87832c1503fc7f1dca9422a81c\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\b38be745ce8d693a4254ff6d2e92d68d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\transition-28.0.0.aar\1e95d5a5d71050f37a4a1c99d9a1a159\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-28.0.0.aar\32482106b6112c7bfb905d8e191472ed\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\aeabff8736f1d902dc9efcb668549599\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8d4ac8f720d3758d65095ea02eee59be\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\8dd86b3da470bc221f655602c4d8a672\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\ead999c28bbcbc089a0cdfe5f887da33\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\7802bc317f1682c349a899aab8036d29\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\302d17f90ffc5d184d65841237a41378\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\2d9798cd8d51c0d4ff51d9597ae88f68\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\26ce0c04fb9dfcfe00f551c0c83d74ff\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\e71b2034020fb3f8981e06343bb0aa83\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\2191ff564bdb5f7ff6ed3824c170cb9d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\b086385f1c35bfb28e094948377308f6\AndroidManifest.xml:17:1-22:12
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-88:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\be4fb7f09a69ca01ee8af4bfb5ffc50b\AndroidManifest.xml:17:1-25:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\3be898165d7f2a296ec9df174e52cbaa\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\952c10cf95dbb761487c0a31d32a1ddc\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\737412f805d9b8619d9505bceb90ce33\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\be3c0cc3d17fbbcdcdec5b54d9c5e074\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\35589c0705bcefdec3f6c1bb47daae3e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cardview-v7-28.0.0.aar\62fba12f70ce47ffd7103bb55fa83518\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\944f62c6798df8f6e0efbbfd56957345\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\gifdecoder-4.7.1.aar\f2824bbd1f3badf0932aac84530c0914\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\71d3a3cb0afbee0d7bd64a86e27345e3\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\082e6eb086ad046bbd91e7262a9981f6\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\fc4ec9606916593346de9b5eeb44755d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\98d2d91e1d791eb502f4034d7a4edac7\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+	package
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:3:5-30
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:1-108:12
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:6:5-65
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:26:5-65
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:26:5-65
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:6:22-62
+uses-permission#android.permission.VIBRATE
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:7:5-66
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:25:5-66
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:25:5-66
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:20:5-66
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:20:5-66
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:7:22-63
+uses-permission#android.permission.FLASHLIGHT
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:8:5-69
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:8:22-66
+uses-permission#android.permission.INTERNET
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:11:5-67
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:13:5-67
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:13:5-67
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:26:5-67
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:26:5-67
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:12:5-67
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:12:5-67
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:11:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:12:5-79
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:14:5-79
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:14:5-79
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:13:5-79
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:12:22-76
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:14:5-71
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:21:5-71
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:21:5-71
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:16:5-71
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:16:5-71
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:14:22-68
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:15:5-81
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:12:5-81
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:12:5-81
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:28:5-81
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:28:5-81
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:11:5-81
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:15:22-78
+application
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:17:5-106:19
+MERGED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:13:5-14:19
+MERGED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:13:5-14:19
+MERGED from [com.jaeger.statusbarutil:library:1.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.0.aar\6f60956a2d379e36c210c2d23c055851\AndroidManifest.xml:11:5-20
+MERGED from [com.jaeger.statusbarutil:library:1.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.0.aar\6f60956a2d379e36c210c2d23c055851\AndroidManifest.xml:11:5-20
+MERGED from [com.afollestad.material-dialogs:core:0.9.4.5] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\core-0.9.4.5.aar\ad29ff41ae795767f25476082c2031ea\AndroidManifest.xml:13:5-20
+MERGED from [com.afollestad.material-dialogs:core:0.9.4.5] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\core-0.9.4.5.aar\ad29ff41ae795767f25476082c2031ea\AndroidManifest.xml:13:5-20
+MERGED from [com.github.Jay-Goo:WaveLineView:v1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\WaveLineView-v1.0.3.aar\2b6ea6f52f4e7b04e6abd2ecae236bcc\AndroidManifest.xml:11:5-15:19
+MERGED from [com.github.Jay-Goo:WaveLineView:v1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\WaveLineView-v1.0.3.aar\2b6ea6f52f4e7b04e6abd2ecae236bcc\AndroidManifest.xml:11:5-15:19
+MERGED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:11:5-34:19
+MERGED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:11:5-34:19
+MERGED from [com.android.support:design:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\a75f3bcc3088ed9fb53b8b80b4189ad7\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\a75f3bcc3088ed9fb53b8b80b4189ad7\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\56360a56d725dbd7997f23d3b9860834\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\56360a56d725dbd7997f23d3b9860834\AndroidManifest.xml:9:5-20
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:33:5-104:19
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:33:5-104:19
+MERGED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:9:5-27:19
+MERGED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:9:5-27:19
+MERGED from [com.zyao89:zloading:1.1.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\zloading-1.1.2.aar\364f1dd38a119db76f06618b29ab0f9c\AndroidManifest.xml:11:5-15:19
+MERGED from [com.zyao89:zloading:1.1.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\zloading-1.1.2.aar\364f1dd38a119db76f06618b29ab0f9c\AndroidManifest.xml:11:5-15:19
+MERGED from [com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SmartRefreshLayout-1.0.5.1.aar\962db8c041e872d2c05e0a2192e2a43c\AndroidManifest.xml:11:5-15:19
+MERGED from [com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SmartRefreshLayout-1.0.5.1.aar\962db8c041e872d2c05e0a2192e2a43c\AndroidManifest.xml:11:5-15:19
+MERGED from [com.github.bumptech.glide:glide:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-4.7.1.aar\c102003efeafa636fc21f5fef58188e9\AndroidManifest.xml:11:5-20
+MERGED from [com.github.bumptech.glide:glide:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-4.7.1.aar\c102003efeafa636fc21f5fef58188e9\AndroidManifest.xml:11:5-20
+MERGED from [com.github.Raizlabs.DBFlow:dbflow-rx2:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-rx2-4.2.4.aar\1ca9585e1fcaebde480a72fb3c753584\AndroidManifest.xml:10:5-20
+MERGED from [com.github.Raizlabs.DBFlow:dbflow-rx2:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-rx2-4.2.4.aar\1ca9585e1fcaebde480a72fb3c753584\AndroidManifest.xml:10:5-20
+MERGED from [com.github.Raizlabs.DBFlow:dbflow:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-4.2.4.aar\bc05351c8502fd2970d5550378af1919\AndroidManifest.xml:11:5-20
+MERGED from [com.github.Raizlabs.DBFlow:dbflow:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-4.2.4.aar\bc05351c8502fd2970d5550378af1919\AndroidManifest.xml:11:5-20
+MERGED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:25:5-29:19
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:24:5-86:19
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:24:5-86:19
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\be4fb7f09a69ca01ee8af4bfb5ffc50b\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\be4fb7f09a69ca01ee8af4bfb5ffc50b\AndroidManifest.xml:22:5-23:19
+MERGED from [com.github.bumptech.glide:gifdecoder:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\gifdecoder-4.7.1.aar\f2824bbd1f3badf0932aac84530c0914\AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\gifdecoder-4.7.1.aar\f2824bbd1f3badf0932aac84530c0914\AndroidManifest.xml:9:5-20
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:23:9-35
+	android:label
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:21:9-41
+	android:roundIcon
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:22:9-54
+	android:icon
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:20:9-43
+	android:allowBackup
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:19:9-35
+	android:theme
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:24:9-40
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:18:9-62
+meta-data#com.amap.api.v2.apikey
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:26:9-28:64
+	android:value
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:28:13-61
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:27:13-50
+provider#android.support.v4.content.FileProvider
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:30:9-38:20
+	android:grantUriPermissions
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:34:13-47
+	android:authorities
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:32:13-63
+	android:exported
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:33:13-37
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:31:13-67
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:35:13-37:56
+	android:resource
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:37:17-53
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:36:17-67
+activity#com.baihua.yaya.SplashActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:40:9-49:20
+	android:windowSoftInputMode
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:43:13-64
+	android:theme
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:42:13-47
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:41:13-43
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:44:13-48:29
+action#android.intent.action.MAIN
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:45:17-69
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:45:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:47:17-77
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:47:27-74
+activity#com.baihua.yaya.rcloud.ConversationListActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:52:9-67:20
+	android:screenOrientation
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:54:13-49
+	android:windowSoftInputMode
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:56:13-67
+	android:theme
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:55:13-56
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:53:13-75
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+data:host:com.baihua.yaya+data:pathPrefix:/conversationlist+data:scheme:rong
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:57:13-66:29
+action#android.intent.action.VIEW
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:58:17-69
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:58:25-66
+category#android.intent.category.DEFAULT
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:60:17-76
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:60:27-73
+data
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:62:17-65:45
+	android:host
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:63:21-51
+	android:scheme
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:65:21-42
+	android:pathPrefix
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:64:21-59
+activity#com.baihua.yaya.rcloud.ConversationActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:70:9-85:20
+	android:screenOrientation
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:72:13-49
+	android:windowSoftInputMode
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:74:13-67
+	android:theme
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:73:13-56
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:71:13-71
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.DEFAULT+data:host:com.baihua.yaya+data:pathPrefix:/conversation/+data:scheme:rong
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:75:13-84:29
+activity#com.baihua.yaya.doctor.DoctorDetailsActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:86:9-66
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:86:19-63
+activity#com.baihua.yaya.doctor.CommentActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:87:9-60
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:87:19-57
+activity#com.baihua.yaya.doctor.AppointmentActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:88:9-64
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:88:19-61
+activity#com.baihua.yaya.home.TipsActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:89:9-55
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:89:19-52
+activity#com.baihua.yaya.doctor.AppointmentConfirmActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:90:9-71
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:90:19-68
+activity#com.baihua.yaya.my.MyVisitActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:91:9-56
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:91:19-53
+activity#com.baihua.yaya.my.MyVisitDetailsActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:92:9-63
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:92:19-60
+activity#com.baihua.yaya.my.MyAppointmentActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:93:9-62
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:93:19-59
+activity#com.baihua.yaya.my.MyAppointmentDetailsActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:94:9-69
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:94:19-66
+activity#com.baihua.yaya.MainActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:95:9-97:55
+	android:windowSoftInputMode
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:97:13-52
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:96:13-41
+activity#com.baihua.yaya.my.PhotoViewActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:98:9-58
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:98:19-55
+activity#com.baihua.yaya.login.LoginActivity
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:99:9-57
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:99:19-54
+service#com.zlw.main.recorderlib.recorder.RecordService
+ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:101:9-104:39
+	android:enabled
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:103:13-35
+	android:exported
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:104:13-36
+	android:name
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml:102:13-75
+uses-sdk
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+MERGED from [cn.smssdk:SMSSDK:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SMSSDK-3.2.1.1.aar\d00e5713ddc1cc3941af3d3a77e720a6\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.smssdk:SMSSDK:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SMSSDK-3.2.1.1.aar\d00e5713ddc1cc3941af3d3a77e720a6\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:8:5-11:45
+MERGED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:8:5-11:45
+MERGED from [cn.sharesdk:ShareSDK:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShareSDK-3.4.0.aar\c2e032c782cd91712e3482d88575932e\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.sharesdk:ShareSDK:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShareSDK-3.4.0.aar\c2e032c782cd91712e3482d88575932e\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.sharesdk:OneKeyShare:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\OneKeyShare-3.4.0.aar\7877434ab46e149c357eb09d8bb0c05e\AndroidManifest.xml:7:5-9:41
+MERGED from [cn.sharesdk:OneKeyShare:3.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\OneKeyShare-3.4.0.aar\7877434ab46e149c357eb09d8bb0c05e\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\bde1bc25d3105ab379bca99540f3a0f8\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\multidex-1.0.3.aar\bde1bc25d3105ab379bca99540f3a0f8\AndroidManifest.xml:20:5-43
+MERGED from [com.jaeger.statusbarutil:library:1.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.0.aar\6f60956a2d379e36c210c2d23c055851\AndroidManifest.xml:7:5-9:41
+MERGED from [com.jaeger.statusbarutil:library:1.4.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.0.aar\6f60956a2d379e36c210c2d23c055851\AndroidManifest.xml:7:5-9:41
+MERGED from [com.afollestad.material-dialogs:core:0.9.4.5] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\core-0.9.4.5.aar\ad29ff41ae795767f25476082c2031ea\AndroidManifest.xml:8:5-11:75
+MERGED from [com.afollestad.material-dialogs:core:0.9.4.5] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\core-0.9.4.5.aar\ad29ff41ae795767f25476082c2031ea\AndroidManifest.xml:8:5-11:75
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-components:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-components-2.2.2.aar\614d7f373ab50ebf9787bf17c1fe77a3\AndroidManifest.xml:16:5-44
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-components:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-components-2.2.2.aar\614d7f373ab50ebf9787bf17c1fe77a3\AndroidManifest.xml:16:5-44
+MERGED from [com.github.zhaolewei:ZlwAudioRecorder:1.0.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ZlwAudioRecorder-1.0.2.aar\47c921ad0e277578402a715b2a6f06a8\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.zhaolewei:ZlwAudioRecorder:1.0.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ZlwAudioRecorder-1.0.2.aar\47c921ad0e277578402a715b2a6f06a8\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.Jay-Goo:WaveLineView:v1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\WaveLineView-v1.0.3.aar\2b6ea6f52f4e7b04e6abd2ecae236bcc\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.Jay-Goo:WaveLineView:v1.0.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\WaveLineView-v1.0.3.aar\2b6ea6f52f4e7b04e6abd2ecae236bcc\AndroidManifest.xml:7:5-9:41
+MERGED from [com.mirkowu:BaseToolbar:0.0.7] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseToolbar-0.0.7.aar\cc8359365377839620d0b8d8250ccaae\AndroidManifest.xml:7:5-9:41
+MERGED from [com.mirkowu:BaseToolbar:0.0.7] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseToolbar-0.0.7.aar\cc8359365377839620d0b8d8250ccaae\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:7:5-9:41
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.1.aar\eeae94dd6c76c8456c839a0d6e2d338d\AndroidManifest.xml:12:5-14:41
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\library-1.4.1.aar\eeae94dd6c76c8456c839a0d6e2d338d\AndroidManifest.xml:12:5-14:41
+MERGED from [com.github.LuckSiege.PictureSelector:ucrop:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ucrop-v2.2.3.aar\e67d1e699d35d38b745f5685ad85bc64\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.LuckSiege.PictureSelector:ucrop:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ucrop-v2.2.3.aar\e67d1e699d35d38b745f5685ad85bc64\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:design:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\a75f3bcc3088ed9fb53b8b80b4189ad7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\design-28.0.0.aar\a75f3bcc3088ed9fb53b8b80b4189ad7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\3f1d471d32ebe909ff73c5b0eb080a80\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\3f1d471d32ebe909ff73c5b0eb080a80\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\56360a56d725dbd7997f23d3b9860834\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\56360a56d725dbd7997f23d3b9860834\AndroidManifest.xml:5:5-7:41
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
+MERGED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
+MERGED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:7:5-44
+MERGED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:7:5-44
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:22:5-24:41
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:22:5-24:41
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\7c9aac890ad12da71f18a602e87e162e\AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\7c9aac890ad12da71f18a602e87e162e\AndroidManifest.xml:5:5-43
+MERGED from [com.zyao89:zloading:1.1.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\zloading-1.1.2.aar\364f1dd38a119db76f06618b29ab0f9c\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zyao89:zloading:1.1.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\zloading-1.1.2.aar\364f1dd38a119db76f06618b29ab0f9c\AndroidManifest.xml:7:5-9:41
+MERGED from [com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SmartRefreshLayout-1.0.5.1.aar\962db8c041e872d2c05e0a2192e2a43c\AndroidManifest.xml:7:5-9:41
+MERGED from [com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SmartRefreshLayout-1.0.5.1.aar\962db8c041e872d2c05e0a2192e2a43c\AndroidManifest.xml:7:5-9:41
+MERGED from [jp.wasabeef:glide-transformations:3.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-transformations-3.1.1.aar\cf133219ef6c6f73de325520d2d798b6\AndroidManifest.xml:8:5-10:41
+MERGED from [jp.wasabeef:glide-transformations:3.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-transformations-3.1.1.aar\cf133219ef6c6f73de325520d2d798b6\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.bumptech.glide:glide:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-4.7.1.aar\c102003efeafa636fc21f5fef58188e9\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.bumptech.glide:glide:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\glide-4.7.1.aar\c102003efeafa636fc21f5fef58188e9\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.Raizlabs.DBFlow:dbflow-rx2:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-rx2-4.2.4.aar\1ca9585e1fcaebde480a72fb3c753584\AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.Raizlabs.DBFlow:dbflow-rx2:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-rx2-4.2.4.aar\1ca9585e1fcaebde480a72fb3c753584\AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.Raizlabs.DBFlow:dbflow:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-4.2.4.aar\bc05351c8502fd2970d5550378af1919\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.Raizlabs.DBFlow:dbflow:4.2.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\dbflow-4.2.4.aar\bc05351c8502fd2970d5550378af1919\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseRecyclerViewAdapterHelper-2.9.40.aar\ea574cc58ed34386cc0f238cc2896fca\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\BaseRecyclerViewAdapterHelper-2.9.40.aar\ea574cc58ed34386cc0f238cc2896fca\AndroidManifest.xml:7:5-9:41
+MERGED from [com.youth.banner:banner:1.4.10] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\banner-1.4.10.aar\f46c4f16bfef813588d54b9b7a655e24\AndroidManifest.xml:7:5-9:41
+MERGED from [com.youth.banner:banner:1.4.10] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\banner-1.4.10.aar\f46c4f16bfef813588d54b9b7a655e24\AndroidManifest.xml:7:5-9:41
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-android:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-android-2.2.2.aar\3b990f7df231b73411d756894b2db127\AndroidManifest.xml:16:5-44
+MERGED from [com.trello.rxlifecycle2:rxlifecycle-android:2.2.2] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxlifecycle-android-2.2.2.aar\3b990f7df231b73411d756894b2db127\AndroidManifest.xml:16:5-44
+MERGED from [io.reactivex.rxjava2:rxandroid:2.1.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxandroid-2.1.0.aar\5a04e3c72a3f1628a9df86a353aae40d\AndroidManifest.xml:18:5-43
+MERGED from [io.reactivex.rxjava2:rxandroid:2.1.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\rxandroid-2.1.0.aar\5a04e3c72a3f1628a9df86a353aae40d\AndroidManifest.xml:18:5-43
+MERGED from [com.github.chrisbanes:PhotoView:2.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\PhotoView-2.0.0.aar\e07a9629c8e3c4b982c0db558fbc94a0\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.chrisbanes:PhotoView:2.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\PhotoView-2.0.0.aar\e07a9629c8e3c4b982c0db558fbc94a0\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.lygttpod:SuperTextView:2.1.8] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SuperTextView-2.1.8.aar\76ea6879cd92cd2f6b9bdbb1d225cbfd\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.lygttpod:SuperTextView:2.1.8] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\SuperTextView-2.1.8.aar\76ea6879cd92cd2f6b9bdbb1d225cbfd\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\1ad8ed87832c1503fc7f1dca9422a81c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\1ad8ed87832c1503fc7f1dca9422a81c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\b38be745ce8d693a4254ff6d2e92d68d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\b38be745ce8d693a4254ff6d2e92d68d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\transition-28.0.0.aar\1e95d5a5d71050f37a4a1c99d9a1a159\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\transition-28.0.0.aar\1e95d5a5d71050f37a4a1c99d9a1a159\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-28.0.0.aar\32482106b6112c7bfb905d8e191472ed\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-28.0.0.aar\32482106b6112c7bfb905d8e191472ed\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\aeabff8736f1d902dc9efcb668549599\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\aeabff8736f1d902dc9efcb668549599\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8d4ac8f720d3758d65095ea02eee59be\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\8d4ac8f720d3758d65095ea02eee59be\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\8dd86b3da470bc221f655602c4d8a672\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\8dd86b3da470bc221f655602c4d8a672\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\ead999c28bbcbc089a0cdfe5f887da33\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\ead999c28bbcbc089a0cdfe5f887da33\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\7802bc317f1682c349a899aab8036d29\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\7802bc317f1682c349a899aab8036d29\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\302d17f90ffc5d184d65841237a41378\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\302d17f90ffc5d184d65841237a41378\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\2d9798cd8d51c0d4ff51d9597ae88f68\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\2d9798cd8d51c0d4ff51d9597ae88f68\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\26ce0c04fb9dfcfe00f551c0c83d74ff\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\26ce0c04fb9dfcfe00f551c0c83d74ff\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\e71b2034020fb3f8981e06343bb0aa83\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\e71b2034020fb3f8981e06343bb0aa83\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\2191ff564bdb5f7ff6ed3824c170cb9d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\2191ff564bdb5f7ff6ed3824c170cb9d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\b086385f1c35bfb28e094948377308f6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\b086385f1c35bfb28e094948377308f6\AndroidManifest.xml:20:5-44
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\7dd4593b1cb4cb2fb43f934bea3428e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\be4fb7f09a69ca01ee8af4bfb5ffc50b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\be4fb7f09a69ca01ee8af4bfb5ffc50b\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\3be898165d7f2a296ec9df174e52cbaa\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\3be898165d7f2a296ec9df174e52cbaa\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\952c10cf95dbb761487c0a31d32a1ddc\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\952c10cf95dbb761487c0a31d32a1ddc\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\737412f805d9b8619d9505bceb90ce33\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\737412f805d9b8619d9505bceb90ce33\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\be3c0cc3d17fbbcdcdec5b54d9c5e074\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\be3c0cc3d17fbbcdcdec5b54d9c5e074\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\35589c0705bcefdec3f6c1bb47daae3e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\35589c0705bcefdec3f6c1bb47daae3e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cardview-v7-28.0.0.aar\62fba12f70ce47ffd7103bb55fa83518\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\cardview-v7-28.0.0.aar\62fba12f70ce47ffd7103bb55fa83518\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\944f62c6798df8f6e0efbbfd56957345\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\944f62c6798df8f6e0efbbfd56957345\AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\gifdecoder-4.7.1.aar\f2824bbd1f3badf0932aac84530c0914\AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.7.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\gifdecoder-4.7.1.aar\f2824bbd1f3badf0932aac84530c0914\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\71d3a3cb0afbee0d7bd64a86e27345e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\71d3a3cb0afbee0d7bd64a86e27345e3\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\082e6eb086ad046bbd91e7262a9981f6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\082e6eb086ad046bbd91e7262a9981f6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\fc4ec9606916593346de9b5eeb44755d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\fc4ec9606916593346de9b5eeb44755d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\98d2d91e1d791eb502f4034d7a4edac7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\98d2d91e1d791eb502f4034d7a4edac7\AndroidManifest.xml:20:5-44
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [cn.smssdk:ShortMessageSDKGUI:3.2.1.1] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\ShortMessageSDKGUI-3.2.1.1.aar\50efcd6ee4830903128f496c82f46178\AndroidManifest.xml:11:9-42
+	android:targetSdkVersion
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		ADDED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+		INJECTED from D:\a_works\baihua\code\Android\BaiHua-Patient\app\src\main\AndroidManifest.xml
+provider#com.luck.picture.lib.PictureFileProvider
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:12:9-20:20
+	android:grantUriPermissions
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:16:13-47
+	android:authorities
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:14:13-60
+	android:exported
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:15:13-37
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:13:13-68
+activity#com.luck.picture.lib.PictureSelectorActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:22:9-24:55
+	android:windowSoftInputMode
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:24:13-52
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:23:13-72
+activity#com.luck.picture.lib.PicturePreviewActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:25:9-80
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:25:19-77
+activity#com.luck.picture.lib.PictureVideoPlayActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:26:9-29:50
+	android:screenOrientation
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:29:13-47
+	android:configChanges
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:28:13-74
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:27:13-73
+activity#com.luck.picture.lib.PictureExternalPreviewActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:30:9-88
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:30:19-85
+activity#com.yalantis.ucrop.UCropActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:31:9-69
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:31:19-66
+activity#com.yalantis.ucrop.PictureMultiCuttingActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:32:9-83
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:32:19-80
+activity#com.luck.picture.lib.PicturePlayAudioActivity
+ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:33:9-82
+	android:name
+		ADDED from [com.github.LuckSiege.PictureSelector:picture_library:v2.2.3] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\picture_library-v2.2.3.aar\842436d2bb1fcdf97094de7d1247b909\AndroidManifest.xml:33:19-79
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:11:5-80
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:27:5-80
+MERGED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:27:5-80
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:11:22-77
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:15:5-81
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:15:22-78
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:16:5-76
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:14:5-76
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:14:5-76
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:16:22-73
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:18:5-75
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:15:5-75
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:15:5-75
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:18:22-72
+uses-permission#android.permission.GET_TASKS
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:22:5-68
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:17:5-68
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:17:5-68
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:22:22-65
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:23:5-68
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:18:5-68
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:18:5-68
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:23:22-65
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:24:5-80
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:19:5-80
+MERGED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:19:5-80
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:24:22-77
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:27:5-73
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:27:22-70
+uses-permission#android.permission.INTERACT_ACROSS_USERS_FULL
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:28:5-85
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:28:22-82
+uses-permission#android.permission.PROCESS_OUTGOING_CALLS
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:29:5-81
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:29:22-78
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:30:5-78
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:30:22-75
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:31:5-76
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:31:22-73
+activity#io.rong.imkit.plugin.location.AMapLocationActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:34:9-36:52
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:36:13-49
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:35:13-78
+activity#io.rong.imkit.plugin.location.AMapPreviewActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:37:9-86
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:37:19-83
+activity#io.rong.imkit.plugin.location.AMapRealTimeActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:38:9-87
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:38:19-84
+activity#io.rong.imkit.plugin.location.SearchLocationActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:39:9-42:71
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:41:13-49
+	android:windowSoftInputMode
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:42:13-68
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:40:13-80
+activity#io.rong.imkit.plugin.image.PictureSelectorActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:43:9-45:52
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:45:13-49
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:44:13-78
+activity#io.rong.imkit.plugin.image.PicturePreviewActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:46:9-48:52
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:48:13-49
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:47:13-77
+activity#io.rong.imkit.tools.RongWebviewActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:51:9-59:20
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:53:13-49
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:52:13-67
+intent-filter#action:name:io.rong.imkit.intent.action.webview+category:name:android.intent.category.DEFAULT
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:54:13-58:29
+action#io.rong.imkit.intent.action.webview
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:55:17-78
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:55:25-75
+activity#io.rong.imkit.widget.provider.TakingPicturesActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:60:9-63:52
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:63:13-49
+	android:configChanges
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:62:13-63
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:61:13-80
+activity#io.rong.imkit.activity.PicturePagerActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:64:9-72:20
+	android:theme
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:66:13-71
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:65:13-71
+intent-filter#action:name:io.rong.imkit.intent.action.picturepagerview+category:name:android.intent.category.DEFAULT
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:67:13-71:29
+action#io.rong.imkit.intent.action.picturepagerview
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:68:17-87
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:68:25-84
+activity#io.rong.imkit.mention.MemberMentionedActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:73:9-76:67
+	android:windowSoftInputMode
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:76:13-64
+	android:configChanges
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:75:13-63
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:74:13-73
+activity#io.rong.imkit.activity.FileManagerActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:77:9-79
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:77:19-76
+activity#io.rong.imkit.activity.FileListActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:78:9-76
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:78:19-73
+activity#io.rong.imkit.activity.FilePreviewActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:79:9-87:20
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:81:13-49
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:80:13-70
+intent-filter#action:name:io.rong.imkit.intent.action.openfile+category:name:android.intent.category.DEFAULT
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:82:13-86:29
+action#io.rong.imkit.intent.action.openfile
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:83:17-79
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:83:25-76
+activity#io.rong.imkit.activity.CSLeaveMessageActivity
+ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:88:9-91:52
+	android:screenOrientation
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:91:13-49
+	android:configChanges
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:90:13-63
+	android:name
+		ADDED from [:IMKit] D:\a_works\baihua\code\Android\BaiHua-Patient\IMKit\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:89:13-73
+activity#com.blankj.utilcode.util.PermissionUtils$PermissionActivity
+ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:10:9-15:75
+	android:multiprocess
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:13:13-40
+	android:windowSoftInputMode
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:15:13-72
+	android:configChanges
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:12:13-74
+	android:theme
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:14:13-55
+	android:name
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:11:13-87
+provider#com.blankj.utilcode.util.Utils$FileProvider4UtilCode
+ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:17:9-26:20
+	android:grantUriPermissions
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:21:13-47
+	android:authorities
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:19:13-69
+	android:multiprocess
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:22:13-40
+	android:exported
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:20:13-37
+	android:name
+		ADDED from [com.blankj:utilcode:1.22.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\utilcode-1.22.0.aar\41f07740e0530531430780b27a92443f\AndroidManifest.xml:18:13-80
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:29:5-84
+	android:name
+		ADDED from [com.lzy.net:okgo:3.0.4] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\okgo-3.0.4.aar\2742cb5211bbb812aff098a55cb5a1df\AndroidManifest.xml:29:22-81
+meta-data#android.support.VERSION
+ADDED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.0.aar\f8c718c35ca7431a06690ca570d23daf\AndroidManifest.xml:26:9-28:38
+	android:value
+		ADDED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:28:13-35
+	android:name
+		ADDED from [com.android.support:support-v4:26.0.0] C:\Users\Administrator\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.0.aar\ef85790c910d937bda5ab050feca6035\AndroidManifest.xml:27:13-51
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:21:5-79
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:21:22-76
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:22:5-81
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:22:22-78
+meta-data#RONG_CLOUD_APP_KEY
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:27:9-29:45
+	android:value
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:29:13-42
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:28:13-46
+service#io.rong.imlib.ipc.RongService
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:31:9-34:38
+	android:process
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:34:13-35
+	android:exported
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:33:13-36
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:32:13-57
+receiver#io.rong.imlib.ConnectChangeReceiver
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:36:9-38:39
+	android:exported
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:38:13-36
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:37:13-63
+receiver#io.rong.imlib.HeartbeatReceiver
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:39:9-41:38
+	android:process
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:41:13-35
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:40:13-59
+service#io.rong.push.core.PushRegistrationService
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:48:9-51:72
+	android:exported
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:50:13-36
+	android:permission
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:51:13-69
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:49:13-69
+service#io.rong.push.core.MessageHandleService
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:52:9-55:72
+	android:exported
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:54:13-36
+	android:permission
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:55:13-69
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:53:13-66
+service#io.rong.push.PushService
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:58:9-62:46
+	android:process
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:62:13-43
+	android:exported
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:60:13-36
+	android:permission
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:61:13-69
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:59:13-52
+receiver#io.rong.push.PushReceiver
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:65:9-80:20
+	android:process
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:67:13-43
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:66:13-53
+intent-filter#action:name:android.net.conn.CONNECTIVITY_CHANGE+action:name:io.rong.push.intent.action.HEART_BEAT
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:69:13-72:29
+action#io.rong.push.intent.action.HEART_BEAT
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:70:17-80
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:70:25-77
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:71:17-79
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:71:25-76
+intent-filter#action:name:android.intent.action.ACTION_POWER_CONNECTED+action:name:android.intent.action.ACTION_POWER_DISCONNECTED+action:name:android.intent.action.USER_PRESENT
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:75:13-79:29
+action#android.intent.action.USER_PRESENT
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:76:17-77
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:76:25-74
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:77:17-87
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:77:25-84
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:78:17-90
+	android:name
+		ADDED from [:IMLib] D:\a_works\baihua\code\Android\BaiHua-Patient\IMLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:78:25-87

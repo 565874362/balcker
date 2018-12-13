@@ -6,13 +6,13 @@
 
     <ImageButton
         android:id="@+id/left"
-        android:layout_width="25dp"
-        android:layout_height="49dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center_vertical|start"
         android:layout_marginLeft="4dp"
         android:background="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/selector_common_return" />
+        android:src="@drawable/arrow_left" />
 
     <TextView
         android:id="@+id/title"
@@ -49,7 +49,7 @@
         android:layout_gravity="end|center_vertical"
         android:layout_marginRight="10dp"
         android:background="@null"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_size_16sp"
         android:visibility="invisible"
         tools:text="菜单1" />
 

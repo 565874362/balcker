@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <declare-styleable name="ValidateCodeView" tools:ignore="ResourceName">
+        <!--总秒数-->
+        <attr name="mTotalSeconds" format="integer" />
+        <!--前缀文本-->
+        <attr name="mPreStr" format="string" />
+        <!--后缀文本-->
+        <attr name="mSuffixStr" format="string" />
+        <!--handler发送信息表标识码(解决多个界面共用验证码问题)-->
+        <attr name="mHandlerSendCode" format="integer" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dimen_dp_12"
+    android:paddingTop="@dimen/dimen_dp_18"
+    android:paddingEnd="@dimen/dimen_dp_12"
+    android:paddingBottom="@dimen/dimen_dp_18">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/visit_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold"
+            tools:text="小小请" />
+
+        <TextView
+            android:id="@+id/visit_tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:layout_toEndOf="@+id/visit_tv_name"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="男" />
+
+        <TextView
+            android:id="@+id/visit_tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:layout_toEndOf="@+id/visit_tv_gender"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="5岁" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/visit_tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_18"
+        android:layout_marginBottom="@dimen/dimen_dp_18"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里这几天我家宝宝嘴里" />
+
+    <View
+        android:id="@+id/visit_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/windowBackground" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_18">
+
+        <TextView
+            android:id="@+id/visit_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="2018年12月4日 11点06分" />
+
+        <TextView
+            android:id="@+id/visit_tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shape_for_visit_status_answered"
+            android:textSize="@dimen/text_size_14sp"
+            tools:text="已解答" />
+
+    </RelativeLayout>
+</LinearLayout>

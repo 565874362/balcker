@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/color_white_light_efefef"
+        android:gravity="center"
+        android:text="医生回答仅为建议，有疑问请前往医院就诊"
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textSize="@dimen/text_size_16sp"
+        android:textStyle="bold" />
+
+    <include layout="@layout/layout_only_doctor" />
+
+</LinearLayout>

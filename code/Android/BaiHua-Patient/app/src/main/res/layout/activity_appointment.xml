@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="患者姓名"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <EditText
+            android:id="@+id/appointment_et_patient_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@android:color/white"
+            android:hint="请输入患者姓名"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="年龄"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <EditText
+            android:id="@+id/appointment_et_patient_age"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@android:color/white"
+            android:hint="请输入实际年龄"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="性别"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <RadioGroup
+            android:id="@+id/appointment_radio_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_dp_12"
+            android:layout_weight="1.8"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/appointment_rb_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="女" />
+
+            <RadioButton
+                android:id="@+id/home_rb_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="男" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="联系电话"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <EditText
+            android:id="@+id/appointment_et_patient_mobile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@android:color/white"
+            android:hint="请输入联系电话"
+            android:inputType="text"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_8"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:text="接诊时间"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/appointment_tv_select_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.6"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:hint="请选择接诊时间"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_8"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="预约费"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/appointment_tv_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_dp_2"
+            android:layout_weight="1.5"
+            android:text="20.00"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/appointment_tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_44"
+        android:layout_marginStart="@dimen/dimen_dp_8"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="@dimen/dimen_dp_8"
+        android:layout_marginBottom="@dimen/dimen_dp_16"
+        android:background="@drawable/shape_for_blue_button_bg"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_18sp" />
+
+</LinearLayout>

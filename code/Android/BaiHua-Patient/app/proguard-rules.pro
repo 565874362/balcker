@@ -350,3 +350,8 @@
 -keep class com.amap.api.navi.**{*;}
 -keep class com.autonavi.**{*;}
 #-----------------------------------高德地图-----------------------------
+
+# BaseToolbar
+-keep class com.mirkowu.basetoolbar.** {*;}
+# Matisse
+-dontwarn com.squareup.picasso.**

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">百花医疗</string>
+    <string name="app_name">吖吖医疗</string>
 
     <string name="common_sure">确定</string>
     <string name="common_confrim">确认</string>
@@ -14,11 +14,21 @@
     <string name="permission_settings">设置</string>
 
     <!--Default Text-->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">医生</string>
+    <string name="title_notifications">我的</string>
+    <string name="title_homepage">吖吖医生</string>
+    <string name="title_doctor">医生列表</string>
+    <string name="title_mine">我的中心</string>
 
     <!--Permission-->
     <string name="permission_rationale_message">You have rejected us to apply for authorization, please agree to authorization, otherwise the function can\'t be used normally!</string>
     <string name="permission_denied_forever_message">We need some of the permissions you rejected or the system failed to apply failed, please manually set to the page authorize, otherwise the function can\'t be used normally!</string>
+
+    <string name="login_login">登录</string>
+    <string name="login_mobile_number">手机号</string>
+    <string name="login_tips_plz_input_mobile_number">请输入手机号</string>
+    <string name="login_get_code">获取验证码</string>
+    <string name="login_code">验证码</string>
+    <string name="login_tips_input_msg_code">请输入短信验证码</string>
 </resources>

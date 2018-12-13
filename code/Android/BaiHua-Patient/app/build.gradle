@@ -40,11 +40,20 @@ MobSDK {
 }
 
 android {
-    def sdkVersion = rootProject.ext
 
+    signingConfigs {
+        release {
+            keyAlias 'yaya'
+            keyPassword 'android'
+            storeFile file('../yaya.jks')
+            storePassword 'android'
+        }
+    }
+
+    def sdkVersion = rootProject.ext
     compileSdkVersion sdkVersion.androidCompileSdkVersion
     defaultConfig {
-        applicationId "com.joymates.flowers"
+        applicationId "com.baihua.yaya"
         minSdkVersion sdkVersion.androidMinSdkVersion
         targetSdkVersion sdkVersion.androidTargetSdkVersion
         versionCode 1
@@ -61,13 +70,15 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
-            debuggable true
-            shrinkResources true
-            zipAlignEnabled true
+//            minifyEnabled true
+//            debuggable true
+//            shrinkResources true
+//            zipAlignEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -159,4 +170,13 @@ dependencies {
     // 音频录制
     implementation appDependence.zlwAudioRecorder
     implementation appDependence.waveLineView
+
+    // https://github.com/chrisbanes/PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    // https://github.com/MirkoWu/BaseToolbar
+    implementation 'com.mirkowu:BaseToolbar:0.0.7'
+    // https://github.com/LuckSiege/PictureSelector
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    // https://github.com/lygttpod/SuperTextView
+    implementation 'com.github.lygttpod:SuperTextView:2.1.8'
 }

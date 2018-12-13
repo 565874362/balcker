@@ -2,73 +2,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="125dp">
 
     </com.youth.banner.Banner>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dimen_dp_50"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="姓名"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
-            <android.support.design.widget.TextInputLayout
+
+            <EditText
+                android:id="@+id/home_et_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_16"
+                android:background="@android:color/white"
+                android:hint="患者姓名"
+                android:inputType="text"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="患者姓名"
-                    android:textSize="@dimen/sp_14" />
-
-            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="年龄"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
-            <android.support.design.widget.TextInputLayout
+
+            <EditText
+                android:id="@+id/home_et_age"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_16"
+                android:background="@android:color/white"
+                android:hint="实际年龄"
+                android:inputType="number"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="实际年龄"
-                    android:textSize="@dimen/sp_14" />
-
-            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -76,8 +88,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,21 +107,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="性别"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
             <RadioGroup
+                android:id="@+id/home_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_dp_12"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/home_rb_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="女" />
 
                 <RadioButton
+                    android:id="@+id/home_rb_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
@@ -116,7 +137,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_dp_50"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -125,20 +146,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="电话"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
-            <android.support.design.widget.TextInputLayout
+
+            <EditText
+                android:id="@+id/home_et_mobile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_16"
+                android:background="@android:color/white"
+                android:hint="联系电话"
+                android:inputType="number"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="联系电话"
-                    android:textSize="@dimen/sp_14" />
-
-            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -146,12 +169,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_10"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -160,22 +188,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="饮食"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择饮食"
-                android:textColor="@color/color_font_gray"
-                android:textSize="@dimen/sp_14" />
+                android:id="@+id/home_tv_select_diet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_16"
+                android:gravity="center_vertical"
+                android:hint="选择饮食"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -184,15 +216,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="睡眠"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textSize="@dimen/text_size_16sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择睡眠"
-                android:textColor="@color/color_font_gray"
-                android:textSize="@dimen/sp_14" />
+                android:id="@+id/home_tv_select_sleep"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_dp_16"
+                android:gravity="center_vertical"
+                android:hint="选择睡眠"
+                android:textColor="@color/color_black_dark_4b5764"
+                android:textColorHint="@color/color_gray_light_afb1bd"
+                android:textSize="@dimen/text_size_16sp" />
 
         </LinearLayout>
 
@@ -200,112 +236,170 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_10"
+        android:background="@android:color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="@dimen/dimen_dp_16"
+            android:layout_height="@dimen/dimen_dp_16"
+            android:src="@drawable/captions"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="症状描述"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
 
     </LinearLayout>
 
     <EditText
+        android:id="@+id/home_et_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:gravity="top|start"
         android:hint="请描述你的问题，包括身体状况、疾病和症状等，医生会根据您的描述给出专业的建议"
-        android:minHeight="120dp" />
+        android:inputType="text"
+        android:minHeight="120dp"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingTop="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_16"
+        android:paddingBottom="@dimen/dimen_dp_12"
+        android:textColorHint="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_dp_12">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="@dimen/dimen_dp_16"
+            android:layout_height="@dimen/dimen_dp_16"
+            android:src="@drawable/voice_red"
+            android:tint="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="语音描述"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:layout_marginStart="@dimen/dimen_dp_10"
+            android:text="语音描述（语音描述病情，促进医生诊断）"
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_16sp" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/play_voice_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:id="@+id/iv_play_voice_anim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dp_10"
-            android:src="@drawable/voice_anim" />
-
-    </RelativeLayout>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <com.joymates.flowers.view.recorder.RecordButton
-            android:id="@+id/record_voice"
+        <RelativeLayout
+            android:id="@+id/play_voice_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_record_voice_512" />
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/dimen_dp_12"
+            android:layout_marginTop="@dimen/dimen_dp_16"
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_play_voice_anim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dimen_dp_10"
+                android:layout_marginEnd="@dimen/dimen_dp_10"
+                android:src="@drawable/voice_anim" />
+
+        </RelativeLayout>
+
+        <com.baihua.yaya.view.recorder.RecordButton
+            android:id="@+id/record_voice"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_dp_40"
+            android:background="@drawable/voice_blue" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_dp_10"
+            android:layout_marginBottom="@dimen/dimen_dp_40"
             android:text="按住说话"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_14" />
+            android:textColor="@color/color_black_dark_4b5764"
+            android:textSize="@dimen/text_size_14sp" />
 
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:layout_marginTop="@dimen/dimen_dp_10"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_12"
         android:text="以前检查结果"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="@color/color_black_dark_4b5764"
+        android:textSize="@dimen/text_size_16sp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/pre_result_recycler"
+        android:id="@+id/home_photo_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_dp_1"
+        android:background="@android:color/white"
+        android:padding="@dimen/dimen_dp_16">
 
     </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/tv_submit"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/dimen_dp_1"
+        android:layout_marginStart="@dimen/dimen_dp_12"
+        android:background="@color/windowBackground" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/dimen_dp_16"
+        android:paddingTop="@dimen/dimen_dp_12"
+        android:paddingEnd="@dimen/dimen_dp_16"
+        android:paddingBottom="@dimen/dimen_dp_12"
+        android:text="上传复检单、患处、病例等图片，以便得到医生更好的答复；照片仅本人与医生可见"
+        android:textColor="@color/color_gray_light_afb1bd"
+        android:textSize="@dimen/text_size_14sp" />
+
+    <TextView
+        android:id="@+id/home_tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="@dimen/dimen_dp_8"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="@dimen/dimen_dp_8"
+        android:layout_marginBottom="@dimen/dimen_dp_16"
+        android:background="@drawable/shape_for_blue_button_bg"
         android:gravity="center"
         android:text="提交"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_18sp" />
 
 </LinearLayout>

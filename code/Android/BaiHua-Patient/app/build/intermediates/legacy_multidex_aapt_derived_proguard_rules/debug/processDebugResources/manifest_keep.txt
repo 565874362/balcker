@@ -1,0 +1,6 @@
+# Referenced at D:\a_works\baihua\code\Android\BaiHua-Patient\app\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:25
+-keep class com.baihua.common.base.BaseApplication { <init>(...); }
+# Referenced at D:\a_works\baihua\code\Android\BaiHua-Patient\app\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:114
+-keep class io.rong.push.PushReceiver { <init>(...); }
+# Referenced at D:\a_works\baihua\code\Android\BaiHua-Patient\app\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:113
+-keep class io.rong.push.PushService { <init>(...); }
