@@ -30,13 +30,13 @@
     _pictureIMG1.sd_layout
     .leftSpaceToView(self.contentView, 15)
     .topSpaceToView(self.contentView, 20)
-    .rightSpaceToView(self.contentView, 15)
+    .widthIs((NYScreenW-45)*0.5)
     .heightIs(150);
     
     _pictureIMG1.sd_cornerRadius = @5;
     
     
-    UIView * bottomV = [[UIView alloc] initWithFrame:CGRectMake(15, 190, NYScreenW-30, 50)];
+    UIView * bottomV = [[UIView alloc] initWithFrame:CGRectMake(15, 190, (NYScreenW-45)*0.5, 50)];
     bottomV.layer.cornerRadius = 3;
     bottomV.clipsToBounds = YES;
     bottomV.backgroundColor = [UIColor whiteColor];
@@ -49,6 +49,7 @@
     UIButton * addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [addBtn setTitleColor:COLOR_LOW forState:UIControlStateNormal];
     [addBtn setTitle:@"+上传身份证正面照" forState:UIControlStateNormal];
+    addBtn.titleLabel.font = FONT(15);
     [bottomV addSubview:addBtn];
     
     addBtn.sd_layout
@@ -68,15 +69,15 @@
     _pictureIMG2.clipsToBounds = YES;
     [self.contentView addSubview:_pictureIMG2];
     _pictureIMG2.sd_layout
-    .leftSpaceToView(self.contentView, 15)
-    .topSpaceToView(bottomV, 20)
+    .leftSpaceToView(_pictureIMG1, 15)
+    .topSpaceToView(self.contentView, 20)
     .rightSpaceToView(self.contentView, 15)
     .heightIs(150);
     
     _pictureIMG2.sd_cornerRadius = @5;
     
     
-    UIView * bottomV2 = [[UIView alloc] initWithFrame:CGRectMake(15, 430, NYScreenW-30, 50)];
+    UIView * bottomV2 = [[UIView alloc] initWithFrame:CGRectMake(15+(NYScreenW-45)*0.5+15, 190, (NYScreenW-45)*0.5, 50)];
     bottomV2.layer.cornerRadius = 3;
     bottomV2.clipsToBounds = YES;
     bottomV2.backgroundColor = [UIColor whiteColor];
@@ -89,6 +90,7 @@
     UIButton * addBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     [addBtn2 setTitleColor:COLOR_LOW forState:UIControlStateNormal];
     [addBtn2 setTitle:@"+上传身份证反面照" forState:UIControlStateNormal];
+    addBtn2.titleLabel.font = FONT(15);
     [bottomV2 addSubview:addBtn2];
     
     addBtn2.sd_layout

@@ -16,6 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^clickChoicePictureBtn)(void);
 
+@property (nonatomic,strong) UIImageView * pictureIMG2;
+
+@property (nonatomic,copy) void(^clickChoicePictureBtn2)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

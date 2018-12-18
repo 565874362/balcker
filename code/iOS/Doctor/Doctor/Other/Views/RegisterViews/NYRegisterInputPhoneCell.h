@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^clickGetCodeButton)(void);
 
+@property (nonatomic,strong) JKCountDownButton * codeButton;
 @end
 
 NS_ASSUME_NONNULL_END

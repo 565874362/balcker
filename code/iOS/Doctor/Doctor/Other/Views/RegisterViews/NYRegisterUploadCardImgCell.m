@@ -30,13 +30,13 @@
     _pictureIMG.sd_layout
     .leftSpaceToView(self.contentView, 15)
     .topSpaceToView(self.contentView, 20)
-    .rightSpaceToView(self.contentView, 15)
+    .widthIs((NYScreenW-45)*0.5)
     .heightIs(150);
     
     _pictureIMG.sd_cornerRadius = @5;
     
     
-    UIView * bottomV = [[UIView alloc] initWithFrame:CGRectMake(15, 190, NYScreenW-30, 50)];
+    UIView * bottomV = [[UIView alloc] initWithFrame:CGRectMake(15, 190, (NYScreenW-45)*0.5, 50)];
     bottomV.layer.cornerRadius = 3;
     bottomV.clipsToBounds = YES;
     bottomV.backgroundColor = [UIColor whiteColor];
@@ -48,7 +48,8 @@
     //点击按钮
     UIButton * addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [addBtn setTitleColor:COLOR_LOW forState:UIControlStateNormal];
-    [addBtn setTitle:@"+上传医师资格证" forState:UIControlStateNormal];
+    [addBtn setTitle:@"+上传本人照片" forState:UIControlStateNormal];
+    addBtn.titleLabel.font = FONT(15);
     [bottomV addSubview:addBtn];
 
     addBtn.sd_layout
@@ -59,13 +60,57 @@
 
     [addBtn addTarget:self action:@selector(clickAddCarButton:) forControlEvents:UIControlEventTouchUpInside];
 
+    //右边图片
+    _pictureIMG2 = [[UIImageView alloc] init];
+    _pictureIMG2.image = [UIImage imageNamed:@"placeholderImage"];
+    _pictureIMG2.contentMode = UIViewContentModeScaleAspectFill;
+    _pictureIMG2.clipsToBounds = YES;
+    [self.contentView addSubview:_pictureIMG2];
+    _pictureIMG2.sd_layout
+    .leftSpaceToView(_pictureIMG, 15)
+    .topSpaceToView(self.contentView, 20)
+    .widthIs((NYScreenW-45)*0.5)
+    .heightIs(150);
     
+    _pictureIMG2.sd_cornerRadius = @5;
+
+    UIView * bottomV2 = [[UIView alloc] initWithFrame:CGRectMake(15+(NYScreenW-45)*0.5+15, 190, (NYScreenW-45)*0.5, 50)];
+    bottomV2.layer.cornerRadius = 3;
+    bottomV2.clipsToBounds = YES;
+    bottomV2.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:bottomV2];
+    
+    
+    [self addBorderToLayer:bottomV2];
+    
+    //点击按钮
+    UIButton * addBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addBtn2 setTitleColor:COLOR_LOW forState:UIControlStateNormal];
+    [addBtn2 setTitle:@"+上传医师资格证" forState:UIControlStateNormal];
+    addBtn2.titleLabel.font = FONT(15);
+    [bottomV2 addSubview:addBtn2];
+    
+    addBtn2.sd_layout
+    .leftSpaceToView(bottomV2, 5)
+    .topSpaceToView(bottomV2, 5)
+    .rightSpaceToView(bottomV2, 5)
+    .bottomSpaceToView(bottomV2, 5);
+    
+    [addBtn2 addTarget:self action:@selector(clickAddCarButton2:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)clickAddCarButton:(UIButton *)button
 {
     if (_clickChoicePictureBtn) {
         _clickChoicePictureBtn();
+    }
+}
+
+- (void)clickAddCarButton2:(UIButton *)button
+{
+    if (_clickChoicePictureBtn2) {
+        _clickChoicePictureBtn2();
     }
 }
 

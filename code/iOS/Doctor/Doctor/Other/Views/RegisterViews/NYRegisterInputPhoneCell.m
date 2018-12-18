@@ -37,6 +37,7 @@
     
     //获取验证码
     JKCountDownButton * codeButton = [JKCountDownButton buttonWithType:UIButtonTypeCustom];
+    self.codeButton = codeButton;
     [codeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     codeButton.titleLabel.font = FONT(13);
     [codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -44,8 +45,9 @@
     codeButton.sd_layout
     .centerYEqualToView(self.contentView)
     .rightSpaceToView(self.contentView, 10)
-    .heightIs(35);
-    [codeButton setupAutoSizeWithHorizontalPadding:10 buttonHeight:35];
+    .heightIs(35)
+    .widthIs(80);
+//    [codeButton setupAutoSizeWithHorizontalPadding:10 buttonHeight:35];
     [codeButton addTarget:self action:@selector(sendCode:) forControlEvents:(UIControlEventTouchUpInside)];
     
     

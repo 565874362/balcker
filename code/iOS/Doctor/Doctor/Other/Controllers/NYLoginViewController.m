@@ -47,8 +47,9 @@
     codeButton.sd_layout
     .centerYEqualToView(bgView1)
     .rightSpaceToView(bgView1, 10)
-    .heightIs(35);
-    [codeButton setupAutoSizeWithHorizontalPadding:10 buttonHeight:35];
+    .heightIs(35)
+    .widthIs(80);
+//    [codeButton setupAutoSizeWithHorizontalPadding:10 buttonHeight:35];
     [codeButton addTarget:self action:@selector(sendCode:) forControlEvents:(UIControlEventTouchUpInside)];
 
     
@@ -65,7 +66,7 @@
     
     //手机号输入框
     UITextField * phoneTF = [[UITextField alloc] init];
-    phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+//    phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     phoneTF.keyboardType = UIKeyboardTypeNumberPad;
     _phoneTF = phoneTF;
     [bgView1 addSubview:phoneTF];
@@ -149,6 +150,42 @@
 #pragma mark - 获取验证码
 - (void)sendCode:(JKCountDownButton *)button
 {
+    NSString * phone = [_phoneTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (phone.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"手机号不能为空"];
+        return;
+    }else if (phone.length != 11){
+        [SVProgressHUD showInfoWithStatus:@"手机号不正确"];
+        return;
+    }
     
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    [PPHTTPRequest postGetCodeWithParameters:phone success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            [SVProgressHUD showSuccessWithStatus:@"验证码已发送"];
+            
+            // 发送验证码
+            _codeButton.enabled = NO;
+            [_codeButton startCountDownWithSecond:60];
+            [_codeButton countDownChanging:^NSString *(JKCountDownButton *countDownButton,NSUInteger second) {
+                NSString *title = [NSString stringWithFormat:@"%zd",second];
+                return title;
+            }];
+            [_codeButton countDownFinished:^NSString *(JKCountDownButton *countDownButton, NSUInteger second) {
+                _codeButton.enabled = YES;
+                return @"重新获取";
+            }];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+        }
+        
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请求失败"];
+    }];
+
 }
 @end

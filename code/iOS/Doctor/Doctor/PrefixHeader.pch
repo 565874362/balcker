@@ -25,6 +25,8 @@
 
 #import "HHTextField.h"
 #import "BRPickerView.h"
+#import "PPHTTPRequest.h"
+#import "MyAlertCenter.h"
 
 #define NYScreenW   [UIScreen mainScreen].bounds.size.width
 #define NYScreenH   [UIScreen mainScreen].bounds.size.height

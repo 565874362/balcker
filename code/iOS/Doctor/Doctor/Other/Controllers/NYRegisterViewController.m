@@ -29,13 +29,61 @@
     UIImageView * _card1Img;
     UIImageView * _card2Img;
     
+    NSInteger _sex; //1男 0女
+    
+    JKCountDownButton * _codeButton;
+    NSString * _captchaId;
+
+    
+    UIImage * _userImage;
+    UIImage * _zigeImage;
+    UIImage * _card1Image;
+    UIImage * _card2Image;
+    
+    
+//    NSString * _phoneStr;
+//    NSString * _danweiStr;
+//    NSString * _zhiweiStr;
+//    NSString * _keshiStr;
+//    NSString * _pirceStr;
+//    NSString * _shanChangStr1;
+//    NSString * _shanChangStr2;
+//    NSString * _shanChangStr3;
+//    NSString * _shanChangContentStr1;
+//    NSString * _shanChangContentStr2;
+//    NSString * _shanChangContentStr3;
+//    NSString * _numberStr;
+//    NSString * _codeStr;
+    
 }
 @property (nonatomic, strong) UIImageView *choiceImg;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 
+@property (nonatomic,strong) HHTextField * nameTF;
+@property (nonatomic,strong) HHTextField * danWeiTF;
+@property (nonatomic,strong) HHTextField * zhiWeiTF;
 @property (nonatomic,strong) HHTextField * keShiTF;
+@property (nonatomic,strong) HHTextField * priceTF;
+
+@property (nonatomic,strong) HHTextField * shanChangTF1;
+@property (nonatomic,strong) BRPlaceholderTextView * shanChangTextView1;
+
+@property (nonatomic,strong) HHTextField * shanChangTF2;
+@property (nonatomic,strong) BRPlaceholderTextView * shanChangTextView2;
+
+@property (nonatomic,strong) HHTextField * shanChangTF3;
+@property (nonatomic,strong) BRPlaceholderTextView * shanChangTextView3;
+
+@property (nonatomic,strong) HHTextField * phoneTF;
+@property (nonatomic,strong) HHTextField * codeTF;
+
+
+@property (nonatomic,strong) NSArray * danweiArray;
+@property (nonatomic,strong) NSArray * zhiweiArray;
+@property (nonatomic,strong) NSArray * keshiArray;
+
 @end
 
 @implementation NYRegisterViewController
@@ -72,16 +120,25 @@
     [self.tableView registerClass:[NYRegisterChoicePictureCell class] forCellReuseIdentifier:@"ChoicePictureCellID"];
     [self.tableView registerClass:[NYRegisterUploadCardImgCell class] forCellReuseIdentifier:@"NYUploadCardImgCellID"];
     [self.tableView registerClass:[NYRegisterUploadCardCell class] forCellReuseIdentifier:@"NYRegisterCardCEllID"];
+    
+    _sex = 0;
+    _captchaId = @""; //验证码编号
+
+    _userImage = nil;
+    _zigeImage = nil;
+    _card1Image = nil;
+    _card2Image = nil;
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return 9;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7 || section == 8 || section == 9) {
+    if (section == 0 || section == 3 || section == 4 || section == 5 || section == 6 || section == 7 || section == 8) {
         return 2;
     }else if (section == 1){
         return 3;
@@ -121,7 +178,7 @@
         if (indexPath.row == 0) {
             return 50;
         }else if (indexPath.row == 1){
-            return 200;
+            return 260;
         }
     }else if (indexPath.section == 7){
         if (indexPath.row == 0) {
@@ -130,12 +187,6 @@
             return 260;
         }
     }else if (indexPath.section == 8){
-        if (indexPath.row == 0) {
-            return 50;
-        }else if (indexPath.row == 1){
-            return 500;
-        }
-    }else if (indexPath.section == 9){
         return 50;
     }
     return 0;
@@ -148,7 +199,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 9) {
+    if (section == 8) {
         return 200;
     }
     return 8;
@@ -159,7 +210,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 9) {
+    if (section == 8) {
         UIView * bgView = [[UIView alloc] init];
         bgView.backgroundColor = [UIColor clearColor];
         
@@ -207,7 +258,187 @@
 
 - (void)clickRegisterButton:(UIButton *)button
 {
+    NSString * nameString = [self.nameTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
+    NSString * danWeiString = [self.danWeiTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * zhiWeiString = [self.zhiWeiTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * keShiString = [self.keShiTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * priceString = [self.priceTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+
+    NSString * shanChangString1 = [self.shanChangTF1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * shanChangString2 = [self.shanChangTF2.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * shanChangString3 = [self.shanChangTF3.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString * shanChangContentString1 = [self.shanChangTextView1.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * shanChangContentString2 = [self.shanChangTextView2.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * shanChangContentString3 = [self.shanChangTextView3.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    
+    
+    NSString * phoneString = [self.phoneTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * codeString = [self.codeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    
+    if (nameString.length == 0) {
+        MYALERT(@"请输入患者姓名");
+        return;
+    }
+    if (danWeiString.length == 0) {
+        MYALERT(@"请选择工作单位");
+        return;
+    }
+    if (zhiWeiString.length == 0) {
+        MYALERT(@"请选择职位");
+        return;
+    }
+    if (keShiString.length == 0) {
+        MYALERT(@"请选择科室");
+        return;
+    }
+    if (priceString.length == 0) {
+        MYALERT(@"请输入预约金额");
+        return;
+    }
+    
+    if (shanChangString1.length == 0) {
+        MYALERT(@"请输入擅长1名称");
+        return;
+    }
+    if (shanChangContentString1.length == 0) {
+        MYALERT(@"请输入擅长1内容");
+        return;
+    }
+
+    if (shanChangString2.length == 0) {
+        MYALERT(@"请输入擅长2名称");
+        return;
+    }
+    if (shanChangContentString2.length == 0) {
+        MYALERT(@"请输入擅长2内容");
+        return;
+    }
+
+    if (shanChangString3.length == 0) {
+        MYALERT(@"请输入擅长3名称");
+        return;
+    }
+    if (shanChangContentString3.length == 0) {
+        MYALERT(@"请输入擅长3内容");
+        return;
+    }
+
+    if (_userImage == nil) {
+        MYALERT(@"请上传本人照片");
+        return;
+    }
+    
+    if (_zigeImage == nil) {
+        MYALERT(@"请上传资格证书");
+        return;
+    }
+
+    if (_card1Image == nil) {
+        MYALERT(@"请上传身份证正面照");
+        return;
+    }
+
+    if (_card2Image == nil) {
+        MYALERT(@"请上传身份证反面照");
+        return;
+    }
+
+    if (phoneString.length == 0) {
+        MYALERT(@"请输入手机号");
+        return;
+    }
+    if (phoneString.length != 11) {
+        MYALERT(@"手机格式不正确");
+        return;
+    }
+
+    NSInteger danWeiCount = 0;
+    for (NSDictionary * obj in self.danweiArray) {
+        if ([obj[@"name"] isEqualToString:danWeiString]) {
+            danWeiCount = [obj[@"id"] integerValue];
+        }
+    }
+    
+    NSInteger zhiWeiCount = 0;
+    for (NSDictionary * obj in self.zhiweiArray) {
+        if ([obj[@"name"] isEqualToString:zhiWeiString]) {
+            zhiWeiCount = [obj[@"id"] integerValue];
+        }
+    }
+    
+    NSInteger keShiCount = 0;
+    for (NSDictionary * obj in self.keshiArray) {
+        if ([obj[@"name"] isEqualToString:keShiString]) {
+            keShiCount = [obj[@"id"] integerValue];
+        }
+    }
+
+    NSArray * shanChangArray = @[@{@"name":shanChangString1,@"describe":shanChangContentString1},
+        @{@"name":shanChangString2,@"describe":shanChangContentString2},
+        @{@"name":shanChangString3,@"describe":shanChangContentString3}];
+    
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    WEAKSELF
+    [PPHTTPRequest postUploadWithparameters:nil images:@[_userImage,_zigeImage,_card1Image,_card2Image] success:^(id response) {
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * imageArray = response[@"data"][@"urls"];
+            
+            NSDictionary * dict = @{@"account":phoneString,
+                                    @"adepts":shanChangArray,
+                                    @"captchaCode":codeString,
+                                    @"captchaId":_captchaId,
+                                    @"gender":@(_sex),
+                                    @"hosId":@(danWeiCount),
+                                    @"hosName":danWeiString,
+                                    @"identityCard":[NSString stringWithFormat:@"%@,%@",imageArray[2],imageArray[3]],
+                                    @"name":nameString,
+                                    @"offId":@(keShiCount),
+                                    @"offName":keShiString,
+                                    @"photo":imageArray[0],
+                                    @"physicianLicence":imageArray[1],
+                                    @"positionId":@(zhiWeiCount),
+                                    @"positionName":zhiWeiString,
+                                    @"registrationFee":@([priceString doubleValue]),
+                                    };
+            
+            [PPHTTPRequest postRegisterInfoWithParameters:dict success:^(id response) {
+                [SVProgressHUD dismiss];
+                if ([response[@"code"] integerValue] == 0) {
+                    MYALERT(@"注册成功，等待审核");
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }else{
+                    MYALERT(response[@"msg"]);
+                }
+                [self.tableView reloadData];
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                MYALERT(@"注册失败");
+            }];
+        }else{
+            [SVProgressHUD dismiss];
+            MYALERT(@"注册失败");
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"注册失败");
+    }];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -216,17 +447,21 @@
     if (indexPath.section == 0) { //姓名
         if (indexPath.row == 0) {
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+
             cell.typeLB.text = @"姓名";
             cell.inputTF.placeholder = @"请输入姓名";
+            _nameTF = cell.inputTF;
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterChoiceSexCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYChoiceSexCellID"];
             cell.clickManButton = ^(RankButton * _Nonnull setBtn) {
+                _sex = 1;
                 if (!setBtn.isSelected) {
                     setBtn.selected = !setBtn.selected;
                 }
             };
             cell.clickWomanButton = ^(RankButton * _Nonnull setBtn) {
+                _sex = 0;
                 if (!setBtn.isSelected) {
                     setBtn.selected = !setBtn.selected;
                 }
@@ -237,12 +472,16 @@
         if (indexPath.row == 0) {
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"单位";
-            cell.inputTF.placeholder = @"请输入工作单位";
+            cell.inputTF.placeholder = @"请选择工作单位";
+            _danWeiTF = cell.inputTF;
+            _danWeiTF.delegate = self;
             return cell;
         }else if (indexPath.row == 1){
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"职位";
-            cell.inputTF.placeholder = @"请输入职位";
+            cell.inputTF.placeholder = @"请选择职位";
+            _zhiWeiTF = cell.inputTF;
+            _zhiWeiTF.delegate = self;
             return cell;
         }else if (indexPath.row == 2){
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
@@ -257,6 +496,8 @@
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"预约费";
             cell.inputTF.placeholder = @"请输入预约费金额";
+            _priceTF = cell.inputTF;
+            _priceTF.keyboardType = UIKeyboardTypeNumberPad;
             return cell;
         }
     }else if (indexPath.section == 3){//擅长1
@@ -264,10 +505,12 @@
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"擅长1";
             cell.inputTF.placeholder = @"请输入名称";
+            _shanChangTF1 = cell.inputTF;
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"临床症状表现";
+            _shanChangTextView1 = cell.infoTextView;
             return cell;
         }
     }else if (indexPath.section == 4){ //擅长2
@@ -275,10 +518,12 @@
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"擅长2";
             cell.inputTF.placeholder = @"请输入名称";
+            _shanChangTF2 = cell.inputTF;
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"临床症状表现";
+            _shanChangTextView2 = cell.infoTextView;
             return cell;
         }
     }else if (indexPath.section == 5){ //擅长3
@@ -286,39 +531,51 @@
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"擅长3";
             cell.inputTF.placeholder = @"请输入名称";
+            _shanChangTF3 = cell.inputTF;
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"临床症状表现";
+            _shanChangTextView3 = cell.infoTextView;
             return cell;
         }
-    }else if (indexPath.section == 6){ //上传本人照片
+    }
+//    else if (indexPath.section == 6){ //上传本人照片
+//        if (indexPath.row == 0) {
+//            NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
+//            cell.titleLB.text = @"上传本人照片";
+//            return cell;
+//        }else if (indexPath.row == 1){
+//            NYRegisterChoicePictureCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ChoicePictureCellID"];
+//            _headerImg = cell.pictureIMG;
+//            cell.clickChoicePictureImg = ^{
+//                [weakSelf clickHeaderImgWith:_headerImg];
+//            };
+//            return cell;
+//        }
+//    }
+    else if (indexPath.section == 6){ //上传医师资格证
         if (indexPath.row == 0) {
             NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
-            cell.titleLB.text = @"上传本人照片";
-            return cell;
-        }else if (indexPath.row == 1){
-            NYRegisterChoicePictureCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ChoicePictureCellID"];
-            _headerImg = cell.pictureIMG;
-            cell.clickChoicePictureImg = ^{
-                [weakSelf clickHeaderImgWith:_headerImg];
-            };
-            return cell;
-        }
-    }else if (indexPath.section == 7){ //上传医师资格证
-        if (indexPath.row == 0) {
-            NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
-            cell.titleLB.text = @"上传医师资格证";
+            cell.titleLB.text = @"上传图片";
             return cell;
         }else if (indexPath.row == 1){
             NYRegisterUploadCardImgCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYUploadCardImgCellID"];
-            _zigeImg = cell.pictureIMG;
+            _headerImg = cell.pictureIMG;
+            _headerImg.tag = 1;
+            _zigeImg = cell.pictureIMG2;
+            _zigeImg.tag = 2;
+            
             cell.clickChoicePictureBtn = ^{
+                [weakSelf clickHeaderImgWith:_headerImg];
+            };
+            
+            cell.clickChoicePictureBtn2 = ^{
                 [weakSelf clickHeaderImgWith:_zigeImg];
             };
             return cell;
         }
-    }else if (indexPath.section == 8){ //上传身份证图片
+    }else if (indexPath.section == 7){ //上传身份证图片
         if (indexPath.row == 0) {
             NYChuZhenTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TitleCell"];
             cell.titleLB.text = @"上传身份证图片";
@@ -327,6 +584,8 @@
             NYRegisterUploadCardCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterCardCEllID"];
             _card1Img = cell.pictureIMG1;
             _card2Img = cell.pictureIMG2;
+            _card1Img.tag = 3;
+            _card2Img.tag = 4;
             cell.clickChoicePictureBtn1 = ^{
                 [weakSelf clickHeaderImgWith:_card1Img];
             };
@@ -335,17 +594,22 @@
             };
             return cell;
         }
-    }else if (indexPath.section == 9){ //手机号&验证码
+    }else if (indexPath.section == 8){ //手机号&验证码
         if (indexPath.row == 0) {
             NYRegisterInputPhoneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterPhoneCellID"];
+            _phoneTF = cell.phoneTF;
+            _phoneTF.keyboardType = UIKeyboardTypePhonePad;
+            _codeButton = cell.codeButton;
             cell.clickGetCodeButton = ^{
-                
+                [weakSelf sendCode:_codeButton];
             };
             return cell;
         }else if (indexPath.row == 1){
             NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
             cell.typeLB.text = @"验证码";
             cell.inputTF.placeholder = @"请输入短信验证码";
+            _codeTF = cell.inputTF;
+            _codeTF.keyboardType = UIKeyboardTypePhonePad;
             return cell;
         }
     }
@@ -354,16 +618,146 @@
     return cell;
 }
 
+#pragma mark - 获取验证码
+- (void)sendCode:(JKCountDownButton *)button
+{
+    NSString * phone = [_phoneTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (phone.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"手机号不能为空"];
+        return;
+    }else if (phone.length != 11){
+        [SVProgressHUD showInfoWithStatus:@"手机号不正确"];
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    [PPHTTPRequest postGetCodeWithParameters:phone success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            [SVProgressHUD showSuccessWithStatus:@"验证码已发送"];
+            
+            _captchaId = response[@"data"][@"captchaId"]; //验证码编号
+            
+            // 发送验证码
+            _codeButton.enabled = NO;
+            [_codeButton startCountDownWithSecond:60];
+            [_codeButton countDownChanging:^NSString *(JKCountDownButton *countDownButton,NSUInteger second) {
+                NSString *title = [NSString stringWithFormat:@"%zd",second];
+                return title;
+            }];
+            [_codeButton countDownFinished:^NSString *(JKCountDownButton *countDownButton, NSUInteger second) {
+                _codeButton.enabled = YES;
+                return @"重新获取";
+            }];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"请求失败"];
+        }
+        
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"请求失败"];
+    }];
+    
+}
+
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    [_nameTF resignFirstResponder];
+    [_priceTF resignFirstResponder];
+    [_shanChangTF1 resignFirstResponder];
+    [_shanChangTextView1 resignFirstResponder];
+    [_shanChangTF2 resignFirstResponder];
+    [_shanChangTextView2 resignFirstResponder];
+    [_shanChangTF3 resignFirstResponder];
+    [_shanChangTextView3 resignFirstResponder];
+
     WEAKSELF
-    // 自定义单列字符串
-    NSArray *dataSource = @[@"儿科", @"妇科", @"产科", @"精神科", @"神经科", @"内分泌科"];
-    [BRStringPickerView showStringPickerWithTitle:@"科室选择" dataSource:dataSource defaultSelValue:_keShiTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-        weakSelf.keShiTF.text = selectValue;
-    } cancelBlock:^{
-        NSLog(@"点击了背景视图或取消按钮");
-    }];
+    
+    if (textField == _danWeiTF) { //选择工作单位
+        [PPHTTPRequest GetHospitalListInfoWithParameters:nil success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                self.danweiArray = response[@"data"][@"list"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary * dict in self.danweiArray) {
+                    [muArr addObject:dict[@"name"]];
+                }
+                
+                // 自定义单列字符串
+                NSArray *dataSource = [muArr copy];
+                [BRStringPickerView showStringPickerWithTitle:@"请选择工作单位" dataSource:dataSource defaultSelValue:_danWeiTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+                    weakSelf.danWeiTF.text = selectValue;
+                } cancelBlock:^{
+                    NSLog(@"点击了背景视图或取消按钮");
+                }];
+                
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
+        }];
+        
+    }else if (textField == _zhiWeiTF){ //现在职位
+        [PPHTTPRequest GetDictionaryDataInfoWithParameters:@"3" success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                self.zhiweiArray = response[@"data"][@"dictionaries"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary * dict in self.zhiweiArray) {
+                    [muArr addObject:dict[@"name"]];
+                }
+                
+                // 自定义单列字符串
+                NSArray *dataSource = [muArr copy];
+                [BRStringPickerView showStringPickerWithTitle:@"请选择职位" dataSource:dataSource defaultSelValue:_zhiWeiTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+                    weakSelf.zhiWeiTF.text = selectValue;
+                } cancelBlock:^{
+                    NSLog(@"点击了背景视图或取消按钮");
+                }];
+                
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
+        }];
+    }else if (textField == _keShiTF){ //科室
+        
+        [PPHTTPRequest GetKeShiListInfoWithParameters:nil success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                self.keshiArray = response[@"data"][@"list"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary * dict in self.keshiArray) {
+                    [muArr addObject:dict[@"name"]];
+                }
+                
+                // 自定义单列字符串
+                NSArray *dataSource = [muArr copy];
+                [BRStringPickerView showStringPickerWithTitle:@"选择科室" dataSource:dataSource defaultSelValue:_keShiTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+                    weakSelf.keShiTF.text = selectValue;
+                } cancelBlock:^{
+                    NSLog(@"点击了背景视图或取消按钮");
+                }];
+                
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
+        }];
+    }
+    
     return NO;
 }
 
@@ -415,6 +809,15 @@
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto infos:(NSArray<NSDictionary *> *)infos {
     UIImage *image = photos[0];
     self.choiceImg.image = image;
+    if (self.choiceImg.tag == 1) {
+        _userImage = image;
+    }else if (self.choiceImg.tag == 2){
+        _zigeImage = image;
+    }else if (self.choiceImg.tag == 3){
+        _card1Image = image;
+    }else if (self.choiceImg.tag == 4){
+        _card2Image = image;
+    }
     [picker dismissViewControllerAnimated:YES completion:nil];
     
 //    [self uploadHeadImage:image];
@@ -424,6 +827,16 @@
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     self.choiceImg.image = image;
+    if (self.choiceImg.tag == 1) {
+        _userImage = image;
+    }else if (self.choiceImg.tag == 2){
+        _zigeImage = image;
+    }else if (self.choiceImg.tag == 3){
+        _card1Image = image;
+    }else if (self.choiceImg.tag == 4){
+        _card2Image = image;
+    }
+
     [picker dismissViewControllerAnimated:YES completion:nil];
     
 //    [self uploadHeadImage:image];
