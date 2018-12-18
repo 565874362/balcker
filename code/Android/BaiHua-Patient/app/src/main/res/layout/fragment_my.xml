@@ -143,6 +143,7 @@
             android:background="@drawable/shape_for_blue_button_bg"
             android:gravity="center"
             android:text="退出当前账户"
+            android:visibility="gone"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_18sp" />
 

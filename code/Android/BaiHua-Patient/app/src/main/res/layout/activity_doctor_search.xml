@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/doctor_ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dimen_dp_10"
+        android:paddingEnd="@dimen/dimen_dp_16">
+
+        <ImageView
+            android:id="@+id/doctor_search_iv_back"
+            android:layout_width="@dimen/dimen_dp_24"
+            android:layout_height="@dimen/dimen_dp_24"
+            android:scaleType="centerInside"
+            android:src="@drawable/arrow_white" />
+
+        <EditText
+            android:id="@+id/doctor_et_search_content"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="@dimen/dimen_dp_12"
+            android:layout_marginEnd="@dimen/dimen_dp_12"
+            android:layout_weight="1"
+            android:background="@drawable/shape_for_doctor_search"
+            android:drawableStart="@drawable/ic_search_afb1bd_24dp"
+            android:drawablePadding="@dimen/dimen_dp_12"
+            android:gravity="center_vertical"
+            android:hint="医院、科室、擅长"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingStart="@dimen/dimen_dp_16"
+            android:paddingEnd="@dimen/dimen_dp_16"
+            android:textColorHint="@color/color_gray_light_afb1bd"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <TextView
+            android:id="@+id/doctor_tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/doctor_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_dp_8"
+            android:background="@color/windowBackground" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

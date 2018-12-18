@@ -1,19 +1,24 @@
 package com.baihua.yaya.doctor;
 
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.DividerDecoration;
-import com.baihua.yaya.decoration.SpaceDecoration;
+import com.baihua.yaya.entity.CommentEntity;
+import com.baihua.yaya.entity.form.CommentForm;
+import com.baihua.yaya.entity.DoctorInfoEntity;
 import com.baihua.yaya.rcloud.RCUtils;
 import com.baihua.yaya.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -58,14 +63,13 @@ public class DoctorDetailsActivity extends BaseActivity {
     @BindView(R.id.doctor_details_recycler)
     RecyclerView mRecyclerView;
 
-    private List<String> mList; // 前三条评论数据
     private CommentAdapter mAdapter; // 评论适配器
+
+    private String mDoctorId;
 
     @Override
     public void setLayout() {
         setTitle("医生详情");
-        mTvTitle.setTextColor(Color.WHITE);
-        mVgTitleBar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_doctor_details);
     }
 
@@ -76,8 +80,50 @@ public class DoctorDetailsActivity extends BaseActivity {
 
     @Override
     public void initMember() {
-        setContentText();
+        if (getIntent().hasExtra("doctorId")) {
+            mDoctorId = (String) getIntent().getSerializableExtra("doctorId");
+            if (TextUtils.isEmpty(mDoctorId))
+                return;
+            getDoctorInfo(mDoctorId);
+            getDoctorComment(mDoctorId);
+        }
+//        setContentText();
         initRecycler();
+    }
+
+    private void getDoctorComment(String doctorId) {
+        RxHttp.getInstance().getSyncServer()
+                .getDoctorCommentList(new CommentForm(1, Integer.parseInt(doctorId), 3))
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<CommentEntity>(this) {
+                    @Override
+                    public void onSuccess(CommentEntity result) {
+                        doctorDetailsTvComment.setText(String.format("评价（%s）", String.valueOf(result.getPage().getTotal())));
+                        mAdapter.setNewData(result.getPage().getRecords());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    private void getDoctorInfo(String doctorId) {
+        RxHttp.getInstance().getSyncServer()
+                .getDoctorInfo(doctorId)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<DoctorInfoEntity>(this) {
+                    @Override
+                    public void onSuccess(DoctorInfoEntity result) {
+                        setContentText(result);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     private void initRecycler() {
@@ -89,13 +135,6 @@ public class DoctorDetailsActivity extends BaseActivity {
         mAdapter = new CommentAdapter(new ArrayList<>());
         mAdapter.addFooterView(getCommentFooterView());
         mRecyclerView.setAdapter(mAdapter);
-
-        mList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            mList.add(String.valueOf(i));
-        }
-
-        mAdapter.setNewData(mList);
     }
 
     private View getCommentFooterView() {
@@ -104,25 +143,38 @@ public class DoctorDetailsActivity extends BaseActivity {
         moreComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtils.startActivity(CommentActivity.class);
+                Utils.gotoActivity(DoctorDetailsActivity.this, CommentActivity.class, false, "doctorId", mDoctorId);
             }
         });
         return footer;
     }
 
-    private void setContentText() {
-        Utils.showImg(this, "http://img.hb.aicdn.com/7ba7b99a9cbdbb3b965e6b24036e89fee5dfc88530ffd-hlULA7_fw658", doctorDetailsImage);
-        doctorDetailsTvName.setText("令狐小影");
-        doctorDetailsTvJob.setText("江湖百晓生");
-        doctorDetailsTvDepartment.setText("剑客");
-        doctorDetailsTvHospital.setText("青衣楼");
-        SpannableStringBuilder one = new SpanUtils().append("独孤九剑：").setBold().append("归妹趋无妄，无妄趋同人，同人趋大有。甲转丙，丙转庚，庚转癸。子丑之交，辰巳之交，午未之 交。风雷是一变，山泽是一变，水火是一变。乾坤相激，震兑相激，离巽相激。三增而成五，五增而成九···").create();
-        SpannableStringBuilder two = new SpanUtils().append("总决式：").setBold().append("有种种变化，用以体演总诀，共有三百六十种变化。").create();
-        SpannableStringBuilder three = new SpanUtils().append("破剑式：").setBold().append("破解普天下各门各派的剑法。").create();
-        doctorDetailsTvGoodAtOne.setText(one);
-        doctorDetailsTvGoodAtTwo.setText(two);
-        doctorDetailsTvGoodAtThree.setText(three);
-        doctorDetailsTvComment.setText(String.format("评价（%s）", "99"));
+    /**
+     * 设置数据
+     *
+     * @param doctorInfoEntity 数据源
+     */
+    private void setContentText(DoctorInfoEntity doctorInfoEntity) {
+        DoctorInfoEntity.InfoBean doctor = doctorInfoEntity.getInfo();
+        Utils.showImg(this, doctor.getPhoto(), doctorDetailsImage);
+        doctorDetailsTvName.setText(doctor.getName());
+        doctorDetailsTvJob.setText(doctor.getPositionName());
+        doctorDetailsTvDepartment.setText(doctor.getOffName());
+        doctorDetailsTvHospital.setText(doctor.getHosName());
+        List<DoctorInfoEntity.InfoBean.AdeptEntitiesBean> adeptEntities = doctor.getAdeptEntities();
+        for (int i = 0; i < adeptEntities.size(); i++) {
+            DoctorInfoEntity.InfoBean.AdeptEntitiesBean adeptEntitiesBean = adeptEntities.get(i);
+            if (i == 0) {
+                SpannableStringBuilder one = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                doctorDetailsTvGoodAtOne.setText(one);
+            } else if (i == 1) {
+                SpannableStringBuilder two = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                doctorDetailsTvGoodAtTwo.setText(two);
+            } else if (i == 2) {
+                SpannableStringBuilder three = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                doctorDetailsTvGoodAtThree.setText(three);
+            }
+        }
     }
 
     @Override
@@ -139,6 +191,7 @@ public class DoctorDetailsActivity extends BaseActivity {
                 break;
             case R.id.doctor_details_tv_visiting:
                 ActivityUtils.startActivity(AppointmentActivity.class);
+                Utils.gotoActivity(DoctorDetailsActivity.this, AppointmentActivity.class, false, "doctorId", mDoctorId);
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.baihua.yaya.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,15 +26,18 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.baihua.yaya.login.LoginActivity;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.bumptech.glide.Glide;
@@ -196,8 +200,8 @@ public class Utils {
                 .centerCrop()
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(transformDrawable(context, R.mipmap.img_default, new CircleCrop()))
-                .error(transformDrawable(context, R.mipmap.img_default, new CircleCrop()));
+                .placeholder(transformDrawable(context, R.drawable.no_image, new CircleCrop()))
+                .error(transformDrawable(context, R.drawable.no_image, new CircleCrop()));
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
@@ -209,16 +213,13 @@ public class Utils {
      */
     public static boolean isLogin(Context ctx) {// 本地loginState中是激活则为登陆状态，或者本地存有角色id为非注册用户
         // TODO 判断登录状态
-//返回单个查询结果
-//        MemberVO user = getMember();
-//        try {
-//            return !StringUtils.isTrimEmpty(user.getAccount());
-//        } catch (Exception e) {
-//            return false;
-//        }
-        return false;
+        //返回单个查询结果
+        try {
+            return !StringUtils.isTrimEmpty(SPUtils.getInstance("token").getString("token", ""));
+        } catch (Exception e) {
+            return false;
+        }
     }
-
 
 
     /**
@@ -227,7 +228,7 @@ public class Utils {
      * @param ctx
      */
     public static void goLogin(Context ctx) {
-//        gotoActivity((Activity) ctx, LoginActivity.class, false, null, null);
+        gotoActivity((Activity) ctx, LoginActivity.class, false, null, null);
     }
 
     /**
@@ -744,6 +745,20 @@ public class Utils {
         if (smartRefreshLayout != null) {
             smartRefreshLayout.finishRefresh();
             smartRefreshLayout.finishLoadmore();
+        }
+    }
+
+    /**
+     * 取消加载更多
+     *
+     * @param currentPage 当前页
+     * @param totalPage   总页数
+     */
+    public static void cancelLoadMore(SmartRefreshLayout smartRefreshLayout, int currentPage, int totalPage) {
+        if (null == smartRefreshLayout)
+            return;
+        if (currentPage == totalPage) {
+            smartRefreshLayout.setEnableLoadMore(false);
         }
     }
 

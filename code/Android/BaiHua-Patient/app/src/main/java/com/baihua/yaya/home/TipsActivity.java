@@ -60,12 +60,6 @@ public class TipsActivity extends BaseActivity {
         mAdapter.addFooterView(getTipsFooter());
         mRecyclerView.setAdapter(mAdapter);
 
-        mList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            mList.add(String.valueOf(i));
-        }
-
-        mAdapter.setNewData(mList);
     }
 
     private View getTipsFooter() {

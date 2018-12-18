@@ -1,6 +1,5 @@
 package com.baihua.yaya.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -8,22 +7,33 @@ import android.os.Environment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baihua.common.base.BaseFragment;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.SpaceDecoration;
+import com.baihua.yaya.entity.AdEntity;
+import com.baihua.yaya.entity.form.AdForm;
+import com.baihua.yaya.entity.DicEntity;
+import com.baihua.yaya.entity.EmptyEntity;
+import com.baihua.yaya.entity.FileEntity;
+import com.baihua.yaya.entity.form.VisitForm;
 import com.baihua.yaya.my.PhotoViewActivity;
+import com.baihua.yaya.util.CommonUtils;
+import com.baihua.yaya.util.Utils;
 import com.baihua.yaya.view.recorder.IRecordButton;
 import com.baihua.yaya.view.recorder.MediaManager;
 import com.baihua.yaya.view.recorder.RecordButton;
@@ -31,13 +41,15 @@ import com.baihua.yaya.widget.GlideImageLoader;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -50,12 +62,15 @@ import com.zlw.main.recorderlib.recorder.listener.RecordStateListener;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -64,7 +79,11 @@ public class HomepageFragment extends BaseFragment {
     @BindView(R.id.banner)
     Banner mBanner;
     @BindView(R.id.play_voice_layout)
-    RelativeLayout mPlayVoiceView;
+    FrameLayout mPlayVoiceView;
+    @BindView(R.id.layout_record)
+    LinearLayout mLayoutRecord;
+    @BindView(R.id.iv_cancel_record_voice)
+    ImageView mCancelRecordVoice;
     @BindView(R.id.record_voice)
     RecordButton mRecordVoice;
     @BindView(R.id.home_photo_recycler)
@@ -107,6 +126,14 @@ public class HomepageFragment extends BaseFragment {
     private AnimationDrawable mAnimDrawable;
     private List<LocalMedia> mReturnList = new ArrayList<>();
 
+    private int mGender = 0; // 性别 1 男 0 女
+    private String mVoicePath; // 语音服务地址
+
+    private List<String> mSleeps = new ArrayList<>(); // 睡眠名字集合
+    private int mSleepId; // 选中睡眠ID
+    private List<String> mDiets = new ArrayList<>(); // 饮食名字集合
+    private int mDietId; // 选中饮食ID
+
     @Override
     public int setRootView() {
         return R.layout.fragment_homepage;
@@ -125,11 +152,14 @@ public class HomepageFragment extends BaseFragment {
     @Override
     public void initMember() {
 
-        initBanner();
+        getAd();
+        getDietDictionary();
+        getSleepDictionary();
+//        initBanner();
 
         RecordManager.getInstance().changeFormat(RecordConfig.RecordFormat.MP3);
         String recordDir = String.format(Locale.getDefault(),
-                "%s/Record/com.zlw.main/",
+                "%s/Record/com.baihua.yaya/",
                 Environment.getExternalStorageDirectory().getAbsolutePath());
         RecordManager.getInstance().changeRecordDir(recordDir);
 
@@ -156,6 +186,80 @@ public class HomepageFragment extends BaseFragment {
 
     }
 
+    /**
+     * 获取睡眠列表
+     */
+    private void getSleepDictionary() {
+        RxHttp.getInstance().getSyncServer()
+                .getDictionary("1")
+                .compose(RxSchedulers.observableIO2Main(getActivity()))
+                .subscribe(new ProgressObserver<DicEntity>(getActivity()) {
+
+                    @Override
+                    public void onSuccess(DicEntity result) {
+                        if (Utils.isListEmpty(result.getDictionaries()))
+                            return;
+                        mSleeps = new ArrayList<>();
+                        for (DicEntity.DictionariesBean bean :
+                                result.getDictionaries()) {
+                            mSleeps.add(bean.getName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取饮食列表
+     */
+    private void getDietDictionary() {
+        RxHttp.getInstance().getSyncServer()
+                .getDictionary("2")
+                .compose(RxSchedulers.observableIO2Main(getActivity()))
+                .subscribe(new ProgressObserver<DicEntity>(getActivity()) {
+
+                    @Override
+                    public void onSuccess(DicEntity result) {
+                        if (Utils.isListEmpty(result.getDictionaries()))
+                            return;
+                        mDiets = new ArrayList<>();
+                        for (DicEntity.DictionariesBean bean :
+                                result.getDictionaries()) {
+                            mDiets.add(bean.getName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取广告
+     */
+    private void getAd() {
+        RxHttp.getInstance().getSyncServer().getAdList(new AdForm(0, 2))
+                .compose(RxSchedulers.observableIO2Main(getActivity()))
+                .subscribe(new ProgressObserver<AdEntity>(getActivity()) {
+
+                    @Override
+                    public void onSuccess(AdEntity result) {
+                        initBanner(result.getAdImages()); // 加载广告页
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
     private void initRecycler() {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         SpaceDecoration spaceDecoration = new SpaceDecoration(ConvertUtils.dp2px(8));
@@ -164,16 +268,16 @@ public class HomepageFragment extends BaseFragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initBanner() {
+    private void initBanner(List<String> images) {
 
-        List<String> images = new ArrayList<>();
-        images.add("http://h.hiphotos.baidu.com/image/h%3D300/sign=22d266a5d839b60052ce09b7d9513526/f2deb48f8c5494eec7036a5f20f5e0fe99257e56.jpg");
-        images.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2593321770,2679209096&fm=26&gp=0.jpg");
-        images.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1209904593,2579101878&fm=26&gp=0.jpg");
-        List<String> titles = new ArrayList<>();
-        titles.add("紫霞仙子");
-        titles.add("阳光海滩");
-        titles.add("诗和远方");
+//        List<String> images = new ArrayList<>();
+//        images.add("http://h.hiphotos.baidu.com/image/h%3D300/sign=22d266a5d839b60052ce09b7d9513526/f2deb48f8c5494eec7036a5f20f5e0fe99257e56.jpg");
+//        images.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2593321770,2679209096&fm=26&gp=0.jpg");
+//        images.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1209904593,2579101878&fm=26&gp=0.jpg");
+//        List<String> titles = new ArrayList<>();
+//        titles.add("紫霞仙子");
+//        titles.add("阳光海滩");
+//        titles.add("诗和远方");
 
         //设置banner样式
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -184,7 +288,7 @@ public class HomepageFragment extends BaseFragment {
         //设置banner动画效果
         mBanner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
-        mBanner.setBannerTitles(titles);
+//        mBanner.setBannerTitles(titles);
         //设置自动轮播，默认为true
         mBanner.isAutoPlay(true);
         //设置轮播时间
@@ -206,10 +310,26 @@ public class HomepageFragment extends BaseFragment {
                 soundPath = file.getAbsolutePath();
                 LogUtils.e("sound length : " + MediaManager.getSoundDuration(soundPath));
                 long voiceLength = MediaManager.getSoundDuration(soundPath);
-                ViewGroup.LayoutParams layoutParams = mPlayVoiceView.getLayoutParams();
-                layoutParams.width = (int) (mMinItemWidth + (mMaxItemWidth / 60f) * voiceLength / 1000);
-                mPlayVoiceView.setLayoutParams(layoutParams);
-                mPlayVoiceView.setVisibility(View.VISIBLE);
+                if (3000 <= voiceLength) {
+                    ViewGroup.LayoutParams layoutParams = mPlayVoiceView.getLayoutParams();
+                    layoutParams.width = (int) (mMinItemWidth + (mMaxItemWidth / 60f) * voiceLength / 1000);
+                    mPlayVoiceView.setLayoutParams(layoutParams);
+                    mPlayVoiceView.setVisibility(View.VISIBLE);
+                    mLayoutRecord.setVisibility(View.GONE);
+                }
+            }
+
+        });
+
+        // 取消录音
+        mCancelRecordVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FileUtils.delete(soundPath)) {
+                    LogUtils.e("Del record voice file success !!!");
+                }
+                mPlayVoiceView.setVisibility(View.GONE);
+                mLayoutRecord.setVisibility(View.VISIBLE);
             }
         });
 
@@ -253,7 +373,9 @@ public class HomepageFragment extends BaseFragment {
         mRecordVoice.setAudioRecord(new IRecordButton() {
             @Override
             public void ready() {
-
+                if (!Utils.isLogin(getActivity())) {
+                    Utils.goLogin(getActivity());
+                }
             }
 
             @Override
@@ -313,10 +435,25 @@ public class HomepageFragment extends BaseFragment {
                             @Override
                             public void onCompletion(MediaPlayer mp) {
                                 MediaManager.release();
+                                mAnimDrawable.selectDrawable(0);
                                 mAnimDrawable.stop();
                             }
                         });
                     }
+                }
+            }
+        });
+
+        homeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.home_rb_female: // 女
+                        mGender = 0;
+                        break;
+                    case R.id.home_rb_male: // 男
+                        mGender = 1;
+                        break;
                 }
             }
         });
@@ -364,11 +501,125 @@ public class HomepageFragment extends BaseFragment {
                 showSleepDialog();
                 break;
             case R.id.home_tv_submit:
-                ActivityUtils.startActivity(TipsActivity.class);
-                //包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
-//                PictureFileUtils.deleteCacheDirFile(getActivity());
+                if (Utils.isLogin(getActivity()))
+                    judgeEmpty();
+                else
+                    Utils.goLogin(getActivity());
                 break;
         }
+    }
+
+    /**
+     * 判空
+     */
+    private void judgeEmpty() {
+        String name = homeEtName.getText().toString().trim();
+        String age = homeEtAge.getText().toString().trim();
+        String phone = homeEtMobile.getText().toString().trim();
+        String diet = homeTvSelectDiet.getText().toString().trim();
+        String sleep = homeTvSelectSleep.getText().toString().trim();
+        String desc = homeEtDescription.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            toast("请输入患者姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(age)) {
+            toast("请输入实际年龄");
+            return;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            toast("请输入联系电话");
+            return;
+        }
+        if (TextUtils.isEmpty(diet)) {
+            toast("请选择饮食");
+            return;
+        }
+        if (TextUtils.isEmpty(sleep)) {
+            toast("请选择睡眠");
+            return;
+        }
+        if (TextUtils.isEmpty(desc)) {
+            toast("请输入症状描述");
+            return;
+        }
+
+        if (mReturnList.size() > 0) {
+            /* 多图片处理*/
+            Map<String, RequestBody> partMap = new HashMap<>();
+            for (LocalMedia localMedia :
+                    mReturnList) {
+                File imageFile = new File(localMedia.getCompressPath());
+                if (ObjectUtils.isNotEmpty(localMedia) && !TextUtils.isEmpty(localMedia.getCompressPath())) {
+                    RequestBody imageBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                    partMap.put("files\";filename=\"" + imageFile.getName() + "", imageBody);
+                }
+            }
+
+            String token = SPUtils.getInstance("token").getString("token", "");
+
+            RxHttp.getInstance().getSyncServer()
+                    .upLoadFile(token, partMap)
+                    .compose(RxSchedulers.observableIO2Main(getActivity()))
+                    .subscribe(new ProgressObserver<FileEntity>(getActivity()) {
+                        @Override
+                        public void onSuccess(FileEntity result) {
+                            LogUtils.e(result.getUrls());
+                            //包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
+                            if (null != getActivity()) {
+                                PictureFileUtils.deleteCacheDirFile(getActivity());
+                            }
+                            submitVisit(result.getUrls());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable e, String errorMsg) {
+                            toast(errorMsg);
+                        }
+                    });
+
+            return;
+        }
+
+        submitVisit(new ArrayList<>());
+
+    }
+
+    /**
+     * 提交问诊信息
+     *
+     * @param urls 图片集合
+     */
+    private void submitVisit(List<String> urls) {
+        String name = homeEtName.getText().toString().trim();
+        String age = homeEtAge.getText().toString().trim();
+        String phone = homeEtMobile.getText().toString().trim();
+        String diet = homeTvSelectDiet.getText().toString().trim();
+        String sleep = homeTvSelectSleep.getText().toString().trim();
+        String desc = homeEtDescription.getText().toString().trim();
+        String token = SPUtils.getInstance("token").getString("token", "");
+        String voicePath = "";
+        if (!TextUtils.isEmpty(soundPath)) {
+            voicePath = CommonUtils.fileToBase64(new File(soundPath));
+        }
+
+        String images = TextUtils.join(",", urls);
+
+        RxHttp.getInstance().getSyncServer()
+                .submitVisit(token, new VisitForm(age, desc, String.valueOf(mDietId), String.valueOf(mGender), images, name, phone, String.valueOf(mSleepId), voicePath))
+                .compose(RxSchedulers.observableIO2Main(getActivity()))
+                .subscribe(new ProgressObserver<EmptyEntity>(getActivity()) {
+                    @Override
+                    public void onSuccess(EmptyEntity result) {
+                        toast("提交成功");
+                        ActivityUtils.startActivity(TipsActivity.class);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+
+                    }
+                });
     }
 
     private void showSleepDialog() {
@@ -377,12 +628,13 @@ public class HomepageFragment extends BaseFragment {
 
         new MaterialDialog.Builder(getActivity())
                 .title("睡眠")
-                .items(new ArrayList<String>(Arrays.asList("睡眠很好", "睡眠一般", "睡眠下降", "失眠", "其它")))
+                .items(mSleeps)
                 .positiveText("确定")
                 .negativeText("取消")
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        mSleepId = which + 1;
                         homeTvSelectSleep.setText(text);
                         return false;
                     }
@@ -396,12 +648,13 @@ public class HomepageFragment extends BaseFragment {
 
         new MaterialDialog.Builder(getActivity())
                 .title("饮食")
-                .items(new ArrayList<String>(Arrays.asList("食欲很好", "食欲一般", "食欲下降", "没有食欲", "其它")))
+                .items(mDiets)
                 .positiveText("确定")
                 .negativeText("取消")
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        mDietId = which + 1;
                         homeTvSelectDiet.setText(text);
                         return false;
                     }
@@ -446,11 +699,16 @@ public class HomepageFragment extends BaseFragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (position == mReturnList.size()) {
+                        if (!Utils.isLogin(getActivity())) {
+                            Utils.goLogin(getActivity());
+                            return;
+                        }
                         // 进入相册 以下是例子：用不到的api可以不写
                         PictureSelector.create(getActivity())
                                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-//                                .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+                                .theme(R.style.picture_QQ_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                                 .maxSelectNum(9)// 最大图片选择数量 int
 //                                .minSelectNum()// 最小选择数量 int
                                 .imageSpanCount(4)// 每行显示个数 int

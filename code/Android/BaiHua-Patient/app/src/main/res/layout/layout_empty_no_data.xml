@@ -10,7 +10,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@color/colorPrimary" />
+        android:src="@color/colorPrimary"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"

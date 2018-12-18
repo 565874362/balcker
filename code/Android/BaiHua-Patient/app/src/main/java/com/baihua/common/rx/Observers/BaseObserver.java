@@ -16,10 +16,10 @@ public abstract class BaseObserver<T> implements Observer<Response<T>> {
 
     @Override
     public final void onNext(@NonNull Response<T> result) {
-        if (result.getRet() == -1) {
-            onFailure(new Exception(result.getMsg()), result.getMsg());
-        } else {
+        if (result.getCode() == 0) {
             onSuccess(result.getData());
+        } else {
+            onFailure(new Exception(result.getMsg()), result.getMsg());
         }
     }
 

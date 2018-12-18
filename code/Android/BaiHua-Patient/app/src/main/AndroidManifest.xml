@@ -97,6 +97,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".my.PhotoViewActivity" />
         <activity android:name=".login.LoginActivity" />
+        <activity
+            android:name=".doctor.DoctorSearchActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name="com.zlw.main.recorderlib.recorder.RecordService"

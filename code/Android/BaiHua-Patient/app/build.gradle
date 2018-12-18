@@ -179,4 +179,8 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
     // https://github.com/lygttpod/SuperTextView
     implementation 'com.github.lygttpod:SuperTextView:2.1.8'
+    // https://github.com/JakeWharton/RxBinding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    // https://github.com/luoshihai/XXDialog
+    implementation 'com.github.luoshihai:XXDialog:v1.0.2'
 }

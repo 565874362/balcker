@@ -1,14 +1,23 @@
 package com.baihua.yaya.login;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.MainActivity;
 import com.baihua.yaya.R;
+import com.baihua.yaya.entity.form.LoginForm;
+import com.baihua.yaya.entity.Token;
+import com.baihua.yaya.entity.Verification;
+import com.baihua.yaya.util.Utils;
 import com.baihua.yaya.widget.ValidateCodeView;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,6 +36,8 @@ public class LoginActivity extends BaseActivity {
     EditText loginEtCode;
     @BindView(R.id.login_tv_login)
     TextView loginTvLogin;
+
+    private LoginForm mLogin = new LoginForm();
 
     @Override
     public void setLayout() {
@@ -55,13 +66,77 @@ public class LoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_tv_get_code:
-                loginTvGetCode.start();
+                getLoginCode();
                 break;
             case R.id.login_tv_login:
-                ActivityUtils.startActivity(MainActivity.class);
+                login();
                 break;
         }
     }
+
+    /**
+     * 登录
+     */
+    private void login() {
+
+        if (TextUtils.isEmpty(registerEtMobileNo.getText().toString().trim())) {
+            toast("请输入手机号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(loginEtCode.getText().toString().trim())) {
+            toast("请输入短信验证码");
+            return;
+        }
+
+        mLogin.setAccount(registerEtMobileNo.getText().toString().trim());
+        RxHttp.getInstance().getSyncServer().login(mLogin)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<Token>(this) {
+                    @Override
+                    public void onSuccess(Token result) {
+                        LogUtils.e(result.getToken());
+                        SPUtils.getInstance("token").put("token", result.getToken());
+                        Utils.gotoActivity(LoginActivity.this, MainActivity.class, true, null, null);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getLoginCode() {
+
+        if (TextUtils.isEmpty(registerEtMobileNo.getText().toString().trim())) {
+            toast("请输入手机号");
+            return;
+        }
+
+        loginTvGetCode.start();
+
+        RxHttp.getInstance().getSyncServer().getVerificationCode(registerEtMobileNo.getText().toString().trim())
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<Verification>(this) {
+                    @Override
+                    public void onSuccess(Verification result) {
+                        LogUtils.e(result.getCaptchaId() + "\n");
+                        LogUtils.e(result.getVerificationCode());
+                        mLogin.setCaptchaCode(result.getVerificationCode());
+                        mLogin.setCaptchaId(result.getCaptchaId());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
 
     @Override
     protected void onDestroy() {

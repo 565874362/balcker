@@ -63,7 +63,8 @@
         android:id="@+id/play_voice_layout"
         android:layout_width="100dp"
         android:layout_height="32dp"
-        android:background="@drawable/shape_voice_bg">
+        android:background="@drawable/shape_voice_bg"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_play_voice_anim"

@@ -18,7 +18,7 @@ ext {
     zloadingVersion = "1.1.2"
     smartRefreshLayoutVersion = "1.0.5.1"
     zxingVersion = "3.3.0"
-    statusbarutilVersion = "1.4.0"
+    statusbarutilVersion = "1.5.1"
     materialDialogsVersion = "0.9.4.5"
     fastjsonVersion = "1.2.8"
     glideVersion = "4.7.1"
