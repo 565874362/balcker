@@ -7,6 +7,8 @@
 //
 
 #import "NYDoctorListCell.h"
+#import "NYDoctorModel.h"
+#import "NYAdeptEntitiesModel.h"
 
 @interface NYDoctorListCell ()
 {
@@ -124,15 +126,28 @@
 {
     _doctorModel = doctorModel;
     
-    _nameLB.text = @"刘江华";
+    [_headerImg sd_setImageWithURL:[NSURL URLWithString:doctorModel.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     
-    _zhiChengLB.text = @"医学院院长";
+    _nameLB.text = doctorModel.name;
     
-    _yiyuanLB.text = @"解放军总医院";
+    _zhiChengLB.text = doctorModel.positionName;
     
-    _keshiLB.text = @"妇产科";
+    _yiyuanLB.text = doctorModel.hosName;
     
-    _shanChangLB.text = @"擅长：孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产";
+    _keshiLB.text = doctorModel.offName;
+    
+    NSMutableString * string = [NSMutableString string];
+    [string appendString:@"擅长："];
+    for (int i = 0; i < doctorModel.adeptEntities.count; i++) {
+        NYAdeptEntitiesModel * model = doctorModel.adeptEntities[i];
+        if (i == (doctorModel.adeptEntities.count-1)) {
+            [string appendString:[NSString stringWithFormat:@"%@",model.name]];
+        }else{
+            [string appendString:[NSString stringWithFormat:@"%@、",model.name]];
+        }
+    }
+    
+    _shanChangLB.text = string;
     
 }
 @end

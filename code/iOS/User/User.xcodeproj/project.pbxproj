@@ -117,6 +117,15 @@
 		4C1EB45D21BA24D70007CB4F /* UIImage+HUExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB45121BA24D60007CB4F /* UIImage+HUExtension.m */; };
 		4C1EB45E21BA24D70007CB4F /* UIImageView+HUWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB45221BA24D60007CB4F /* UIImageView+HUWebImage.m */; };
 		4C1EB45F21BA24D70007CB4F /* HUPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EB45821BA24D60007CB4F /* HUPhotoBrowser.m */; };
+		4C814DA321C2487A00A7DA98 /* NYDoctorSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DA221C2487A00A7DA98 /* NYDoctorSearchViewController.m */; };
+		4C814DA621C7597100A7DA98 /* NYAdeptEntitiesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DA521C7597100A7DA98 /* NYAdeptEntitiesModel.m */; };
+		4C814DA921C782A900A7DA98 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DA721C782A900A7DA98 /* UserInfo.m */; };
+		4C814DAC21C88E2E00A7DA98 /* NYJiuZhenTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DAB21C88E2E00A7DA98 /* NYJiuZhenTimeModel.m */; };
+		4C814DAF21C8959300A7DA98 /* NYPayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DAE21C8959300A7DA98 /* NYPayInfoModel.m */; };
+		4C814DB221C8CB4000A7DA98 /* NYJiuZhenDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DB121C8CB4000A7DA98 /* NYJiuZhenDoneViewController.m */; };
+		4C814DB521C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DB421C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.m */; };
+		4C814DB821C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DB721C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.m */; };
+		4C814DBC21C8DBDD00A7DA98 /* NYPayWayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C814DBB21C8DBDD00A7DA98 /* NYPayWayModel.m */; };
 		4CD31F3E21C0AC54005877D2 /* NYWenZhenDetailTopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD31F3D21C0AC54005877D2 /* NYWenZhenDetailTopCell.m */; };
 		4CD31F4521C1FCE5005877D2 /* NYAlreadyChoiceCheckAllPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD31F4121C1FCE4005877D2 /* NYAlreadyChoiceCheckAllPriceCell.m */; };
 		4CD31F4621C1FCE5005877D2 /* NYAlreadyChoiceCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD31F4221C1FCE4005877D2 /* NYAlreadyChoiceCheckCell.m */; };
@@ -345,6 +354,24 @@
 		4C1EB45621BA24D60007CB4F /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		4C1EB45721BA24D60007CB4F /* hu_const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hu_const.h; sourceTree = "<group>"; };
 		4C1EB45821BA24D60007CB4F /* HUPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUPhotoBrowser.m; sourceTree = "<group>"; };
+		4C814DA121C2487A00A7DA98 /* NYDoctorSearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYDoctorSearchViewController.h; sourceTree = "<group>"; };
+		4C814DA221C2487A00A7DA98 /* NYDoctorSearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYDoctorSearchViewController.m; sourceTree = "<group>"; };
+		4C814DA421C7597100A7DA98 /* NYAdeptEntitiesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYAdeptEntitiesModel.h; sourceTree = "<group>"; };
+		4C814DA521C7597100A7DA98 /* NYAdeptEntitiesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYAdeptEntitiesModel.m; sourceTree = "<group>"; };
+		4C814DA721C782A900A7DA98 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		4C814DA821C782A900A7DA98 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		4C814DAA21C88E2E00A7DA98 /* NYJiuZhenTimeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJiuZhenTimeModel.h; sourceTree = "<group>"; };
+		4C814DAB21C88E2E00A7DA98 /* NYJiuZhenTimeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJiuZhenTimeModel.m; sourceTree = "<group>"; };
+		4C814DAD21C8959300A7DA98 /* NYPayInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYPayInfoModel.h; sourceTree = "<group>"; };
+		4C814DAE21C8959300A7DA98 /* NYPayInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYPayInfoModel.m; sourceTree = "<group>"; };
+		4C814DB021C8CB4000A7DA98 /* NYJiuZhenDoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJiuZhenDoneViewController.h; sourceTree = "<group>"; };
+		4C814DB121C8CB4000A7DA98 /* NYJiuZhenDoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJiuZhenDoneViewController.m; sourceTree = "<group>"; };
+		4C814DB321C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJiuZhenDoneTopCell.h; sourceTree = "<group>"; };
+		4C814DB421C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJiuZhenDoneTopCell.m; sourceTree = "<group>"; };
+		4C814DB621C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYJiuZhenDonePayWayCell.h; sourceTree = "<group>"; };
+		4C814DB721C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYJiuZhenDonePayWayCell.m; sourceTree = "<group>"; };
+		4C814DBA21C8DBDD00A7DA98 /* NYPayWayModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYPayWayModel.h; sourceTree = "<group>"; };
+		4C814DBB21C8DBDD00A7DA98 /* NYPayWayModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYPayWayModel.m; sourceTree = "<group>"; };
 		4CD31F3C21C0AC54005877D2 /* NYWenZhenDetailTopCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NYWenZhenDetailTopCell.h; sourceTree = "<group>"; };
 		4CD31F3D21C0AC54005877D2 /* NYWenZhenDetailTopCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NYWenZhenDetailTopCell.m; sourceTree = "<group>"; };
 		4CD31F3F21C1FCE3005877D2 /* NYAlreadyChoiceCheckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYAlreadyChoiceCheckCell.h; sourceTree = "<group>"; };
@@ -534,6 +561,8 @@
 				4C1EB3BE21B7C6B60007CB4F /* NYMyWenZhenModel.m */,
 				4C1EB3C921B7CF0B0007CB4F /* NYYuYueJiuZhenModel.h */,
 				4C1EB3CA21B7CF0B0007CB4F /* NYYuYueJiuZhenModel.m */,
+				4C814DAD21C8959300A7DA98 /* NYPayInfoModel.h */,
+				4C814DAE21C8959300A7DA98 /* NYPayInfoModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -810,6 +839,8 @@
 		4C162D8A219A802B00CDB410 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4C814DA821C782A900A7DA98 /* UserInfo.h */,
+				4C814DA721C782A900A7DA98 /* UserInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -838,6 +869,12 @@
 				4C1EB3AB21B7BBAC0007CB4F /* NYDoctorModel.m */,
 				4C1EB42021BA04800007CB4F /* NYCommentModel.h */,
 				4C1EB42121BA04800007CB4F /* NYCommentModel.m */,
+				4C814DA421C7597100A7DA98 /* NYAdeptEntitiesModel.h */,
+				4C814DA521C7597100A7DA98 /* NYAdeptEntitiesModel.m */,
+				4C814DAA21C88E2E00A7DA98 /* NYJiuZhenTimeModel.h */,
+				4C814DAB21C88E2E00A7DA98 /* NYJiuZhenTimeModel.m */,
+				4C814DBA21C8DBDD00A7DA98 /* NYPayWayModel.h */,
+				4C814DBB21C8DBDD00A7DA98 /* NYPayWayModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -863,6 +900,10 @@
 				4C1EB43221BA14E50007CB4F /* NYNameInputCell.m */,
 				4C1EB43521BA150A0007CB4F /* NYRegisterChoiceSexCell.h */,
 				4C1EB43621BA150A0007CB4F /* NYRegisterChoiceSexCell.m */,
+				4C814DB321C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.h */,
+				4C814DB421C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.m */,
+				4C814DB621C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.h */,
+				4C814DB721C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -878,6 +919,10 @@
 				4C1EB42721BA0D940007CB4F /* NYCommentListViewController.m */,
 				4C1EB42F21BA11C80007CB4F /* NYYuYueJiuZhenViewController.h */,
 				4C1EB43021BA11C80007CB4F /* NYYuYueJiuZhenViewController.m */,
+				4C814DB021C8CB4000A7DA98 /* NYJiuZhenDoneViewController.h */,
+				4C814DB121C8CB4000A7DA98 /* NYJiuZhenDoneViewController.m */,
+				4C814DA121C2487A00A7DA98 /* NYDoctorSearchViewController.h */,
+				4C814DA221C2487A00A7DA98 /* NYDoctorSearchViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1124,6 +1169,7 @@
 				4C162DA2219A802B00CDB410 /* UIRefreshControl+AFNetworking.m in Sources */,
 				4C162D98219A802B00CDB410 /* AFURLSessionManager.m in Sources */,
 				4C1EB3D421B8B3FE0007CB4F /* NYChuZhenTitleCell.m in Sources */,
+				4C814DB221C8CB4000A7DA98 /* NYJiuZhenDoneViewController.m in Sources */,
 				4C1EB3AF21B7C0CB0007CB4F /* NYMyTypeCell.m in Sources */,
 				4C1EB43A21BA20E60007CB4F /* NYWenZhenDetailViewController.m in Sources */,
 				4C162D91219A802B00CDB410 /* NSDate+BRAdd.m in Sources */,
@@ -1132,6 +1178,7 @@
 				4C162D90219A802B00CDB410 /* MyAlertCenter.m in Sources */,
 				4C1EB41321B91AF50007CB4F /* NYTiShiSuccessedCell.m in Sources */,
 				4C1EB3B621B7C26C0007CB4F /* NYMyHeaderView.m in Sources */,
+				4C814DA921C782A900A7DA98 /* UserInfo.m in Sources */,
 				4C162D9C219A802B00CDB410 /* AFImageDownloader.m in Sources */,
 				4C1EB3EF21B8F4200007CB4F /* NYHomeVoiceCell.m in Sources */,
 				4C1EB3DA21B8BF190007CB4F /* NYHomeScrollViewCell.m in Sources */,
@@ -1142,10 +1189,13 @@
 				4C162DAC219A802B00CDB410 /* PPNetworkCache.m in Sources */,
 				4C1EB3FC21B8F6FC0007CB4F /* RecordHUD.m in Sources */,
 				4C1EB3C821B7CEC30007CB4F /* NYYuYueJiuZhenJiLvCell.m in Sources */,
+				4C814DAF21C8959300A7DA98 /* NYPayInfoModel.m in Sources */,
 				4C162DA5219A802B00CDB410 /* BRAddressPickerView.m in Sources */,
+				4C814DAC21C88E2E00A7DA98 /* NYJiuZhenTimeModel.m in Sources */,
 				4C1EB45D21BA24D70007CB4F /* UIImage+HUExtension.m in Sources */,
 				4C162DB2219A802B00CDB410 /* RTRootNavigationController.m in Sources */,
 				4C1EB3B921B7C6230007CB4F /* NYMyWenZhenListViewController.m in Sources */,
+				4C814DB521C8CFB700A7DA98 /* NYJiuZhenDoneTopCell.m in Sources */,
 				4C162DA9219A802B00CDB410 /* BRStringPickerView.m in Sources */,
 				4C162DB0219A802B00CDB410 /* YYKVStorage.m in Sources */,
 				4C1EB44421BA23F00007CB4F /* NYHomeHuanZheInfoVoiceCell.m in Sources */,
@@ -1171,6 +1221,7 @@
 				4C162D96219A802B00CDB410 /* AFURLRequestSerialization.m in Sources */,
 				4C162DAA219A802B00CDB410 /* BRPlaceholderTextView.m in Sources */,
 				4C162DA8219A802B00CDB410 /* BRDatePickerView.m in Sources */,
+				4C814DA621C7597100A7DA98 /* NYAdeptEntitiesModel.m in Sources */,
 				4C1EB44521BA23F00007CB4F /* NYHomeHuanZheInfoTimeCell.m in Sources */,
 				4C1EB41621B921D10007CB4F /* NYDoctorInfoDetailViewController.m in Sources */,
 				4C162DA4219A802B00CDB410 /* BRAddressModel.m in Sources */,
@@ -1194,9 +1245,11 @@
 				4C1EB3F921B8F6FC0007CB4F /* D3RecordButton.m in Sources */,
 				4C1EB3E621B8CE9D0007CB4F /* NYHomeInfoTitleCell.m in Sources */,
 				4C162D8C219A802B00CDB410 /* NYHomeViewController.m in Sources */,
+				4C814DA321C2487A00A7DA98 /* NYDoctorSearchViewController.m in Sources */,
 				4C162DAB219A802B00CDB410 /* PPHTTPRequest.m in Sources */,
 				4C1EB45B21BA24D70007CB4F /* HUWebImageDownloadOperation.m in Sources */,
 				4C162DBE219A80A400CDB410 /* NYDoctorListViewController.m in Sources */,
+				4C814DBC21C8DBDD00A7DA98 /* NYPayWayModel.m in Sources */,
 				4C162D94219A802B00CDB410 /* AFNetworkReachabilityManager.m in Sources */,
 				4C1EB3D721B8B4FE0007CB4F /* NYJieZhenDoctorDetailCell.m in Sources */,
 				4C1EB3C221B7CC230007CB4F /* NYMyWenZhenListCell.m in Sources */,
@@ -1219,6 +1272,7 @@
 				4C162D97219A802B00CDB410 /* AFURLResponseSerialization.m in Sources */,
 				4C1EB42821BA0D940007CB4F /* NYCommentListViewController.m in Sources */,
 				4C1EB45921BA24D70007CB4F /* UIView+frame.m in Sources */,
+				4C814DB821C8D71700A7DA98 /* NYJiuZhenDonePayWayCell.m in Sources */,
 				4C162DA0219A802B00CDB410 /* UIImageView+AFNetworking.m in Sources */,
 				4C162CFD219A7E7D00CDB410 /* AppDelegate.m in Sources */,
 			);

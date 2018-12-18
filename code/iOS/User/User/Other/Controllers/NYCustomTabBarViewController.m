@@ -12,9 +12,9 @@
 #import "NYAnswerViewController.h"
 #import "NYMineViewController.h"
 #import "NYDoctorListViewController.h"
+#import "NYLoginViewController.h"
 
-
-@interface NYCustomTabBarViewController ()
+@interface NYCustomTabBarViewController ()<UITabBarControllerDelegate>
 
 @end
 
@@ -23,6 +23,7 @@
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         [self initViewControllers];
+        self.delegate = self;
     }
     return self;
 }
@@ -44,14 +45,14 @@
     homeNav.tabBarItem.title = @"首页";
     
     
-    NYAnswerViewController * cardVC = [[NYAnswerViewController alloc] init];
-//    cardVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
-    cardVC.tabBarItem.image=[UIImage imageNamed:@"menu_coupon"];
-    cardVC.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_coupon_hover"];
-    
-    NYBaseNavViewController * cardNav=[[NYBaseNavViewController alloc] initWithRootViewController:cardVC];
-    cardNav.tabBarItem.tag = 1;
-    cardNav.tabBarItem.title = @"问答";
+//    NYAnswerViewController * cardVC = [[NYAnswerViewController alloc] init];
+////    cardVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
+//    cardVC.tabBarItem.image=[UIImage imageNamed:@"menu_coupon"];
+//    cardVC.tabBarItem.selectedImage=[UIImage imageNamed:@"menu_coupon_hover"];
+//
+//    NYBaseNavViewController * cardNav=[[NYBaseNavViewController alloc] initWithRootViewController:cardVC];
+//    cardNav.tabBarItem.tag = 1;
+//    cardNav.tabBarItem.title = @"问答";
     
     NYDoctorListViewController * doctorVC = [[NYDoctorListViewController alloc] init];
 //    doctorVC.tabBarItem.imageInsets=UIEdgeInsetsMake(5, 0, -5,0);
@@ -59,7 +60,7 @@
     doctorVC.tabBarItem.selectedImage=[UIImage imageNamed:@"doctor_fille"];
     
     NYBaseNavViewController * doctorNav=[[NYBaseNavViewController alloc] initWithRootViewController:doctorVC];
-    doctorNav.tabBarItem.tag = 2;
+    doctorNav.tabBarItem.tag = 1;
     doctorNav.tabBarItem.title = @"医生";
 
     
@@ -69,11 +70,28 @@
     mineVC.tabBarItem.selectedImage=[UIImage imageNamed:@"people_fill"];
     
     NYBaseNavViewController *mineNav=[[NYBaseNavViewController alloc] initWithRootViewController:mineVC];
-    mineNav.tabBarItem.tag = 3;
+    mineNav.tabBarItem.tag = 2;
     mineNav.tabBarItem.title = @"我的";
     
     self.viewControllers=@[homeNav,doctorNav,mineNav];
     
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    
+    if (viewController.tabBarItem.tag == 2){
+        if (!ISLOGIN) {
+            NYBaseNavViewController * baseNvc = (NYBaseNavViewController *)tabBarController.selectedViewController;
+            UIViewController * baseVC =  baseNvc.rt_topViewController;
+            
+            NYLoginViewController * loginVC = [[NYLoginViewController alloc] init];
+            NYBaseNavViewController * vc = [[NYBaseNavViewController alloc] initWithRootViewController:loginVC];
+            [baseVC presentViewController:vc animated:YES completion:^{
+            }];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 

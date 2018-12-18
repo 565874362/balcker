@@ -23,6 +23,7 @@
 {
     UIView * bgView = [[UIView alloc] init];
     bgView.backgroundColor = BGCOLOR;
+    bgView.userInteractionEnabled = YES;
     [self.contentView addSubview:bgView];
     
     bgView.sd_layout
@@ -33,5 +34,16 @@
     
     bgView.sd_cornerRadius = @20;
     
+    [bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickVoice:)]];
+
+    
 }
+
+- (void)clickVoice:(UITapGestureRecognizer *)tap
+{
+    if (_clickVoiceButton) {
+        _clickVoiceButton();
+    }
+}
+
 @end

@@ -93,8 +93,22 @@
 
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 
+    [self getUserPicture]; //获取用户信息
+
 }
-    
+
+#pragma mark - 获取用户信息
+- (void)getUserPicture
+{
+    [PPHTTPRequest GetUserPictureInfoWithParameters:nil success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            [UserInfo setPic:response[@"data"][@"photo"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -173,7 +187,26 @@
 #pragma mark - 点击退出登录
 - (void)clickOutLoginBtn:(UIButton *)button
 {
-    [UIApplication sharedApplication].delegate.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
+    
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确认要退出登录吗？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:0 handler:^(UIAlertAction * _Nonnull action) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ISLOGIN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [UserInfo setToken:nil];
+
+        [self.tabBarController setSelectedIndex:0];
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        
+        
+        
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+
+//    [UIApplication sharedApplication].delegate.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
 }
 
 
@@ -220,16 +253,18 @@
 #pragma mark - 选择头像
 - (void)clickHeaderImg
 {
-    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:0 handler:^(UIAlertAction * _Nonnull action) {
-        [self pushImagePickerController];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"相机" style:0 handler:^(UIAlertAction * _Nonnull action) {
-        [self takePhoto];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self pushImagePickerController];
+
+//    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:0 handler:^(UIAlertAction * _Nonnull action) {
+//        [self pushImagePickerController];
+//    }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"相机" style:0 handler:^(UIAlertAction * _Nonnull action) {
+//        [self takePhoto];
+//    }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//    }]];
+//    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (UIImagePickerController *)imagePickerVc {
@@ -255,19 +290,19 @@
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto infos:(NSArray<NSDictionary *> *)infos {
     UIImage *image = photos[0];
-    _headerImageView.image = image;
+//    _headerImageView.image = image;
     [picker dismissViewControllerAnimated:YES completion:nil];
     
-    //    [self uploadHeadImage:image];
+        [self uploadHeadImage:image];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    _headerImageView.image = image;
+//    _headerImageView.image = image;
     [picker dismissViewControllerAnimated:YES completion:nil];
     
-    //    [self uploadHeadImage:image];
+        [self uploadHeadImage:image];
 }
 #pragma mark - 拍照
 - (void)takePhoto {
@@ -309,6 +344,40 @@
     pvc.allowCrop = YES;
     pvc.cropRect = CGRectMake(0, (NYScreenH - NYScreenW)/2, NYScreenW, NYScreenW);
     [self presentViewController:pvc animated:YES completion:nil];
+}
+
+#pragma mark - 上传图片
+- (void)uploadHeadImage:(UIImage *)image {
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    WEAKSELF
+    [PPHTTPRequest postUploadWithparameters:nil images:@[image] success:^(id response) {
+        if ([response[@"code"] integerValue] == 0) {
+            NSDictionary * dict = @{
+                                    @"photoUrl":[response[@"data"][@"urls"] firstObject],
+                                    };
+            [PPHTTPRequest postUserPictureInfoWithParameters:dict success:^(id response) {
+                [SVProgressHUD dismiss];
+                if ([response[@"code"] integerValue] == 0) {
+                    _headerImageView.image = image;
+                    [UserInfo setPic:[response[@"data"][@"urls"] firstObject]];
+                }else{
+                    [SVProgressHUD dismiss];
+                    MYALERT(@"上传失败");
+                }
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                MYALERT(@"上传失败");
+            }];
+        }else{
+            [SVProgressHUD dismiss];
+            MYALERT(@"上传失败");
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"上传失败");
+    }];
 }
 
 @end

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYCommentListViewController : UIViewController
 
+@property (nonatomic,copy) NSString * doctorID;
+
 @end
 
 NS_ASSUME_NONNULL_END

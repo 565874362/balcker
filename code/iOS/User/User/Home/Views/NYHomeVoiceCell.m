@@ -43,7 +43,7 @@
     //删除按钮
     UIButton * deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.deleBtn = deleteBtn;
-    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"share_delete_select_icon"] forState:UIControlStateNormal];
+    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Common_Close_gray_transparent_n"] forState:UIControlStateNormal];
     [self.contentView addSubview:deleteBtn];
     
     deleteBtn.sd_layout

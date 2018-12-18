@@ -34,6 +34,7 @@
     
     UILabel * nameLB = [[UILabel alloc] init];
     nameLB.textColor = COLOR_BIG;
+    nameLB.font = FONT(18);
     nameLB.textAlignment = NSTextAlignmentLeft;
     [bgView1 addSubview:nameLB];
     
@@ -43,7 +44,7 @@
     .bottomSpaceToView(bgView1, 0)
     .widthIs(50);
     
-    nameLB.text = @"姓名";
+    nameLB.text = @"饮食";
     
     //姓名输入
     _eatTF = [[HHTextField alloc] init];
@@ -72,6 +73,7 @@
     //年龄
     UILabel * ageLB = [[UILabel alloc] init];
     ageLB.textColor = COLOR_BIG;
+    ageLB.font = FONT(18);
     ageLB.textAlignment = NSTextAlignmentLeft;
     [bgView2 addSubview:ageLB];
     
@@ -81,7 +83,7 @@
     .bottomSpaceToView(bgView2, 0)
     .widthIs(50);
     
-    ageLB.text = @"年龄";
+    ageLB.text = @"睡眠";
     
     //姓名输入
     _sleepTF = [[HHTextField alloc] init];

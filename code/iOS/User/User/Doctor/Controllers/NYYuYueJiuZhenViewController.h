@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYYuYueJiuZhenViewController : UIViewController
 
+@property (nonatomic,copy) NSString * doctorID;
+
+@property (nonatomic,copy) NSString * priceString;
 @end
 
 NS_ASSUME_NONNULL_END

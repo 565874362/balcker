@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYWenZhenDetailViewController : UIViewController
 
+@property (nonatomic,copy) NSString * wenZhenID;
+
 @end
 
 NS_ASSUME_NONNULL_END

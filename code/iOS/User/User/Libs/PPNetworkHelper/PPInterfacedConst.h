@@ -21,16 +21,15 @@
 #define PPInterfacedConst_h
 
 
-#define DevelopSever 0
+#define DevelopSever 1
 #define TestSever    0
-#define ProductSever 1
+#define ProductSever 0
 #define XKSSever     0
 
 
 #if DevelopSever
-/** 新加坡测试服务地址*/
-NSString *const kApiPrefix = @"http://www.somatech.com.sg";
-//NSString *const kApiPrefix = @"http://47.74.250.52:8081/soma-api";
+/** 东东开发地址*/
+NSString *const kApiPrefix = @"http://192.168.2.96:8080";
 #elif TestSever
 /** 黄明超服务*/
 NSString *const kApiPrefix = @"http://192.168.2.72:8080/soma-api";
@@ -45,146 +44,82 @@ NSString *const kApiPrefix = @"http://114.215.192.125:8084/soma-api";
 
 #pragma mark - 详细接口地址
 
+//====================================登录================================
+
 /** 获取短信验证码*/
-NSString *const getCode = @"/app/sms/send";
-
-/** 校验验证码*/
-NSString *const checkCode = @"/app/sms/check";
-
-/** 再次购买*/
-NSString *const orderBuyAgain = @"/app/corder/buyAgain";
-
-/** 添加信用卡*/
-NSString *const addUserCard = @"/app/ccustomerCard/save";
-
-/** 获取用户信用卡列表*/
-NSString *const getUserCardList = @"/app/ccustomerCard/list";
-
-/** 删除卡片*/
-NSString *const deletedCard = @"/app/ccustomerCard/delete";
-
-
-/** 用户注册*/
-NSString *const regist = @"/app/register";
-
-/** 忘记密码*/
-NSString *const forgetPwd = @"/app/forgetPwd";
+NSString *const getCode = @"/rest/login/verification";
 
 /** 用户登录*/
-NSString *const login = @"/app/login";
+NSString *const login = @"/rest/login/patient";
 
-/** 第三方登录*/
-NSString *const ThirdLogin = @"/app/login/other";
+//====================================广告================================
 
-/** 获取用户信息*/
-NSString *const userInfo = @"/app/userInfo";
-
-/** 获取商户信息列表*/
-NSString *const merchantList = @"/app/merchant/list";
-
-/** 根据商户id查询商户下所有分类*/
-NSString *const getMerchantCategory = @"/app/ccategory/getMerchantCategory";
-
-/** 根据分类id 获取产品信息列表*/
-NSString *const getProductList = @"/app/cproduct/list";
-
-/** 根据商品id 获取产品信息详情*/
-NSString *const getProductDetail = @"/app/cproduct/details";
-
-/** 根据套餐id 获取套餐信息详情*/
-NSString *const getTaoCanDetail = @"/app/cproduct/getPackagedetails";
-
-/** 根据商户id 获取商户信息对象*/
-NSString *const getMerchantInfo = @"/app/merchant/info";
-
-/** 用户信息修改*/
-NSString *const changeCustomerInfo = @"/app/customer/update";
-
-/** 修改密码*/
-NSString *const changePassword = @"/app/customer/updatePassword";
-
-/** 创建订单*/
-NSString *const createOrderDetail = @"/app/corder/create";
-
-/** 获取订单列表*/
-NSString *const getOrderList = @"/app/corder/getList";
-
-/** 查看订单详情*/
-NSString *const lookOrderDetail = @"/app/corder/info";
-
-/** 取消订单*/
-NSString *const cancelOrder = @"/app/stripe/refund";
-/** paypal取消订单*/
-NSString *const paypalCancelOrder = @"/app/paypal/refund";
-
-/** 根据商户id获取商户营业时间*/
-NSString *const getMerchantBusinessTime = @"/app/merchant/getBusinessTime";
-
-/** 获取用户的优惠券列表信息*/
-NSString *const getUserDiscountList = @"/app/cdiscount/getDiscount";
-
-/** 获取用户可用的优惠券*/
-NSString *const getGoodCanUseDiscount = @"/app/cdiscount/canUseDiscount";
-
-/** 根据商户id查询所有产品信息*/
-NSString *const getAllProductList = @"/app/cproduct/getProductList";
-
-/**=====================================收藏========================================*/
-/** 取消收藏*/
-NSString *const cancelCollection = @"/app/ccollection/cancelCollection";
-
-/** 用户收藏商户*/
-NSString *const collectionMerchant = @"/app/ccollection/collect";
-
-/** 获取用户的收藏列表*/
-NSString *const getUserCollectionList = @"/app/ccollection/getCollection";
-
-/** 判断某一商户是否被用户收藏*/
-NSString *const hasCollection = @"/app/ccollection/hasCollect";
-
-/** 更新头像*/
-NSString *const upDateUserImg = @"/oss/upload";
-
-/** 店铺就餐等待时间*/
-NSString *const orderWaitingTime = @"/app/corder/orderWaitingTime";
+/** 首页广告滚动*/
+NSString *const AdListInfo = @"/rest/basad/list";
 
 
-/** Stripe支付订单*/
-NSString *const stripePay = @"/app/stripe/pay";
+//====================================医生================================
+
+/** 医生列表*/
+NSString *const DoctorListInfo = @"/rest/usdoctor/list";
+
+/** 医生信息*/
+NSString *const DoctorDetailInfo = @"/rest/usdoctor/info";
+
+//====================================评论================================
+
+/** 根据医生加载评论*/
+NSString *const DoctorCommentListInfo = @"/rest/sercomment/doctorList";
 
 
-/** 获取消息列表*/
-NSString *const getPushMsgList = @"/app/customer/getPushMsg";
+//====================================问诊================================
+
+/** 用户问诊列表*/
+NSString *const wenZhenListInfo = @"/rest/serinquiry/patientList";
+
+/** 用户问诊详情*/
+NSString *const wenZhenDetailInfo = @"/rest/serinquiry/info";
+
+/** 增加问诊*/
+NSString *const addWenZhenInfo = @"/rest/serinquiry/save";
 
 
-/** 获取运营地区列表*/
-NSString *const getSearchAreaList = @"/app/merchant/searchArea";
+//====================================上传图片================================
 
-/** 根据qrCode获取商户信息对象*/
-NSString *const getMerchantInfoWithQrCode = @"/app/merchant/infoQrCode";
+/** 上传图片*/
+NSString *const uploadImage = @"/rest/upload";
 
-/**=====================================预约========================================*/
 
-/** 根据id获取商户预定时间折扣*/
-NSString *const postZheKouTimeList = @"/app/cmerchantReserved/getReservedTime";
+//====================================字典================================
 
-/** 创建预约订单*/
-NSString *const postCreatYuYueOrder = @"/app/cmerchantReserved/save";
+/** 获取字典*/
+NSString *const getDictionaryDataInfo = @"/rest/basdictionary/list";
 
-/** 我的预约列表接口*/
-NSString *const YuYueOrderList = @"/app/cReservedOrder/getReservedWait";
 
-/** 取消预约*/
-NSString *const cancelReservedYuYueOrder = @"/app/cReservedOrder/cancelReserved";
+//====================================患者================================
 
-/** 判断用户是否可预约*/
-NSString *const personIsYuYueOrder = @"/app/cmerchantReserved/info";
+/** 获取图片*/
+NSString *const getUserPicture = @"/rest/patient/photo";
 
-/** 获取邮件*/
-NSString *const getEmail = @"/app/corder/getEmail";
+/** 设置图片*/
+NSString *const setUserPict = @"/rest/patient/phone";
 
-/** PayPal支付回调接口*/
-NSString *const paypalVerifyPayment = @"/app/paypal/verifyPayment";
 
+//====================================挂号================================
+
+/** 预约就诊列表*/
+NSString *const yuYueJiuZhenListInfo = @"/rest/serregistration/patientList";
+
+/** 预约挂号*/
+NSString *const yuYueGuaHao = @"/rest/serregistration/registration";
+
+/** 挂号详情*/
+NSString *const getGuaHaoDetail = @"/rest/serregistration/info";
+
+
+//====================================出诊时间表================================
+
+/** 出诊时间表*/
+NSString *const ChuZhenTimeListInfo = @"/rest/serschedule/diagnoseList";
 
 #endif

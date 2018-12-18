@@ -32,6 +32,7 @@
 
     
     self.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

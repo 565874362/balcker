@@ -108,25 +108,31 @@
     _wenZhenListModel = wenZhenListModel;
     
     //状态
-    if ([wenZhenListModel.state integerValue] == 1) {
-        _stateLB.text = @"已解答";
-        _stateLB.textColor = [UIColor whiteColor];
-        _stateLB.backgroundColor = MAINCOLOR;
-        
-    }else{
+    if ([wenZhenListModel.status integerValue] == 1) {
         _stateLB.text = @"未解答";
         _stateLB.textColor = [UIColor whiteColor];
         _stateLB.backgroundColor = COLOR_RED;
-        
+    }else{
+        _stateLB.text = @"已解答";
+        _stateLB.textColor = [UIColor whiteColor];
+        _stateLB.backgroundColor = MAINCOLOR;
     }
     
-    _nameLB.text = @"赵小强";
+    _nameLB.text = wenZhenListModel.name;
     
-    _sexAndAgeLB.text = @"男  5岁";
     
-    _contentLB.text = @"这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    NSString * sexString = @"";
+    if ([wenZhenListModel.gender integerValue] == 0) {
+        sexString = @"女";
+    }else{
+        sexString = @"男";
+    }
     
-    _timeLB.text = @"2018-11-22 10:10";
+    _sexAndAgeLB.text = [NSString stringWithFormat:@"%@   %zi岁",sexString,[wenZhenListModel.age integerValue]];
+    
+    _contentLB.text = wenZhenListModel.characterDescribe;
+    
+    _timeLB.text = [wenZhenListModel.gmtCreate substringWithRange:NSMakeRange(0, 16)];
 }
 
 @end

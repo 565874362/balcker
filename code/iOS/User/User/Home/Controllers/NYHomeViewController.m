@@ -22,6 +22,8 @@
 #import "D3RecordButton.h"
 #import "NYHomeChoiceImgCell.h"
 #import "NYHomeOnlineWenZhenSuccessedViewController.h"
+#import "NYLoginViewController.h"
+#import "NYBaseNavViewController.h"
 
 #import <TZImageManager.h>
 #import <TZVideoPlayerController.h>
@@ -36,7 +38,7 @@
 @interface NYHomeViewController ()<UITableViewDelegate,UITableViewDataSource,SDCycleScrollViewDelegate,UITextFieldDelegate,UITextViewDelegate,D3RecordDelegate,AVAudioPlayerDelegate,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSMutableArray * _imageUrlStrings; //广告图片数组
-    BRPlaceholderTextView * _textView;
+    BRPlaceholderTextView * _textView; //症状描述
     
     AVAudioPlayer * _play;
     D3RecordButton * _voiceBtn;
@@ -55,12 +57,22 @@
     NSArray * _seletedImgArr;
     UIImage * _nomalImg;
 
+    NSInteger _sex; // 1男  0女
+    
+    NSArray * _imageUrlArray;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic,strong) SDCycleScrollView * cycleScrollView;
 
+@property (nonatomic,strong) HHTextField * nameTF;
+@property (nonatomic,strong) HHTextField * ageTF;
+@property (nonatomic,strong) HHTextField * phoneTF;
+
 @property (nonatomic,strong) HHTextField * eatTF;
+@property (nonatomic,strong) NSArray * eatArray;
+
 @property (nonatomic,strong) HHTextField * sleepTF;
+@property (nonatomic,strong) NSArray * sleepArray;
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 
@@ -104,9 +116,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _imageUrlStrings = [NSMutableArray array];
-    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544073545161&di=3c514205ba7563bfaf7b6df56218d2b2&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F00e93901213fb80e9044dd233cd12f2eb83894a9.jpg"];
-    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544668347&di=16c9e49c4575733631bb0fd5e67096da&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0b7b02087bf40ad15cc629ca5c2c11dfa9eccefd.jpg"];
-    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544073628200&di=6fef2a9a620992759aa7bd09f84a331d&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D4f726ef28013632701e0ca70f9e6ca99%2F63d0f703918fa0ec565796232c9759ee3d6ddb08.jpg"];
+    _sex = 0;
+//    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544073545161&di=3c514205ba7563bfaf7b6df56218d2b2&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F00e93901213fb80e9044dd233cd12f2eb83894a9.jpg"];
+//    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544668347&di=16c9e49c4575733631bb0fd5e67096da&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0b7b02087bf40ad15cc629ca5c2c11dfa9eccefd.jpg"];
+//    [_imageUrlStrings addObject:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544073628200&di=6fef2a9a620992759aa7bd09f84a331d&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D4f726ef28013632701e0ca70f9e6ca99%2F63d0f703918fa0ec565796232c9759ee3d6ddb08.jpg"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"吖吖医生";
@@ -128,6 +141,46 @@
     _seletedImgArr = @[_nomalImg];
 
     
+//    [self getAdInfo]; //获取广告图片
+    
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
+}
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getAdInfo)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+}
+
+
+#pragma mark - 获取广告图片
+- (void)getAdInfo
+{
+    WEAKSELF
+    NSDictionary * dict =@{
+                           @"positionId":@"1",
+                           @"terminal":@"2",
+                           };
+//    [SVProgressHUD showWithStatus:nil];
+    [PPHTTPRequest postGetAdListInfoWithParameters:dict success:^(id response) {
+//        [SVProgressHUD dismiss];
+        [self.tableView.mj_header endRefreshing];
+        if ([response[@"code"] integerValue] == 0) {
+            _imageUrlStrings = response[@"data"][@"adImages"];
+            [weakSelf.tableView reloadData];
+        }else {
+            MYALERT(response[@"msg"]);
+        }
+    } failure:^(NSError *error) {
+//        [SVProgressHUD dismiss];
+        [self.tableView.mj_header endRefreshing];
+        MYALERT(@"请求失败");
+    }];
+
 }
     
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -138,6 +191,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
+        if (_imageUrlStrings.count == 0) {
+            return 0;
+        }
         return 1;
     }else if (section == 1){
         return 2;
@@ -237,9 +293,201 @@
 
 - (void)clickDoneButton:(UIButton *)button
 {
-    NYHomeOnlineWenZhenSuccessedViewController * vc = [[NYHomeOnlineWenZhenSuccessedViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if (!ISLOGIN) {
+        NYLoginViewController * loginVC = [[NYLoginViewController alloc] init];
+        NYBaseNavViewController * vc = [[NYBaseNavViewController alloc] initWithRootViewController:loginVC];
+        [self presentViewController:vc animated:YES completion:^{
+        }];
+        return;
+    }
+
+    
+    NSString * nameString = [self.nameTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString * ageString = [self.ageTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString * phoneString = [self.phoneTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString * eatString = [self.eatTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString * sleepString = [self.sleepTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //症状描述
+    NSString * zhengZhuangString = [_textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    if (nameString.length == 0) {
+        MYALERT(@"请输入患者姓名");
+        return;
+    }
+    if (ageString.length == 0) {
+        MYALERT(@"请输入患者年龄");
+        return;
+    }
+    if (phoneString.length == 0) {
+        MYALERT(@"请输入联系电话");
+        return;
+    }
+    if (phoneString.length != 11) {
+        MYALERT(@"手机格式不正确");
+        return;
+    }
+    if (eatString.length == 0) {
+        MYALERT(@"请选择饮食情况");
+        return;
+    }
+    if (sleepString.length == 0) {
+        MYALERT(@"请选择睡眠情况");
+        return;
+    }
+    if (zhengZhuangString.length == 0) {
+        MYALERT(@"请输入症状描述");
+        return;
+    }
+
+    NSInteger eatCount = 0;
+    for (NSDictionary * obj in self.eatArray) {
+        if ([obj[@"name"] isEqualToString:eatString]) {
+            eatCount = [obj[@"id"] integerValue];
+        }
+    }
+    
+    NSInteger sleepCount = 0;
+    for (NSDictionary * obj in self.sleepArray) {
+        if ([obj[@"name"] isEqualToString:sleepString]) {
+            sleepCount = [obj[@"id"] integerValue];
+        }
+    }
+
+    
+    if (_selectedPhotos.count == 0) { //没有图片
+        
+        NSString * base64String = @"";
+        if (_voiceData != nil) {
+            base64String = [_voiceData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+        }
+        
+        NSDictionary * dict = @{@"age":@([ageString integerValue]),
+                                @"characterDescribe":zhengZhuangString,
+                                @"diet":@(eatCount),
+                                @"gender":@(_sex),
+                                @"image":@"",
+                                @"name":nameString,
+                                @"phone":phoneString,
+                                @"sleep":@(sleepCount),
+                                @"voiceDescribe":base64String,
+                                };
+        [SVProgressHUD showWithStatus:nil];
+        [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+        
+        [PPHTTPRequest postAddWenZhenInfoWithParameters:dict success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                
+                //清空
+                _nameTF.text = @"";
+                _ageTF.text = @"";
+                _sex = 0;
+                _phoneTF.text = @"";
+                _eatTF.text = @"";
+                _sleepTF.text = @"";
+                _textView.text = @"";
+                _voiceData = nil;
+                [_selectedPhotos removeAllObjects];
+                [_selectedAssets removeAllObjects];
+                _seletedImgArr = @[_nomalImg];
+                
+                
+                NYHomeOnlineWenZhenSuccessedViewController * vc = [[NYHomeOnlineWenZhenSuccessedViewController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+            [self.tableView reloadData];
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"提交失败");
+        }];
+    }else{ //有图片
+        [SVProgressHUD showWithStatus:nil];
+        [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+        
+        WEAKSELF
+        [PPHTTPRequest postUploadWithparameters:nil images:_selectedPhotos success:^(id response) {
+            if ([response[@"code"] integerValue] == 0) {
+                _imageUrlArray = response[@"data"][@"urls"];
+                
+                NSMutableString * imgString = [NSMutableString string];
+                for (int i = 0; i < _imageUrlArray.count; i++) {
+                    NSString * imgUrl = _imageUrlArray[i];
+                    if (i == (_imageUrlArray.count-1)) {
+                        [imgString appendString:imgUrl];
+                    }else{
+                        [imgString appendString:[NSString stringWithFormat:@"%@,",imgUrl]];
+                    }
+                }
+                
+                NSString * base64String = @"";
+                if (_voiceData != nil) {
+                    base64String = [_voiceData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                }
+
+                NSDictionary * dict = @{@"age":@([ageString integerValue]),
+                                        @"characterDescribe":zhengZhuangString,
+                                        @"diet":@(eatCount),
+                                        @"gender":@(_sex),
+                                        @"image":imgString,
+                                        @"name":nameString,
+                                        @"phone":phoneString,
+                                        @"sleep":@(sleepCount),
+                                        @"voiceDescribe":base64String,
+                                        };
+                
+                [PPHTTPRequest postAddWenZhenInfoWithParameters:dict success:^(id response) {
+                    [SVProgressHUD dismiss];
+                    if ([response[@"code"] integerValue] == 0) {
+                        
+                        
+                        //清空
+                        _nameTF.text = @"";
+                        _ageTF.text = @"";
+                        _sex = 0;
+                        _phoneTF.text = @"";
+                        _eatTF.text = @"";
+                        _sleepTF.text = @"";
+                        _textView.text = nil;
+                        _voiceData = nil;
+                        [_selectedPhotos removeAllObjects];
+                        [_selectedAssets removeAllObjects];
+                        _seletedImgArr = @[_nomalImg];
+                        
+                        
+                        NYHomeOnlineWenZhenSuccessedViewController * vc = [[NYHomeOnlineWenZhenSuccessedViewController alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }else{
+                        MYALERT(response[@"msg"]);
+                    }
+                    [self.tableView reloadData];
+                } failure:^(NSError *error) {
+                    [SVProgressHUD dismiss];
+                    MYALERT(@"提交失败");
+                }];
+            }else{
+                [SVProgressHUD dismiss];
+                MYALERT(@"提交失败");
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"提交失败");
+        }];
+    }
+    
+    
+
+    
+    
+    
 }
 
     
@@ -260,15 +508,20 @@
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
             NYHomeNameAndAgeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeNameAndAgeCellID"];
+            self.nameTF = cell.nameTF;
+            self.ageTF = cell.ageTF;
             return cell;
         }else if (indexPath.row == 1){
             NYHomeSexAndPhoneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeSexAndPhoneCellID"];
+            self.phoneTF = cell.phoneTF;
             cell.clickManButton = ^(RankButton * _Nonnull setBtn) {
+                _sex = 1;
                 if (!setBtn.isSelected) {
                     setBtn.selected = !setBtn.selected;
                 }
             };
             cell.clickWomanButton = ^(RankButton * _Nonnull setBtn) {
+                _sex = 0;
                 if (!setBtn.isSelected) {
                     setBtn.selected = !setBtn.selected;
                 }
@@ -421,23 +674,70 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    [_nameTF resignFirstResponder];
+    [_ageTF resignFirstResponder];
+    [_phoneTF resignFirstResponder];
+    [_textView resignFirstResponder];
+
+    
+    
     if (textField == _eatTF) {
         WEAKSELF
-        // 自定义单列字符串
-        NSArray *dataSource = @[@"食欲很好", @"食欲一般", @"食欲下降", @"没有食欲", @"其他"];
-        [BRStringPickerView showStringPickerWithTitle:@"选择饮食" dataSource:dataSource defaultSelValue:_eatTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-            weakSelf.eatTF.text = selectValue;
-        } cancelBlock:^{
-            NSLog(@"点击了背景视图或取消按钮");
+        
+        [PPHTTPRequest GetDictionaryDataInfoWithParameters:@"2" success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                self.eatArray = response[@"data"][@"dictionaries"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary * dict in self.eatArray) {
+                    [muArr addObject:dict[@"name"]];
+                }
+                
+                // 自定义单列字符串
+                NSArray *dataSource = [muArr copy];
+                [BRStringPickerView showStringPickerWithTitle:@"选择饮食" dataSource:dataSource defaultSelValue:_eatTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+                    weakSelf.eatTF.text = selectValue;
+                } cancelBlock:^{
+                    NSLog(@"点击了背景视图或取消按钮");
+                }];
+
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
         }];
+        
+        
     }else if (textField == _sleepTF) {
         WEAKSELF
-        // 自定义单列字符串
-        NSArray *dataSource = @[@"睡眠很好", @"睡眠一般", @"睡眠下降", @"没有睡眠", @"其他"];
-        [BRStringPickerView showStringPickerWithTitle:@"选择睡眠" dataSource:dataSource defaultSelValue:_sleepTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-            weakSelf.sleepTF.text = selectValue;
-        } cancelBlock:^{
-            NSLog(@"点击了背景视图或取消按钮");
+        
+        [PPHTTPRequest GetDictionaryDataInfoWithParameters:@"1" success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                self.sleepArray = response[@"data"][@"dictionaries"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary * dict in self.sleepArray) {
+                    [muArr addObject:dict[@"name"]];
+                }
+                
+                // 自定义单列字符串
+                NSArray *dataSource = [muArr copy];
+                [BRStringPickerView showStringPickerWithTitle:@"选择睡眠" dataSource:dataSource defaultSelValue:_sleepTF.text isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+                    weakSelf.sleepTF.text = selectValue;
+                } cancelBlock:^{
+                    NSLog(@"点击了背景视图或取消按钮");
+                }];
+
+            }else{
+                MYALERT(response[@"msg"]);
+            }
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
         }];
 
     }
@@ -461,16 +761,19 @@
 #pragma mark - 选中上传图片
 - (void)choiceImg
 {
-    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:0 handler:^(UIAlertAction * _Nonnull action) {
-        [self pushImagePickerController];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"相机" style:0 handler:^(UIAlertAction * _Nonnull action) {
-        [self takePhoto];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }]];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self pushImagePickerController];
+    
+    
+//    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"相册" style:0 handler:^(UIAlertAction * _Nonnull action) {
+//        [self pushImagePickerController];
+//    }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"相机" style:0 handler:^(UIAlertAction * _Nonnull action) {
+//        [self takePhoto];
+//    }]];
+//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//    }]];
+//    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (UIImagePickerController *)imagePickerVc {
@@ -520,6 +823,7 @@
             if(iOS8Later) {
                 _imagePickerVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             }
+            
             [self presentViewController:_imagePickerVc animated:YES completion:nil];
         } else {
             NSLog(@"模拟器中无法打开照相机,请在真机中使用");
@@ -539,7 +843,7 @@
         // 1.设置目前已经选中的图片数组
         //        imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     }
-    imagePickerVc.allowTakePicture = NO; // 在内部显示拍照按钮
+    imagePickerVc.allowTakePicture = YES; // 在内部显示拍照按钮
     
     // 3. 设置是否可以选择视频/图片/原图
     imagePickerVc.allowPickingVideo = NO;
@@ -594,6 +898,23 @@
     
     [self.tableView reloadData];
     
+}
+
+#pragma mark - 上传图片
+- (void)uploadImage{
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    WEAKSELF
+    [PPHTTPRequest postUploadWithparameters:nil images:_selectedPhotos success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            _imageUrlArray = response[@"data"][@"urls"];
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
 }
 
 @end

@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NYYuYueJiuZhenModel;
+
 @interface NYJiuZhenDetailViewController : UIViewController
+
+@property (nonatomic,strong) NYYuYueJiuZhenModel * jiuZhenModel;
 
 @end
 

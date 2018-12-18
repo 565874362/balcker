@@ -46,7 +46,7 @@
 {
     _wenZhenModel = wenZhenModel;
     
-    _timeLB.text = @"2018-11-22 10:10";
+    _timeLB.text = [wenZhenModel.gmtCreate substringWithRange:NSMakeRange(0, 16)];
 
 }
 

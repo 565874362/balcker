@@ -11,6 +11,9 @@
 #import "NYJieZhenDetailCell.h"
 #import "NYJieZhenDoctorDetailCell.h"
 
+#import "NYPayInfoModel.h"
+#import "NYYuYueJiuZhenModel.h"
+
 @interface NYJiuZhenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -112,6 +115,7 @@
             return cell;
         }else if (indexPath.row == 1){
             NYJieZhenDoctorDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JieZhenDoctorDetailCellID"];
+            cell.jiuZhenModel = self.jiuZhenModel;
             return cell;
         }
     }else if (indexPath.section == 1) {
@@ -123,19 +127,19 @@
             NYJieZhenDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JieZhenDetailCellID"];
             if (indexPath.row == 1) {
                 cell.typeLB.text = @"患者姓名";
-                cell.infoLB.text = @"赵小强";
+                cell.infoLB.text = self.jiuZhenModel.name;
             }else if (indexPath.row == 2){
                 cell.typeLB.text = @"年龄";
-                cell.infoLB.text = @"5岁";
+                cell.infoLB.text = [NSString stringWithFormat:@"%@岁",self.jiuZhenModel.age];
             }else if (indexPath.row == 3){
                 cell.typeLB.text = @"性别";
-                cell.infoLB.text = @"男";
+                cell.infoLB.text = [self.jiuZhenModel.gender integerValue]==0?@"女":@"男";
             }else if (indexPath.row == 4){
                 cell.typeLB.text = @"联系电话";
-                cell.infoLB.text = @"15596679811";
+                cell.infoLB.text = self.jiuZhenModel.phone;
             }else if (indexPath.row == 5){
                 cell.typeLB.text = @"就诊时间";
-                cell.infoLB.text = @"2018-10-30 周五 下午";
+                cell.infoLB.text = [NSString stringWithFormat:@"%@ %@",self.jiuZhenModel.visitTime,[self.jiuZhenModel.timePart integerValue]==0?@"上午":@"下午"];
             }
             return cell;
         }
@@ -148,10 +152,10 @@
             NYJieZhenDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JieZhenDetailCellID"];
             if (indexPath.row == 1) {
                 cell.typeLB.text = @"支付方式";
-                cell.infoLB.text = @"微信支付";
+                cell.infoLB.text = [self.jiuZhenModel.payInfo.type integerValue] == 1?@"微信":@"支付宝";
             }else if (indexPath.row == 2){
                 cell.typeLB.text = @"支付时间";
-                cell.infoLB.text = @"2018-10-30 12:15:26";
+                cell.infoLB.text = self.jiuZhenModel.payInfo.gmtCreate;
             }
             return cell;
         }

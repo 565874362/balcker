@@ -34,6 +34,7 @@
     
     UILabel * nameLB = [[UILabel alloc] init];
     nameLB.textColor = COLOR_BIG;
+    nameLB.font = FONT(18);
     nameLB.textAlignment = NSTextAlignmentLeft;
     [bgView1 addSubview:nameLB];
     
@@ -73,6 +74,7 @@
     //年龄
     UILabel * ageLB = [[UILabel alloc] init];
     ageLB.textColor = COLOR_BIG;
+    ageLB.font = FONT(18);
     ageLB.textAlignment = NSTextAlignmentLeft;
     [bgView2 addSubview:ageLB];
     

@@ -39,6 +39,7 @@
     
     UILabel * sexLB = [[UILabel alloc] init];
     sexLB.textColor = COLOR_BIG;
+    sexLB.font = FONT(18);
     sexLB.textAlignment = NSTextAlignmentLeft;
     [bgView1 addSubview:sexLB];
     
@@ -110,6 +111,7 @@
     //电话
     UILabel * phoneLB = [[UILabel alloc] init];
     phoneLB.textColor = COLOR_BIG;
+    phoneLB.font = FONT(18);
     phoneLB.textAlignment = NSTextAlignmentLeft;
     [bgView2 addSubview:phoneLB];
     

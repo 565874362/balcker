@@ -21,9 +21,15 @@
 #import <UIImageView+WebCache.h>
 #import <MJRefresh.h>
 #import <RongIMKit/RongIMKit.h>
+#import <JKCountDownButton.h>
 
 #import "HHTextField.h"
 #import "BRPickerView.h"
+#import "PPHTTPRequest.h"
+#import "MyAlertCenter.h"
+#import "UserInfo.h"
+#import "NSObject+HaiTian.h"
+
 
 #define NYScreenW   [UIScreen mainScreen].bounds.size.width
 #define NYScreenH   [UIScreen mainScreen].bounds.size.height
@@ -38,6 +44,7 @@
 #define FONT(z) [UIFont systemFontOfSize:z];
 
 #define MYALERT(string) [[MyAlertCenter defaultCenter] postAlertWithMessage:string] // 提示
+#define ISLOGIN [[NSUserDefaults standardUserDefaults] boolForKey:@"ISLOGIN"]
 
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define MAINCOLOR RGBA(23,132,243,1.0) //主打色

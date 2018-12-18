@@ -62,6 +62,7 @@
     //时间
     _timeLB = [[UILabel alloc] init];
     _timeLB.textAlignment = NSTextAlignmentRight;
+    _timeLB.font = FONT(15);
     _timeLB.textColor = COLOR_BIG;
     [self.contentView addSubview:_timeLB];
     
@@ -105,10 +106,10 @@
 {
     _commModel = commModel;
     
-    _phoneLB.text = @"155****9811";
+    _phoneLB.text = [commModel.patientAccount stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
     
-    _timeLB.text = @"2018-12-06";
-    
-    _contentLB.text = @"很感谢刘振环医生的详细解读，真的是吃了一颗定心丸，自己也不用胡思乱想了，很感谢刘振环医生的详细解读，真的是吃了一颗定心丸，自己也不用胡思乱想了很感谢刘振环医生的详细解读，真的是吃了一颗定心丸，自己也不用胡思乱想了";
+    _timeLB.text = [commModel.gmtCreate substringWithRange:NSMakeRange(0, 10)];
+
+    _contentLB.text = commModel.content;
 }
 @end

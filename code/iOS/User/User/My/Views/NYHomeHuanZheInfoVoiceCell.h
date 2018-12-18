@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYHomeHuanZheInfoVoiceCell : UITableViewCell
 
+@property (nonatomic,copy) void (^clickVoiceButton)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

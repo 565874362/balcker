@@ -8,6 +8,7 @@
 
 #import "NYDoctorDetailInfoCell.h"
 #import "NYDoctorModel.h"
+#import "NYAdeptEntitiesModel.h"
 
 @interface NYDoctorDetailInfoCell ()
 {
@@ -173,32 +174,40 @@
     [_shanChangInfoLB3 setMaxNumberOfLinesToShow:0];
     
     
-    [self setupAutoHeightWithBottomView:_shanChangInfoLB3 bottomMargin:15];
-    
+    [self setupAutoHeightWithBottomViewsArray:@[_shanChangInfoLB1,_shanChangInfoLB2,_shanChangInfoLB3] bottomMargin:15];
 }
 
 - (void)setDoctorModel:(NYDoctorModel *)doctorModel
 {
     _doctorModel = doctorModel;
     
+    //头像
+    [_headerImg sd_setImageWithURL:[NSURL URLWithString:doctorModel.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    
     //科室
-    _keshiLB.text = @"儿科";
+    _keshiLB.text = doctorModel.offName;
     //姓名
-    _nameLB.text = @"刘振环";
+    _nameLB.text = doctorModel.name;
     //职称
-    _zhichengLB.text = @"主任医师";
+    _zhichengLB.text = doctorModel.positionName;
     //医院名称
-    _yiyuanNameLB.text = @"西安儿童医院";
+    _yiyuanNameLB.text = doctorModel.hosName;
     //擅长
     _shanChangLB.text = @"擅长:";
     
-    //擅长1
-    _shanChangInfoLB1.text = @"咳嗽:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长2
-    _shanChangInfoLB2.text = @"哮喘:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长3
-    _shanChangInfoLB3.text = @"呼吸道感染:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    
+    for (int i = 0; i < doctorModel.adeptEntities.count; i++) {
+        NYAdeptEntitiesModel * adModel = doctorModel.adeptEntities[i];
+        if (i == 0) {
+            //擅长1
+            _shanChangInfoLB1.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }else if (i == 1){
+            //擅长2
+            _shanChangInfoLB2.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }else if (i == 2){
+            //擅长3
+            _shanChangInfoLB3.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }
+    }
 }
 
 @end

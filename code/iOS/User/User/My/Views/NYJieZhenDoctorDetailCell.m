@@ -7,6 +7,8 @@
 //
 
 #import "NYJieZhenDoctorDetailCell.h"
+#import "NYYuYueJiuZhenModel.h"
+#import "NYDoctorModel.h"
 
 @interface NYJieZhenDoctorDetailCell ()
 {
@@ -139,4 +141,21 @@
     _priceRightLB.text = @"20.0元";
 }
 
+- (void)setJiuZhenModel:(NYYuYueJiuZhenModel *)jiuZhenModel
+{
+    _jiuZhenModel = jiuZhenModel;
+    
+    //头像
+    [_headerImg sd_setImageWithURL:[NSURL URLWithString:jiuZhenModel.doctor.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    
+    //姓名
+    _nameRightLB.text = jiuZhenModel.doctor.name;
+    
+    //单位
+    _danWeiRightLB.text = jiuZhenModel.doctor.hosName;
+    
+    //预约费用
+    _priceRightLB.text = [NSString stringWithFormat:@"%.2f元",[jiuZhenModel.fee doubleValue]];
+    
+}
 @end

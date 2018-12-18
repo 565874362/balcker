@@ -8,6 +8,7 @@
 
 #import "NYYuYueJiuZhenJiLvCell.h"
 #import "NYYuYueJiuZhenModel.h"
+#import "NYDoctorModel.h"
 
 @interface NYYuYueJiuZhenJiLvCell ()
 {
@@ -169,20 +170,20 @@
 {
     _jiuZhenJiLvModel = jiuZhenJiLvModel;
     
-    _nameLB.text = @"丁国芳";
+    _nameLB.text = jiuZhenJiLvModel.doctor.name;
     
-    _keshiLB.text = @"(儿科)";
+    _keshiLB.text = [NSString stringWithFormat:@"(%@)",jiuZhenJiLvModel.doctor.offName];
     
-    _moneyLB.text = @"20.0元";
+    _moneyLB.text = [NSString stringWithFormat:@"%.2f元",[jiuZhenJiLvModel.fee doubleValue]];
     
     _timeLeftLB.text = @"就诊时间";
-    _timeRightLB.text = @"2018-10-26 周五 上午";
+    _timeRightLB.text = [NSString stringWithFormat:@"%@ %@",jiuZhenJiLvModel.visitTime,[jiuZhenJiLvModel.timePart integerValue]==0?@"上午":@"下午"];
     
     _userNameLeftLB.text = @"患者姓名";
-    _userNameRightLB.text = @"赵小强";
+    _userNameRightLB.text = jiuZhenJiLvModel.name;
 
     _userAgeLeftLB.text = @"年龄";
-    _userAgeRightLB.text = @"5岁";
+    _userAgeRightLB.text = [NSString stringWithFormat:@"%@岁",jiuZhenJiLvModel.age];
 
 }
 

@@ -11,9 +11,16 @@
 #import "NYYuYueJiuZhenModel.h"
 #import "NYJiuZhenDetailViewController.h"
 
-@interface NYYuYueJiuZhenListViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface NYYuYueJiuZhenListViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+{
+    NSInteger _page; //分页
+    NSInteger _count; //每页多少数据
+    NSMutableArray * _dataArray;
+    
+}
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) MJRefreshAutoFooter *footer;
 
 
 @end
@@ -35,6 +42,9 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.showsVerticalScrollIndicator = YES;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
+
     }
     return _tableView;
 }
@@ -46,11 +56,97 @@
     
     [self.tableView registerClass:[NYYuYueJiuZhenJiLvCell class] forCellReuseIdentifier:@"Cell"];
     
+    _dataArray = [NSMutableArray array];
+    _page = 1;
+    _count = 10;
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
 }
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+    
+    //上拉刷新
+    self.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+}
+
+#pragma mark - 获取数据
+- (void)loadData
+{
+    _page = 1;
+    NSDictionary * dict = @{@"size":@(_count),
+                            @"current":@(_page),
+                            };
+    [PPHTTPRequest postyYuYueJiuZhenListInfoWithParameters:dict success:^(id response) {
+        [self.tableView.mj_header endRefreshing];
+        
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"page"][@"records"];
+            if (listArr.count >= _count) {
+                _page++;
+                self.tableView.mj_footer = self.footer;
+            }else{
+                self.tableView.mj_footer = nil;
+            }
+            
+            [_dataArray removeAllObjects];
+            for (NSDictionary *datc in listArr) {
+                NYYuYueJiuZhenModel *jiuZhenModel = [NYYuYueJiuZhenModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:jiuZhenModel];
+            }
+        }else{
+            self.tableView.mj_footer = nil;
+            MYALERT(@"暂无数据");
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        MYALERT(@"获取失败");
+    }];
+}
+
+#pragma mark - 加载更多数据
+- (void)loadMoreData
+{
+    NSDictionary * dict = @{@"size":@(_count),
+                            @"current":@(_page),
+                            };
+    [PPHTTPRequest postyYuYueJiuZhenListInfoWithParameters:dict success:^(id response) {
+        [self.tableView.mj_footer endRefreshing];
+        
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"page"][@"records"];
+            if (listArr.count >= _count) {
+                _page++;
+                self.tableView.mj_footer = self.footer;
+            }else{
+                self.tableView.mj_footer = nil;
+            }
+            
+            for (NSDictionary *datc in listArr) {
+                NYYuYueJiuZhenModel *jiuZhenModel = [NYYuYueJiuZhenModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:jiuZhenModel];
+            }
+        }else{
+            self.tableView.mj_footer = nil;
+            MYALERT(@"暂无数据");
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_footer endRefreshing];
+        MYALERT(@"获取失败");
+    }];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -84,7 +180,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NYYuYueJiuZhenJiLvCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.jiuZhenJiLvModel = nil;
+    cell.jiuZhenJiLvModel = _dataArray[indexPath.section];
     return cell;
 }
 
@@ -93,6 +189,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NYJiuZhenDetailViewController * vc = [[NYJiuZhenDetailViewController alloc] init];
+    vc.jiuZhenModel = _dataArray[indexPath.section];
     [self.navigationController pushViewController:vc animated:YES];
     
 }
