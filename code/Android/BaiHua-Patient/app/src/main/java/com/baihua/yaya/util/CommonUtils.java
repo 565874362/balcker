@@ -6,9 +6,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baihua.yaya.R;
@@ -102,6 +104,26 @@ public class CommonUtils {
      */
     public static String getTimePartString(String timePart) {
         return "0".equals(timePart) ? "上午" : "下午";
+    }
+
+    /**
+     * 判断EditText TextView是否为空
+     *
+     * @param textView 目标
+     * @return true 空 false 不空
+     */
+    public static boolean isTextEmpty(TextView textView) {
+        return TextUtils.isEmpty(textView.getText().toString().trim());
+    }
+
+    /**
+     * 获取TextView 内容
+     *
+     * @param textView 目标
+     * @return 内容
+     */
+    public static String getTextString(TextView textView) {
+        return textView.getText().toString().trim();
     }
 
     /**

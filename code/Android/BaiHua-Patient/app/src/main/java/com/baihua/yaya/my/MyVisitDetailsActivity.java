@@ -29,6 +29,7 @@ import com.baihua.yaya.decoration.SpaceDecoration;
 import com.baihua.yaya.doctor.AppointmentActivity;
 import com.baihua.yaya.entity.PatientListEntity;
 import com.baihua.yaya.entity.VisitDetailsEntity;
+import com.baihua.yaya.rcloud.RCUtils;
 import com.baihua.yaya.util.CommonUtils;
 import com.baihua.yaya.util.Utils;
 import com.baihua.yaya.view.recorder.MediaManager;
@@ -282,7 +283,7 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutReplyAdvisory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toast("咨询");
+                RCUtils.startConversation(MyVisitDetailsActivity.this, "targetId", "title");
             }
         });
 

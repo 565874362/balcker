@@ -11,9 +11,10 @@ import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.MainActivity;
 import com.baihua.yaya.R;
-import com.baihua.yaya.entity.form.LoginForm;
 import com.baihua.yaya.entity.Token;
 import com.baihua.yaya.entity.Verification;
+import com.baihua.yaya.entity.form.LoginForm;
+import com.baihua.yaya.util.CommonUtils;
 import com.baihua.yaya.util.Utils;
 import com.baihua.yaya.widget.ValidateCodeView;
 import com.blankj.utilcode.util.LogUtils;
@@ -37,7 +38,8 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_tv_login)
     TextView loginTvLogin;
 
-    private LoginForm mLogin = new LoginForm();
+    private String mCodeId = ""; // 验证码ID
+    private String mCode = ""; // 验证码
 
     @Override
     public void setLayout() {
@@ -89,8 +91,16 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        mLogin.setAccount(registerEtMobileNo.getText().toString().trim());
-        RxHttp.getInstance().getSyncServer().login(mLogin)
+        if (!CommonUtils.getTextString(loginEtCode).equals(mCode)) {
+            toast("请输入正确的验证码");
+            return;
+        }
+
+        LoginForm loginForm = new LoginForm();
+        loginForm.setAccount(registerEtMobileNo.getText().toString().trim());
+        loginForm.setCaptchaCode(mCode);
+        loginForm.setCaptchaId(mCodeId);
+        RxHttp.getInstance().getSyncServer().login(loginForm)
                 .compose(RxSchedulers.observableIO2Main(this))
                 .subscribe(new ProgressObserver<Token>(this) {
                     @Override
@@ -126,8 +136,8 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(Verification result) {
                         LogUtils.e(result.getCaptchaId() + "\n");
                         LogUtils.e(result.getVerificationCode());
-                        mLogin.setCaptchaCode(result.getVerificationCode());
-                        mLogin.setCaptchaId(result.getCaptchaId());
+                        mCode = result.getVerificationCode();
+                        mCodeId = result.getCaptchaId();
                     }
 
                     @Override
