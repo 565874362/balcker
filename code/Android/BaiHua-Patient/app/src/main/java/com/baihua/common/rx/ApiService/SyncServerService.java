@@ -13,6 +13,7 @@ import com.baihua.yaya.entity.EmptyEntity;
 import com.baihua.yaya.entity.FileEntity;
 import com.baihua.yaya.entity.PatientListEntity;
 import com.baihua.yaya.entity.RegisteredEntity;
+import com.baihua.yaya.entity.RegisteredListEntity;
 import com.baihua.yaya.entity.Token;
 import com.baihua.yaya.entity.Verification;
 import com.baihua.yaya.entity.VisitDetailsEntity;
@@ -22,6 +23,7 @@ import com.baihua.yaya.entity.form.CommentForm;
 import com.baihua.yaya.entity.form.DoctorForm;
 import com.baihua.yaya.entity.form.LoginForm;
 import com.baihua.yaya.entity.form.PatientListForm;
+import com.baihua.yaya.entity.form.PublishCommentForm;
 import com.baihua.yaya.entity.form.RegisteredForm;
 import com.baihua.yaya.entity.form.VisitForm;
 
@@ -108,6 +110,15 @@ public interface SyncServerService {
     @POST("/rest/sercomment/doctorList")
     Observable<Response<CommentEntity>> getDoctorCommentList(@Body CommentForm commentForm);
 
+    /**
+     * 发表评论
+     *
+     * @param publishCommentForm 所需参数
+     * @return 结果
+     */
+    @POST("/rest/sercomment/patientCommit")
+    Observable<Response<EmptyEntity>> publishComment(@Header("token") String token, @Body PublishCommentForm publishCommentForm);
+
     // ************************************** 问诊 *****************************************
 
     /**
@@ -166,12 +177,20 @@ public interface SyncServerService {
     // ************************************** 挂号 *****************************************
 
     /**
-     * 患者列表
+     * 挂号列表
      *
      * @return 结果
      */
     @POST("/rest/serregistration/patientList")
-    Observable<Response<PatientListEntity>> getRegisteredList(@Header("token") String token, @Body PatientListForm patientListForm);
+    Observable<Response<RegisteredListEntity>> getRegisteredList(@Header("token") String token, @Body PatientListForm patientListForm);
+
+    /**
+     * 挂号详情
+     *
+     * @return 结果
+     */
+    @GET("/rest/serregistration/info/{id}")
+    Observable<Response<RegisteredListEntity>> getRegisteredDetails(@Header("token") String token, @Path("id") String id);
 
     /**
      * 挂号

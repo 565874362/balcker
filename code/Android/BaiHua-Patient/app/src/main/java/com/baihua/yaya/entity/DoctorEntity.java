@@ -133,6 +133,7 @@ public class DoctorEntity implements Serializable {
             private String gmtCreate;
             private String gmtModified;
             private String isDel;
+            private List<AdeptEntitiesBean> adeptEntities;
 
             public String getId() {
                 return id;
@@ -268,6 +269,100 @@ public class DoctorEntity implements Serializable {
 
             public void setStatus(String status) {
                 this.status = status;
+            }
+
+            public String getGmtCreate() {
+                return gmtCreate;
+            }
+
+            public void setGmtCreate(String gmtCreate) {
+                this.gmtCreate = gmtCreate;
+            }
+
+            public String getGmtModified() {
+                return gmtModified;
+            }
+
+            public void setGmtModified(String gmtModified) {
+                this.gmtModified = gmtModified;
+            }
+
+            public String getIsDel() {
+                return isDel;
+            }
+
+            public void setIsDel(String isDel) {
+                this.isDel = isDel;
+            }
+
+            public List<AdeptEntitiesBean> getAdeptEntities() {
+                return adeptEntities;
+            }
+
+            public void setAdeptEntities(List<AdeptEntitiesBean> adeptEntities) {
+                this.adeptEntities = adeptEntities;
+            }
+        }
+
+        public static class AdeptEntitiesBean implements Serializable {
+            /**
+             * id : null
+             * name : 咳嗽
+             * describe : 过敏性咳嗽
+             * ordered : null
+             * docId : null
+             * gmtCreate : null
+             * gmtModified : null
+             * isDel : null
+             */
+
+            private String id;
+            private String name;
+            private String describe;
+            private String ordered;
+            private String docId;
+            private String gmtCreate;
+            private String gmtModified;
+            private String isDel;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getDescribe() {
+                return describe;
+            }
+
+            public void setDescribe(String describe) {
+                this.describe = describe;
+            }
+
+            public String getOrdered() {
+                return ordered;
+            }
+
+            public void setOrdered(String ordered) {
+                this.ordered = ordered;
+            }
+
+            public String getDocId() {
+                return docId;
+            }
+
+            public void setDocId(String docId) {
+                this.docId = docId;
             }
 
             public String getGmtCreate() {

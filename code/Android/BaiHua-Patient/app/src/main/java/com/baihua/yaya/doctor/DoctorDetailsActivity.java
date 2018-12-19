@@ -190,7 +190,6 @@ public class DoctorDetailsActivity extends BaseActivity {
                 RCUtils.startConversation(this, "targetId", "title");
                 break;
             case R.id.doctor_details_tv_visiting:
-                ActivityUtils.startActivity(AppointmentActivity.class);
                 Utils.gotoActivity(DoctorDetailsActivity.this, AppointmentActivity.class, false, "doctorId", mDoctorId);
                 break;
         }

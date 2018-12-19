@@ -239,7 +239,7 @@ public class DoctorInfoEntity implements Serializable {
             this.adeptEntities = adeptEntities;
         }
 
-        public static class AdeptEntitiesBean {
+        public static class AdeptEntitiesBean implements Serializable{
             /**
              * id : null
              * name : 咳嗽

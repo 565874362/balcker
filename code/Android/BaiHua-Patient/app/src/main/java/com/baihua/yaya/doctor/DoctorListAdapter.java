@@ -1,6 +1,7 @@
 package com.baihua.yaya.doctor;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.baihua.yaya.R;
 import com.baihua.yaya.entity.DoctorEntity;
@@ -8,6 +9,7 @@ import com.baihua.yaya.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,11 +25,16 @@ public class DoctorListAdapter extends BaseQuickAdapter<DoctorEntity.PageBean.Re
 
     @Override
     protected void convert(BaseViewHolder helper, DoctorEntity.PageBean.RecordsBean item) {
+        List<String> good = new ArrayList<>();
+        for (int i = 0; i < item.getAdeptEntities().size(); i++) {
+            good.add(item.getAdeptEntities().get(i).getName());
+        }
         Utils.showCircleImg(mContext, item.getPhoto(), helper.getView(R.id.item_doctor_iv_avatar));
         helper.setText(R.id.item_doctor_tv_name, item.getName())
                 .setText(R.id.item_doctor_tv_job, item.getPositionName())
                 .setText(R.id.item_doctor_tv_hospital, item.getHosName())
                 .setText(R.id.item_doctor_tv_department, item.getOffName())
-                .setText(R.id.item_doctor_tv_good, String.format("擅长：%s", item.getMajor()));
+                .setText(R.id.item_doctor_tv_good, String.format("擅长：%s", TextUtils.join("、", good)));
+
     }
 }

@@ -95,6 +95,16 @@ public class CommonUtils {
     }
 
     /**
+     * 时间区间   0 上午 1 下午
+     *
+     * @param timePart 时间区间
+     * @return 上午 下午
+     */
+    public static String getTimePartString(String timePart) {
+        return "0".equals(timePart) ? "上午" : "下午";
+    }
+
+    /**
      * 文件转base64字符串
      *
      * @param file 目标文件
