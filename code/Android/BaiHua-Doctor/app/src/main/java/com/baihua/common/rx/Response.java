@@ -6,19 +6,19 @@ package com.baihua.common.rx;
 
 public class Response<T> {
 
-	public int ret;//约定  -1为server返回数据异常  200为正常范围
+	public int code;//约定  0为server返回数据正常  200为正常范围
 	public String msg;
 	public T data;
 
-	public int getRet() {
-		return ret;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public void setRet(int ret) {
-		this.ret = ret;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public String getMsg() {
+    public String getMsg() {
 		return msg;
 	}
 

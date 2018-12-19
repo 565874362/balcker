@@ -31,6 +31,7 @@
             android:layout_weight="3"
             android:background="@android:color/white"
             android:hint="@string/login_tips_plz_input_name"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
@@ -107,17 +108,16 @@
             android:textSize="@dimen/text_size_16sp" />
 
 
-        <EditText
-            android:id="@+id/register_et_company"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/register_sp_hospital"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@android:color/white"
-            android:hint="@string/login_tips_plz_input_company"
-            android:inputType="text"
-            android:textColor="@color/color_black_dark_4b5764"
-            android:textColorHint="@color/color_gray_light_afb1bd"
-            android:textSize="@dimen/text_size_16sp" />
+            android:dropDownVerticalOffset="0dp"
+            android:entries="@array/actionArray"
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/text_size_16sp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
     </LinearLayout>
 
@@ -142,17 +142,16 @@
             android:textSize="@dimen/text_size_16sp" />
 
 
-        <EditText
-            android:id="@+id/register_et_job"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/register_sp_position"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@android:color/white"
-            android:hint="@string/login_tips_plz_input_job"
-            android:inputType="text"
-            android:textColor="@color/color_black_dark_4b5764"
-            android:textColorHint="@color/color_gray_light_afb1bd"
-            android:textSize="@dimen/text_size_16sp" />
+            android:dropDownVerticalOffset="0dp"
+            android:entries="@array/actionArray"
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/text_size_16sp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
     </LinearLayout>
 
@@ -182,12 +181,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:spinnerMode="dropdown"
             android:dropDownVerticalOffset="0dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:entries="@array/actionArray"
-            android:prompt="@string/login_tips_plz_input_department"
-            android:textSize="@dimen/text_size_16sp" />
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/text_size_16sp"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
     </LinearLayout>
 
@@ -219,6 +217,7 @@
             android:layout_weight="3"
             android:background="@android:color/white"
             android:hint="@string/login_tips_plz_input_registration_fee"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
@@ -254,6 +253,7 @@
             android:layout_weight="3"
             android:background="@android:color/white"
             android:hint="@string/login_tips_plz_input_good_at_name"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
@@ -264,7 +264,8 @@
     <EditText
         android:id="@+id/register_et_good_at_one_desc"
         style="@style/LoginWithMinHeightEditTextStyle"
-        android:hint="@string/login_tips_description" />
+        android:hint="@string/login_tips_description"
+        android:imeOptions="actionNext" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -294,6 +295,7 @@
             android:layout_weight="3"
             android:background="@android:color/white"
             android:hint="@string/login_tips_plz_input_good_at_name"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
@@ -304,7 +306,8 @@
     <EditText
         android:id="@+id/register_et_good_at_two_desc"
         style="@style/LoginWithMinHeightEditTextStyle"
-        android:hint="@string/login_tips_description" />
+        android:hint="@string/login_tips_description"
+        android:imeOptions="actionNext" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -334,6 +337,7 @@
             android:layout_weight="3"
             android:background="@android:color/white"
             android:hint="@string/login_tips_plz_input_good_at_name"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
@@ -344,7 +348,8 @@
     <EditText
         android:id="@+id/register_tv_good_at_three_desc"
         style="@style/LoginWithMinHeightEditTextStyle"
-        android:hint="@string/login_tips_description" />
+        android:hint="@string/login_tips_description"
+        android:imeOptions="actionDone" />
 
     <TextView
         android:layout_width="match_parent"

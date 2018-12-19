@@ -79,7 +79,7 @@ public class MyInformationActivity extends BaseActivity {
 
     @Override
     public void setListener() {
-        mIbRight.setOnClickListener(new View.OnClickListener() {
+        mTvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityUtils.startActivity(MyInfoEditActivity.class);

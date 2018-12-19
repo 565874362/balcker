@@ -1,14 +1,11 @@
 package com.baihua.yayayisheng.login;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatSpinner;
-import android.view.MotionEvent;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,21 +13,38 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
+import com.baihua.yayayisheng.entity.DicEntity;
+import com.baihua.yayayisheng.entity.EmptyEntity;
+import com.baihua.yayayisheng.entity.FileEntity;
+import com.baihua.yayayisheng.entity.HospitalEntity;
+import com.baihua.yayayisheng.entity.OfficeEntity;
+import com.baihua.yayayisheng.entity.VerificationEntity;
+import com.baihua.yayayisheng.entity.form.RegisterForm;
+import com.baihua.yayayisheng.util.CommonUtils;
 import com.baihua.yayayisheng.util.Utils;
 import com.baihua.yayayisheng.widget.ValidateCodeView;
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Author:byd
@@ -46,10 +60,10 @@ public class RegisterActivity extends BaseActivity {
     RadioButton registerRbMale;
     @BindView(R.id.register_rb_group)
     RadioGroup registerRbGroup;
-    @BindView(R.id.register_et_company)
-    EditText registerEtCompany;
-    @BindView(R.id.register_et_job)
-    EditText registerEtJob;
+    @BindView(R.id.register_sp_hospital)
+    AppCompatSpinner registerSpHospital;
+    @BindView(R.id.register_sp_position)
+    AppCompatSpinner registerSpPosition;
     @BindView(R.id.register_sp_department)
     AppCompatSpinner registerSpDepartment;
     @BindView(R.id.register_et_registration_fee)
@@ -93,8 +107,18 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.register_tv_upload_yourself)
     TextView registerTvUploadYourself;
 
-    private List<LocalMedia> mReturnList = new ArrayList<>();
     private String uploadType;
+
+    private int mGender = 0; // 性别 1 男 0 女
+    private HospitalEntity.ListBean selectHosBean; // 被选中的单位
+    private DicEntity.DictionariesBean selectPosBean; // 被选中的职位
+    private OfficeEntity.ListBean selectOfficeBean; // 被选中的科室
+    private String mYourSelfImagePath = ""; // 本人照片地址
+    private String mCertificateImagePath = ""; // 医师资格证照片地址
+    private String mFrontCardImagePath = ""; // 正面身份证照片地址
+    private String mBackCardImagePath = ""; // 反面身份证照片地址
+    private String mCodeId = ""; // 验证码ID
+    private String mCode = ""; // 验证码
 
     @Override
     public void setLayout() {
@@ -117,24 +141,177 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initMember() {
+        getHospital();
+        getPositionList();
+        getOfficeList();
+    }
+
+    /**
+     * 获取医院
+     */
+    private void getHospital() {
+        RxHttp.getInstance().getSyncServer()
+                .getHospitalList()
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<HospitalEntity>(this) {
+                    @Override
+                    public void onSuccess(HospitalEntity result) {
+                        SpinnerHospitalAdapter spinnerHospitalAdapter = new SpinnerHospitalAdapter(RegisterActivity.this, result.getList());
+                        registerSpHospital.setAdapter(spinnerHospitalAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取职位
+     */
+    private void getPositionList() {
+        RxHttp.getInstance().getSyncServer()
+                .getDictionary("3")
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<DicEntity>(this) {
+
+                    @Override
+                    public void onSuccess(DicEntity result) {
+                        SpinnerPositionAdapter spinnerPositionAdapter = new SpinnerPositionAdapter(RegisterActivity.this, result.getDictionaries());
+                        registerSpPosition.setAdapter(spinnerPositionAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取科室
+     */
+    private void getOfficeList() {
+        RxHttp.getInstance().getSyncServer()
+                .getOfficeList()
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<OfficeEntity>(this) {
+                    @Override
+                    public void onSuccess(OfficeEntity result) {
+                        SpinnerOfficeAdapter spinnerOfficeAdapter = new SpinnerOfficeAdapter(RegisterActivity.this, result.getList());
+                        registerSpDepartment.setAdapter(spinnerOfficeAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     @Override
     public void setListener() {
+        registerSpHospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectHosBean = (HospitalEntity.ListBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectHosBean.getName() + " : " + selectHosBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        registerSpPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectPosBean = (DicEntity.DictionariesBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectPosBean.getName() + " : " + selectPosBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        registerSpDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectOfficeBean = (OfficeEntity.ListBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectOfficeBean.getName() + " : " + selectOfficeBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         registerTvGetCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerTvGetCode.start();
+                getRegisterCode();
             }
         });
+
+        registerRbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.register_rb_female: // 女
+                        mGender = 0;
+                        break;
+                    case R.id.register_rb_male: // 男
+                        mGender = 1;
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getRegisterCode() {
+
+        if (TextUtils.isEmpty(registerEtMobileNo.getText().toString().trim())) {
+            toast("请输入手机号");
+            return;
+        }
+
+        registerTvGetCode.start();
+
+        RxHttp.getInstance().getSyncServer().getVerificationCode(registerEtMobileNo.getText().toString().trim())
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<VerificationEntity>(this) {
+                    @Override
+                    public void onSuccess(VerificationEntity result) {
+                        LogUtils.e(result.getCaptchaId() + "\n");
+                        LogUtils.e(result.getVerificationCode());
+                        mCode = result.getVerificationCode();
+                        mCodeId = result.getCaptchaId();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     private void showSingleCamera(Activity activity, List<LocalMedia> mediaList) {
         // 进入相册 以下是例子：用不到的api可以不写
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
-//                                .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
-                .maxSelectNum(1)// 最大图片选择数量 int
+                .theme(R.style.picture_QQ_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+//                .maxSelectNum(1)// 最大图片选择数量 int
 //                                .minSelectNum()// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
                 .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
@@ -175,8 +352,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.register_tv_upload_yourself, R.id.register_tv_upload_certificate, R.id.register_tv_upload_front_id_card, R.id.register_tv_upload_back_id_card,
-            R.id.register_tv_code, R.id.register_tv_register, R.id.register_tv_login})
+    @OnClick({R.id.register_tv_upload_yourself, R.id.register_tv_upload_certificate, R.id.register_tv_upload_front_id_card, R.id.register_tv_upload_back_id_card, R.id.register_tv_register, R.id.register_tv_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.register_tv_upload_yourself:
@@ -195,18 +371,89 @@ public class RegisterActivity extends BaseActivity {
                 uploadType = "back_id_card";
                 showSingleCamera(RegisterActivity.this, new ArrayList<>());
                 break;
-            case R.id.register_tv_code:
-                break;
             case R.id.register_tv_register:
-                toast("register");
-                ActivityUtils.startActivity(LoginActivity.class);
-                finish();
+                judgeEmpty();
                 break;
             case R.id.register_tv_login:
-                ActivityUtils.startActivity(LoginActivity.class);
                 finish();
                 break;
         }
+    }
+
+    /**
+     * 判空
+     */
+    private void judgeEmpty() {
+        if (CommonUtils.isTextEmpty(registerEtName)) {
+            toast("请输入姓名");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtRegistrationFee)) {
+            toast("请输入挂号费金额");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtOne)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtOneDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtTwo)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtTwoDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerTvGoodAtThree)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerTvGoodAtThreeDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mYourSelfImagePath)) {
+            toast("请上传本人照片");
+            return;
+        }
+        if (TextUtils.isEmpty(mCertificateImagePath)) {
+            toast("请上传医师资格证");
+            return;
+        }
+        if (TextUtils.isEmpty(mFrontCardImagePath)) {
+            toast("请上传身份证正面照");
+            return;
+        }
+        if (TextUtils.isEmpty(mYourSelfImagePath)) {
+            toast("请上传身份证反面照");
+            return;
+        }
+
+        if (CommonUtils.isTextEmpty(registerEtMobileNo)) {
+            toast("请输入手机号");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerTvCode)) {
+            toast("请输入短信验证码");
+            return;
+        }
+
+        if (!CommonUtils.getTextString(registerTvCode).equals(mCode)) {
+            toast("请输入正确的验证码");
+            return;
+        }
+
+        List<String> images = new ArrayList<>();
+        images.add(mYourSelfImagePath);
+        images.add(mCertificateImagePath);
+        images.add(mFrontCardImagePath);
+        images.add(mBackCardImagePath);
+        uploadImages(images);
     }
 
     @Override
@@ -216,49 +463,118 @@ public class RegisterActivity extends BaseActivity {
             List<LocalMedia> localMediaList = PictureSelector.obtainMultipleResult(data);
             switch (uploadType) {
                 case "yourself":
+                    mYourSelfImagePath = localMediaList.get(0).getCompressPath();
+                    LogUtils.e("mYourSelfImagePath: " + mYourSelfImagePath);
                     Utils.showImg(RegisterActivity.this, localMediaList.get(0).getCompressPath(), registerIvYourself);
                     break;
                 case "certificate":
+                    mCertificateImagePath = localMediaList.get(0).getCompressPath();
+                    LogUtils.e("mCertificateImagePath: " + mCertificateImagePath);
                     Utils.showImg(RegisterActivity.this, localMediaList.get(0).getCompressPath(), registerIvCertificate);
                     break;
                 case "front_id_card":
+                    mFrontCardImagePath = localMediaList.get(0).getCompressPath();
+                    LogUtils.e("mFrontCardImagePath: " + mFrontCardImagePath);
                     Utils.showImg(RegisterActivity.this, localMediaList.get(0).getCompressPath(), registerIvFrontIdCard);
                     break;
                 case "back_id_card":
+                    mBackCardImagePath = localMediaList.get(0).getCompressPath();
+                    LogUtils.e("mBackCardImagePath: " + mBackCardImagePath);
                     Utils.showImg(RegisterActivity.this, localMediaList.get(0).getCompressPath(), registerIvBackIdCard);
                     break;
             }
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
-                InputMethodManager imm =
-                        (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS
-                );
+    /**
+     * 图片上传
+     *
+     * @param images 图片地址集合
+     */
+    private void uploadImages(List<String> images) {
+        if (!Utils.isListEmpty(images)) {
+            /* 多图片处理*/
+            Map<String, RequestBody> partMap = new LinkedHashMap<>();
+            for (String image :
+                    images) {
+                LogUtils.e(image);
+                File imageFile = new File(image);
+                RequestBody imageBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                partMap.put("files\";filename=\"" + imageFile.getName() + "", imageBody);
             }
+            // 上传图片
+            RxHttp.getInstance().getSyncServer()
+                    .uploadFile(partMap)
+                    .compose(RxSchedulers.observableIO2Main(this))
+                    .subscribe(new ProgressObserver<FileEntity>(this, true, "") {
+                        @Override
+                        public void onSuccess(FileEntity result) {
+                            LogUtils.e(result.getUrls());
+                            // 清除包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
+                            PictureFileUtils.deleteCacheDirFile(RegisterActivity.this);
+                            userRegister(result.getUrls());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable e, String errorMsg) {
+                            toast(errorMsg);
+                        }
+                    });
         }
-        return super.dispatchTouchEvent(ev);
     }
 
-    // Return whether touch the view.
-    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
-        if ((v instanceof EditText)) {
-            int[] l = {0, 0};
-            v.getLocationInWindow(l);
-            int left = l[0],
-                    top = l[1],
-                    bottom = top + v.getHeight(),
-                    right = left + v.getWidth();
-            return !(event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom);
-        }
-        return false;
-    }
+    /**
+     * 用户注册
+     */
+    private void userRegister(List<String> images) {
+        // 擅长
+        List<RegisterForm.AdeptsBean> adeptsBeans = new ArrayList<>();
+        RegisterForm.AdeptsBean one = new RegisterForm.AdeptsBean();
+        RegisterForm.AdeptsBean two = new RegisterForm.AdeptsBean();
+        RegisterForm.AdeptsBean three = new RegisterForm.AdeptsBean();
+        one.setName(CommonUtils.getTextString(registerEtGoodAtOne));
+        one.setDescribe(CommonUtils.getTextString(registerEtGoodAtOneDesc));
+        two.setName(CommonUtils.getTextString(registerEtGoodAtTwo));
+        two.setDescribe(CommonUtils.getTextString(registerEtGoodAtTwoDesc));
+        three.setName(CommonUtils.getTextString(registerTvGoodAtThree));
+        three.setDescribe(CommonUtils.getTextString(registerTvGoodAtThreeDesc));
+        adeptsBeans.add(one);
+        adeptsBeans.add(two);
+        adeptsBeans.add(three);
+        // 注册所需参数
+        RegisterForm registerForm = new RegisterForm();
+        registerForm.setAccount(CommonUtils.getTextString(registerEtMobileNo));
+        registerForm.setCaptchaCode(CommonUtils.getTextString(registerTvCode));
+        registerForm.setCaptchaId(mCodeId);
+        registerForm.setGender(String.valueOf(mGender));
+        registerForm.setHosId(selectHosBean.getId());
+        registerForm.setHosName(selectHosBean.getName());
+        String idCard = images.get(2) + "," + images.get(3);
+        registerForm.setIdentityCard(idCard);
+        registerForm.setName(CommonUtils.getTextString(registerEtName));
+        registerForm.setOffId(selectOfficeBean.getId());
+        registerForm.setOffName(selectOfficeBean.getName());
+        registerForm.setPhoto(images.get(0));
+        registerForm.setPhysicianLicence(images.get(1));
+        registerForm.setPositionId(selectPosBean.getId());
+        registerForm.setPositionName(selectPosBean.getName());
+        registerForm.setRegistrationFee(CommonUtils.getTextString(registerEtRegistrationFee));
+        registerForm.setAdepts(adeptsBeans);
 
+        // 注册
+        RxHttp.getInstance().getSyncServer()
+                .register(registerForm)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<EmptyEntity>(this, true, "") {
+                    @Override
+                    public void onSuccess(EmptyEntity result) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
 }

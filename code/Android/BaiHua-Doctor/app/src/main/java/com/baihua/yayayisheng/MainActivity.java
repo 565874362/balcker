@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity {
      * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
      * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
      *
-     * @param token 从服务端获取的用户身份令牌（Token）。
+     * @param token 从服务端获取的用户身份令牌（TokenEntity）。
      * @return RongIM  客户端核心类的实例。
      */
     private void connect(String token) {
@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
                 /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * TokenEntity 错误。可以从下面两点检查 1.  TokenEntity 是否过期，如果过期您需要向 App Server 重新请求一个新的 TokenEntity
                  *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
                  */
                 @Override

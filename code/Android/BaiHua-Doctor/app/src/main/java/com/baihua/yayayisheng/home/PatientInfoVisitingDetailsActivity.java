@@ -1,5 +1,6 @@
 package com.baihua.yayayisheng.home;
 
+import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.baihua.common.base.BaseActivity;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.decoration.SpaceDecoration;
+import com.baihua.yayayisheng.widget.HackyViewPager;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -99,9 +102,34 @@ public class PatientInfoVisitingDetailsActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(PhotoViewActivity.class);
+//                ActivityUtils.startActivity(PhotoViewActivity.class);
+                // 图片地址合集
+                List<String> mList = new ArrayList<>();
+                mList.add("http://img.hb.aicdn.com/a74dba1791530dcb8dee2a63e539d7920343dd5db9db9-lKWKQn_fw658");
+                mList.add("http://img.hb.aicdn.com/89b64a4fe336383edb977c0bb16ef40c5619bba6e3207-4TUP5A_fw658");
+                mList.add("http://img.hb.aicdn.com/607f122005dc6ac326a4d4613242d783b09dc0676f2af-VLzfQk_fw658");
+                showPicDialog(view.getContext(), mList, position);
             }
         });
+    }
+
+    /**
+     * 展示大图
+     *
+     * @param selectPosition 选中的图片位置
+     */
+    private void showPicDialog(Context context, List<String> imageSource, int selectPosition) {
+        MaterialDialog show = new MaterialDialog.Builder(context)
+                .customView(R.layout.dialog_show_photo_view, false)
+                .build();
+        View view = show.getCustomView();
+        if (null == view)
+            return;
+        HackyViewPager hackyViewPager = view.findViewById(R.id.view_pager);
+        PhotoViewPagerAdapter mAdapter = new PhotoViewPagerAdapter(imageSource, context);
+        hackyViewPager.setAdapter(mAdapter);
+        hackyViewPager.setCurrentItem(selectPosition);
+        show.show();
     }
 
     @OnClick({R.id.play_voice_layout, R.id.patient_details_visiting})

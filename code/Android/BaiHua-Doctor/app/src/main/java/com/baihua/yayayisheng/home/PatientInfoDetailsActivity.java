@@ -1,5 +1,7 @@
 package com.baihua.yayayisheng.home;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -7,8 +9,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,18 +22,29 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baihua.common.base.BaseActivity;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.decoration.DividerDecoration;
 import com.baihua.yayayisheng.decoration.SpaceDecoration;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.baihua.yayayisheng.entity.PatientListEntity;
+import com.baihua.yayayisheng.entity.VisitDetailsEntity;
+import com.baihua.yayayisheng.util.CommonUtils;
+import com.baihua.yayayisheng.view.recorder.MediaManager;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SpanUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -80,6 +95,17 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     private PhotoAdapter mAdapter;
     private NeedToCheckAdapter mCheckAdapter;
 
+    private PatientListEntity.PageBean.RecordsBean mVisitDetails;// 详情
+
+    private int mMinItemWidth; //最小的item宽度
+    private int mMaxItemWidth; //最大的item宽度
+
+    private AnimationDrawable mAnimDrawable;
+    private File mVoice; // 语音文件
+
+    private VisitDetailsEntity mVisitDetailsEntity;
+    private TextView mTvPrice; // 检查总价
+
     @Override
     public void setLayout() {
         setTitle("患者信息");
@@ -94,9 +120,14 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     @Override
     public void initMember() {
         mAnswerOrNeedAnswerLayout = findViewById(R.id.answer_or_need_answer_layout);
-        if (getIntent().hasExtra("status")) {
-            String status = (String) getIntent().getSerializableExtra("status");
-            switch (status) {
+        if (getIntent().hasExtra("visit")) {
+            mVisitDetails = (PatientListEntity.PageBean.RecordsBean) getIntent().getSerializableExtra("visit");
+            setContentText();
+            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
+                initRecycler();
+            if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
+                initVoiceLayout();
+            switch (mVisitDetails.getStatus()) {
                 case "1": // 接诊
 
                     break;
@@ -114,17 +145,79 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                     mAnswerOrNeedAnswerLayout.setVisibility(View.VISIBLE);
                     patientDetailsVisiting.setVisibility(View.GONE);
 
+                    initCheckRecycler();
+                    getVisitDetails(String.valueOf(mVisitDetails.getId()));
 
-                    SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append("小儿疱疹性口炎，其实就是因为感染后形成的").setFontSize(16, true).create();
-                    layoutReplyInitialDiagnosis.setText(spannable);
-                    SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append("可以给小孩买点好吃的，多喝开水；可以给小孩买点好吃的，多喝开水").setFontSize(16, true).create();
-                    layoutReplyWarmDoctor.setText(spannableWarm);
+//                    SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append("小儿疱疹性口炎，其实就是因为感染后形成的").setFontSize(16, true).create();
+//                    layoutReplyInitialDiagnosis.setText(spannable);
+//                    SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append("可以给小孩买点好吃的，多喝开水；可以给小孩买点好吃的，多喝开水").setFontSize(16, true).create();
+//                    layoutReplyWarmDoctor.setText(spannableWarm);
                     break;
             }
         }
-        setContentText();
-        initRecycler();
-        initCheckRecycler();
+
+    }
+
+    /**
+     * 设置语音信息
+     */
+    private void initVoiceLayout() {
+        playVoiceLayout.setVisibility(View.VISIBLE);
+        mMaxItemWidth = (int) (ScreenUtils.getScreenWidth() * 0.7f);
+        mMinItemWidth = (int) (ScreenUtils.getScreenWidth() * 0.15f);
+        mAnimDrawable = (AnimationDrawable) ivPlayVoiceAnim.getDrawable();
+
+        mVoice = CommonUtils.base64ToFile(mVisitDetails.getVoiceDescribe());
+        long voiceLength = MediaManager.getSoundDuration(mVoice.getAbsolutePath());
+        if (3000 <= voiceLength) {
+            ViewGroup.LayoutParams layoutParams = playVoiceLayout.getLayoutParams();
+            layoutParams.width = (int) (mMinItemWidth + (mMaxItemWidth / 60f) * voiceLength / 1000);
+            playVoiceLayout.setLayoutParams(layoutParams);
+        }
+    }
+
+    /**
+     * 获取问诊详情
+     *
+     * @param id 问诊ID
+     */
+    private void getVisitDetails(String id) {
+        RxHttp.getInstance().getSyncServer()
+                .getVisitDetails(CommonUtils.getToken(), id)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<VisitDetailsEntity>(this) {
+                    @Override
+                    public void onSuccess(VisitDetailsEntity result) {
+                        VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
+                        VisitDetailsEntity.InfoBean infoBean = result.getInfo();
+                        initDoctorInfo(result);
+                        // TODO: 18/12/2018 检查项数据设置
+//                        List<String> checks = Arrays.asList(infoBean.getExaContent())
+//                        mCheckAdapter.setNewData();
+                        mTvPrice.setText(String.format("%s元", infoBean.getExaFee()));
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 设置医生信息
+     */
+    private void initDoctorInfo(VisitDetailsEntity visitDetailsEntity) {
+        VisitDetailsEntity.InfoBean infoBean = visitDetailsEntity.getInfo();
+
+        SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append(infoBean.getResponse()).setFontSize(16, true).create();
+        layoutReplyInitialDiagnosis.setText(spannable);
+        SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append(infoBean.getAdvice()).setFontSize(16, true).create();
+        layoutReplyWarmDoctor.setText(spannableWarm);
+
+//        layoutReplyAdvisory.setText("咨询");
+//        layoutReplyVisit.setText(String.format("就诊（%s）", "20.00"));
+
     }
 
     /**
@@ -142,11 +235,6 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         mCheckAdapter.addHeaderView(getCheckHeaderView());
         mCheckAdapter.addFooterView(getCheckFooterView());
         layoutReplyRecycler.setAdapter(mCheckAdapter);
-        mList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            mList.add(i + "");
-        }
-        mCheckAdapter.setNewData(mList);
     }
 
     private View getCheckHeaderView() {
@@ -155,8 +243,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
 
     private View getCheckFooterView() {
         View footer = mInflater.inflate(R.layout.footer_need_to_check, layoutPatientRecycler, false);
-        TextView tvPrice = (TextView) footer.findViewById(R.id.footer_check_tv_price);
-        tvPrice.setText(String.format("%s元", "25.00"));
+        mTvPrice = (TextView) footer.findViewById(R.id.footer_check_tv_price);
+        mTvPrice.setText(String.format("%s元", "00.00"));
         return footer;
     }
 
@@ -171,11 +259,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         mAdapter = new PhotoAdapter(new ArrayList<>());
         layoutPatientRecycler.setAdapter(mAdapter);
 
-        mList = new ArrayList<>();
-        mList.add("http://img.hb.aicdn.com/a74dba1791530dcb8dee2a63e539d7920343dd5db9db9-lKWKQn_fw658");
-        mList.add("http://img.hb.aicdn.com/89b64a4fe336383edb977c0bb16ef40c5619bba6e3207-4TUP5A_fw658");
-        mList.add("http://img.hb.aicdn.com/607f122005dc6ac326a4d4613242d783b09dc0676f2af-VLzfQk_fw658");
-        mAdapter.setNewData(mList);
+        List<String> images = Arrays.asList(mVisitDetails.getImage().split(","));
+        mAdapter.setNewData(images);
     }
 
     /**
@@ -183,12 +268,12 @@ public class PatientInfoDetailsActivity extends BaseActivity {
      */
     private void setContentText() {
         // 共有的
-        layoutPatientTvName.setText("令狐小影");
-        layoutPatientTvGender.setText("男");
-        layoutPatientTvAge.setText(String.format("%s岁", "5"));
-        layoutPatientTvDescription.setText(String.format("%s", "这几天我家宝宝嘴里起来好多小泡泡，哭的也特别列害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我下问下这中情况要不要输液？"));
+        layoutPatientTvName.setText(mVisitDetails.getName());
+        layoutPatientTvGender.setText(CommonUtils.getGender(mVisitDetails.getGender()));
+        layoutPatientTvAge.setText(String.format("%s岁", mVisitDetails.getAge()));
+        layoutPatientTvDescription.setText(String.format("%s", mVisitDetails.getCharacterDescribe()));
         layoutPatientTvStatus.setVisibility(View.GONE);
-        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd HH:mm", System.currentTimeMillis()));
+        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(mVisitDetails.getGmtCreate(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
     }
 
     @Override
@@ -196,7 +281,13 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(PhotoViewActivity.class);
+//                ActivityUtils.startActivity(PhotoViewActivity.class);
+                // 图片地址合集
+                List<String> mList = new ArrayList<>();
+                mList.add("http://img.hb.aicdn.com/a74dba1791530dcb8dee2a63e539d7920343dd5db9db9-lKWKQn_fw658");
+                mList.add("http://img.hb.aicdn.com/89b64a4fe336383edb977c0bb16ef40c5619bba6e3207-4TUP5A_fw658");
+                mList.add("http://img.hb.aicdn.com/607f122005dc6ac326a4d4613242d783b09dc0676f2af-VLzfQk_fw658");
+                CommonUtils.showPicDialog(view.getContext(), mList, position);
             }
         });
     }
@@ -205,6 +296,7 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.play_voice_layout: // 语音播放
+                playVoice();
                 break;
             case R.id.layout_reply_need_to_check: // 选择检查项 （待回复）
                 showCheckedDialog();
@@ -214,6 +306,28 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                 break;
             case R.id.patient_details_tv_submit: // 提交 （待回复）
                 break;
+        }
+    }
+
+    /**
+     * 播放语音
+     */
+    private void playVoice() {
+        if (null != mAnimDrawable) {
+            if (mAnimDrawable.isRunning()) {
+                mAnimDrawable.selectDrawable(0);
+                mAnimDrawable.stop();
+            } else {
+                mAnimDrawable.start();
+                MediaManager.playSound(mVoice.getAbsolutePath(), new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        MediaManager.release();
+                        mAnimDrawable.selectDrawable(0);
+                        mAnimDrawable.stop();
+                    }
+                });
+            }
         }
     }
 

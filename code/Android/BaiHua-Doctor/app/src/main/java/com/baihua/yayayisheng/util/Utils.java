@@ -196,8 +196,8 @@ public class Utils {
                 .centerCrop()
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(transformDrawable(context, R.mipmap.img_default, new CircleCrop()))
-                .error(transformDrawable(context, R.mipmap.img_default, new CircleCrop()));
+                .placeholder(transformDrawable(context, R.drawable.no_image, new CircleCrop()))
+                .error(transformDrawable(context, R.drawable.no_image, new CircleCrop()));
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
@@ -218,7 +218,6 @@ public class Utils {
 //        }
         return false;
     }
-
 
 
     /**
@@ -744,6 +743,20 @@ public class Utils {
         if (smartRefreshLayout != null) {
             smartRefreshLayout.finishRefresh();
             smartRefreshLayout.finishLoadmore();
+        }
+    }
+
+    /**
+     * 取消加载更多
+     *
+     * @param currentPage 当前页
+     * @param totalPage   总页数
+     */
+    public static void cancelLoadMore(SmartRefreshLayout smartRefreshLayout, int currentPage, int totalPage) {
+        if (null == smartRefreshLayout)
+            return;
+        if (currentPage == totalPage) {
+            smartRefreshLayout.setEnableLoadMore(false);
         }
     }
 

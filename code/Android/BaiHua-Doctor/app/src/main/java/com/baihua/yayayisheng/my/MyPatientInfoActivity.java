@@ -6,16 +6,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.baihua.common.base.BaseActivity;
-import com.baihua.common.base.BaseFragment;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.decoration.SpaceDecoration;
+import com.baihua.yayayisheng.entity.PatientListEntity;
+import com.baihua.yayayisheng.entity.form.PatientListForm;
 import com.baihua.yayayisheng.home.PatientInfoAdapter;
-import com.baihua.yayayisheng.home.PatientInfoAnsweredDetailsActivity;
-import com.baihua.yayayisheng.home.PatientInfoPendingReplyDetailsActivity;
-import com.baihua.yayayisheng.home.PatientInfoVisitingDetailsActivity;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.baihua.yayayisheng.home.PatientInfoDetailsActivity;
+import com.baihua.yayayisheng.util.CommonUtils;
+import com.baihua.yayayisheng.util.Utils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +33,13 @@ public class MyPatientInfoActivity extends BaseActivity {
 
     @BindView(R.id.my_patient_info_recycler)
     RecyclerView mRecyclerView;
+    @BindView(R.id.smart_refresh)
+    SmartRefreshLayout smartRefreshLayout;
 
     private List<String> mList;
     private PatientInfoAdapter mAdapter;
+
+    private int mCurrentPage = 1;
 
     @Override
     public void setLayout() {
@@ -45,32 +55,35 @@ public class MyPatientInfoActivity extends BaseActivity {
     @Override
     public void initMember() {
 
-
-//        RxHttp.getInstance().getSyncServer().getLatestVersion("1", "1.0.0")
-//                .compose(RxSchedulers.observableIO2Main(getActivity()))
-//                .subscribe(new ProgressObserver<String>(getActivity()) {
-//
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        toast(result);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable e, String errorMsg) {
-//
-//                    }
-//                });
-
         initRecycler();
-        initData();
+        smartRefreshLayout.autoRefresh();
     }
 
-    private void initData() {
-        mList = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            mList.add("i = " + i);
-        }
-        mAdapter.setNewData(mList);
+    /**
+     * 获取患者信息列表
+     */
+    private void getPatientInfoList() {
+        RxHttp.getInstance().getSyncServer()
+                .getPatientList(CommonUtils.getToken(), new PatientListForm(mCurrentPage, 10))
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<PatientListEntity>(this) {
+                    @Override
+                    public void onSuccess(PatientListEntity result) {
+                        Utils.finishRefreshAndLoadMore(smartRefreshLayout);
+                        Utils.cancelLoadMore(smartRefreshLayout, result.getPage().getCurrent(), result.getPage().getPages());
+                        if (1 < result.getPage().getCurrent()) {
+                            mAdapter.addData(result.getPage().getRecords());
+                        } else {
+                            mAdapter.setNewData(result.getPage().getRecords());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        Utils.finishRefreshAndLoadMore(smartRefreshLayout);
+                        toast(errorMsg);
+                    }
+                });
     }
 
     private void initRecycler() {
@@ -81,6 +94,7 @@ public class MyPatientInfoActivity extends BaseActivity {
         spaceDecoration.setPaddingEdgeSide(false);
         mRecyclerView.addItemDecoration(spaceDecoration);
         mAdapter = new PatientInfoAdapter(new ArrayList<>());
+        Utils.showNoData(mAdapter, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -88,16 +102,24 @@ public class MyPatientInfoActivity extends BaseActivity {
     @Override
     public void setListener() {
 
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                mCurrentPage += 1;
+                getPatientInfoList();
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mCurrentPage = 1;
+                getPatientInfoList();
+            }
+        });
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (position % 2 == 1) {
-                    ActivityUtils.startActivity(PatientInfoVisitingDetailsActivity.class);
-                } else if (position % 2 == 0 && 10 != position) {
-                    ActivityUtils.startActivity(PatientInfoPendingReplyDetailsActivity.class);
-                } else {
-                    ActivityUtils.startActivity(PatientInfoAnsweredDetailsActivity.class);
-                }
+                Utils.gotoActivity(MyPatientInfoActivity.this, PatientInfoDetailsActivity.class, false, "status", "3");
             }
         });
 

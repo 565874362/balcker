@@ -142,7 +142,7 @@
             android:layout_marginEnd="@dimen/dimen_dp_8"
             android:background="@drawable/shape_for_blue_button_bg"
             android:gravity="center"
-            android:text="@string/login_login"
+            android:text="@string/login_register"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_18sp" />
 
@@ -156,7 +156,7 @@
             android:layout_marginBottom="46dp"
             android:background="@drawable/shape_for_red_button_bg"
             android:gravity="center"
-            android:text="@string/login_register"
+            android:text="@string/login_login"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_18sp" />
 
