@@ -21,14 +21,14 @@ import lombok.Data;
 public class PageQuery<T> {
 	@ApiModelProperty("页下标 从1开始")
 	@NotNull(message = "分页页数不能为空")
-	private int current;
+	private long current;
 	@ApiModelProperty("页容量")
 	@NotNull(message = "分页页容量不能为空")
-	private int size;
+	private long size;
 
 	@ApiModelProperty(hidden = true)
 	public IPage<T> getPage(){
-		Page<T> page = new Page<>();
+		Page<T> page = new Page<T>();
 		BeanUtils.copyProperties(this,page);
 		return page;
 	}

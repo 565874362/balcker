@@ -49,7 +49,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/rest/sercomment")
 public class SerCommentController {
     @Autowired
-
     private SerCommentService serCommentService;
 
     /**

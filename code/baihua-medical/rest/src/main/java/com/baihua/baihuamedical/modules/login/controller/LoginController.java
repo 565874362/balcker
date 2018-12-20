@@ -88,7 +88,8 @@ public class LoginController {
 		accountService.checkCaptcha(sysCaptchaEntity);
 
 		UsAccountEntity accountEntity = accountService.getOne(new QueryWrapper<UsAccountEntity>().lambda()
-				.eq(UsAccountEntity::getAccount, doctorRegister.getAccount()));
+				.eq(UsAccountEntity::getAccount, doctorRegister.getAccount())
+				.eq(UsAccountEntity::getType,Constants.AccountType.doctor.getCode()));
 		if(accountEntity != null
 				&& accountEntity.getType().intValue() == Constants.AccountType.doctor.getCode()
 				&& accountEntity.getStatus().intValue() == Constants.AccountStatus.waitactive.getCode()){
@@ -142,7 +143,8 @@ public class LoginController {
 		accountService.checkCaptcha(sysCaptchaEntity);
 
 		UsAccountEntity accountEntity = accountService.getOne(new QueryWrapper<UsAccountEntity>().lambda()
-				.eq(UsAccountEntity::getAccount, loginEntity.getAccount()));
+				.eq(UsAccountEntity::getAccount, loginEntity.getAccount())
+				.eq(UsAccountEntity::getType,accountType.getCode()));
 		if (accountEntity == null) {
 			if (accountType == Constants.AccountType.patient) {
 				accountEntity = accountService.generatorPatient(loginEntity.getAccount());

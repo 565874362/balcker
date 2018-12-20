@@ -39,6 +39,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 /**
@@ -102,6 +103,18 @@ public class UsDoctorController {
         }
         return R.success().addResData("info", usDoctor);
     }
+
+    @ApiOperation("医生个人信息 [医生]")
+    @GetMapping("/info")
+    public R info(@ApiIgnore @LoginDoctor UsDoctorEntity doctorEntity){
+            List<SerAdeptEntity> SerAdeptEntitys = adeptService.list(new QueryWrapper<SerAdeptEntity>().lambda()
+                    .select(SerAdeptEntity::getName,SerAdeptEntity::getDescribe)
+                    .eq(SerAdeptEntity::getDocId, doctorEntity.getId())
+                    .orderByAsc(SerAdeptEntity::getOrdered));
+        doctorEntity.setAdeptEntities(SerAdeptEntitys);
+        return R.success().addResData("info", doctorEntity);
+    }
+
 
     /**
      *

@@ -60,7 +60,6 @@ public class UploadController {
 	@PostMapping("/android")
 	@LoginIgnore
 	@ApiOperation(value = "上传文件 安卓端")
-
 	public R upload(MultipartFile[] files) throws Exception {
 		if (files == null || files.length == 0) {
 			throw new ParameterException("上传文件不能为空");

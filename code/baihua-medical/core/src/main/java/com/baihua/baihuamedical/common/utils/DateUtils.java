@@ -17,12 +17,15 @@
 package com.baihua.baihuamedical.common.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.Locale;
 
@@ -84,6 +87,19 @@ public class DateUtils {
         }
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
         return Date.from(LocalDateTime.parse(strDate,fmt).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 字符串转换成日期
+     * @param strDate 日期字符串
+     * @param pattern 日期的格式，如：DateUtils.DATE_TIME_PATTERN
+     */
+    public static Date stringToTime(String strDate, String pattern) {
+        if (StringUtils.isBlank(strDate)){
+            return null;
+        }
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+        return Date.from(LocalTime.parse(strDate,fmt).atDate(LocalDate.now()).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
@@ -175,6 +191,28 @@ public class DateUtils {
      * @param date
      * @return
      */
+    public static String getWeek(Date date){
+        LocalDateTime dateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return "周" + dateTime.getDayOfWeek().getDisplayName(TextStyle.NARROW, Locale.CHINA);
+    }
+
+
+    /**
+     * 获取时分
+     * @param date
+     * @return
+     */
+    public static String getTime(Date date){
+        LocalTime localTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+        return transferToTwoDig(localTime.getHour()) + ":" + transferToTwoDig(localTime.getMinute());
+    }
+
+
+    /**
+     * 获取日期周
+     * @param date
+     * @return
+     */
     public static String getDateWeek(Date date){
         LocalDateTime dateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
         return  transferToTwoDig(dateTime.getMonthValue()) + "-" + transferToTwoDig(dateTime.getDayOfMonth()) + " 周" + dateTime.getDayOfWeek().getDisplayName(TextStyle.NARROW, Locale.CHINA);
@@ -190,7 +228,73 @@ public class DateUtils {
         return  dateTime.getYear() + "-" + transferToTwoDig(dateTime.getMonthValue()) + "-" + transferToTwoDig(dateTime.getDayOfMonth()) + " 周" + dateTime.getDayOfWeek().getDisplayName(TextStyle.NARROW, Locale.CHINA);
     }
 
-    private static String transferToTwoDig(int input) {
+    /**
+     * 获取当前周
+     *
+     * @return
+     */
+    public static Date[] getCurentWeek(){
+        LocalDate curentMonday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate currentSunday = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        Instant curentMondayInstant = curentMonday.atTime(LocalTime.MIN).atZone(ZoneId.systemDefault()).toInstant();
+        Instant currentSundayInstant = currentSunday.atTime(LocalTime.MIN).atZone(ZoneId.systemDefault()).toInstant();
+        Date[] result = new Date[2];
+        result[0] = Date.from(curentMondayInstant);
+        result[1] = Date.from(currentSundayInstant);
+        return result;
+    }
+
+    /**
+     * 获取
+     * @param date
+     * @return
+     */
+    public static String getYearMonthDate(LocalDate date){
+        return date.getYear() + "-" + getMonthDate(date);
+    }
+
+    public static String getMonthDate(LocalDate date){
+        return transferToTwoDig(date.getMonthValue()) + "-" + transferToTwoDig(date.getDayOfMonth());
+    }
+
+    /**
+     * 获取周
+     * @param date
+     * @return
+     */
+    public static String getWeek(LocalDate date){
+        return "周" + date.getDayOfWeek().getDisplayName(TextStyle.NARROW, Locale.CHINA);
+    }
+
+
+    /**
+     * 获取下周日期
+     *
+     * @return
+     */
+    public static LocalDate[] getNextWeekDays(Date date){
+        LocalDate[] weekDates = new LocalDate[7];
+        LocalDate localDate = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
+        LocalDate nextMonday = localDate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+        LocalDate nextTuesday = nextMonday.plusDays(1);
+        LocalDate nextWednesday = nextTuesday.plusDays(1);
+        LocalDate nextThursday = nextWednesday.plusDays(1);
+        LocalDate nextFriday = nextThursday.plusDays(1);
+        LocalDate nextSaturday = nextFriday.plusDays(1);
+        LocalDate nextSunday = nextSaturday.plusDays(1);
+
+        weekDates[0] = nextMonday;
+        weekDates[1] = nextTuesday;
+        weekDates[2] = nextWednesday;
+        weekDates[3] = nextThursday;
+        weekDates[4] = nextFriday;
+        weekDates[5] = nextSaturday;
+        weekDates[6] = nextSunday;
+        return weekDates;
+    }
+
+    public static String transferToTwoDig(int input) {
         if(input < 10){
             return "0" + input;
         }

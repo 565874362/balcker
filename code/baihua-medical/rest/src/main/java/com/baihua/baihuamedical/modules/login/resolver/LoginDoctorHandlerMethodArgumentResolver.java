@@ -9,6 +9,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.baihua.baihuamedical.common.enums.Constants;
+import com.baihua.baihuamedical.common.exception.ParameterException;
 import com.baihua.baihuamedical.common.utils.LocalParameterUtils;
 import com.baihua.baihuamedical.modules.login.annotation.LoginDoctor;
 import com.baihua.baihuamedical.modules.login.interceptor.AuthorizationInterceptor;
@@ -39,8 +40,7 @@ public class LoginDoctorHandlerMethodArgumentResolver implements HandlerMethodAr
         UsAccountEntity accountEntity = LocalParameterUtils.get(AuthorizationInterceptor.ACCOUNT_KEY);
         if(null != accountEntity && accountEntity.getType().intValue() == Constants.AccountType.doctor.getCode()){
             return usDoctorDao.selectById(accountEntity.getSId());
-
         }
-        return null;
+        throw new ParameterException("参数异常");
     }
 }
