@@ -1,0 +1,18 @@
+package com.baihua.baihuamedical.modules.service.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.baihua.baihuamedical.modules.service.entity.SerCashFlowEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+ * 现金流水
+ * 
+ * @author chenshun
+ * @email sunlightcs@gmail.com
+ * @date 2018-12-06 10:17:17
+ */
+@Mapper
+public interface SerCashFlowDao extends BaseMapper<SerCashFlowEntity> {
+	
+}
