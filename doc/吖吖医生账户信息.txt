@@ -1,0 +1,11 @@
+服务器信息：
+IP：47.99.243.241
+用户名：root
+密码：Yayayisheng2018
+
+APP接口域名：api.yayayisheng.com
+
+
+阿里云短信参数：
+AccessKey ID：LTAIwdR6tad6JLnp
+Access Key Secret：OVshHkvXoV62GzcCpirexyjGQno7WE
