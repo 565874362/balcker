@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baihua.baihuamedical.modules.service.dao.SerInquiryDao">
+
+    <sql id="selectIndexColumns">
+        id, `name`,gender,age,character_describe,`status`,gmt_modified
+    </sql>
+
+    <select id="selectDoctorIndexPage"
+            resultType="com.baihua.baihuamedical.modules.service.entity.SerInquiryEntity">
+        (SELECT
+            <include refid="selectIndexColumns"/>
+        FROM
+            ser_inquiry
+        WHERE
+            `status` = 1
+        AND
+            id IN (
+            SELECT
+                inquiry_id
+            FROM
+                ser_inquiry_match
+            WHERE
+                doc_id = #{doctorId}
+        )
+        ORDER BY
+            gmt_modified)
+        UNION ALL
+        (SELECT
+            <include refid="selectIndexColumns"/>
+        FROM
+            ser_inquiry
+        WHERE
+            `status` = 2
+        AND
+             doctor_id = #{doctorId}
+        ORDER BY
+            gmt_modified)
+        UNION ALL
+        (SELECT
+           <include refid="selectIndexColumns"/>
+        FROM
+            ser_inquiry
+        WHERE
+            `status` = 3
+        AND
+            doctor_id = #{doctorId}
+        ORDER BY
+            gmt_modified DESC)
+    </select>
+    <select id="selectDoctorIndexTotal" resultType="java.lang.Long">
+        SELECT
+            COUNT(*) + (
+            SELECT
+                COUNT(*)
+            FROM
+                ser_inquiry
+            WHERE
+               doctor_id = #{doctorId}
+            AND
+               `status` IN (2,3))
+        FROM
+            ser_inquiry
+        WHERE
+            `status` = 1
+        AND
+            id IN (
+            SELECT
+                inquiry_id
+            FROM
+                ser_inquiry_match
+            WHERE
+                doc_id = #{doctorId}
+        )
+    </select>
+</mapper>
