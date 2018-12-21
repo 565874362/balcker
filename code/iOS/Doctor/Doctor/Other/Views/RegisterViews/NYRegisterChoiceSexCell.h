@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^clickManButton)(RankButton * setBtn);
 
+@property (nonatomic,strong) RankButton * manBtn;
+@property (nonatomic,strong) RankButton * womanBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END

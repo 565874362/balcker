@@ -7,6 +7,7 @@
 //
 
 #import "NYNeedCheckCell.h"
+#import "NYNeedCheckModel.h"
 
 @implementation NYNeedCheckCell
 {
@@ -74,7 +75,14 @@
 {
     _checkModel = checkModel;
     
+    _typeLB.text = checkModel.name;
     
+    _priceLB.text = [NSString stringWithFormat:@"%.2f元",[checkModel.price doubleValue]];
     
+    if (checkModel.isSeleted) {
+        _leftIMG.image = [UIImage imageNamed:@"register_pact_hover"];
+    }else{
+        _leftIMG.image = [UIImage imageNamed:@"radio"];
+    }
 }
 @end

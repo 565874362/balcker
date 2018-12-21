@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "NYLoginViewController.h"
 #import "NYBaseNavViewController.h"
+#import "NYCustomTabBarViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,8 +34,12 @@
 
     [[RCIM sharedRCIM] initWithAppKey:@"kj7swf8o7wzx2"];
 
+    if (ISLOGIN) {
+        self.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
+    }else{
+        self.window.rootViewController = [[NYBaseNavViewController alloc] initWithRootViewController:[[NYLoginViewController alloc] init]];
+    }
     
-    self.window.rootViewController = [[NYBaseNavViewController alloc] initWithRootViewController:[[NYLoginViewController alloc] init]];
     [self.window makeKeyAndVisible];
     return YES;
 }

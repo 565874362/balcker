@@ -15,6 +15,9 @@
     UITextField * _codeTF;
     JKCountDownButton * _codeButton;
     UITextField * _phoneTF;
+    
+    NSString * _captchaId;
+
 }
 @end
 
@@ -25,6 +28,8 @@
     self.view.backgroundColor = BGCOLOR;
     self.navigationItem.title = @"登录";
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    _captchaId = @"";
     
     //第一个输入框
     UIView * bgView1 = [[UIView alloc] init];
@@ -136,7 +141,55 @@
 #pragma mark - 点击登录按钮
 - (void)clickLoginButton:(UIButton *)button
 {
-    [UIApplication sharedApplication].delegate.window.rootViewController = [[NYCustomTabBarViewController alloc] init];        
+    
+    [_phoneTF resignFirstResponder];
+    [_codeTF resignFirstResponder];
+    WEAKSELF
+    NSString * phone = [_phoneTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (phone.length == 0) {
+        MYALERT(@"请输入手机号");
+        return;
+    }
+    NSString * code = [_codeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (code.length == 0) {
+        MYALERT(@"请输入验证码");
+        return;
+    }
+    NSDictionary * dict =@{
+                           @"account":phone,
+                           @"captchaCode":code,
+                           @"captchaId":_captchaId
+                           };
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    [PPHTTPRequest postLoginWithParameters:dict success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            MYALERT(@"登录成功");
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ISLOGIN"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            if (![NSObject isNilOrNull:response[@"data"][@"token"]]) {
+                [UserInfo setToken:response[@"data"][@"token"]];
+            }
+            
+            if (![NSObject isNilOrNull:response[@"data"][@"doctorId"]]) {
+                [UserInfo setAccount:response[@"data"][@"doctorId"]];
+            }
+
+            
+            
+            [UIApplication sharedApplication].delegate.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
+        }else {
+            MYALERT(response[@"msg"]);
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"登录失败");
+    }];
+    
 }
 
 #pragma mark - 点击注册
@@ -167,6 +220,8 @@
         if ([response[@"code"] integerValue] == 0) {
             [SVProgressHUD showSuccessWithStatus:@"验证码已发送"];
             
+            _captchaId = response[@"data"][@"captchaId"]; //验证码编号
+
             // 发送验证码
             _codeButton.enabled = NO;
             [_codeButton startCountDownWithSecond:60];

@@ -21,9 +21,26 @@
 #import "NYAlreadyChoiceCheckTitleCell.h"
 #import "NYAlreadyChoiceCheckAllPriceCell.h"
 
-@interface NYHomeHuanZheInfoDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "NYHuanZheDetailModel.h"
+#import "NYMyInfoDetailModel.h"
+#import "D3RecordButton.h"
+#import "NYNeedCheckModel.h"
+
+#import "NYWenZhenDetailTopCell.h"
+#import "NYWenZhenDetailYiZhuCell.h"
+
+@interface NYHomeHuanZheInfoDetailViewController ()<AVAudioPlayerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
-    NYHomeListModel * _model;
+    NYHuanZheDetailModel * _model;
+    NSArray * _seletedCheckArray;
+    AVAudioPlayer * _play;
+    
+    UIImageView * _qiangDanImg;
+    UIButton * _tijiaoButton;
+    
+    BRPlaceholderTextView * _chuBuTextView;
+    BRPlaceholderTextView * _yiZhuTextView;
+    
 }
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -48,6 +65,9 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.showsVerticalScrollIndicator = YES;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
     }
     return _tableView;
 }
@@ -67,93 +87,223 @@
     [self.tableView registerClass:[NYAlreadyChoiceCheckTitleCell class] forCellReuseIdentifier:@"NYAlreadyChoiceCheckTitleCellID"];
     [self.tableView registerClass:[NYAlreadyChoiceCheckAllPriceCell class] forCellReuseIdentifier:@"NYAlreadyChoiceCheckAllPriceCellID"];
     
-    _model = [[NYHomeListModel alloc] init];
-    _model.state = @"0"; 
-    _model.content = @"这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    [self.tableView registerClass:[NYWenZhenDetailTopCell class] forCellReuseIdentifier:@"NYWenZhenDetailTopCellID"];
+    [self.tableView registerClass:[NYWenZhenDetailYiZhuCell class] forCellReuseIdentifier:@"NYWenZhenDetailYiZhuCellID"];
+    
+    [self initJieZhenButton];//抢单按钮
+    [self initTiJiaoButton]; //提交按钮
 
-    if ([_model.state integerValue] == 0) {
-        //抢单按钮
-        [self initJieZhenButton];
-    }
+    
+    
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
 }
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+}
+
+
+- (void)loadData
+{
+    WEAKSELF
+    [PPHTTPRequest GetWenZhenDetailInfoWithParameters:self.detailID success:^(id response) {
+        [SVProgressHUD dismiss];
+        [self.tableView.mj_header endRefreshing];
+        if ([response[@"code"] integerValue] == 0) {
+            _model = [NYHuanZheDetailModel mj_objectWithKeyValues:response[@"data"]];
+            
+            if ([_model.info.status integerValue] == 1) {
+                _qiangDanImg.hidden = NO;
+                _tijiaoButton.hidden = YES;
+            }else if ([_model.info.status integerValue] == 2){
+                
+                if ([_model.doctor.id isEqualToString:[UserInfo getAccount]]) { //我抢的单子
+                    _qiangDanImg.hidden = YES;
+                    _tijiaoButton.hidden = NO;
+                }else{
+                    //不是我抢的单子
+                    _qiangDanImg.hidden = YES;
+                    _tijiaoButton.hidden = YES;
+                    
+                    _model.info.status = @"1";
+                    MYALERT(@"该订单已被抢");
+                }
+                
+                
+            }else if([_model.info.status integerValue] == 3){
+                if ([_model.doctor.id isEqualToString:[UserInfo getAccount]]) { //我抢的单子
+                    _qiangDanImg.hidden = YES;
+                    _tijiaoButton.hidden = YES;
+                }else{
+                    //不是我抢的单子
+                    _qiangDanImg.hidden = YES;
+                    _tijiaoButton.hidden = YES;
+                    
+                    _model.info.status = @"1";
+                    
+                    MYALERT(@"该订单已被抢");
+                }
+            }
+            
+        }else{
+            MYALERT(@"请求失败");
+        }
+        [weakSelf.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [SVProgressHUD dismiss];
+        MYALERT(@"请求失败");
+    }];
+}
+
 
 #pragma mark - 初始化抢单按钮
 - (void)initJieZhenButton
 {
-    UIImageView * imageV = [[UIImageView alloc] init];
-    imageV.image = [UIImage imageNamed:@"accepts_btn"];
-    imageV.clipsToBounds = YES;
-    imageV.userInteractionEnabled = YES;
-    [self.view addSubview:imageV];
-    
-    [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickJieZhenQiangDan:)]];
-    
-    imageV.sd_layout
-    .centerXEqualToView(self.view)
-    .bottomSpaceToView(self.view, 20)
-    .widthIs(100)
-    .heightEqualToWidth();
-
-    imageV.sd_cornerRadius = @50;
-    
-//    UILabel * label = [[UILabel alloc] init];
-//    label.font = FONT(20);
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor whiteColor];
-//    [imageV addSubview:label];
-//    
-//    label.sd_layout
-//    .spaceToSuperView(UIEdgeInsetsMake(0, 0, 0, 0));
-//    
-//    label.text = @"接诊";
+    if (_qiangDanImg == nil) {
+        UIImageView * imageV = [[UIImageView alloc] init];
+        imageV.image = [UIImage imageNamed:@"accepts_btn"];
+        imageV.clipsToBounds = YES;
+        imageV.userInteractionEnabled = YES;
+        [self.view addSubview:imageV];
+        
+        [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickJieZhenQiangDan:)]];
+        
+        imageV.sd_layout
+        .centerXEqualToView(self.view)
+        .bottomSpaceToView(self.view, 20)
+        .widthIs(100)
+        .heightEqualToWidth();
+        
+        imageV.sd_cornerRadius = @50;
+        
+        _qiangDanImg = imageV;
+        _qiangDanImg.hidden = YES;
+    }
 }
 
 #pragma mark - 点击抢单按钮
 - (void)clickJieZhenQiangDan:(UITapGestureRecognizer *)tap
 {
-    UIImageView * img = (UIImageView *)tap.view;
-    img.hidden = YES;
+    WEAKSELF
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
     
-    _model.state = @"1";
-    [self.tableView reloadData];
-    
-    [self initTiJiaoButton];
+    [PPHTTPRequest GetDoctorClickJieZhenInfoWithParameters:_model.info.id success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            [self loadData];
+        }else{
+            MYALERT(@"请求失败");
+        }
+        [weakSelf.tableView reloadData];
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"请求失败");
+    }];
 }
 
 #pragma mark - 创建提交按钮
 - (void)initTiJiaoButton
 {
-    UIButton * doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [doneButton setTitle:@"提交" forState:UIControlStateNormal];
-    [doneButton setBackgroundColor:MAINCOLOR];
-    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:doneButton];
-    
-    doneButton.sd_layout
-    .leftSpaceToView(self.view, 0)
-    .bottomSpaceToView(self.view, 0)
-    .rightSpaceToView(self.view, 0)
-    .heightIs(50);
-    [doneButton addTarget:self action:@selector(clickDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+    if (_tijiaoButton == nil) {
+        UIButton * doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [doneButton setTitle:@"提交" forState:UIControlStateNormal];
+        [doneButton setBackgroundColor:MAINCOLOR];
+        [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.view addSubview:doneButton];
+        
+        doneButton.sd_layout
+        .leftSpaceToView(self.view, 0)
+        .bottomSpaceToView(self.view, 0)
+        .rightSpaceToView(self.view, 0)
+        .heightIs(50);
+        [doneButton addTarget:self action:@selector(clickDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+        
+        _tijiaoButton = doneButton;
+        _tijiaoButton.hidden = YES;
+        
+    }
 }
 
 #pragma mark - 点击提交按钮
 - (void)clickDoneButton:(UIButton *)button
 {
-    button.hidden = YES;
     
-    _model.state = @"2";
-    [self.tableView reloadData];
+    [_chuBuTextView resignFirstResponder];
+    [_yiZhuTextView resignFirstResponder];
+    
+    
+    
+    NSString * chuZhenString = [_chuBuTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * yiZhuString = [_yiZhuTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    
+    
+    if (chuZhenString.length == 0) {
+        MYALERT(@"请输入初步诊断");
+        return;
+    }
+    
+    if (yiZhuString.length == 0) {
+        MYALERT(@"请输入医嘱");
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    WEAKSELF
+    NSDictionary * dict = nil;
+    if (_seletedCheckArray.count == 0) {
+        dict = @{
+                 @"advice":yiZhuString,
+                 @"id":self.detailID,
+                 @"response":chuZhenString,
+                 };
+    }else{
+        NSMutableArray * idArr = [NSMutableArray array];
+        for (NYNeedCheckModel * model in _seletedCheckArray) {
+            [idArr addObject:model.id];
+        }
+        dict = @{
+                 @"advice":yiZhuString,
+                 @"exaIds":idArr,
+                 @"id":self.detailID,
+                 @"response":chuZhenString,
+                 };
+    }
+    
+    [PPHTTPRequest postDoctorHuiFuWenZhenInfoWithParameters:dict success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            MYALERT(@"提交成功");
+            [self loadData];
+            [weakSelf.tableView reloadData];
+        }else{
+            MYALERT(response[@"msg"]);
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"提交失败");
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([_model.state integerValue] == 0) {
-        return 1;
-    }else if ([_model.state integerValue] == 1){
+    if ([_model.info.status integerValue] == 1) {
         return 4;
-    }else if ([_model.state integerValue] == 2){
-        return 4;
+    }else if ([_model.info.status integerValue] == 2){
+        return 4+3;
+    }else if ([_model.info.status integerValue] == 3){
+        return 5;
     }
     return 0;
 }
@@ -161,49 +311,90 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 1;
+    }else if (section == 1){
+        if (_model.info.voiceDescribe.length == 0) {
+            return 0;
+        }
+        return 1;
+    }else if (section == 2){
+        if (_model.info.image.length == 0) {
+            return 0;
+        }
+        return 1;
+    }else if (section == 3){
+        return 1;
     }
-    if ([_model.state integerValue] == 1){
-        if (section == 1){
+    
+    if ([_model.info.status integerValue] == 1) {
+        
+    }else if ([_model.info.status integerValue] == 2){
+        if (section == 4){
             return 1;
-        }else if (section == 2){
-            return 6;
-        }else if (section == 3){
+        }else if (section == 5){
+            if (_seletedCheckArray.count == 0) {
+                return 1;
+            }else{
+                return 3+_seletedCheckArray.count;
+            }
+        }else if (section == 6){
             return 1;
         }
-    }else if ([_model.state integerValue] == 2){
-        if (section == 1){
-            return 1;
-        }else if (section == 2){
-            return 6;
-        }else if (section == 3){
-            return 1;
+    }else if ([_model.info.status integerValue] == 3){
+        if (section == 4){
+            if (_model.healthExaminations.count == 0) {
+                return 2;
+            }else{
+                return 2+_model.healthExaminations.count+2;
+            }
         }
     }
+
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return [self.tableView cellHeightForIndexPath:indexPath model:_model keyPath:@"homeListModel" cellClass:[NYHomeHuanZheInfoCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
-        }else if (indexPath.row == 1){
-            return 50;
-        }else if (indexPath.row == 2){
-            return (NYScreenW-15*4)*0.33+30;
-        }else if (indexPath.row == 3){
-            return 50;
+        return [self.tableView cellHeightForIndexPath:indexPath model:_model.info keyPath:@"homeListModel" cellClass:[NYHomeHuanZheInfoCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+    }else if (indexPath.section == 1){
+        return 50;
+    }else if (indexPath.section == 2){
+        CGFloat PIC_WIDTH = (NYScreenW-(15*4))*0.33;
+        NSArray * imgArray = [_model.info.image componentsSeparatedByString:@","];
+        NSInteger row = imgArray.count / 3;
+        if (imgArray.count % 3 == 0) {
+            return (PIC_WIDTH+15)*row+15;
+        }else{
+            return (PIC_WIDTH+15)*(row+1)+15;
         }
+    }else if (indexPath.section == 3){
+        return 50;
     }
 
-    if ([_model.state integerValue] == 1){
-        if (indexPath.section == 1 || indexPath.section == 3) {
+    if ([_model.info.status integerValue] == 2){
+        if (indexPath.section == 4 || indexPath.section == 6) {
             return 100;
         }
         return 50;
-    }else if ([_model.state integerValue] == 2){
-        return 50;
+    }else if ([_model.info.status integerValue] == 3){
+        if (indexPath.section == 4) {
+            if (_model.healthExaminations.count == 0) {
+                if (indexPath.row == 0) {
+                    return [self.tableView cellHeightForIndexPath:indexPath model:_model keyPath:@"huanZheDetailModel" cellClass:[NYWenZhenDetailTopCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+                }else if (indexPath.row == 1){
+                    return [self.tableView cellHeightForIndexPath:indexPath model:_model keyPath:@"huanZheDetailModel" cellClass:[NYWenZhenDetailYiZhuCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+                }
+            }else{
+                if (indexPath.row == 0) {
+                    return [self.tableView cellHeightForIndexPath:indexPath model:_model keyPath:@"huanZheDetailModel" cellClass:[NYWenZhenDetailTopCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+                }else if (indexPath.row == (3+_model.healthExaminations.count)){
+                    return [self.tableView cellHeightForIndexPath:indexPath model:_model keyPath:@"huanZheDetailModel" cellClass:[NYWenZhenDetailYiZhuCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+                }else{
+                    return 50;
+                }
+            }
+        }
     }
 
     return 0;
@@ -216,16 +407,28 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if ([_model.state integerValue] == 0) {
-        if (section == 0) {
-            return 120;
-        }
-    }else if ([_model.state integerValue] == 1){
+    if ([_model.info.status integerValue] == 1) {
         if (section == 3) {
+            return 120;
+        }else{
+            return 0.0001f;
+        }
+    }else if ([_model.info.status integerValue] == 2){
+        if (section == 0 || section == 1 || section == 2) {
+            return 0.0001f;
+        }else if (section == 6) {
             return 60;
+        }else{
+            return 8;
+        }
+    }else if ([_model.info.status integerValue] == 3){
+        if (section == 0 || section == 1 || section == 2) {
+            return 0.0001f;
+        }else{
+            return 8;
         }
     }
-    return 8;
+    return 0.0001f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -236,55 +439,111 @@
     return [UIView new];
 }
 
+#pragma mark - 播放语音
+- (void)clickPlayVoiceBtn
+{
+    NSData * voiceData = [[NSData alloc] initWithBase64EncodedString:_model.info.voiceDescribe options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    NSError *error;
+    _play = [[AVAudioPlayer alloc]initWithData:voiceData error:&error];
+    _play.delegate = self;
+    NSLog(@"%@",error);
+    _play.volume = 1.0f;
+    [_play play];
+    NSLog(@"yesssssssssss..........%f",_play.duration);
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WEAKSELF
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            NYHomeHuanZheInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoCellID"];
-            cell.homeListModel = _model;
-            return cell;
-        }else if (indexPath.row == 1){
-            NYHomeHuanZheInfoVoiceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoVoiceCellID"];
-            return cell;
-        }else if (indexPath.row == 2){
-            NYHomeHuanZheInfoImgCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoImgCellID"];
-            cell.clickImg = ^(NSInteger index, UIImageView * _Nonnull imageView) {
-                [HUPhotoBrowser showFromImageView:imageView withImages:@[imageView.image] atIndex:0];
-            };
-            return cell;
-        }else if (indexPath.row == 3){
-            NYHomeHuanZheInfoTimeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoTimeCellID"];
-            cell.homeListModel = _model;
-            return cell;
-        }
+        NYHomeHuanZheInfoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoCellID"];
+        cell.homeListModel = _model.info;
+        return cell;
+    }else if (indexPath.section == 1){
+        NYHomeHuanZheInfoVoiceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoVoiceCellID"];
+        cell.clickVoiceButton = ^{
+            [weakSelf clickPlayVoiceBtn];
+        };
+        return cell;
+    }else if (indexPath.section == 2){
+        NYHomeHuanZheInfoImgCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoImgCellID"];
+        cell.imageArray = [_model.info.image componentsSeparatedByString:@","];
+        cell.clickImg = ^(NSInteger index, UIImageView * _Nonnull imageView) {
+            NSArray * imArr = [_model.info.image componentsSeparatedByString:@","];
+            [HUPhotoBrowser showFromImageView:imageView withURLStrings:imArr atIndex:index];
+        };
+        return cell;
+    }else if (indexPath.section == 3){
+        NYHomeHuanZheInfoTimeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHuanZheInfoTimeCellID"];
+        cell.homeListModel = _model.info;
+        return cell;
     }
 
-    if ([_model.state integerValue] == 1){
-        if (indexPath.section == 1) {
+    if ([_model.info.status integerValue] == 2){
+        if (indexPath.section == 4) {
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"初步诊断:";
+            _chuBuTextView = cell.infoTextView;
             return cell;
-        }else if (indexPath.section == 2){
+        }else if (indexPath.section == 5){
             if (indexPath.row == 0) {
                 NYHomeHuanZheChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeHuanZheChoiceCheckCellID"];
                 return cell;
             }else if (indexPath.row == 1){
                 NYAlreadyChoiceCheckTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckTitleCellID"];
                 return cell;
-            }else if (indexPath.row == 5){
+            }else if (indexPath.row == (2+_seletedCheckArray.count)){
                 NYAlreadyChoiceCheckAllPriceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckAllPriceCellID"];
+                cell.choiceCheckArr = _seletedCheckArray;
                 return cell;
             }else{
                 NYAlreadyChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckCellID"];
+                cell.checkModel = _seletedCheckArray[indexPath.row-2];
                 return cell;
             }
-        }else if (indexPath.section == 3){
+        }else if (indexPath.section == 6){
             NYRegisterShanChangCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterShanChangCellID"];
             cell.infoTextView.placeholder = @"温馨医嘱:";
+            _yiZhuTextView = cell.infoTextView;
             return cell;
         }
-    }else if ([_model.state integerValue] == 2){
-        
+    }else if ([_model.info.status integerValue] == 3){
+        if (indexPath.section == 4) {
+            if (_model.healthExaminations.count == 0) {
+                if (indexPath.row == 0) {
+                    NYWenZhenDetailTopCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYWenZhenDetailTopCellID"];
+                    cell.huanZheDetailModel = _model;
+                    return cell;
+                }else if (indexPath.row == 1){
+                    NYWenZhenDetailYiZhuCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYWenZhenDetailYiZhuCellID"];
+                    cell.huanZheDetailModel = _model;
+                    return cell;
+                }
+            }else{
+                if (indexPath.row == 0) {
+                    NYWenZhenDetailTopCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYWenZhenDetailTopCellID"];
+                    cell.huanZheDetailModel = _model;
+                    return cell;
+                }else if (indexPath.row == 1){
+                    NYAlreadyChoiceCheckTitleCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckTitleCellID"];
+                    return cell;
+                }else if (indexPath.row == (2+_model.healthExaminations.count)){
+                    NYAlreadyChoiceCheckAllPriceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckAllPriceCellID"];
+                    cell.huanZheDetailModel = _model;
+                    return cell;
+                }else if (indexPath.row == (3+_model.healthExaminations.count)){
+                    NYWenZhenDetailYiZhuCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYWenZhenDetailYiZhuCellID"];
+                    cell.huanZheDetailModel = _model;
+                    return cell;
+                }else{
+                    NYAlreadyChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckCellID"];
+                    return cell;
+                }
+            }
+
+        }
     }
 
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
@@ -293,10 +552,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WEAKSELF
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 2) {
+    if (indexPath.section == 5) {
         if (indexPath.row == 0) {
             NYNeedCheckViewController * vc = [[NYNeedCheckViewController alloc] init];
+            vc.alreadyChoiceArr = _seletedCheckArray;
+            vc.clickDoneChoicCheck = ^(NSArray * _Nonnull choiceArr) {
+                _seletedCheckArray = choiceArr;
+                [weakSelf.tableView reloadData];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

@@ -129,24 +129,40 @@
     _homeListModel = homeListModel;
     
     //状态
-    if ([homeListModel.state integerValue] == 1) {
-        _stateLB.text = @"已解答";
-        _stateLB.textColor = MAINCOLOR;
-        
-        _pointView.backgroundColor = MAINCOLOR;
-    }else{
+    if ([homeListModel.status integerValue] == 1) { //待接诊
+        _stateLB.text = @"接诊";
+        _stateLB.textColor = COLOR_RED;
+        _pointView.backgroundColor = COLOR_RED;
+    }else if ([homeListModel.status integerValue] == 2){ //待回复
         _stateLB.text = @"待回复";
         _stateLB.textColor = COLOR_RED;
-        
         _pointView.backgroundColor = COLOR_RED;
+    }else if ([homeListModel.status integerValue] == 3){ //已回复
+        _stateLB.text = @"已回复";
+        _stateLB.textColor = MAINCOLOR;
+        _pointView.backgroundColor = MAINCOLOR;
     }
     
-    _nameLB.text = @"赵小强";
+    _nameLB.text = homeListModel.name;
     
-    _sexAndAgeLB.text = @"男  5岁";
     
-    _contentLB.text = @"这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    NSString * sexString = @"";
+    if ([homeListModel.gender integerValue] == 0) {
+        sexString = @"女";
+    }else{
+        sexString = @"男";
+    }
     
-    _timeLB.text = @"2018-11-22 10:10";
+    _sexAndAgeLB.text = [NSString stringWithFormat:@"%@   %zi岁",sexString,[homeListModel.age integerValue]];
+    
+    _contentLB.text = homeListModel.characterDescribe;
+    
+    _timeLB.text = [homeListModel.gmtModified substringWithRange:NSMakeRange(0, 16)];
+}
+
+- (void)setJieZhenModel:(NYMyJieZhenModel *)jieZhenModel
+{
+    _jieZhenModel = jieZhenModel;
+    
 }
 @end

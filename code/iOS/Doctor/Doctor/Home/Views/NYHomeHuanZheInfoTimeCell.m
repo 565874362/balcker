@@ -46,7 +46,7 @@
 {
     _homeListModel = homeListModel;
     
-    _timeLB.text = @"2018-11-22 10:10";
+    _timeLB.text = [homeListModel.gmtModified substringWithRange:NSMakeRange(0, 16)];
 }
 
 @end

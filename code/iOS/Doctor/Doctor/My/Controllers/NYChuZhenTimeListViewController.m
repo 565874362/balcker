@@ -12,7 +12,10 @@
 #import "NYChuZhenListModel.h"
 #import "NYChoiceChuZhenTimeViewController.h"
 
-@interface NYChuZhenTimeListViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface NYChuZhenTimeListViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+{
+    NSMutableArray * _dataArray;
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -35,6 +38,8 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.showsVerticalScrollIndicator = YES;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
     }
     return _tableView;
 }
@@ -47,7 +52,44 @@
     [self.tableView registerClass:[NYChuZhenListCell class] forCellReuseIdentifier:@"ListCell"];
 
     [self setRightItem];
+    
+    _dataArray = [NSMutableArray array];
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
 }
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+}
+
+#pragma mark - 获取数据
+- (void)loadData
+{
+    [PPHTTPRequest GetJieZhenTimeInfoWithParameters:nil success:^(id response) {
+        [self.tableView.mj_header endRefreshing];
+        
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"diagnoseList"];
+            
+            [_dataArray removeAllObjects];
+            for (NSDictionary *datc in listArr) {
+                NYChuZhenListModel *doctorModel = [NYChuZhenListModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:doctorModel];
+            }
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        MYALERT(@"获取失败");
+    }];
+}
+
+
 
 #pragma mark - 右边item
 - (void)setRightItem
@@ -64,7 +106,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 10;
+    return _dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -114,18 +156,36 @@
             return cell;
         }else if (indexPath.row == 1){
             NYChuZhenListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell"];
-            cell.chuZhenListModel = nil;
+            cell.chuZhenListModel = _dataArray[indexPath.section];
             return cell;
         }
     }
     NYChuZhenListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell"];
-    cell.chuZhenListModel = nil;
+    cell.chuZhenListModel = _dataArray[indexPath.section];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - 空数据代理方法
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_launcher"];
+//}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"暂无数据";
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:17.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
+{
+    return YES;
 }
 
 

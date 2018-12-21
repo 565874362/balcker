@@ -23,6 +23,7 @@
 {
     UIView * bgView = [[UIView alloc] init];
     bgView.backgroundColor = BGCOLOR;
+    bgView.userInteractionEnabled = YES;
     [self.contentView addSubview:bgView];
     
     bgView.sd_layout
@@ -33,5 +34,25 @@
     
     bgView.sd_cornerRadius = @20;
     
+    [bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickVoice:)]];
+
+    UIImageView * voiceImg = [[UIImageView alloc] init];
+    voiceImg.image = [UIImage imageNamed:@"voice"];
+    [bgView addSubview:voiceImg];
+    
+    voiceImg.sd_layout
+    .leftSpaceToView(bgView, 20)
+    .centerYEqualToView(bgView)
+    .widthIs(30)
+    .heightEqualToWidth();
+
 }
+
+- (void)clickVoice:(UITapGestureRecognizer *)tap
+{
+    if (_clickVoiceButton) {
+        _clickVoiceButton();
+    }
+}
+
 @end

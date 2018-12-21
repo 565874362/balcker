@@ -112,7 +112,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"注册";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-    [self.tableView registerClass:[NYNameInputCell class] forCellReuseIdentifier:@"INPUTCELLID"];
+//    [self.tableView registerClass:[NYNameInputCell class] forCellReuseIdentifier:@"INPUTCELLID"];
     [self.tableView registerClass:[NYChuZhenTitleCell class] forCellReuseIdentifier:@"TitleCell"];
     [self.tableView registerClass:[NYRegisterInputPhoneCell class] forCellReuseIdentifier:@"NYRegisterPhoneCellID"];
     [self.tableView registerClass:[NYRegisterChoiceSexCell class] forCellReuseIdentifier:@"NYChoiceSexCellID"];
@@ -365,6 +365,12 @@
         return;
     }
 
+    if (codeString.length == 0) {
+        MYALERT(@"请输入验证码");
+        return;
+    }
+
+    
     NSInteger danWeiCount = 0;
     for (NSDictionary * obj in self.danweiArray) {
         if ([obj[@"name"] isEqualToString:danWeiString]) {
@@ -425,7 +431,6 @@
                 }else{
                     MYALERT(response[@"msg"]);
                 }
-                [self.tableView reloadData];
             } failure:^(NSError *error) {
                 [SVProgressHUD dismiss];
                 MYALERT(@"注册失败");
@@ -446,7 +451,12 @@
     WEAKSELF
     if (indexPath.section == 0) { //姓名
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"1";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
 
             cell.typeLB.text = @"姓名";
             cell.inputTF.placeholder = @"请输入姓名";
@@ -470,21 +480,39 @@
         }
     }else if (indexPath.section == 1){//单位
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"2";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"单位";
             cell.inputTF.placeholder = @"请选择工作单位";
             _danWeiTF = cell.inputTF;
             _danWeiTF.delegate = self;
             return cell;
         }else if (indexPath.row == 1){
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"3";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"职位";
             cell.inputTF.placeholder = @"请选择职位";
             _zhiWeiTF = cell.inputTF;
             _zhiWeiTF.delegate = self;
             return cell;
         }else if (indexPath.row == 2){
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"4";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"科室";
             cell.inputTF.placeholder = @"选择科室";
             _keShiTF = cell.inputTF;
@@ -493,7 +521,13 @@
         }
     }else if (indexPath.section == 2){//预约费
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"5";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"预约费";
             cell.inputTF.placeholder = @"请输入预约费金额";
             _priceTF = cell.inputTF;
@@ -502,7 +536,13 @@
         }
     }else if (indexPath.section == 3){//擅长1
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"6";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"擅长1";
             cell.inputTF.placeholder = @"请输入名称";
             _shanChangTF1 = cell.inputTF;
@@ -515,7 +555,13 @@
         }
     }else if (indexPath.section == 4){ //擅长2
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"7";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"擅长2";
             cell.inputTF.placeholder = @"请输入名称";
             _shanChangTF2 = cell.inputTF;
@@ -528,7 +574,13 @@
         }
     }else if (indexPath.section == 5){ //擅长3
         if (indexPath.row == 0) {
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"8";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"擅长3";
             cell.inputTF.placeholder = @"请输入名称";
             _shanChangTF3 = cell.inputTF;
@@ -605,7 +657,13 @@
             };
             return cell;
         }else if (indexPath.row == 1){
-            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+//            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:@"INPUTCELLID"];
+            static NSString * cellID = @"9";
+            NYNameInputCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+            if (cell == nil) {
+                cell = [[NYNameInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            }
+
             cell.typeLB.text = @"验证码";
             cell.inputTF.placeholder = @"请输入短信验证码";
             _codeTF = cell.inputTF;

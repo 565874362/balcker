@@ -12,8 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYChoiceWeekCell : UITableViewCell
 
-@property (nonatomic,copy) void(^clickChoiceWeek)(NSInteger index);
+@property (nonatomic,copy) void(^clickChoiceWeek)(NSArray * cellViewArray);
 
+@property (nonatomic,strong) NSArray * weekDayArray;
 @end
 
 NS_ASSUME_NONNULL_END

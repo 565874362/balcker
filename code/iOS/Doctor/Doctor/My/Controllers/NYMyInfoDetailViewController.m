@@ -10,8 +10,12 @@
 #import "NYMyInfoDetailCell.h"
 #import "NYMyInfoDetailModel.h"
 #import "NYEditMyInfoViewController.h"
+#import "NYMyInfoDetailModel.h"
 
 @interface NYMyInfoDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    NYMyInfoDetailModel * _infoModel;
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -47,20 +51,61 @@
     self.navigationItem.title = @"我的信息";
     [self.tableView registerClass:[NYMyInfoDetailCell class] forCellReuseIdentifier:@"MyInfoDetailCellID"];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(clickEditItem:)];
+//    [self getDoctorDetailInfo]; //获取医生信息
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
+}
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getDoctorDetailInfo)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
     
+}
+
+#pragma mark - 获取医生信息
+- (void)getDoctorDetailInfo
+{
+    WEAKSELF
+    [PPHTTPRequest GetDoctorDetailInfoWithParameters:nil success:^(id response) {
+        [self.tableView.mj_header endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(clickEditItem:)];
+            
+            _infoModel = [NYMyInfoDetailModel mj_objectWithKeyValues:response[@"data"][@"info"]];
+
+            [weakSelf.tableView reloadData];
+        }else{
+            MYALERT(@"获取失败");
+        }
+    } failure:^(NSError *error) {
+        MYALERT(@"获取失败");
+        [self.tableView.mj_header endRefreshing];
+    }];
 }
 
 #pragma mark - 点击编辑
 - (void)clickEditItem:(UIBarButtonItem *)item
 {
+    WEAKSELF
     NYEditMyInfoViewController * vc = [[NYEditMyInfoViewController alloc] init];
+    vc.infoModel = _infoModel;
+    vc.ChangDoctorInfoSuccessed = ^{
+        [weakSelf getDoctorDetailInfo];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (_infoModel) {
+        return 1;
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -70,14 +115,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NYMyInfoDetailModel * model = [[NYMyInfoDetailModel alloc] init];
-    model.shanChang1 = @"咳嗽:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长2
-    model.shanChang2 = @"哮喘:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长3
-    model.shanChang3 = @"呼吸道感染:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    model.yiyuanName = @"西安儿童医院";
-    return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"myInfoModel" cellClass:[NYMyInfoDetailCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
+    return [self.tableView cellHeightForIndexPath:indexPath model:_infoModel keyPath:@"myInfoModel" cellClass:[NYMyInfoDetailCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -101,7 +139,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NYMyInfoDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MyInfoDetailCellID"];
-    cell.myInfoModel = nil;
+    cell.myInfoModel = _infoModel;
     return cell;
 }
 

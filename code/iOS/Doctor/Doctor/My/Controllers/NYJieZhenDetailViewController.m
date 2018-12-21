@@ -9,6 +9,8 @@
 #import "NYJieZhenDetailViewController.h"
 #import "NYChuZhenTitleCell.h"
 #import "NYJieZhenDetailCell.h"
+#import "NYMyJieZhenModel.h"
+#import "NYPayInfoModel.h"
 
 @interface NYJieZhenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -98,20 +100,20 @@
         }else{
             NYJieZhenDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JieZhenDetailCellID"];
             if (indexPath.row == 1) {
-                cell.typeLB.text = @"患者信息";
-                cell.infoLB.text = @"赵小强";
+                cell.typeLB.text = @"患者姓名";
+                cell.infoLB.text = self.jieZhenModel.name;
             }else if (indexPath.row == 2){
                 cell.typeLB.text = @"年龄";
-                cell.infoLB.text = @"5岁";
+                cell.infoLB.text = [NSString stringWithFormat:@"%@岁",self.jieZhenModel.age];
             }else if (indexPath.row == 3){
                 cell.typeLB.text = @"性别";
-                cell.infoLB.text = @"男";
+                cell.infoLB.text = [self.jieZhenModel.gender integerValue]==0?@"女":@"男";
             }else if (indexPath.row == 4){
                 cell.typeLB.text = @"联系电话";
-                cell.infoLB.text = @"15596679811";
+                cell.infoLB.text = self.jieZhenModel.phone;
             }else if (indexPath.row == 5){
-                cell.typeLB.text = @"接诊时间";
-                cell.infoLB.text = @"2018-10-30 周五 下午";
+                cell.typeLB.text = @"就诊时间";
+                cell.infoLB.text = [NSString stringWithFormat:@"%@ %@",self.jieZhenModel.visitTime,[self.jieZhenModel.timePart integerValue]==0?@"上午":@"下午"];
             }
             return cell;
         }
@@ -124,14 +126,14 @@
             NYJieZhenDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JieZhenDetailCellID"];
             if (indexPath.row == 1) {
                 cell.typeLB.text = @"支付方式";
-                cell.infoLB.text = @"微信支付";
+                cell.infoLB.text = [self.jieZhenModel.payInfo.type integerValue] == 1?@"微信":@"支付宝";
             }else if (indexPath.row == 2){
                 cell.typeLB.text = @"支付金额";
-                cell.infoLB.text = @"20.00元";
+                cell.infoLB.text = [NSString stringWithFormat:@"%.2f元",[self.jieZhenModel.fee doubleValue]];
                 cell.infoLB.textColor = COLOR_RED;
             }else if (indexPath.row == 3){
                 cell.typeLB.text = @"支付时间";
-                cell.infoLB.text = @"2018-10-30 12:15:26";
+                cell.infoLB.text = self.jieZhenModel.payInfo.gmtCreate;
             }
             return cell;
         }

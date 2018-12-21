@@ -11,14 +11,22 @@
 #import "NYChuZhenSetCountCell.h"
 #import "NYChoiceChuZhenTimeCell.h"
 #import "NYChoiceWeekCell.h"
+#import "NYJieZhenZhouQiModel.h"
+#import "NYMyView.h"
 
 @interface NYChoiceChuZhenTimeViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     HHTextField * _amStartTimeTF;
     HHTextField * _amEndTimeTF;
+    HHTextField * _amCountTF;
     
     HHTextField * _pmStartTimeTF;
     HHTextField * _pmEndTimeTF;
+    HHTextField * _pmCountTF;
+    
+    NSMutableArray * _dataArray;
+    
+    NSArray * _seletedDayArr;
 }
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -54,8 +62,42 @@
     [self.tableView registerClass:[NYChoiceChuZhenTimeCell class] forCellReuseIdentifier:@"ChoiceChuZhenTimeCell"];
     [self.tableView registerClass:[NYChoiceWeekCell class] forCellReuseIdentifier:@"ChoiceWeekCell"];
 
+    _dataArray = [NSMutableArray arrayWithCapacity:7];
+    
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
 }
 
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+}
+
+#pragma mark - 获取数据
+- (void)loadData
+{
+    [PPHTTPRequest GetJieZhenZhouQiInfoWithParameters:nil success:^(id response) {
+        [self.tableView.mj_header endRefreshing];
+        
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"diagnoseDates"];
+            
+            [_dataArray removeAllObjects];
+            for (NSDictionary *datc in listArr) {
+                NYJieZhenZhouQiModel *doctorModel = [NYJieZhenZhouQiModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:doctorModel];
+            }
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        MYALERT(@"获取失败");
+    }];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -132,7 +174,79 @@
 #pragma mark - 点击提交按钮
 - (void)clickPutBtn:(UIButton *)button
 {
+    [_amCountTF resignFirstResponder];
+    [_pmCountTF resignFirstResponder];
     
+    NSMutableArray * muA = [NSMutableArray array];
+    for (int i = 0; i < _seletedDayArr.count; i++) {
+        NYMyView * view = _seletedDayArr[i];
+        if (view.isSeleted == YES) {
+            NYJieZhenZhouQiModel * model = _dataArray[i];
+            [muA addObject:model.date];
+        }
+    }
+    
+    if (muA.count == 0) {
+        MYALERT(@"请选择接诊时间");
+        return;
+    }
+    
+    
+    NSString * amStartString = [_amStartTimeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * amEndString = [_amEndTimeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * pmStartString = [_pmStartTimeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * pmEndString = [_pmEndTimeTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSString * amCountString = [_amCountTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    
+    NSString * pmCountString = [_pmCountTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    
+    if (amStartString.length == 0 && pmStartString.length == 0) {
+        MYALERT(@"请选择开始时间");
+        return;
+    }
+    
+    if (amEndString.length == 0 && pmEndString.length == 0) {
+        MYALERT(@"请选择结束时间");
+        return;
+    }
+    
+    if (amCountString.length == 0 && pmCountString.length == 0) {
+        MYALERT(@"请输入接诊人数");
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+    
+    WEAKSELF
+    NSDictionary * dict = @{
+                            @"moringBegin":_amStartTimeTF.text.length==0?@"":_amStartTimeTF.text,
+                            @"moringEnd":_amEndTimeTF.text.length==0?@"":_amEndTimeTF.text,
+                            @"morningNum":_amCountTF.text.length==0?@"":@([_amCountTF.text integerValue]),
+                            @"dates":muA,
+                            @"afternoonBegin":_pmStartTimeTF.text.length==0?@"":_pmStartTimeTF.text,
+                            @"afternoonEnd":_pmEndTimeTF.text.length==0?@"":_pmEndTimeTF.text,
+                            @"afternoonNum":_pmCountTF.text.length==0?@"":@([_pmCountTF.text integerValue]),
+                            };
+    
+    [PPHTTPRequest postAddJieZhenTimeInfoWithParameters:dict success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            MYALERT(@"提交成功");
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }else{
+            MYALERT(response[@"msg"]);
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"提交失败");
+    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,6 +258,10 @@
             return cell;
         }else if (indexPath.row == 1){
             NYChoiceWeekCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceWeekCell"];
+            cell.weekDayArray = [_dataArray copy];
+            cell.clickChoiceWeek = ^(NSArray * _Nonnull cellViewArray) {
+                _seletedDayArr = cellViewArray;
+            };
             return cell;
         }
     }else if (indexPath.section == 1){
@@ -163,6 +281,7 @@
             return cell;
         }else if (indexPath.row == 2){
             NYChuZhenSetCountCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SetCountCell"];
+            _amCountTF = cell.countTF;
             return cell;
         }
     }else if (indexPath.section == 2){
@@ -183,6 +302,7 @@
             return cell;
         }else if (indexPath.row == 2){
             NYChuZhenSetCountCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SetCountCell"];
+            _pmCountTF = cell.countTF;
             return cell;
         }
     }
@@ -191,14 +311,25 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    // 自定义多列字符串
-    NSArray *dataSource = @[@[@"00", @"01", @"02", @"03", @"04", @"05", @"06",@"07", @"08", @"09", @"10", @"11", @"12", @"13",@"14", @"15", @"16", @"17", @"18", @"19", @"20",@"21", @"22", @"23"], @[@"00", @"30"]];
-    NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@":"];
-    [BRStringPickerView showStringPickerWithTitle:@"选择时间" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
-        textField.text = [NSString stringWithFormat:@"%@:%@", selectValue[0], selectValue[1]];
-    } cancelBlock:^{
-        NSLog(@"点击了背景视图或取消按钮");
-    }];
+    if (textField.tag == 1 || textField.tag == 2) { //
+        // 自定义多列字符串
+        NSArray *dataSource = @[@[@"00", @"01", @"02", @"03", @"04", @"05", @"06",@"07", @"08", @"09", @"10", @"11", @"12"], @[@"00", @"30"]];
+        NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@":"];
+        [BRStringPickerView showStringPickerWithTitle:@"选择时间" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+            textField.text = [NSString stringWithFormat:@"%@:%@", selectValue[0], selectValue[1]];
+        } cancelBlock:^{
+            NSLog(@"点击了背景视图或取消按钮");
+        }];
+    }else if (textField.tag == 3 || textField.tag == 4){
+        // 自定义多列字符串
+        NSArray *dataSource = @[@[@"13",@"14", @"15", @"16", @"17", @"18", @"19", @"20",@"21", @"22", @"23"], @[@"00", @"30"]];
+        NSArray *defaultSelArr = [textField.text componentsSeparatedByString:@":"];
+        [BRStringPickerView showStringPickerWithTitle:@"选择时间" dataSource:dataSource defaultSelValue:defaultSelArr isAutoSelect:YES themeColor:nil resultBlock:^(id selectValue) {
+            textField.text = [NSString stringWithFormat:@"%@:%@", selectValue[0], selectValue[1]];
+        } cancelBlock:^{
+            NSLog(@"点击了背景视图或取消按钮");
+        }];
+    }
 
     return NO;
 }

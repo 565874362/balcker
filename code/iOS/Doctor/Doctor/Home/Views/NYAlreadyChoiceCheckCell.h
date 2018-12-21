@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NYNeedCheckModel;
+
 @interface NYAlreadyChoiceCheckCell : UITableViewCell
 
 @property (nonatomic,strong) UILabel * typeLB;
@@ -17,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UILabel * priceLB;
 
 @property (nonatomic,strong) UIView * lineView;
+
+@property (nonatomic,strong) NYNeedCheckModel * checkModel;
 
 @end
 

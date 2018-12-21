@@ -10,9 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NYHuanZheDetailModel;
+
 @interface NYAlreadyChoiceCheckAllPriceCell : UITableViewCell
 
 @property (nonatomic,strong) UILabel * priceLB;
+
+@property (nonatomic,strong) NSArray * choiceCheckArr;
+
+@property (nonatomic,strong) NYHuanZheDetailModel * huanZheDetailModel;
 
 @end
 

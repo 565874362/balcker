@@ -102,12 +102,12 @@
 {
     _chuZhenListModel = chuZhenListModel;
     
-    _weekLB.text = @"周一";
+    _weekLB.text = chuZhenListModel.date;
     
-    _dayLB.text = @"上午";
+    _dayLB.text = chuZhenListModel.timepart;
     
-    _timeLB.text = @"08:30-11:30";
+    _timeLB.text = [NSString stringWithFormat:@"%@-%@",chuZhenListModel.beginTime,chuZhenListModel.endTime];
     
-    _countLB.text = @"就诊人数：80人";
+    _countLB.text = [NSString stringWithFormat:@"就诊人数：%zi人",[chuZhenListModel.totalNumber integerValue]];
 }
 @end

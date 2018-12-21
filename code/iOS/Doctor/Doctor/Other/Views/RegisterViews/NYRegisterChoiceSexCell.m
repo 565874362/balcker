@@ -11,8 +11,8 @@
 
 @implementation NYRegisterChoiceSexCell
 {
-    RankButton * _manBtn;
-    RankButton * _womanBtn;
+//    RankButton * _manBtn;
+//    RankButton * _womanBtn;
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

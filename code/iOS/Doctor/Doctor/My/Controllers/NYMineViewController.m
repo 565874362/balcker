@@ -16,11 +16,14 @@
 #import "NYHuanZheInfoListViewController.h"
 #import "NYMyJieZhenListViewController.h"
 #import "NYMyInfoDetailViewController.h"
+#import "NYMyInfoDetailModel.h"
 
 #define NAVBAR_CHANGE_POINT 50
 
 @interface NYMineViewController ()<UITableViewDelegate,UITableViewDataSource>
-
+{
+    NYMyInfoDetailModel * _infoModel;
+}
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -29,7 +32,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self getDoctorDetailInfo]; //获取医生信息
+
     [self scrollViewDidScroll:self.tableView];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
@@ -77,7 +81,22 @@
     }
     return _tableView;
 }
-    
+
+
+#pragma mark - 获取医生信息
+- (void)getDoctorDetailInfo
+{
+    [PPHTTPRequest GetDoctorDetailInfoWithParameters:nil success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            _infoModel = [NYMyInfoDetailModel mj_objectWithKeyValues:response[@"data"][@"info"]];
+            
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -130,9 +149,12 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         NYMyHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HeaderViewID"];
-        headerView.nameLB.text = @"刘振环";
-        headerView.typeLB.text = @"主任医师 | 儿科";
-        headerView.leaveLB.text = @"等级";
+        if (_infoModel) {
+            [headerView.headerImg sd_setImageWithURL:[NSURL URLWithString:_infoModel.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+            headerView.nameLB.text = _infoModel.name;
+            headerView.typeLB.text = [NSString stringWithFormat:@"%@ | %@",_infoModel.positionName,_infoModel.offName];
+            headerView.leaveLB.text = @"等级";
+        }
         return headerView;
     }
     return [UIView new];
@@ -165,7 +187,22 @@
 #pragma mark - 点击退出登录
 - (void)clickOutLoginBtn:(UIButton *)button
 {
-    [UIApplication sharedApplication].delegate.window.rootViewController = [[NYBaseNavViewController alloc] initWithRootViewController:[[NYLoginViewController alloc] init]];
+    
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"确认要退出登录吗？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:0 handler:^(UIAlertAction * _Nonnull action) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ISLOGIN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [UserInfo setToken:nil];
+        
+        [UIApplication sharedApplication].delegate.window.rootViewController = [[NYBaseNavViewController alloc] initWithRootViewController:[[NYLoginViewController alloc] init]];
+
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

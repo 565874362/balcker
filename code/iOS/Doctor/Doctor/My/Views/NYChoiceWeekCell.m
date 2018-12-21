@@ -8,13 +8,17 @@
 
 #import "NYChoiceWeekCell.h"
 #import "NYMyView.h"
+#import "NYJieZhenZhouQiModel.h"
 
 @implementation NYChoiceWeekCell
-
+{
+    NSMutableArray * _muArray;
+}
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        _muArray = [NSMutableArray array];
         [self setup];
     }
     return self;
@@ -39,6 +43,8 @@
     CGFloat cellH = 80;
     
     
+    [_muArray removeAllObjects];
+    
     //    根据格子个数创建对应的框框
     for(int index = 0; index< 7; index++) {
         
@@ -62,6 +68,7 @@
         // 添加到view 中
         [self.contentView addSubview:cellView];
         
+        [_muArray addObject:cellView];
         
         UILabel * timeLB = [[UILabel alloc] init];
         timeLB.tag = 1001;
@@ -77,7 +84,7 @@
         .rightSpaceToView(cellView, 0)
         .heightIs(30);
         
-        timeLB.text = @"11-19";
+//        timeLB.text = @"11-19";
         
         
         //星期
@@ -94,21 +101,21 @@
         .topSpaceToView(timeLB, 0)
         .rightSpaceToView(cellView, 0)
         .bottomSpaceToView(cellView, 10);
-        if (index == 0) {
-            offLB.text = @"周一";
-        }else if (index == 1){
-            offLB.text = @"周二";
-        }else if (index == 2){
-            offLB.text = @"周三";
-        }else if (index == 3){
-            offLB.text = @"周四";
-        }else if (index == 4){
-            offLB.text = @"周五";
-        }else if (index == 5){
-            offLB.text = @"周六";
-        }else if (index == 6){
-            offLB.text = @"周日";
-        }
+//        if (index == 0) {
+//            offLB.text = @"周一";
+//        }else if (index == 1){
+//            offLB.text = @"周二";
+//        }else if (index == 2){
+//            offLB.text = @"周三";
+//        }else if (index == 3){
+//            offLB.text = @"周四";
+//        }else if (index == 4){
+//            offLB.text = @"周五";
+//        }else if (index == 5){
+//            offLB.text = @"周六";
+//        }else if (index == 6){
+//            offLB.text = @"周日";
+//        }
     }
 }
 
@@ -131,10 +138,24 @@
         weekLB.textColor = [UIColor whiteColor];
     }
     
-    
-    
     if (_clickChoiceWeek) {
-        _clickChoiceWeek(tap.view.tag);
+        _clickChoiceWeek([_muArray copy]);
+    }
+}
+
+- (void)setWeekDayArray:(NSArray *)weekDayArray
+{
+    _weekDayArray = weekDayArray;
+    
+    for (int i = 0; i< weekDayArray.count; i++) {
+        NYJieZhenZhouQiModel * model = weekDayArray[i];
+        
+        NYMyView * view = _muArray[i];
+        UILabel * timeLB = [view viewWithTag:1001];
+        UILabel * weekLB = [view viewWithTag:1002];
+        
+        timeLB.text = model.monthDay;
+        weekLB.text = model.week;
     }
 }
 

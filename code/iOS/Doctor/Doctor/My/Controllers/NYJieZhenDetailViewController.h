@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class NYMyJieZhenModel;
 @interface NYJieZhenDetailViewController : UIViewController
+
+@property (nonatomic,strong) NYMyJieZhenModel * jieZhenModel;
 
 @end
 

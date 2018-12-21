@@ -10,8 +10,11 @@
 #import "NYNeedCheckCell.h"
 #import "NYNeedCheckModel.h"
 
-@interface NYNeedCheckViewController ()<UITableViewDelegate,UITableViewDataSource>
-
+@interface NYNeedCheckViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+{
+    NSMutableArray * _dataArray;
+    UILabel * _allPriceLB;
+}
 @property (nonatomic, strong) UITableView *tableView;
 
 
@@ -34,6 +37,12 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.showsVerticalScrollIndicator = YES;
         _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.emptyDataSetSource = self;
+        _tableView.emptyDataSetDelegate = self;
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;
+
     }
     return _tableView;
 }
@@ -44,8 +53,59 @@
     self.navigationItem.title = @"需做检查";
     [self.tableView registerClass:[NYNeedCheckCell class] forCellReuseIdentifier:@"Cell"];
     
-    [self initBottomUI];
+    
+    _dataArray = [NSMutableArray array];
+    [self setupRefresh];
+    [self.tableView.mj_header beginRefreshing];
+
 }
+
+//集成刷新控件
+- (void)setupRefresh{
+    // 1.下拉刷新
+    MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+    
+}
+
+#pragma mark - 获取数据
+- (void)loadData
+{
+    [PPHTTPRequest GetJianKangCheckInfoWithParameters:nil success:^(id response) {
+        [self.tableView.mj_header endRefreshing];
+        
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"list"];
+            
+            [_dataArray removeAllObjects];
+            for (NSDictionary *datc in listArr) {
+                NYNeedCheckModel *doctorModel = [NYNeedCheckModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:doctorModel];
+            }
+            
+            for (NYNeedCheckModel * alreadyModel in _alreadyChoiceArr) {
+                for (NYNeedCheckModel * obj in _dataArray) {
+                    if ([alreadyModel.id integerValue] == [obj.id integerValue]) {
+                        obj.isSeleted = YES;
+                        break;
+                    }
+                }
+            }
+            
+            
+            [self initBottomUI];
+
+        }else{
+            MYALERT(@"暂无数据");
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        MYALERT(@"获取失败");
+    }];
+}
+
 
 #pragma mark - 初始化底部UI
 - (void)initBottomUI
@@ -75,8 +135,9 @@
     
     [priceLB setSingleLineAutoResizeWithMaxWidth:NYScreenW*0.3];
     
-    priceLB.text = @"共计: 25.00元";
-
+    priceLB.text = @"共计: 0.00元";
+    
+    _allPriceLB = priceLB;
     
     UIButton * doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [doneButton setTitle:@"确认" forState:UIControlStateNormal];
@@ -94,12 +155,40 @@
     
     
     [doneButton addTarget:self action:@selector(clickDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    //初始化价格
+    double allPrice = 0.0;
+    for (NYNeedCheckModel * model in _dataArray) {
+        if (model.isSeleted) {
+            double pric = [model.price doubleValue];
+            allPrice += pric;
+        }
+    }
+    
+    _allPriceLB.text = [NSString stringWithFormat:@"共计: %.2f元",allPrice];
+    
 }
 
 #pragma mark - 点击确认按钮
 - (void)clickDoneButton:(UIButton *)button
 {
+    NSMutableArray * arr = [NSMutableArray array];
     
+    for (NYNeedCheckModel * model in _dataArray) {
+        if (model.isSeleted) {
+            [arr addObject:model];
+        }
+    }
+    
+    if (arr.count == 0) {
+        return MYALERT(@"请选择需要做的检查");
+    }else{
+        if (_clickDoneChoicCheck) {
+            _clickDoneChoicCheck([arr copy]);
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -109,7 +198,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,12 +227,48 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NYNeedCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell.checkModel = _dataArray[indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NYNeedCheckModel * model = _dataArray[indexPath.row];
+    model.isSeleted = !model.isSeleted;
+    
+    double allPrice = 0.0;
+    for (NYNeedCheckModel * model in _dataArray) {
+        if (model.isSeleted) {
+            double pric = [model.price doubleValue];
+            allPrice += pric;
+        }
+    }
+    
+    _allPriceLB.text = [NSString stringWithFormat:@"共计: %.2f元",allPrice];
+    
+    [self.tableView reloadData];
+
+}
+
+
+#pragma mark - 空数据代理方法
+//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
+//{
+//    return [UIImage imageNamed:@"ic_launcher"];
+//}
+
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"暂无数据";
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:17.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor]};
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+- (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
+{
+    return YES;
 }
 
 @end

@@ -80,11 +80,19 @@
 {
     _homeListModel = homeListModel;
     
-    _nameLB.text = @"赵小强";
+    _nameLB.text = homeListModel.name;
     
-    _sexAndAgeLB.text = @"男  5岁";
     
-    _contentLB.text = @"这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    NSString * sexString = @"";
+    if ([homeListModel.gender integerValue] == 0) {
+        sexString = @"女";
+    }else{
+        sexString = @"男";
+    }
+    
+    _sexAndAgeLB.text = [NSString stringWithFormat:@"%@   %zi岁",sexString,[homeListModel.age integerValue]];
+    
+    _contentLB.text = homeListModel.characterDescribe;
 }
 
 @end

@@ -10,8 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NYMyInfoDetailModel;
+
 @interface NYEditMyInfoViewController : UIViewController
 
+@property (nonatomic,strong) NYMyInfoDetailModel * infoModel;
+
+@property (nonatomic,copy) void(^ChangDoctorInfoSuccessed)(void);
 @end
 
 NS_ASSUME_NONNULL_END

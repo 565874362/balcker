@@ -8,6 +8,7 @@
 
 #import "NYMyInfoDetailCell.h"
 #import "NYMyInfoDetailModel.h"
+#import "NYAdeptEntitiesModel.h"
 
 @interface NYMyInfoDetailCell ()
 {
@@ -248,28 +249,40 @@
 {
     _myInfoModel = myInfoModel;
     
+    [_headerImg sd_setImageWithURL:[NSURL URLWithString:myInfoModel.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    
     //科室
-    _keshiLB.text = @"儿科";
+    _keshiLB.text = myInfoModel.offName;
     //姓名
-    _nameLB.text = @"刘振环";
+    _nameLB.text = myInfoModel.name;
     //职称
-    _zhichengLB.text = @"主任医师";
+    _zhichengLB.text = myInfoModel.positionName;
     //医院名称
-    _yiyuanNameLB.text = @"西安儿童医院";
+    _yiyuanNameLB.text = myInfoModel.hosName;
     //擅长
     _shanChangLB.text = @"擅长:";
     
-    //擅长1
-    _shanChangInfoLB1.text = @"咳嗽:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长2
-    _shanChangInfoLB2.text = @"哮喘:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
-    //擅长3
-    _shanChangInfoLB3.text = @"呼吸道感染:过敏性咳嗽（咳嗽变异性哮喘）、过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）过敏性咳嗽（咳嗽变异性哮喘）";
+    NSArray * shanChangArr = myInfoModel.adeptEntities;
+    
+    for (int i = 0; i < shanChangArr.count; i++) {
+        NYAdeptEntitiesModel * adModel = shanChangArr[i];
+        if (i == 0) {
+            _shanChangInfoLB1.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }else if (i == 1){
+            _shanChangInfoLB2.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }else if (i == 2){
+            _shanChangInfoLB3.text = [NSString stringWithFormat:@"%@：%@",adModel.name,adModel.describe];
+        }
+    }
     //医生资格证
     _zigeCardLB.text = @"医生资格证";
+    [_zigeCardImg sd_setImageWithURL:[NSURL URLWithString:myInfoModel.physicianLicence] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     
     //身份证
     _shenfenCardLB.text = @"身份证图片";
+    NSArray * carImgArr = [myInfoModel.identityCard componentsSeparatedByString:@","];
+    [_shenfenCardImg1 sd_setImageWithURL:[NSURL URLWithString:carImgArr[0]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    [_shenfenCardImg2 sd_setImageWithURL:[NSURL URLWithString:carImgArr[1]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
 
 }
 @end

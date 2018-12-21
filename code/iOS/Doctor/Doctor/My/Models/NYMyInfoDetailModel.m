@@ -7,7 +7,12 @@
 //
 
 #import "NYMyInfoDetailModel.h"
+#import "NYAdeptEntitiesModel.h"
 
 @implementation NYMyInfoDetailModel
+
++ (NSDictionary *)objectClassInArray{
+    return @{@"adeptEntities" : [NYAdeptEntitiesModel class]};
+}
 
 @end

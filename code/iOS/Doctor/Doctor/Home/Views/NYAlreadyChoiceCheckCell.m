@@ -7,6 +7,7 @@
 //
 
 #import "NYAlreadyChoiceCheckCell.h"
+#import "NYNeedCheckModel.h"
 
 @implementation NYAlreadyChoiceCheckCell
 
@@ -35,7 +36,7 @@
     
     [_typeLB setSingleLineAutoResizeWithMaxWidth:NYScreenW*0.5];
     
-    _typeLB.text = @"口腔检查";
+    _typeLB.text = @"";
     
     
     _priceLB = [[UILabel alloc] init];
@@ -51,7 +52,7 @@
     .bottomSpaceToView(self.contentView, 0)
     .widthIs(200);
     
-    _priceLB.text = @"25.00元";
+    _priceLB.text = @"0.00元";
 
     _lineView = [[UIView alloc] init];
     _lineView.backgroundColor = BGCOLOR;
@@ -62,6 +63,17 @@
     .bottomSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 5)
     .heightIs(1);
+    
+}
+
+- (void)setCheckModel:(NYNeedCheckModel *)checkModel
+{
+    _checkModel = checkModel;
+    
+    _typeLB.text = checkModel.name;
+    
+    _priceLB.text = [NSString stringWithFormat:@"%.2f元",[checkModel.price doubleValue]];
+
     
 }
 @end

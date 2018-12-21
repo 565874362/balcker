@@ -75,4 +75,53 @@ NSString *const getDictionaryDataInfo = @"/rest/basdictionary/list";
 /** 上传图片*/
 NSString *const uploadImage = @"/rest/upload";
 
+
+//====================================医生================================
+
+/** 获取医生信息*/
+NSString *const getDoctorDetailInfo = @"/rest/usdoctor/info";
+
+/** 编辑医生信息*/
+NSString *const EditDoctorDetailInfo = @"/rest/usdoctor/update";
+
+
+//====================================出诊时间表================================
+
+/** 获取接诊周期*/
+NSString *const getJieZhenZhouQiInfo = @"/rest/serschedule/diagnoseDates";
+
+/** 接诊时间*/
+NSString *const GetJieZhenTimeInfo = @"/rest/serschedule/diagnoseList";
+
+/** 增加接诊时间*/
+NSString *const AddJieZhenTimeInfo = @"/rest/serschedule/addDiagnose";
+
+//====================================问诊================================
+
+/** 我的患者-列表*/
+NSString *const getDoctorWenZhenListInfo = @"/rest/serinquiry/doctorList";
+
+
+/** 首页患者-列表*/
+NSString *const getHomeHuanZheListInfo = @"/rest/serinquiry/doctorIndex";
+
+/** 用户问诊详情*/
+NSString *const wenZhenDetailInfo = @"/rest/serinquiry/info";
+
+/** 医生点击接诊*/
+NSString *const DoctorJieZhenInfo = @"/rest/serinquiry/accept";
+
+/** 医生回复*/
+NSString *const DoctorHuiFuWenZhenInfo = @"/rest/serinquiry/response";
+
+//====================================健康检查================================
+
+/** 健康检查列表*/
+NSString *const JianKangCheckInfo = @"/rest/bashealthexamination/list";
+
+//====================================挂号================================
+
+/** 医生接诊列表*/
+NSString *const DoctorJieZhenListInfo = @"/rest/serregistration/doctorListRegistration";
+
 #endif

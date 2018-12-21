@@ -7,6 +7,10 @@
 //
 
 #import "NYAlreadyChoiceCheckAllPriceCell.h"
+#import "NYNeedCheckModel.h"
+#import "NYHuanZheDetailModel.h"
+#import "NYMyInfoDetailModel.h"
+#import "NYHomeListModel.h"
 
 @implementation NYAlreadyChoiceCheckAllPriceCell
 
@@ -36,6 +40,52 @@
     
     _priceLB.text = @"预估费用合计 110.00元";
     
+}
+
+- (void)setChoiceCheckArr:(NSArray *)choiceCheckArr
+{
+    _choiceCheckArr = choiceCheckArr;
+    
+    double allPrice = 0.0;
+    for (NYNeedCheckModel * model in choiceCheckArr) {
+        if (model.isSeleted) {
+            double pric = [model.price doubleValue];
+            allPrice += pric;
+        }
+    }
+    
+    _priceLB.text = [NSString stringWithFormat:@"预估费用合计 %.2f元",allPrice];
+
+    
+    // 1.创建NSMutableAttributedString实例
+    NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:_priceLB.text];
+    
+    // 2.添加属性
+    [fontAttributeNameStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17] range:NSMakeRange(6, _priceLB.text.length-6)];
+    [fontAttributeNameStr addAttribute:NSForegroundColorAttributeName value:COLOR_RED range:NSMakeRange(6, _priceLB.text.length-6)];
+    
+    // 3.给label赋值
+    _priceLB.attributedText = fontAttributeNameStr;
+
+    
+}
+
+- (void)setHuanZheDetailModel:(NYHuanZheDetailModel *)huanZheDetailModel
+{
+    _huanZheDetailModel = huanZheDetailModel;
+    
+    _priceLB.text = [NSString stringWithFormat:@"预估费用合计 %.2f元",[huanZheDetailModel.info.exaFee doubleValue]];
+    
+    // 1.创建NSMutableAttributedString实例
+    NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:_priceLB.text];
+    
+    // 2.添加属性
+    [fontAttributeNameStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17] range:NSMakeRange(6, _priceLB.text.length-6)];
+    [fontAttributeNameStr addAttribute:NSForegroundColorAttributeName value:COLOR_RED range:NSMakeRange(6, _priceLB.text.length-6)];
+    
+    // 3.给label赋值
+    _priceLB.attributedText = fontAttributeNameStr;
+
 }
 
 @end
