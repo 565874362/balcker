@@ -22,5 +22,6 @@ public interface UsDoctorService extends IService<UsDoctorEntity> {
     void register(String account,UsDoctorEntity doctorEntity, List<SerAdeptEntity> serAdeptEntity);
 
     void update(UsDoctorEntity doctorEntity, List<SerAdeptEntity> serAdeptEntity);
+
 }
 

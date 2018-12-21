@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.utils.PageUtils;
 import com.baihua.baihuamedical.common.utils.Query;
+import com.baihua.baihuamedical.modules.service.dao.SerInquiryMatchDao;
 import com.baihua.baihuamedical.modules.service.entity.SerAdeptEntity;
 import com.baihua.baihuamedical.modules.service.service.SerAdeptService;
 import com.baihua.baihuamedical.modules.user.dao.UsAccountDao;
@@ -31,6 +32,9 @@ public class UsDoctorServiceImpl extends ServiceImpl<UsDoctorDao, UsDoctorEntity
 
 	@Autowired
 	private UsAccountDao accountDao;
+
+	@Autowired
+	private SerInquiryMatchDao inquiryMatchDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

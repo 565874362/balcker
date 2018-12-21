@@ -27,12 +27,15 @@ import com.baihua.baihuamedical.common.utils.DateUtils;
 import com.baihua.baihuamedical.common.utils.R;
 import com.baihua.baihuamedical.common.utils.VerificationGenerator;
 import com.baihua.baihuamedical.common.validator.ValidatorUtils;
+import com.baihua.baihuamedical.modules.basic.service.IDoctorMatchService;
 import com.baihua.baihuamedical.modules.service.entity.SerAdeptEntity;
 import com.baihua.baihuamedical.modules.sys.entity.SysCaptchaEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsAccountEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
+import com.baihua.baihuamedical.modules.user.entity.UsPatientEntity;
 import com.baihua.baihuamedical.modules.user.service.UsAccountService;
 import com.baihua.baihuamedical.modules.user.service.UsDoctorService;
+import com.baihua.baihuamedical.modules.user.service.UsPatientService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 
@@ -58,7 +61,13 @@ public class LoginController {
 	private UsAccountService accountService;
 
 	@Autowired
+	private UsPatientService patientService;
+
+	@Autowired
 	private UsDoctorService doctorService;
+
+	@Autowired
+	private IDoctorMatchService doctorMatchService;
 
 	@Autowired
 	private ConfigProperties configProperties;
@@ -112,7 +121,6 @@ public class LoginController {
 			BeanUtils.copyProperties(object,serAdeptEntity);
 			serAdeptEntities.add(serAdeptEntity);
 		}
-
 		doctorService.register(doctorRegister.getAccount(),doctorEntity,serAdeptEntities);
 		return R.success();
 	}
@@ -121,7 +129,9 @@ public class LoginController {
 	@PostMapping("/patient")
 	public R patientLogin(@RequestBody LoginEntity loginEntity) {
 		String token = login(loginEntity, Constants.AccountType.patient);
-		return R.success().addResData("token", token);
+		long patientId = Long.parseLong(loginEntity.getCaptchaCode());
+		UsPatientEntity patient = patientService.getById(patientId);
+		return R.success().addResData("token", token).addResData("info",patient);
 	}
 
 	@ApiOperation("登陆 [医生]")
@@ -129,7 +139,24 @@ public class LoginController {
 	public R doctorRegister(@RequestBody LoginEntity loginEntity) {
 		String token = login(loginEntity, Constants.AccountType.doctor);
 		long doctorId = Long.parseLong(loginEntity.getCaptchaCode());
-		return R.success().addResData("token", token).addResData("doctorId",doctorId);
+		UsDoctorEntity doctorEntity = doctorService.getById(doctorId);
+		return R.success().addResData("token", token).addResData("info",doctorEntity);
+	}
+
+	@ApiOperation("医生审核通过 测试用")
+	@PostMapping("/docterChecked/{doctorId}")
+	public R docterChecked(@PathVariable("doctorId") Long doctorId){
+		UsDoctorEntity UsDoctorEntity =  new UsDoctorEntity();
+		UsDoctorEntity.setId(doctorId);
+		UsDoctorEntity.setStatus(Constants.DoctorStatus.checked.getCode());
+		doctorService.updateById(UsDoctorEntity);
+		UsAccountEntity accountEntity = new UsAccountEntity();
+		accountEntity.setStatus(Constants.AccountStatus.normal.getCode());
+		accountService.update(accountEntity,new QueryWrapper<UsAccountEntity>().lambda()
+				.eq(UsAccountEntity::getSId, doctorId)
+				.eq(UsAccountEntity::getType, Constants.AccountType.doctor.getCode()));
+		doctorMatchService.updateDoctorInfo(doctorId);
+		return R.success();
 	}
 
 	private String login(LoginEntity loginEntity, Constants.AccountType accountType) {

@@ -245,5 +245,24 @@ public interface Constants {
 			return code;
 		}
 	}
+
+	/**
+	 * 敏感词状态
+	 */
+	enum KeywordStatus {
+
+		valid(1),
+		invalid(0);
+
+		private int code;
+
+		KeywordStatus(int code) {
+			this.code = code;
+		}
+
+		public int getCode() {
+			return code;
+		}
+	}
 }
 

@@ -17,6 +17,7 @@ import com.baihua.baihuamedical.modules.service.entity.SerInquiryMatchEntity;
 import com.baihua.baihuamedical.modules.service.service.SerInquiryMatchService;
 import com.baihua.baihuamedical.modules.service.service.SerInquiryService;
 import com.baihua.baihuamedical.modules.user.dao.UsDoctorDao;
+import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -57,12 +58,17 @@ public class SerInquiryServiceImpl extends ServiceImpl<SerInquiryDao, SerInquiry
 
 	@Override
 	@Transactional
-	public void commit(SerInquiryEntity input) {
+	public List<UsDoctorEntity> commit(SerInquiryEntity input) {
+		List<UsDoctorEntity> doctorEntities = new ArrayList<>();
 		inquiryDao.insert(input);
 		List<IDoctorMatchService.MatchDoctor> keyword = keywordService.findKeyword(input.getCharacterDescribe());
+		if(keyword.isEmpty()){
+			return doctorEntities;
+		}
 
 		List<SerInquiryMatchEntity> serInquiryMatchEntities = new ArrayList<>();
 		for (IDoctorMatchService.MatchDoctor matchDoctor : keyword) {
+			doctorEntities.add(matchDoctor.getDoctorEntity());
 			SerInquiryMatchEntity serInquiryMatchEntity = new SerInquiryMatchEntity();
 			serInquiryMatchEntity.setPatId(input.getPatientId());
 			serInquiryMatchEntity.setDocId(matchDoctor.getDoctorEntity().getId());
@@ -71,5 +77,7 @@ public class SerInquiryServiceImpl extends ServiceImpl<SerInquiryDao, SerInquiry
 			serInquiryMatchEntities.add(serInquiryMatchEntity);
 		}
 		serInquiryMatchService.saveBatch(serInquiryMatchEntities);
+
+		return doctorEntities.subList(0,keyword.size() > 3 ? 3 : keyword.size());
 	}
 }

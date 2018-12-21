@@ -2,7 +2,6 @@ package com.baihua.baihuamedical.modules.service.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,27 +194,10 @@ public class SerInquiryController {
 		BeanUtils.copyProperties(serInquiry, entity);
 		entity.setPatientId(patientEntity.getId());
 		entity.setStatus(Constants.InquiryStatus.waitcheck.getCode());
-		serInquiryService.commit(entity);
-		return R.success();
+		List<UsDoctorEntity> matchDoctors = serInquiryService.commit(entity);
+		return R.success().addResData("matchDoctors",matchDoctors);
 	}
 
-	/**
-	 * 修改
-	 */
-	@RequestMapping("/update")
-	public R update(@RequestBody SerInquiryEntity serInquiry) {
-		serInquiryService.updateById(serInquiry);
-		return R.success();
-	}
-
-	/**
-	 * 删除
-	 */
-	@RequestMapping("/delete")
-	public R delete(@RequestBody Long[] ids) {
-		serInquiryService.removeByIds(Arrays.asList(ids));
-		return R.success();
-	}
 
 
 	@ApiModel("添加实体")

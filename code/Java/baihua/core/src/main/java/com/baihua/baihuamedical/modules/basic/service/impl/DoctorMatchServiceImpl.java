@@ -17,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.modules.basic.dao.BasKeywordDao;
 import com.baihua.baihuamedical.modules.basic.entity.BasKeywordEntity;
 import com.baihua.baihuamedical.modules.basic.service.IDoctorMatchService;
@@ -66,7 +67,7 @@ public class DoctorMatchServiceImpl implements IDoctorMatchService {
 		long size = 500;
 		Page<BasKeywordEntity> basKeywordEntityPage = new Page<>(current, size);
 
-		List<BasKeywordEntity> keywordEntityList = keywordDao.selectPage(basKeywordEntityPage, null).getRecords();
+		List<BasKeywordEntity> keywordEntityList = keywordDao.selectPage(basKeywordEntityPage, new QueryWrapper<BasKeywordEntity>().lambda().eq(BasKeywordEntity::getStatus, Constants.KeywordStatus.valid.getCode())).getRecords();
 		while (!keywordEntityList.isEmpty()) {
 			for (BasKeywordEntity temp : keywordEntityList) {
 				keywordDoctorsMap.put(temp.getWord(), new CopyOnWriteArrayList<>());
@@ -156,7 +157,7 @@ public class DoctorMatchServiceImpl implements IDoctorMatchService {
 	 * @return
 	 */
 	public List<MatchDoctor> findKeyword(String content) {
-		SortedSet<MatchDoctor> result = new TreeSet<>();
+		SortedSet<MatchDoctor> result = new TreeSet<>((a,b) -> Integer.compare(b.getMatchNum(),a.getMatchNum()));
 
 		Map<UsDoctorEntity,Integer> doctorMatches = new HashMap<>();
 		if (StringUtils.isEmpty(content)) {
