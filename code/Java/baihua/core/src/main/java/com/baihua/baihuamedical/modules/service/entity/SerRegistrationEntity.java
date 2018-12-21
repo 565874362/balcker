@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  */
 @TableName("ser_registration")
 public class SerRegistrationEntity implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -23,6 +23,7 @@ import com.baihua.baihuamedical.common.utils.DateUtils;
 import com.baihua.baihuamedical.common.utils.PageQuery;
 import com.baihua.baihuamedical.common.utils.R;
 import com.baihua.baihuamedical.common.validator.ValidatorUtils;
+import com.baihua.baihuamedical.modules.login.annotation.LoginDoctor;
 import com.baihua.baihuamedical.modules.login.annotation.LoginPatient;
 import com.baihua.baihuamedical.modules.service.entity.SerCashFlowEntity;
 import com.baihua.baihuamedical.modules.service.entity.SerRegistrationEntity;
@@ -107,38 +108,34 @@ public class SerRegistrationController {
     }
 
     /**
-     * 患者列表
+     * 我的接诊
      */
-    @ApiOperation("医生接诊列表 [医生]")
-    @PostMapping("/doctorList")
-    public R doctorList(@RequestBody PatientListInput patientListInput,@ApiIgnore @LoginPatient UsPatientEntity patientEntity){
-        ValidatorUtils.validateEntity(patientListInput);
-        IPage<SerRegistrationEntity> page = serRegistrationService.page(patientListInput.getPage(),
+    @ApiOperation("我的接诊 [医生]")
+    @PostMapping("/doctorListRegistration")
+    public R doctorListRegistration(@RequestBody PageQuery<SerRegistrationEntity> pageQuery,@ApiIgnore @LoginDoctor UsDoctorEntity doctorEntity){
+        ValidatorUtils.validateEntity(pageQuery);
+        IPage<SerRegistrationEntity> page = serRegistrationService.page(pageQuery.getPage(),
                 new QueryWrapper<SerRegistrationEntity>().lambda()
-                        .eq(SerRegistrationEntity::getPatientId, patientEntity.getId()));
+                .eq(SerRegistrationEntity::getDoctorId, doctorEntity.getId())
+                .eq(SerRegistrationEntity::getStatus, Constants.RegistrationStatus.paid.getCode())
+                .orderByDesc(SerRegistrationEntity::getGmtModified));
         if(page.getTotal() == 0){
             return R.success().addResData("page", page);
         }
-        List<Long> doctorIds = page.getRecords().stream()
-                .map(e -> e.getDoctorId())
-                .collect(Collectors.toList());
-        List<Long> registrationIds = page.getRecords().stream()
-                .map(e -> e.getId())
-                .collect(Collectors.toList());
-        Map<Long, UsDoctorEntity> doctorIdMap = doctorService.listByIds(doctorIds)
-                .stream()
-                .collect(Collectors.toMap(UsDoctorEntity::getId, e -> e));
+
+        List<Long> registrationIds = page.getRecords().stream().map(SerRegistrationEntity::getId).collect(Collectors.toList());
+
         Map<Long, SerCashFlowEntity> cashFlowIdMap = cashFlowService.list(new QueryWrapper<SerCashFlowEntity>().lambda()
                 .select(SerCashFlowEntity::getRegId,SerCashFlowEntity::getAmount,SerCashFlowEntity::getType,SerCashFlowEntity::getGmtCreate)
                 .in(SerCashFlowEntity::getRegId,registrationIds))
                 .stream()
                 .collect(Collectors.toMap(SerCashFlowEntity::getRegId, e -> e));
+
         List<Map<String, Object>> content = new ArrayList<>();
         page.getRecords().forEach(e -> {
             Map<String, Object> each = BeanUtil.beanToMap(e);
             content.add(each);
             each.put("visitTime",DateUtils.getYearDateWeek(e.getVisitTime()));
-            each.put("doctor",doctorIdMap.get(e.getDoctorId()));
             each.put("payInfo",cashFlowIdMap.get(e.getId()));
         });
         IPage pageResult = new Page<>();

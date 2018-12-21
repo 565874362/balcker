@@ -212,7 +212,8 @@ public interface Constants {
 	enum RegistrationStatus {
 
 		unpaid(1),
-		paid(2);
+		paid(2),
+		reception(3);
 
 		private int code;
 
