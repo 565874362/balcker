@@ -3,20 +3,25 @@ package com.baihua.common.rx.ApiService;
 
 import com.baihua.common.rx.Response;
 import com.baihua.yayayisheng.entity.AvatarEntity;
+import com.baihua.yayayisheng.entity.DiagnoseDateEntity;
+import com.baihua.yayayisheng.entity.DiagnoseDateListEntity;
 import com.baihua.yayayisheng.entity.DicEntity;
 import com.baihua.yayayisheng.entity.DoctorInfoEntity;
 import com.baihua.yayayisheng.entity.EmptyEntity;
+import com.baihua.yayayisheng.entity.ExaminationEntity;
 import com.baihua.yayayisheng.entity.FileEntity;
 import com.baihua.yayayisheng.entity.HospitalEntity;
 import com.baihua.yayayisheng.entity.OfficeEntity;
 import com.baihua.yayayisheng.entity.PatientListEntity;
-import com.baihua.yayayisheng.entity.VisitDetailsEntity;
-import com.baihua.yayayisheng.entity.form.AvatarForm;
-import com.baihua.yayayisheng.entity.form.LoginForm;
 import com.baihua.yayayisheng.entity.TokenEntity;
 import com.baihua.yayayisheng.entity.VerificationEntity;
+import com.baihua.yayayisheng.entity.VisitDetailsEntity;
+import com.baihua.yayayisheng.entity.form.AvatarForm;
+import com.baihua.yayayisheng.entity.form.DiagnoseForm;
+import com.baihua.yayayisheng.entity.form.LoginForm;
 import com.baihua.yayayisheng.entity.form.PatientListForm;
 import com.baihua.yayayisheng.entity.form.RegisterForm;
+import com.baihua.yayayisheng.entity.form.ResponseForm;
 
 import java.util.Map;
 
@@ -111,7 +116,7 @@ public interface SyncServerService {
      *
      * @return 结果
      */
-    @POST("/rest/serinquiry/patientList")
+    @POST("/rest/serinquiry/doctorIndex")
     Observable<Response<PatientListEntity>> getPatientList(@Header("token") String token, @Body PatientListForm patientListForm);
 
     /**
@@ -121,6 +126,23 @@ public interface SyncServerService {
      */
     @GET("/rest/serinquiry/info/{id}")
     Observable<Response<VisitDetailsEntity>> getVisitDetails(@Header("token") String token, @Path("id") String id);
+
+    /**
+     * 接诊
+     *
+     * @return 结果
+     */
+    @GET("/rest/serinquiry/accept/{inquiryId}")
+    Observable<Response<String>> inquiry(@Header("token") String token, @Path("inquiryId") String inquiryId);
+
+    /**
+     * 医生回复
+     *
+     * @param responseForm 所需参数
+     * @return 结果
+     */
+    @POST("/rest/serinquiry/response")
+    Observable<Response<String>> response(@Header("token") String token, @Body ResponseForm responseForm);
 
     /**
      * 设置头像
@@ -146,4 +168,45 @@ public interface SyncServerService {
      */
     @GET("/rest/usdoctor/info")
     Observable<Response<DoctorInfoEntity>> getDoctorInfo(@Header("token") String token);
+
+    /**
+     * 医生信息更新
+     *
+     * @return 结果
+     */
+    @POST("/rest/usdoctor/update")
+    Observable<Response<EmptyEntity>> updateDoctorInfo(@Header("token") String token, @Body RegisterForm registerForm);
+
+    /**
+     * 获取接诊周期
+     *
+     * @return 结果
+     */
+    @GET("/rest/serschedule/diagnoseDates")
+    Observable<Response<DiagnoseDateEntity>> getDiagnoseDates(@Header("token") String token);
+
+    /**
+     * 健康检查项目
+     *
+     * @return 结果
+     */
+    @GET("/rest/bashealthexamination/list")
+    Observable<Response<ExaminationEntity>> getExaminations(@Header("token") String token);
+
+    /**
+     * 获取接诊时间
+     *
+     * @return 结果
+     */
+    @GET("/rest/serschedule/diagnoseList")
+    Observable<Response<DiagnoseDateListEntity>> getDiagnoseList(@Header("token") String token);
+
+    /**
+     * 增加接诊
+     *
+     * @return 结果
+     */
+    @POST("/rest/serschedule/addDiagnose")
+    Observable<Response<EmptyEntity>> addDiagnose(@Header("token") String token, @Body DiagnoseForm diagnoseForm);
+
 }

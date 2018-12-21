@@ -28,9 +28,13 @@ import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.decoration.DividerDecoration;
 import com.baihua.yayayisheng.decoration.SpaceDecoration;
+import com.baihua.yayayisheng.entity.ExaminationEntity;
 import com.baihua.yayayisheng.entity.PatientListEntity;
 import com.baihua.yayayisheng.entity.VisitDetailsEntity;
+import com.baihua.yayayisheng.entity.form.PatientListForm;
+import com.baihua.yayayisheng.entity.form.ResponseForm;
 import com.baihua.yayayisheng.util.CommonUtils;
+import com.baihua.yayayisheng.util.Utils;
 import com.baihua.yayayisheng.view.recorder.MediaManager;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -89,6 +93,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     TextView patientDetailsVisiting;
     @BindView(R.id.patient_details_tv_submit)
     TextView patientDetailsTvSubmit;
+    @BindView(R.id.layout_reply_time)
+    TextView mLayoutReplyTime; // 回复时间
     private View mAnswerOrNeedAnswerLayout;
 
     private List<String> mList;
@@ -106,6 +112,10 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     private VisitDetailsEntity mVisitDetailsEntity;
     private TextView mTvPrice; // 检查总价
 
+    private List<String> mItems = new ArrayList<>();
+    private List<ExaminationEntity.ListBean> mExasList = new ArrayList<>();
+    private List<Integer> mResIds = new ArrayList<>();
+
     @Override
     public void setLayout() {
         setTitle("患者信息");
@@ -122,38 +132,13 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         mAnswerOrNeedAnswerLayout = findViewById(R.id.answer_or_need_answer_layout);
         if (getIntent().hasExtra("visit")) {
             mVisitDetails = (PatientListEntity.PageBean.RecordsBean) getIntent().getSerializableExtra("visit");
+            getVisitDetails(String.valueOf(mVisitDetails.getId()));
             setContentText();
             if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
                 initRecycler();
             if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
                 initVoiceLayout();
-            switch (mVisitDetails.getStatus()) {
-                case "1": // 接诊
 
-                    break;
-                case "2": // 待回复
-                    pendingReply();
-                    break;
-                case "3": // 已解决
-                    // 已解决
-                    layoutReplyNeedToCheck.setEnabled(false);
-
-                    layoutReplyInitialDiagnosis.setFocusable(false);
-                    layoutReplyInitialDiagnosis.setFocusableInTouchMode(false);
-                    layoutReplyWarmDoctor.setFocusable(false);
-                    layoutReplyWarmDoctor.setFocusableInTouchMode(false);
-                    mAnswerOrNeedAnswerLayout.setVisibility(View.VISIBLE);
-                    patientDetailsVisiting.setVisibility(View.GONE);
-
-                    initCheckRecycler();
-                    getVisitDetails(String.valueOf(mVisitDetails.getId()));
-
-//                    SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append("小儿疱疹性口炎，其实就是因为感染后形成的").setFontSize(16, true).create();
-//                    layoutReplyInitialDiagnosis.setText(spannable);
-//                    SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append("可以给小孩买点好吃的，多喝开水；可以给小孩买点好吃的，多喝开水").setFontSize(16, true).create();
-//                    layoutReplyWarmDoctor.setText(spannableWarm);
-                    break;
-            }
         }
 
     }
@@ -188,13 +173,57 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                 .subscribe(new ProgressObserver<VisitDetailsEntity>(this) {
                     @Override
                     public void onSuccess(VisitDetailsEntity result) {
+                        mVisitDetailsEntity = result;
                         VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
                         VisitDetailsEntity.InfoBean infoBean = result.getInfo();
-                        initDoctorInfo(result);
-                        // TODO: 18/12/2018 检查项数据设置
+                        switch (infoBean.getStatus()) {
+                            case "1": // 接诊
+                                break;
+                            case "2": // 待回复
+                                pendingReply();
+                                getExaminations();
+                                break;
+                            case "3": // 已解决
+                                // 已解决
+                                layoutReplyNeedToCheck.setEnabled(false);
+                                layoutReplyInitialDiagnosis.setFocusable(false);
+                                layoutReplyInitialDiagnosis.setFocusableInTouchMode(false);
+                                layoutReplyWarmDoctor.setFocusable(false);
+                                layoutReplyWarmDoctor.setFocusableInTouchMode(false);
+                                mAnswerOrNeedAnswerLayout.setVisibility(View.VISIBLE);
+                                patientDetailsVisiting.setVisibility(View.GONE);
+                                initCheckRecycler();
+                                initDoctorInfo(result);
+                                // TODO: 18/12/2018 检查项数据设置
 //                        List<String> checks = Arrays.asList(infoBean.getExaContent())
 //                        mCheckAdapter.setNewData();
-                        mTvPrice.setText(String.format("%s元", infoBean.getExaFee()));
+                                mTvPrice.setText(String.format("%s元", infoBean.getExaFee()));
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取检查项
+     */
+    private void getExaminations() {
+        RxHttp.getInstance().getSyncServer()
+                .getExaminations(CommonUtils.getToken())
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<ExaminationEntity>(this) {
+                    @Override
+                    public void onSuccess(ExaminationEntity result) {
+                        mExasList = result.getList();
+                        List<ExaminationEntity.ListBean> listBeans = result.getList();
+                        for (int i = 0; i < listBeans.size(); i++) {
+                            mItems.add(String.format("%s %s", listBeans.get(i).getName(), listBeans.get(i).getPrice()));
+                        }
                     }
 
                     @Override
@@ -209,12 +238,21 @@ public class PatientInfoDetailsActivity extends BaseActivity {
      */
     private void initDoctorInfo(VisitDetailsEntity visitDetailsEntity) {
         VisitDetailsEntity.InfoBean infoBean = visitDetailsEntity.getInfo();
+        if (!TextUtils.isEmpty(infoBean.getResponse())) {
+            layoutReplyInitialDiagnosis.setVisibility(View.VISIBLE);
+            SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append(infoBean.getResponse()).setFontSize(16, true).create();
+            layoutReplyInitialDiagnosis.setText(spannable);
+        }
+        if (!TextUtils.isEmpty(infoBean.getAdvice())) {
+            layoutReplyWarmDoctor.setVisibility(View.VISIBLE);
+            SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append(infoBean.getAdvice()).setFontSize(16, true).create();
+            layoutReplyWarmDoctor.setText(spannableWarm);
+        }
 
-        SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append(infoBean.getResponse()).setFontSize(16, true).create();
-        layoutReplyInitialDiagnosis.setText(spannable);
-        SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append(infoBean.getAdvice()).setFontSize(16, true).create();
-        layoutReplyWarmDoctor.setText(spannableWarm);
-
+        if (!TextUtils.isEmpty(infoBean.getGmtModified())) {
+            mLayoutReplyTime.setVisibility(View.VISIBLE);
+            mLayoutReplyTime.setText(String.format("%s", DateFormat.format("yyyy-MM-dd HH:ss", TimeUtils.string2Date(infoBean.getGmtModified(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())))));
+        }
 //        layoutReplyAdvisory.setText("咨询");
 //        layoutReplyVisit.setText(String.format("就诊（%s）", "20.00"));
 
@@ -252,6 +290,7 @@ public class PatientInfoDetailsActivity extends BaseActivity {
      * 咨询上传的图片列表 （共有的）
      */
     private void initRecycler() {
+        layoutPatientRecycler.setVisibility(View.VISIBLE);
         layoutPatientRecycler.setLayoutManager(new GridLayoutManager(this, 3));
         SpaceDecoration spaceDecoration = new SpaceDecoration(ConvertUtils.dp2px(8));
         layoutPatientRecycler.addItemDecoration(spaceDecoration);
@@ -273,7 +312,7 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         layoutPatientTvAge.setText(String.format("%s岁", mVisitDetails.getAge()));
         layoutPatientTvDescription.setText(String.format("%s", mVisitDetails.getCharacterDescribe()));
         layoutPatientTvStatus.setVisibility(View.GONE);
-        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(mVisitDetails.getGmtCreate(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
+        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(mVisitDetails.getGmtModified(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
     }
 
     @Override
@@ -302,11 +341,62 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                 showCheckedDialog();
                 break;
             case R.id.patient_details_visiting: // 接诊（待接诊）(调用接诊接口，成功后 展示待回复页面）
-                pendingReply();
+                goReply();
                 break;
             case R.id.patient_details_tv_submit: // 提交 （待回复）
+                replayQuestion();
                 break;
         }
+    }
+
+    /**
+     * 回复
+     */
+    private void replayQuestion() {
+        // TODO: 20/12/2018 inquiryId
+        String advice = CommonUtils.getTextString(layoutReplyWarmDoctor);
+        String answer = CommonUtils.getTextString(layoutReplyInitialDiagnosis);
+        ResponseForm responseForm = new ResponseForm();
+        responseForm.setId(Integer.parseInt(mVisitDetails.getId())); // TODO: 20/12/2018
+        responseForm.setAdvice(advice);
+        responseForm.setResponse(answer);
+        responseForm.setExaIds(mResIds); // TODO: 20/12/2018
+
+        RxHttp.getInstance().getSyncServer()
+                .response(CommonUtils.getToken(), responseForm)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<String>(this) {
+                    @Override
+                    public void onSuccess(String result) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 抢单
+     */
+    private void goReply() {
+        // TODO: 20/12/2018 inquiryId
+        RxHttp.getInstance().getSyncServer()
+                .inquiry(CommonUtils.getToken(), mVisitDetails.getId())
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<String>(this) {
+                    @Override
+                    public void onSuccess(String result) {
+                        pendingReply();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     /**
@@ -346,13 +436,13 @@ public class PatientInfoDetailsActivity extends BaseActivity {
 
     private void showCheckedDialog() {
 
-        List<String> items = new ArrayList<String>(Arrays.asList("口腔检查 25.00元", "血常规检查 30.00元",
-                "病毒检查 40.00元", "微量元素检查 35.50元", "心电图检查 105.00元"));
+//        List<String> items = new ArrayList<String>(Arrays.asList("口腔检查 25.00元", "血常规检查 30.00元",
+//                "病毒检查 40.00元", "微量元素检查 35.50元", "心电图检查 105.00元"));
 
         checkboxDialog = new MaterialDialog.Builder(this)
                 .title("需做检查")
                 .content("共计0.00元")
-                .items(items)
+                .items(mItems)
                 .positiveText("确定")
                 .negativeText("取消")
                 .alwaysCallMultiChoiceCallback()
@@ -380,7 +470,10 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (null == dialog.getSelectedIndices())
                             return;
-                        LogUtils.e(dialog.getSelectedIndices().length);
+                        for (Integer index :
+                                dialog.getSelectedIndices()) {
+                            mResIds.add(mExasList.get(index).getId());
+                        }
                     }
                 })
                 .show();

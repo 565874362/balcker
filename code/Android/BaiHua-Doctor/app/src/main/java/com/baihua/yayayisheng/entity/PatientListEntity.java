@@ -10,8 +10,9 @@ import java.util.List;
  */
 public class PatientListEntity implements Serializable {
 
+
     /**
-     * page : {"records":[{"id":1073521292302397400,"name":"赵冬冬","gender":0,"age":28,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"哈哈","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":2,"gmtCreate":"2018-12-14 18:13:16","gmtModified":null,"isDel":null},{"id":1074594403449851900,"name":"白诗诗","gender":0,"age":5,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 17:17:25","gmtModified":null,"isDel":null},{"id":1074608581371781100,"name":"小黑","gender":1,"age":4,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 18:13:46","gmtModified":null,"isDel":null},{"id":1074608976584269800,"name":"小黑","gender":1,"age":4,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 18:15:20","gmtModified":null,"isDel":null},{"id":1074837789088018400,"name":"小黑","gender":0,"age":6,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 09:24:33","gmtModified":null,"isDel":null},{"id":1074839493674135600,"name":"小小","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 09:31:20","gmtModified":null,"isDel":null},{"id":1074846751006916600,"name":"猪小弟","gender":0,"age":1,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"嗜睡","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:00:10","gmtModified":null,"isDel":null},{"id":1074846886646517800,"name":"猪小弟","gender":0,"age":1,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"嗜睡","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:00:42","gmtModified":null,"isDel":null},{"id":1074851191885729800,"name":"小家伙","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"失眠","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:17:49","gmtModified":null,"isDel":null},{"id":1074851269622960100,"name":"小家伙","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"失眠","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:18:07","gmtModified":null,"isDel":null}],"total":12,"size":10,"current":1,"searchCount":true,"pages":2}
+     * page : {"records":[{"id":1074613933320536000,"name":"丽芳","gender":0,"age":8,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"长董敏的时候就可以去了吧，，。，。，。，@qq.com","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":3,"gmtCreate":null,"gmtModified":"2018-12-17 18:35:02","isDel":null}],"total":9,"size":1,"current":1,"searchCount":true,"pages":9}
      */
 
     private PageBean page;
@@ -26,12 +27,12 @@ public class PatientListEntity implements Serializable {
 
     public static class PageBean implements Serializable{
         /**
-         * records : [{"id":1073521292302397400,"name":"赵冬冬","gender":0,"age":28,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"哈哈","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":2,"gmtCreate":"2018-12-14 18:13:16","gmtModified":null,"isDel":null},{"id":1074594403449851900,"name":"白诗诗","gender":0,"age":5,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 17:17:25","gmtModified":null,"isDel":null},{"id":1074608581371781100,"name":"小黑","gender":1,"age":4,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 18:13:46","gmtModified":null,"isDel":null},{"id":1074608976584269800,"name":"小黑","gender":1,"age":4,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧，咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-17 18:15:20","gmtModified":null,"isDel":null},{"id":1074837789088018400,"name":"小黑","gender":0,"age":6,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"咳嗽","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 09:24:33","gmtModified":null,"isDel":null},{"id":1074839493674135600,"name":"小小","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"发烧","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 09:31:20","gmtModified":null,"isDel":null},{"id":1074846751006916600,"name":"猪小弟","gender":0,"age":1,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"嗜睡","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:00:10","gmtModified":null,"isDel":null},{"id":1074846886646517800,"name":"猪小弟","gender":0,"age":1,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"嗜睡","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:00:42","gmtModified":null,"isDel":null},{"id":1074851191885729800,"name":"小家伙","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"失眠","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:17:49","gmtModified":null,"isDel":null},{"id":1074851269622960100,"name":"小家伙","gender":0,"age":3,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"失眠","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":1,"gmtCreate":"2018-12-18 10:18:07","gmtModified":null,"isDel":null}]
-         * total : 12
-         * size : 10
+         * records : [{"id":1074613933320536000,"name":"丽芳","gender":0,"age":8,"phone":null,"bloodType":null,"diet":null,"sleep":null,"characterDescribe":"长董敏的时候就可以去了吧，，。，。，。，@qq.com","voiceDescribe":null,"image":null,"patientId":null,"doctorId":null,"response":null,"advice":null,"exaIds":null,"exaContent":null,"exaFee":null,"status":3,"gmtCreate":null,"gmtModified":"2018-12-17 18:35:02","isDel":null}]
+         * total : 9
+         * size : 1
          * current : 1
          * searchCount : true
-         * pages : 2
+         * pages : 9
          */
 
         private int total;
@@ -91,15 +92,15 @@ public class PatientListEntity implements Serializable {
 
         public static class RecordsBean implements Serializable{
             /**
-             * id : 1073521292302397400
-             * name : 赵冬冬
+             * id : 1074613933320536000
+             * name : 丽芳
              * gender : 0
-             * age : 28
+             * age : 8
              * phone : null
              * bloodType : null
              * diet : null
              * sleep : null
-             * characterDescribe : 哈哈
+             * characterDescribe : 长董敏的时候就可以去了吧，，。，。，。，@qq.com
              * voiceDescribe : null
              * image : null
              * patientId : null
@@ -109,13 +110,13 @@ public class PatientListEntity implements Serializable {
              * exaIds : null
              * exaContent : null
              * exaFee : null
-             * status : 2
-             * gmtCreate : 2018-12-14 18:13:16
-             * gmtModified : null
+             * status : 3
+             * gmtCreate : null
+             * gmtModified : 2018-12-17 18:35:02
              * isDel : null
              */
 
-            private long id;
+            private String id;
             private String name;
             private String gender;
             private String age;
@@ -138,11 +139,11 @@ public class PatientListEntity implements Serializable {
             private String gmtModified;
             private String isDel;
 
-            public long getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(long id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

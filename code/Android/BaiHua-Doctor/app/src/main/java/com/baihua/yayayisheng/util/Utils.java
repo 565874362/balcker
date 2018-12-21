@@ -31,9 +31,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.baihua.yayayisheng.login.LoginActivity;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.bumptech.glide.Glide;
@@ -209,14 +211,11 @@ public class Utils {
      */
     public static boolean isLogin(Context ctx) {// 本地loginState中是激活则为登陆状态，或者本地存有角色id为非注册用户
         // TODO 判断登录状态
-//返回单个查询结果
-//        MemberVO user = getMember();
-//        try {
-//            return !StringUtils.isTrimEmpty(user.getAccount());
-//        } catch (Exception e) {
-//            return false;
-//        }
-        return false;
+        try {
+            return !StringUtils.isTrimEmpty(SPUtils.getInstance("token").getString("token", ""));
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
@@ -226,7 +225,7 @@ public class Utils {
      * @param ctx
      */
     public static void goLogin(Context ctx) {
-//        gotoActivity((Activity) ctx, LoginActivity.class, false, null, null);
+        gotoActivity((Activity) ctx, LoginActivity.class, false, null, null);
     }
 
     /**

@@ -7,6 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
+import com.baihua.yayayisheng.entity.DiagnoseDateListEntity;
+import com.baihua.yayayisheng.entity.EmptyEntity;
+import com.baihua.yayayisheng.util.CommonUtils;
+import com.baihua.yayayisheng.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.baihua.common.base.BaseActivity;
@@ -45,18 +52,30 @@ public class MyVisitingScheduleActivity extends BaseActivity {
 
     @Override
     public void initMember() {
-
         initRecycler();
-        initData();
-
+        getListData();
     }
 
-    private void initData() {
-        mList = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            mList.add("i = " + i);
-        }
-        mAdapter.setNewData(mList);
+    /**
+     * 获取接诊时间列表
+     */
+    private void getListData() {
+        RxHttp.getInstance().getSyncServer()
+                .getDiagnoseList(CommonUtils.getToken())
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<DiagnoseDateListEntity>(this) {
+                    @Override
+                    public void onSuccess(DiagnoseDateListEntity result) {
+                        if (Utils.isListEmpty(result.getDiagnoseList()))
+                            mAdapter.removeHeaderView(getHeaderView());
+                        mAdapter.setNewData(result.getDiagnoseList());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     private void initRecycler() {
@@ -68,6 +87,7 @@ public class MyVisitingScheduleActivity extends BaseActivity {
         mRecyclerView.addItemDecoration(spaceDecoration);
         mAdapter = new MyVisitingScheduleAdapter(new ArrayList<>());
         mAdapter.addHeaderView(getHeaderView());
+        Utils.showNoData(mAdapter, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
     }
 

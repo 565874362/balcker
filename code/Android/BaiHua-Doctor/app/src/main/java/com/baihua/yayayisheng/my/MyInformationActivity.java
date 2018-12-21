@@ -7,9 +7,13 @@ import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
 import com.baihua.yayayisheng.R;
+import com.baihua.yayayisheng.entity.DoctorInfoEntity;
 import com.baihua.yayayisheng.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SpanUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -42,6 +46,8 @@ public class MyInformationActivity extends BaseActivity {
     @BindView(R.id.my_info_iv_reverse_photo)
     ImageView myInfoIvReversePhoto;
 
+    private DoctorInfoEntity.InfoBean mDoctorInfo;
+
     @Override
     public void setLayout() {
         setTitle("我的信息");
@@ -57,24 +63,36 @@ public class MyInformationActivity extends BaseActivity {
 
     @Override
     public void initMember() {
+        if (getIntent().hasExtra("doctorInfo")) {
+            mDoctorInfo = (DoctorInfoEntity.InfoBean) getIntent().getSerializableExtra("doctorInfo");
+        }
         setContentText();
     }
 
     private void setContentText() {
-        Utils.showImg(this, "http://img.hb.aicdn.com/7ba7b99a9cbdbb3b965e6b24036e89fee5dfc88530ffd-hlULA7_fw658", myInfoImage);
-        myInfoTvName.setText("令狐小影");
-        myInfoTvJob.setText("江湖百晓生");
-        myInfoTvDepartment.setText("剑客");
-        myInfoTvHospital.setText("青衣楼");
-        SpannableStringBuilder one = new SpanUtils().append("独孤九剑：").setBold().append("归妹趋无妄，无妄趋同人，同人趋大有。甲转丙，丙转庚，庚转癸。子丑之交，辰巳之交，午未之 交。风雷是一变，山泽是一变，水火是一变。乾坤相激，震兑相激，离巽相激。三增而成五，五增而成九···").create();
-        SpannableStringBuilder two = new SpanUtils().append("总决式：").setBold().append("有种种变化，用以体演总诀，共有三百六十种变化。").create();
-        SpannableStringBuilder three = new SpanUtils().append("破剑式：").setBold().append("破解普天下各门各派的剑法。").create();
-        myInfoTvGoodAtOne.setText(one);
-        myInfoTvGoodAtTwo.setText(two);
-        myInfoTvGoodAtThree.setText(three);
-        Utils.showImg(this, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544094862406&di=020b3a797cd8288c0901c7020ceeb812&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fugc%2Fbaikepic2%2F24851%2F20140822144735-61823944.jpg%2F0", myInfoIvDoctorCertificate);
-        Utils.showImg(this, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544094804168&di=675fb6ff6db6a09468b5d562bb6253d6&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171019%2F3142bd2d25504798b41b2fa66fb66eeb.jpeg", myInfoIvFrontPhoto);
-        Utils.showImg(this, "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=848842050,3998338789&fm=26&gp=0.jpg", myInfoIvReversePhoto);
+        Utils.showImg(this, mDoctorInfo.getPhoto(), myInfoImage);
+        myInfoTvName.setText(mDoctorInfo.getName());
+        myInfoTvJob.setText(mDoctorInfo.getPositionName());
+        myInfoTvDepartment.setText(mDoctorInfo.getOffName());
+        myInfoTvHospital.setText(mDoctorInfo.getHosName());
+        List<DoctorInfoEntity.InfoBean.AdeptEntitiesBean> adeptEntities = mDoctorInfo.getAdeptEntities();
+        for (int i = 0; i < adeptEntities.size(); i++) { // 擅长
+            DoctorInfoEntity.InfoBean.AdeptEntitiesBean adeptEntitiesBean = adeptEntities.get(i);
+            if (i == 0) {
+                SpannableStringBuilder one = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                myInfoTvGoodAtOne.setText(one);
+            } else if (i == 1) {
+                SpannableStringBuilder two = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                myInfoTvGoodAtTwo.setText(two);
+            } else if (i == 2) {
+                SpannableStringBuilder three = new SpanUtils().append(String.format("%s：", adeptEntitiesBean.getName())).setBold().append(adeptEntitiesBean.getDescribe()).create();
+                myInfoTvGoodAtThree.setText(three);
+            }
+        }
+        Utils.showImg(this, mDoctorInfo.getPhysicianLicence(), myInfoIvDoctorCertificate);
+        List<String> idCards = Arrays.asList(mDoctorInfo.getIdentityCard().split(","));
+        Utils.showImg(this, idCards.get(0), myInfoIvFrontPhoto);
+        Utils.showImg(this, idCards.get(1), myInfoIvReversePhoto);
     }
 
     @Override
@@ -82,7 +100,7 @@ public class MyInformationActivity extends BaseActivity {
         mTvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtils.startActivity(MyInfoEditActivity.class);
+                Utils.gotoActivity(MyInformationActivity.this, MyInfoEditActivity.class, false, "doctor", mDoctorInfo);
             }
         });
     }

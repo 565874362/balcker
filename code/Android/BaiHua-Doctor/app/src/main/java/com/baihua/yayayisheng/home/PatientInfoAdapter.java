@@ -36,7 +36,7 @@ public class PatientInfoAdapter extends BaseQuickAdapter<PatientListEntity.PageB
                 .setText(R.id.patient_tv_gender, CommonUtils.getGender(item.getGender()))
                 .setText(R.id.patient_tv_age, String.format("%s岁", item.getAge()))
                 .setText(R.id.patient_tv_description, item.getCharacterDescribe())
-                .setText(R.id.patient_tv_date, DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(item.getGmtCreate(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
+                .setText(R.id.patient_tv_date, DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(item.getGmtModified(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
 
         TextView tvStatus = helper.getView(R.id.patient_tv_status);
         // '问诊状态 1 等待抢单 2 已抢单 3 已回复'

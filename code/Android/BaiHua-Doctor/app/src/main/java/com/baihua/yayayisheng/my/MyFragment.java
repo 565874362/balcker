@@ -68,7 +68,7 @@ public class MyFragment extends BaseFragment {
     TextView myTvExitAccount;
 
     private List<LocalMedia> mLocalMedia = new ArrayList<>();
-    private DoctorInfoEntity mDocorInfo;
+    private DoctorInfoEntity mDoctorInfo;
 
     @Override
     public int setRootView() {
@@ -101,7 +101,7 @@ public class MyFragment extends BaseFragment {
                 .subscribe(new ProgressObserver<DoctorInfoEntity>(getActivity()) {
                     @Override
                     public void onSuccess(DoctorInfoEntity result) {
-                        mDocorInfo = result;
+                        mDoctorInfo = result;
                         initContent(result.getInfo());
                     }
 
@@ -164,7 +164,7 @@ public class MyFragment extends BaseFragment {
                 ActivityUtils.startActivity(MyVisitingScheduleActivity.class);
                 break;
             case R.id.my_ll_my_information:
-                ActivityUtils.startActivity(MyInformationActivity.class);
+                Utils.gotoActivity(getActivity(), MyInformationActivity.class, false, "doctorInfo", mDoctorInfo.getInfo());
                 break;
             case R.id.my_tv_exit_account:
                 exitYYAPP();

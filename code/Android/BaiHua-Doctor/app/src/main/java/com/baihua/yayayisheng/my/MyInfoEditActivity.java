@@ -3,7 +3,9 @@ package com.baihua.yayayisheng.my;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -11,18 +13,40 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
+import com.baihua.common.rx.Observers.ProgressObserver;
+import com.baihua.common.rx.RxHttp;
+import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
+import com.baihua.yayayisheng.entity.DicEntity;
+import com.baihua.yayayisheng.entity.DoctorInfoEntity;
+import com.baihua.yayayisheng.entity.EmptyEntity;
+import com.baihua.yayayisheng.entity.FileEntity;
+import com.baihua.yayayisheng.entity.HospitalEntity;
+import com.baihua.yayayisheng.entity.OfficeEntity;
+import com.baihua.yayayisheng.entity.form.RegisterForm;
+import com.baihua.yayayisheng.login.SpinnerHospitalAdapter;
+import com.baihua.yayayisheng.login.SpinnerOfficeAdapter;
+import com.baihua.yayayisheng.login.SpinnerPositionAdapter;
+import com.baihua.yayayisheng.util.CommonUtils;
 import com.baihua.yayayisheng.util.Utils;
+import com.blankj.utilcode.util.LogUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Author:byd
@@ -75,9 +99,21 @@ public class MyInfoEditActivity extends BaseActivity {
     ImageView registerIvYourself;
     @BindView(R.id.register_tv_upload_yourself)
     TextView registerTvUploadYourself;
+    @BindView(R.id.tv_submit)
+    TextView mTvSubmit; // 提交
 
-    private List<LocalMedia> mReturnList = new ArrayList<>();
     private String uploadType;
+
+    private int mGender = 0; // 性别 1 男 0 女
+    private HospitalEntity.ListBean selectHosBean; // 被选中的单位
+    private DicEntity.DictionariesBean selectPosBean; // 被选中的职位
+    private OfficeEntity.ListBean selectOfficeBean; // 被选中的科室
+    private String mYourSelfImagePath = ""; // 本人照片地址
+    private String mCertificateImagePath = ""; // 医师资格证照片地址
+    private String mFrontCardImagePath = ""; // 正面身份证照片地址
+    private String mBackCardImagePath = ""; // 反面身份证照片地址
+
+    private DoctorInfoEntity.InfoBean mDoctorInfo; // 医生信息
 
     @Override
     public void setLayout() {
@@ -92,15 +128,196 @@ public class MyInfoEditActivity extends BaseActivity {
 
     @Override
     public void initMember() {
+//        mTvSubmit.setVisibility(View.VISIBLE);// TODO: 20/12/2018 编辑功能
+        if (getIntent().hasExtra("doctor")) {
+            mDoctorInfo = (DoctorInfoEntity.InfoBean) getIntent().getSerializableExtra("doctor");
+            getHospital();
+            getPositionList();
+            getOfficeList();
+            setContentData();
+        }
 
+    }
+
+    /**
+     * 数据回填
+     */
+    private void setContentData() {
+        registerEtName.setText(mDoctorInfo.getName());
+        // 1 男 0 女
+        if (mDoctorInfo.getGender().equals("0"))
+            registerRbFemale.setSelected(true);
+        else if (mDoctorInfo.getGender().equals("1"))
+            registerRbMale.setSelected(true);
+        registerEtRegistrationFee.setText(Utils.keep2DecimalDigits(mDoctorInfo.getRegistrationFee()));
+        List<DoctorInfoEntity.InfoBean.AdeptEntitiesBean> adeptEntities = mDoctorInfo.getAdeptEntities();
+        for (int i = 0; i < adeptEntities.size(); i++) { // 擅长
+            DoctorInfoEntity.InfoBean.AdeptEntitiesBean adeptEntitiesBean = adeptEntities.get(i);
+            if (i == 0) {
+                registerEtGoodAtOne.setText(adeptEntitiesBean.getName());
+                registerEtGoodAtOneDesc.setText(adeptEntitiesBean.getDescribe());
+            } else if (i == 1) {
+                registerEtGoodAtTwo.setText(adeptEntitiesBean.getName());
+                registerEtGoodAtTwoDesc.setText(adeptEntitiesBean.getDescribe());
+            } else if (i == 2) {
+                registerTvGoodAtThree.setText(adeptEntitiesBean.getName());
+                registerTvGoodAtThreeDesc.setText(adeptEntitiesBean.getDescribe());
+            }
+        }
+        Utils.showImg(this, mDoctorInfo.getPhoto(), registerIvYourself);
+        mYourSelfImagePath = mDoctorInfo.getPhoto();
+        Utils.showImg(this, mDoctorInfo.getPhysicianLicence(), registerIvCertificate);
+        mCertificateImagePath = mDoctorInfo.getPhysicianLicence();
+        List<String> idCards = Arrays.asList(mDoctorInfo.getIdentityCard().split(","));
+        Utils.showImg(this, idCards.get(0), registerIvFrontIdCard);
+        mFrontCardImagePath = idCards.get(0);
+        Utils.showImg(this, idCards.get(1), registerIvBackIdCard);
+        mBackCardImagePath = idCards.get(1);
+    }
+
+    /**
+     * 获取医院(单位)
+     */
+    private void getHospital() {
+        RxHttp.getInstance().getSyncServer()
+                .getHospitalList()
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<HospitalEntity>(this) {
+                    @Override
+                    public void onSuccess(HospitalEntity result) {
+                        SpinnerHospitalAdapter spinnerHospitalAdapter = new SpinnerHospitalAdapter(MyInfoEditActivity.this, result.getList());
+                        registerSpHospital.setAdapter(spinnerHospitalAdapter);
+                        for (int i = 0; i < result.getList().size(); i++) {
+                            if (mDoctorInfo.getHosId().equals(result.getList().get(i).getId())) {
+                                registerSpHospital.setSelection(i);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取职位
+     */
+    private void getPositionList() {
+        RxHttp.getInstance().getSyncServer()
+                .getDictionary("3")
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<DicEntity>(this) {
+
+                    @Override
+                    public void onSuccess(DicEntity result) {
+                        SpinnerPositionAdapter spinnerPositionAdapter = new SpinnerPositionAdapter(MyInfoEditActivity.this, result.getDictionaries());
+                        registerSpPosition.setAdapter(spinnerPositionAdapter);
+                        for (int i = 0; i < result.getDictionaries().size(); i++) {
+                            if (mDoctorInfo.getPositionId().equals(result.getDictionaries().get(i).getId())) {
+                                registerSpPosition.setSelection(i);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取科室
+     */
+    private void getOfficeList() {
+        RxHttp.getInstance().getSyncServer()
+                .getOfficeList()
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<OfficeEntity>(this) {
+                    @Override
+                    public void onSuccess(OfficeEntity result) {
+                        SpinnerOfficeAdapter spinnerOfficeAdapter = new SpinnerOfficeAdapter(MyInfoEditActivity.this, result.getList());
+                        registerSpDepartment.setAdapter(spinnerOfficeAdapter);
+                        for (int i = 0; i < result.getList().size(); i++) {
+                            if (mDoctorInfo.getOffId().equals(result.getList().get(i).getId())) {
+                                registerSpDepartment.setSelection(i);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     @Override
     public void setListener() {
 
+        registerSpHospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectHosBean = (HospitalEntity.ListBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectHosBean.getName() + " : " + selectHosBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        registerSpPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectPosBean = (DicEntity.DictionariesBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectPosBean.getName() + " : " + selectPosBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        registerSpDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getAdapter().getItem(position) instanceof String)
+                    return;
+                selectOfficeBean = (OfficeEntity.ListBean) parent.getAdapter().getItem(position);
+                LogUtils.e(selectOfficeBean.getName() + " : " + selectOfficeBean.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        registerRbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.register_rb_female: // 女
+                        mGender = 0;
+                        break;
+                    case R.id.register_rb_male: // 男
+                        mGender = 1;
+                        break;
+                }
+            }
+        });
+
     }
 
-    @OnClick({R.id.register_tv_upload_yourself, R.id.register_tv_upload_certificate, R.id.register_tv_upload_front_id_card, R.id.register_tv_upload_back_id_card})
+    @OnClick({R.id.register_tv_upload_yourself, R.id.register_tv_upload_certificate, R.id.register_tv_upload_front_id_card, R.id.register_tv_upload_back_id_card, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.register_tv_upload_yourself:
@@ -119,7 +336,229 @@ public class MyInfoEditActivity extends BaseActivity {
                 uploadType = "back_id_card";
                 showSingleCamera(MyInfoEditActivity.this, new ArrayList<>());
                 break;
+            case R.id.tv_submit:
+                judgeEmpty();
+                break;
         }
+    }
+
+    /**
+     * 判空
+     */
+    boolean y, c, f, b;
+
+    private void judgeEmpty() {
+        if (CommonUtils.isTextEmpty(registerEtName)) {
+            toast("请输入姓名");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtRegistrationFee)) {
+            toast("请输入挂号费金额");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtOne)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtOneDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtTwo)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerEtGoodAtTwoDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerTvGoodAtThree)) {
+            toast("请输入擅长名称");
+            return;
+        }
+        if (CommonUtils.isTextEmpty(registerTvGoodAtThreeDesc)) {
+            toast("请输入擅长描述");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mYourSelfImagePath)) {
+            toast("请上传本人照片");
+            return;
+        }
+        if (TextUtils.isEmpty(mCertificateImagePath)) {
+            toast("请上传医师资格证");
+            return;
+        }
+        if (TextUtils.isEmpty(mFrontCardImagePath)) {
+            toast("请上传身份证正面照");
+            return;
+        }
+        if (TextUtils.isEmpty(mYourSelfImagePath)) {
+            toast("请上传身份证反面照");
+            return;
+        }
+
+        List<String> images = new ArrayList<>();
+
+        if (!mYourSelfImagePath.contains("http")) {
+            y = true;
+            images.add(mYourSelfImagePath);
+        }
+        if (!mCertificateImagePath.contains("http")) {
+            c = true;
+            images.add(mCertificateImagePath);
+        }
+        if (!mFrontCardImagePath.contains("http")) {
+            f = true;
+            images.add(mFrontCardImagePath);
+        }
+        if (!mBackCardImagePath.contains("http")) {
+            b = true;
+            images.add(mBackCardImagePath);
+        }
+        if (Utils.isListEmpty(images)) {
+            updateInfo(new ArrayList<>());
+        } else {
+            uploadImages(images);
+        }
+    }
+
+    /**
+     * 图片上传
+     *
+     * @param images 图片地址集合
+     */
+    private void uploadImages(List<String> images) {
+        if (!Utils.isListEmpty(images)) {
+            /* 多图片处理*/
+            Map<String, RequestBody> partMap = new LinkedHashMap<>();
+            for (String image :
+                    images) {
+                LogUtils.e(image);
+                File imageFile = new File(image);
+                RequestBody imageBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+                partMap.put("files\";filename=\"" + imageFile.getName() + "", imageBody);
+            }
+            // 上传图片
+            RxHttp.getInstance().getSyncServer()
+                    .uploadFile(partMap)
+                    .compose(RxSchedulers.observableIO2Main(this))
+                    .subscribe(new ProgressObserver<FileEntity>(this, true, "") {
+                        @Override
+                        public void onSuccess(FileEntity result) {
+                            LogUtils.e(result.getUrls());
+                            // 清除包括裁剪和压缩后的缓存，要在上传成功后调用，注意：需要系统sd卡权限
+                            PictureFileUtils.deleteCacheDirFile(MyInfoEditActivity.this);
+                            updateInfo(result.getUrls());
+                        }
+
+                        @Override
+                        public void onFailure(Throwable e, String errorMsg) {
+                            toast(errorMsg);
+                        }
+                    });
+        }
+    }
+
+    /**
+     * 提交修改信息
+     *
+     * @param urls 需要上传的图片
+     */
+    private void updateInfo(List<String> urls) {
+        String photo;
+        String idCard;
+        String certification;
+        if (Utils.isListEmpty(urls)) {
+            photo = mYourSelfImagePath;
+            certification = mCertificateImagePath;
+            idCard = mFrontCardImagePath + "," + mBackCardImagePath;
+        } else {
+            for (int i = 0; i < urls.size(); i++) {
+                switch (i) {
+                    case 0:
+                        if (y) {
+                            mYourSelfImagePath = urls.get(i);
+                        } else if (c) {
+                            mCertificateImagePath = urls.get(i);
+                        } else if (f) {
+                            mFrontCardImagePath = urls.get(i);
+                        } else if (b) {
+                            mFrontCardImagePath = urls.get(i);
+                        }
+                        break;
+                    case 1:
+                        if (c) {
+                            mCertificateImagePath = urls.get(i);
+                        } else if (f) {
+                            mFrontCardImagePath = urls.get(i);
+                        } else if (b) {
+                            mFrontCardImagePath = urls.get(i);
+                        }
+                        break;
+                    case 2:
+                        if (f) {
+                            mFrontCardImagePath = urls.get(i);
+                        } else if (b) {
+                            mFrontCardImagePath = urls.get(i);
+                        }
+                        break;
+                    case 3:
+                        mFrontCardImagePath = urls.get(i);
+                        break;
+                }
+            }
+            photo = mYourSelfImagePath;
+            certification = mCertificateImagePath;
+            idCard = mFrontCardImagePath + "," + mBackCardImagePath;
+        }
+        // 擅长
+        List<RegisterForm.AdeptsBean> adeptsBeans = new ArrayList<>();
+        RegisterForm.AdeptsBean one = new RegisterForm.AdeptsBean();
+        RegisterForm.AdeptsBean two = new RegisterForm.AdeptsBean();
+        RegisterForm.AdeptsBean three = new RegisterForm.AdeptsBean();
+        one.setName(CommonUtils.getTextString(registerEtGoodAtOne));
+        one.setDescribe(CommonUtils.getTextString(registerEtGoodAtOneDesc));
+        two.setName(CommonUtils.getTextString(registerEtGoodAtTwo));
+        two.setDescribe(CommonUtils.getTextString(registerEtGoodAtTwoDesc));
+        three.setName(CommonUtils.getTextString(registerTvGoodAtThree));
+        three.setDescribe(CommonUtils.getTextString(registerTvGoodAtThreeDesc));
+        adeptsBeans.add(one);
+        adeptsBeans.add(two);
+        adeptsBeans.add(three);
+        RegisterForm registerForm = new RegisterForm();
+        registerForm.setAccount("");
+        registerForm.setCaptchaCode("");
+        registerForm.setCaptchaId("");
+        registerForm.setGender(String.valueOf(mGender));
+        registerForm.setHosId(selectHosBean.getId());
+        registerForm.setHosName(selectHosBean.getName());
+        registerForm.setIdentityCard(idCard);
+        registerForm.setName(CommonUtils.getTextString(registerEtName));
+        registerForm.setOffId(selectOfficeBean.getId());
+        registerForm.setOffName(selectOfficeBean.getName());
+        registerForm.setPhoto(photo);
+        registerForm.setPhysicianLicence(certification);
+        registerForm.setPositionId(selectPosBean.getId());
+        registerForm.setPositionName(selectPosBean.getName());
+        registerForm.setRegistrationFee(CommonUtils.getTextString(registerEtRegistrationFee));
+        registerForm.setAdepts(adeptsBeans);
+
+        // 更新信息
+        RxHttp.getInstance().getSyncServer()
+                .updateDoctorInfo(CommonUtils.getToken(), registerForm)
+                .compose(RxSchedulers.observableIO2Main(this))
+                .subscribe(new ProgressObserver<EmptyEntity>(this, true, "") {
+                    @Override
+                    public void onSuccess(EmptyEntity result) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     @Override
@@ -129,15 +568,19 @@ public class MyInfoEditActivity extends BaseActivity {
             List<LocalMedia> localMediaList = PictureSelector.obtainMultipleResult(data);
             switch (uploadType) {
                 case "yourself":
+                    mYourSelfImagePath = localMediaList.get(0).getCompressPath();
                     Utils.showImg(MyInfoEditActivity.this, localMediaList.get(0).getCompressPath(), registerIvYourself);
                     break;
                 case "certificate":
+                    mCertificateImagePath = localMediaList.get(0).getCompressPath();
                     Utils.showImg(MyInfoEditActivity.this, localMediaList.get(0).getCompressPath(), registerIvCertificate);
                     break;
                 case "front_id_card":
+                    mFrontCardImagePath = localMediaList.get(0).getCompressPath();
                     Utils.showImg(MyInfoEditActivity.this, localMediaList.get(0).getCompressPath(), registerIvFrontIdCard);
                     break;
                 case "back_id_card":
+                    mBackCardImagePath = localMediaList.get(0).getCompressPath();
                     Utils.showImg(MyInfoEditActivity.this, localMediaList.get(0).getCompressPath(), registerIvBackIdCard);
                     break;
             }
@@ -149,7 +592,7 @@ public class MyInfoEditActivity extends BaseActivity {
         PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .theme(R.style.picture_QQ_style)//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
-                .maxSelectNum(1)// 最大图片选择数量 int
+//                .maxSelectNum(1)// 最大图片选择数量 int
 //                                .minSelectNum()// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
                 .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE

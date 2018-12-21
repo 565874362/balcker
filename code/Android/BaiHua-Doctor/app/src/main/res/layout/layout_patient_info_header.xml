@@ -77,7 +77,8 @@
         android:id="@+id/play_voice_layout"
         android:layout_width="100dp"
         android:layout_height="32dp"
-        android:background="@drawable/shape_voice_bg">
+        android:background="@drawable/shape_voice_bg"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_play_voice_anim"
@@ -103,6 +104,7 @@
         android:id="@+id/layout_patient_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dimen_dp_18" />
 
     <TextView

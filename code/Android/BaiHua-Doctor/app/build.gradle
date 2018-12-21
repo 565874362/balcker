@@ -183,4 +183,6 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     // https://github.com/LuckSiege/PictureSelector
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    // https://github.com/luoshihai/XXDialog
+    implementation 'com.github.luoshihai:XXDialog:v1.0.2'
 }
