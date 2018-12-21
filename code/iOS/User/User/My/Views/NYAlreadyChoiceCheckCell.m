@@ -7,6 +7,7 @@
 //
 
 #import "NYAlreadyChoiceCheckCell.h"
+#import "NYHuanZheDetialCheckModel.h"
 
 @implementation NYAlreadyChoiceCheckCell
 
@@ -62,6 +63,16 @@
     .bottomSpaceToView(self.contentView, 0)
     .rightSpaceToView(self.contentView, 5)
     .heightIs(1);
+    
+}
+
+- (void)setCheckModel:(NYHuanZheDetialCheckModel *)checkModel
+{
+    _checkModel = checkModel;
+    
+    _typeLB.text = checkModel.name;
+    
+    _priceLB.text = [NSString stringWithFormat:@"%.2f元",[checkModel.price doubleValue]];
     
 }
 @end

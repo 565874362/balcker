@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@class NYHuanZheDetailModel;
 
 @interface NYAlreadyChoiceCheckAllPriceCell : UITableViewCell
 
 @property (nonatomic,strong) UILabel * priceLB;
 
 @property (nonatomic,strong) UIView * lineView;
+
+@property (nonatomic,strong) NYHuanZheDetailModel * huanZheDetailModel;
 
 @end
 

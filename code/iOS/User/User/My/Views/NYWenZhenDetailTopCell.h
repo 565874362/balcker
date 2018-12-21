@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class NYHuanZheDetailModel;
 @interface NYWenZhenDetailTopCell : UITableViewCell
 
-@property (nonatomic,copy) NSString * content;
+@property (nonatomic,strong) NYHuanZheDetailModel * huanZheDetailModel;
 
 @end
 

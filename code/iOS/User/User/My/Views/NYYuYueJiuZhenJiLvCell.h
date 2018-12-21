@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class NYYuYueJiuZhenModel;
 @interface NYYuYueJiuZhenJiLvCell : UITableViewCell
 
+
 @property (nonatomic,strong) NYYuYueJiuZhenModel * jiuZhenJiLvModel;
 @end
 

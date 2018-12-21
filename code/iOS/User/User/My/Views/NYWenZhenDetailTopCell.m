@@ -7,6 +7,10 @@
 //
 
 #import "NYWenZhenDetailTopCell.h"
+#import "NYHuanZheDetailModel.h"
+#import "NYDoctorModel.h"
+#import "NYMyWenZhenModel.h"
+
 
 @interface NYWenZhenDetailTopCell ()
 {
@@ -141,8 +145,8 @@
     //需要做的检查
     _needCheckTitleLB = [[UILabel alloc] init];
     _needCheckTitleLB.textAlignment = NSTextAlignmentLeft;
-    _needCheckTitleLB.font = [UIFont boldSystemFontOfSize:17];
-    _needCheckTitleLB.textColor = COLOR_BIG;
+    _needCheckTitleLB.font = FONT(16);
+    _needCheckTitleLB.textColor = COLOR_LOW;
     [self.contentView addSubview:_needCheckTitleLB];
     
     _needCheckTitleLB.sd_layout
@@ -151,27 +155,54 @@
     .heightIs(30)
     .widthIs(200);
 
-    _needCheckTitleLB.text = @"需做检查:";
     
     [self setupAutoHeightWithBottomView:_needCheckTitleLB bottomMargin:15];
     
     
-    _nameLB.text = @"刘江华";
-    
-    _zhiChengLB.text = @"医学院院长";
-    
-    _yiyuanLB.text = @"解放军总医院";
-    
-    _keshiLB.text = @"妇产科";
-
-    
 }
 
-- (void)setContent:(NSString *)content
+//- (void)setContent:(NSString *)content
+//{
+//    NSString *text = @"初步诊断：这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+//    // 1.创建NSMutableAttributedString实例
+//    NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:text];
+//
+//    // 2.添加属性
+//    [fontAttributeNameStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17] range:NSMakeRange(0, 5)];
+//    [fontAttributeNameStr addAttribute:NSForegroundColorAttributeName value:COLOR_BIG range:NSMakeRange(0, 5)];
+//
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    [paragraphStyle setLineSpacing:5.0];
+//    [fontAttributeNameStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
+//
+//
+//    // 3.给label赋值
+//    _chuBuZhenDuanLB.attributedText = fontAttributeNameStr;
+//
+//}
+
+- (void)setHuanZheDetailModel:(NYHuanZheDetailModel *)huanZheDetailModel
 {
-    _content = content;
+    _huanZheDetailModel = huanZheDetailModel;
     
-    NSString *text = @"初步诊断：这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
+    //头像
+    [_headerImg sd_setImageWithURL:[NSURL URLWithString:huanZheDetailModel.doctor.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+    
+    _nameLB.text = huanZheDetailModel.doctor.name;
+    
+    _zhiChengLB.text = huanZheDetailModel.doctor.positionName;
+    
+    _yiyuanLB.text = huanZheDetailModel.doctor.hosName;
+    
+    _keshiLB.text = huanZheDetailModel.doctor.offName;
+
+    //初步诊断
+    NSString *text = @"";
+    if (huanZheDetailModel.info.response.length == 0) {
+        text = @"初步诊断：无";
+    }else{
+        text = [NSString stringWithFormat:@"初步诊断：%@",huanZheDetailModel.info.response];
+    }
     // 1.创建NSMutableAttributedString实例
     NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:text];
     
@@ -186,7 +217,31 @@
     
     // 3.给label赋值
     _chuBuZhenDuanLB.attributedText = fontAttributeNameStr;
+
     
+    
+    
+    NSString * checkStr = @"";
+    if (huanZheDetailModel.healthExaminations.count == 0) {
+        checkStr = @"需做检查：无";
+    }else{
+        checkStr = @"需做检查：";
+    }
+    
+    // 1.创建NSMutableAttributedString实例
+    NSMutableAttributedString *fontAttributeNameStr2 = [[NSMutableAttributedString alloc]initWithString:checkStr];
+    
+    // 2.添加属性
+    [fontAttributeNameStr2 addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17] range:NSMakeRange(0, 5)];
+    [fontAttributeNameStr2 addAttribute:NSForegroundColorAttributeName value:COLOR_BIG range:NSMakeRange(0, 5)];
+    
+    NSMutableParagraphStyle *paragraphStyle2 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle2 setLineSpacing:5.0];
+    [fontAttributeNameStr2 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle2 range:NSMakeRange(0, [checkStr length])];
+    
+    
+    // 3.给label赋值
+    _needCheckTitleLB.attributedText = fontAttributeNameStr2;
 }
 
 @end

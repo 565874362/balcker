@@ -51,6 +51,13 @@
     return [self requestWithURL:url parameters:parameters success:success failure:failure];
 }
 
+/** 获取推荐医生*/
++ (NSURLSessionTask *)postGetTuiJianDoctorListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@", kApiPrefix,getTuiJianDoctorListInfo];
+    return [self postRequestWithURL:url parameters:[parameters mj_JSONString] success:success failure:failure];
+
+}
 //====================================评论================================
 
 /** 根据医生加载评论*/
@@ -59,6 +66,13 @@
     NSString *url = [NSString stringWithFormat:@"%@%@", kApiPrefix,DoctorCommentListInfo];
     return [self postRequestWithURL:url parameters:[parameters mj_JSONString] success:success failure:failure];
 
+}
+
+/** 患者评价*/
++ (NSURLSessionTask *)postUserCommentDoctorInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@", kApiPrefix,UserCommentDoctorInfo];
+    return [self postRequestWithURL:url parameters:[parameters mj_JSONString] success:success failure:failure];
 }
 
 //====================================问诊================================
@@ -239,7 +253,7 @@
         [PPNetworkHelper setValue:[UserInfo getToken] forHTTPHeaderField:@"token"];
     }
 
-    return [PPNetworkHelper uploadImagesWithURL:URL parameters:parameter name:@"file" images:imagesArray fileNames:nil imageScale:0.5 imageType:@"png/jpeg" progress:^(NSProgress *progress) {
+    return [PPNetworkHelper uploadImagesWithURL:URL parameters:parameter name:@"file" images:imagesArray fileNames:nil imageScale:0.5 imageType:@"png" progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         success(responseObject);

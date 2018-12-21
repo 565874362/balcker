@@ -7,7 +7,7 @@
 //
 
 #import "NYHomeViewController.h"
-#import <SDCycleScrollView.h>
+#import "SDCycleScrollView.h"
 #import "NYHomeScrollViewCell.h"
 #import "NYHomeNameAndAgeCell.h"
 #import "NYHomeSexAndPhoneCell.h"
@@ -293,7 +293,7 @@
 
 - (void)clickDoneButton:(UIButton *)button
 {
-    
+        
     if (!ISLOGIN) {
         NYLoginViewController * loginVC = [[NYLoginViewController alloc] init];
         NYBaseNavViewController * vc = [[NYBaseNavViewController alloc] initWithRootViewController:loginVC];
@@ -455,7 +455,9 @@
                         _phoneTF.text = @"";
                         _eatTF.text = @"";
                         _sleepTF.text = @"";
-                        _textView.text = nil;
+                        _textView.text = @"";
+                        _textView.placeholder = @"请描述你的问题,包括身体状况、疾病和症状等,医生会根据您的描述给出专业的意见。";
+
                         _voiceData = nil;
                         [_selectedPhotos removeAllObjects];
                         [_selectedAssets removeAllObjects];

@@ -14,10 +14,16 @@
 #import "NYPayInfoModel.h"
 #import "NYYuYueJiuZhenModel.h"
 
-@interface NYJiuZhenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "ChatKeyBoard.h"
 
+@interface NYJiuZhenDetailViewController ()<UITableViewDelegate,UITableViewDataSource,ChatToolBarDelegate,ChatKeyBoardDelegate, ChatKeyBoardDataSource>
+{
+    NSString *_content; // 评论的文字
+}
 @property (nonatomic, strong) UITableView *tableView;
 
+/** 聊天键盘 */
+@property (nonatomic, strong) ChatKeyBoard *chatKeyBoard;
 
 @end
 
@@ -53,7 +59,79 @@
     [self.tableView registerClass:[NYJieZhenDetailCell class] forCellReuseIdentifier:@"JieZhenDetailCellID"];
     [self.tableView registerClass:[NYJieZhenDoctorDetailCell class] forCellReuseIdentifier:@"JieZhenDoctorDetailCellID"];
     
+    [self initChatKeyBoard];
 }
+
+- (void)initChatKeyBoard
+{
+    self.chatKeyBoard = [ChatKeyBoard keyBoard];
+    self.chatKeyBoard.placeHolder = @"输入评价内容";
+    self.chatKeyBoard.delegate = self;
+    self.chatKeyBoard.dataSource = self;
+    self.chatKeyBoard.chatToolBar.delegate = self;
+    self.chatKeyBoard.allowFace = NO;
+    self.chatKeyBoard.allowMore = NO;
+    self.chatKeyBoard.allowVoice = NO;
+    self.chatKeyBoard.associateTableView = nil;
+    [self.view addSubview:self.chatKeyBoard];
+    
+}
+
+#pragma mark - 滚动隐藏键盘
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.chatKeyBoard keyboardDown];
+}
+
+#pragma mark - ChatToolBarDelegate
+
+- (void)chatToolBarTextViewDidBeginEditing:(UITextView *)textView
+{
+}
+- (void)chatToolBarSendText:(NSString *)text
+{
+    [self sendComment];
+}
+- (void)chatToolBarTextViewDidChange:(UITextView *)textView
+{
+    _content = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+- (void)chatToolBarTextViewDeleteBackward:(RFTextView *)textView
+{
+}
+
+#pragma mark -  发送评论
+
+- (void)sendComment {
+    
+    if (_content.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"评论内容不能为空"];
+        return;
+    }
+    
+    NSDictionary * dict =@{
+                           @"content":_content,
+                           @"doctorId":_jiuZhenModel.doctorId,
+                           @"regId":_jiuZhenModel.id
+                           };
+    
+    [SVProgressHUD showWithStatus:nil];
+    [SVProgressHUD setDefaultMaskType:(SVProgressHUDMaskTypeClear)];
+
+    [PPHTTPRequest postUserCommentDoctorInfoWithParameters:dict success:^(id response) {
+        [SVProgressHUD dismiss];
+        if ([response[@"code"] integerValue] == 0) {
+            MYALERT(@"评论成功");
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            MYALERT(response[@"msg"]);
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        MYALERT(@"评价失败");
+    }];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -95,6 +173,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    if (section == 2) {
+        return 120;
+    }
     return 8;
 }
 

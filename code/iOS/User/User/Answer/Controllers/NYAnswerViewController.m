@@ -66,7 +66,7 @@
     
     RCConversationViewController * vc = [[RCConversationViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:@"10004"];
     vc.displayUserNameInCell = NO;
-    vc.title = @"医生";
+    vc.title = @"咨询";
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

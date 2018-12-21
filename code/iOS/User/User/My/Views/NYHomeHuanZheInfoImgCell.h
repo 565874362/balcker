@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^clickImg)(NSInteger index,UIImageView *imageView);
 
+@property (nonatomic,strong) NSArray * imageArray;
 @end
 
 NS_ASSUME_NONNULL_END

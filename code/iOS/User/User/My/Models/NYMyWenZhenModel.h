@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * phone;
 @property (nonatomic,copy) NSString * response;
 @property (nonatomic,copy) NSString * sleep;
-@property (nonatomic,copy) NSString * status;  //1未解答
+@property (nonatomic,copy) NSString * status;  //1待接诊 2待回复 3已回复（医生状态） //1未解答 2未解答 3已解答（患者状态）
 @property (nonatomic,copy) NSString * voiceDescribe;
 
 @end

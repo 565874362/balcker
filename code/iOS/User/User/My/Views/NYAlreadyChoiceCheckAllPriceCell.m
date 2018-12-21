@@ -7,6 +7,9 @@
 //
 
 #import "NYAlreadyChoiceCheckAllPriceCell.h"
+#import "NYHuanZheDetailModel.h"
+#import "NYDoctorModel.h"
+#import "NYMyWenZhenModel.h"
 
 @implementation NYAlreadyChoiceCheckAllPriceCell
 
@@ -48,4 +51,10 @@
 
 }
 
+- (void)setHuanZheDetailModel:(NYHuanZheDetailModel *)huanZheDetailModel
+{
+    _huanZheDetailModel = huanZheDetailModel;
+    
+    _priceLB.text = [NSString stringWithFormat:@"预估费用合计 %.2f元",[huanZheDetailModel.info.exaFee doubleValue]];
+}
 @end

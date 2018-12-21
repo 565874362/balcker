@@ -146,12 +146,6 @@
 - (void)clickDoneButton:(UIButton *)button
 {
     
-//    NYJiuZhenDoneViewController * vc = [[NYJiuZhenDoneViewController alloc] init];
-//    vc.jiuZhenID = @"1074930328554041346";
-//    [self.navigationController pushViewController:vc animated:YES];
-//    return;
-    
-    
     NSString * nameString = [_nameTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     NSString * ageString = [_ageTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

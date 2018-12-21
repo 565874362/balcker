@@ -62,7 +62,17 @@
     [self setupRefresh];
     [self.tableView.mj_header beginRefreshing];
 
+    if (self.pushType == 1) {
+        UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Common_back_n"] style:UIBarButtonItemStylePlain target:self action:@selector(clickLeftBackItem:)];
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }
 }
+
+- (void)clickLeftBackItem:(UIBarButtonItem *)item
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 //集成刷新控件
 - (void)setupRefresh{

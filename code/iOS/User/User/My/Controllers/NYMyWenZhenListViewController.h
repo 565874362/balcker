@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NYMyWenZhenListViewController : UIViewController
 
+@property (nonatomic,assign) NSInteger pushType; //1首页提交成功之后返回进来的
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -108,11 +108,11 @@
     _wenZhenListModel = wenZhenListModel;
     
     //状态
-    if ([wenZhenListModel.status integerValue] == 1) {
+    if ([wenZhenListModel.status integerValue] == 1 || [wenZhenListModel.status integerValue] == 2) {
         _stateLB.text = @"未解答";
         _stateLB.textColor = [UIColor whiteColor];
         _stateLB.backgroundColor = COLOR_RED;
-    }else{
+    }else if([wenZhenListModel.status integerValue] == 3){
         _stateLB.text = @"已解答";
         _stateLB.textColor = [UIColor whiteColor];
         _stateLB.backgroundColor = MAINCOLOR;
@@ -132,7 +132,7 @@
     
     _contentLB.text = wenZhenListModel.characterDescribe;
     
-    _timeLB.text = [wenZhenListModel.gmtCreate substringWithRange:NSMakeRange(0, 16)];
+    _timeLB.text = [wenZhenListModel.gmtModified substringWithRange:NSMakeRange(0, 16)];
 }
 
 @end

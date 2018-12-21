@@ -237,6 +237,8 @@
 -(void)setText:(NSString *)tex{
     if (tex.length>0) {
         _PlaceholderLabel.hidden=YES;
+    }else{
+        _PlaceholderLabel.hidden=NO;
     }
     [super setText:tex];
 }

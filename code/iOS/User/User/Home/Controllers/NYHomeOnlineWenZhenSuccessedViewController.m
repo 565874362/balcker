@@ -10,9 +10,13 @@
 #import "NYDoctorListCell.h"
 #import "NYDoctorModel.h"
 #import "NYTiShiSuccessedCell.h"
+#import "NYDoctorInfoDetailViewController.h"
+#import "NYMyWenZhenListViewController.h"
 
 @interface NYHomeOnlineWenZhenSuccessedViewController ()<UITableViewDelegate,UITableViewDataSource>
-
+{
+    NSMutableArray * _dataArray;
+}
 @property (nonatomic, strong) UITableView *tableView;
 
 
@@ -46,9 +50,38 @@
     [self.tableView registerClass:[NYDoctorListCell class] forCellReuseIdentifier:@"Cell"];
     [self.tableView registerClass:[NYTiShiSuccessedCell class] forCellReuseIdentifier:@"NYTiShiSuccessedCellID"];
     
+    _dataArray = [NSMutableArray array];
+
+    [self loadData];
+    
     [self initBottomUI];
     
 }
+
+#pragma mark - 获取数据
+- (void)loadData
+{
+    NSDictionary * dict = @{@"size":@(10),
+                            @"current":@(1),
+                            };
+    [PPHTTPRequest postGetTuiJianDoctorListInfoWithParameters:dict success:^(id response) {
+        if ([response[@"code"] integerValue] == 0) {
+            NSArray * listArr = response[@"data"][@"page"][@"records"];
+            
+            [_dataArray removeAllObjects];
+            for (NSDictionary *datc in listArr) {
+                NYDoctorModel *doctorModel = [NYDoctorModel mj_objectWithKeyValues:datc];
+                [_dataArray addObject:doctorModel];
+            }
+        }else{
+            MYALERT(@"暂无数据");
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        MYALERT(@"获取失败");
+    }];
+}
+
 
 #pragma mark - 初始化底部
 - (void)initBottomUI
@@ -83,7 +116,9 @@
 
 - (void)clickBackButton:(UIButton *)button
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    NYMyWenZhenListViewController * vc = [[NYMyWenZhenListViewController alloc] init];
+    vc.pushType = 1;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -94,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _dataArray.count+1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,8 +137,7 @@
     if (indexPath.row == 0) {
         return 220;
     }else{
-        NYDoctorModel * model = [[NYDoctorModel alloc] init];
-        model.content = @"擅长：孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产、孕前检查、不孕不育、反复流产";
+        NYDoctorModel * model = _dataArray[indexPath.row-1];
         return [self.tableView cellHeightForIndexPath:indexPath model:model keyPath:@"doctorModel" cellClass:[NYDoctorListCell class] contentViewWidth:[UIScreen mainScreen].bounds.size.width];
     }
     return 0;
@@ -134,7 +168,7 @@
         return cell;
     }else{
         NYDoctorListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-        cell.doctorModel = nil;
+        cell.doctorModel = _dataArray[indexPath.row-1];
         return cell;
     }
     return nil;
@@ -143,6 +177,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row > 0) {
+        NYDoctorInfoDetailViewController * vc = [[NYDoctorInfoDetailViewController alloc] init];
+        NYDoctorModel * model = _dataArray[indexPath.row-1];
+        vc.doctorID = model.id;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 @end

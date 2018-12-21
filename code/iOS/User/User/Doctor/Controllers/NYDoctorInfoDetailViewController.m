@@ -68,7 +68,7 @@
     [self.tableView registerClass:[NYDoctorDetailModelBtnCell class] forCellReuseIdentifier:@"NYDoctorDetailModelBtnCellID"];
 
     
-    [self initBottomUI];
+//    [self initBottomUI];
     
 //    [self loadDoctorDetialInfoData]; //获取医生详情
 //
@@ -108,6 +108,8 @@
             
             [weakSelf getCommentData]; //获取评论
 
+            [self initBottomUI];
+            
         }else{
             [self.tableView.mj_header endRefreshing];
             MYALERT(@"请求失败");
@@ -185,7 +187,7 @@
     [doneButton addTarget:self action:@selector(clickZiXunButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton * jiuZhenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [jiuZhenButton setTitle:@"就诊(20.00元)" forState:UIControlStateNormal];
+    [jiuZhenButton setTitle:[NSString stringWithFormat:@"就诊(%.2f元)",[_model.registrationFee doubleValue]] forState:UIControlStateNormal];
     [jiuZhenButton setBackgroundColor:MAINCOLOR];
     [jiuZhenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bgView addSubview:jiuZhenButton];
@@ -218,7 +220,7 @@
     
     RCConversationViewController * vc = [[RCConversationViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:@"10004"];
     vc.displayUserNameInCell = NO;
-    vc.title = @"医生";
+    vc.title = @"咨询";
     [self.navigationController pushViewController:vc animated:YES];
 }
 

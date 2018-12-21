@@ -46,7 +46,7 @@
 {
     _wenZhenModel = wenZhenModel;
     
-    _timeLB.text = [wenZhenModel.gmtCreate substringWithRange:NSMakeRange(0, 16)];
+    _timeLB.text = [wenZhenModel.gmtModified substringWithRange:NSMakeRange(0, 16)];
 
 }
 

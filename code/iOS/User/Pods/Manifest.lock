@@ -22,8 +22,6 @@ PODS:
     - RongCloudIM/IMLib
   - RongCloudIM/IMLib (2.8.32)
   - SDAutoLayout (2.2.0)
-  - SDCycleScrollView (1.75):
-    - SDWebImage (>= 4.0.0)
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
   - SDWebImage/Core (4.4.1)
@@ -44,7 +42,6 @@ DEPENDENCIES:
   - RongCloudIM/IMKit (~> 2.8.3)
   - RongCloudIM/IMLib (~> 2.8.3)
   - SDAutoLayout
-  - SDCycleScrollView (~> 1.75)
   - SDWebImage
   - SVProgressHUD
   - TZImagePickerController
@@ -62,11 +59,10 @@ SPEC CHECKSUMS:
   RKNotificationHub: e926748820d719f21ff374657a47fceefa1796b4
   RongCloudIM: 48bfc2fcb8d7cae8ce1e19cb5fb26d6d90616375
   SDAutoLayout: c5509e77ae75735d9a39f7bc83dba6d3f75d49d8
-  SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TZImagePickerController: bc25e933c9d970a622d052f0d4de16202bbcd863
 
-PODFILE CHECKSUM: 33cd68bc2f9130bf4609b81daf55675d62d83ddf
+PODFILE CHECKSUM: 613494e471013013ba89fa07ab749a56bfff7edc
 
 COCOAPODS: 1.4.0

@@ -55,11 +55,16 @@ typedef void(^cacheMessage)(id responseCache);
 /** 医生信息*/
 + (NSURLSessionTask *)GetDoctorDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
+/** 获取推荐医生*/
++ (NSURLSessionTask *)postGetTuiJianDoctorListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
 //====================================评论================================
 
 /** 根据医生加载评论*/
 + (NSURLSessionTask *)postGetDoctorCommentListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
+/** 患者评价*/
++ (NSURLSessionTask *)postUserCommentDoctorInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
 //====================================问诊================================
 

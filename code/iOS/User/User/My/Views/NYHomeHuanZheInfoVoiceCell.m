@@ -36,6 +36,15 @@
     
     [bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickVoice:)]];
 
+    UIImageView * voiceImg = [[UIImageView alloc] init];
+    voiceImg.image = [UIImage imageNamed:@"voice"];
+    [bgView addSubview:voiceImg];
+    
+    voiceImg.sd_layout
+    .leftSpaceToView(bgView, 18)
+    .centerYEqualToView(bgView)
+    .widthIs(30)
+    .heightEqualToWidth();
     
 }
 

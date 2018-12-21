@@ -7,11 +7,15 @@
 //
 
 #import "NYWenZhenDetailYiZhuCell.h"
+#import "NYHuanZheDetailModel.h"
+#import "NYDoctorModel.h"
+#import "NYMyWenZhenModel.h"
 
 @implementation NYWenZhenDetailYiZhuCell
 {
     UILabel * _chuBuZhenDuanLB;
     UILabel * _timeLB;
+    UIButton * _jiuZhenBtn;
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -59,7 +63,8 @@
     
     //就诊
     UIButton * jiuZhenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [jiuZhenButton setTitle:@"就诊(20.00元)" forState:UIControlStateNormal];
+    _jiuZhenBtn = jiuZhenButton;
+    [jiuZhenButton setTitle:@"就诊(0.00元)" forState:UIControlStateNormal];
     jiuZhenButton.titleLabel.font = FONT(15);
     [jiuZhenButton setBackgroundColor:MAINCOLOR];
     [jiuZhenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -121,9 +126,7 @@
 }
 
 - (void)setContent:(NSString *)content
-{
-    _content = content;
-    
+{    
     NSString *text = @"温馨医嘱：这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！这几天我家宝宝嘴里起了好多小泡。哭的特别厉害也不敢吃东西，后来去诊所，医生说这是小儿疱疹性口炎，我想问一下！！！";
     // 1.创建NSMutableAttributedString实例
     NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:text];
@@ -139,6 +142,34 @@
     // 3.给label赋值
     _chuBuZhenDuanLB.attributedText = fontAttributeNameStr;
     
+}
+
+- (void)setHuanZheDetailModel:(NYHuanZheDetailModel *)huanZheDetailModel
+{
+    _huanZheDetailModel = huanZheDetailModel;
+    
+    NSString *text = @"";
+    if (huanZheDetailModel.info.advice.length == 0) {
+        text = @"温馨医嘱：无";
+    }else{
+        text = [NSString stringWithFormat:@"温馨医嘱：%@",huanZheDetailModel.info.advice];
+    }
+    // 1.创建NSMutableAttributedString实例
+    NSMutableAttributedString *fontAttributeNameStr = [[NSMutableAttributedString alloc]initWithString:text];
+    
+    // 2.添加属性
+    [fontAttributeNameStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17] range:NSMakeRange(0, 5)];
+    [fontAttributeNameStr addAttribute:NSForegroundColorAttributeName value:COLOR_BIG range:NSMakeRange(0, 5)];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:5.0];
+    [fontAttributeNameStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
+    
+    // 3.给label赋值
+    _chuBuZhenDuanLB.attributedText = fontAttributeNameStr;
+
+    [_jiuZhenBtn setTitle:[NSString stringWithFormat:@"就诊(%.2f元)",[huanZheDetailModel.doctor.registrationFee doubleValue]] forState:UIControlStateNormal];
+
 }
 
 @end

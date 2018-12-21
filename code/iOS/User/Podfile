@@ -10,7 +10,7 @@ target 'User' do
     pod 'JKCountDownButton'             #倒计时按钮
    pod 'TZImagePickerController'       #选择图片
 #   pod 'HUPhotoBrowser'                #图片浏览器
-   pod 'SDCycleScrollView','~> 1.75'   #循环滚动
+#   pod 'SDCycleScrollView','~> 1.75'   #循环滚动
    pod 'MZTimerLabel'                  #倒计时
    pod 'NJKWebViewProgress'            #webview加载进度
    pod 'BGFMDB'                        #本地数据库缓存

@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+
 NS_ASSUME_NONNULL_BEGIN
+@class NYHuanZheDetailModel;
 
 @interface NYWenZhenDetailYiZhuCell : UITableViewCell
-
-@property (nonatomic,copy) NSString * content;
 
 @property (nonatomic,copy) void(^clickZiXunBlock)(void);
 
 @property (nonatomic,copy) void(^clickJiuZhenBlock)(void);
+
+@property (nonatomic,strong) NYHuanZheDetailModel * huanZheDetailModel;
 
 @end
 

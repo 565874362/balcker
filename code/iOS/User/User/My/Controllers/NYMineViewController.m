@@ -34,7 +34,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self getUserPicture]; //获取用户信息
+
     [self scrollViewDidScroll:self.tableView];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
@@ -93,7 +94,6 @@
 
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 
-    [self getUserPicture]; //获取用户信息
 
 }
 
@@ -103,7 +103,10 @@
     [PPHTTPRequest GetUserPictureInfoWithParameters:nil success:^(id response) {
         [SVProgressHUD dismiss];
         if ([response[@"code"] integerValue] == 0) {
-            [UserInfo setPic:response[@"data"][@"photo"]];
+            if (![NSObject isNilOrNull:response[@"data"][@"photo"]]) {
+                [UserInfo setPic:response[@"data"][@"photo"]];
+                [self.tableView reloadData];
+            }
         }
     } failure:^(NSError *error) {
     }];
@@ -150,6 +153,7 @@
     if (section == 0) {
         NYMyHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HeaderViewID"];
         _headerImageView = headerView.headerImg;
+        [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo getPic]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
         headerView.clickHeader = ^{
             [weakSelf clickHeaderImg];
         };
