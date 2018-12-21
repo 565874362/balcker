@@ -1,6 +1,7 @@
 package com.baihua.yaya.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Author:byd
@@ -16,7 +17,7 @@ public class VisitDetailsEntity implements Serializable {
      */
 
     private DoctorBean doctor;
-    private Object healthExaminations;
+    private List<HealthExaminationsEntity> healthExaminations;
     private InfoBean info;
 
     public DoctorBean getDoctor() {
@@ -27,11 +28,11 @@ public class VisitDetailsEntity implements Serializable {
         this.doctor = doctor;
     }
 
-    public Object getHealthExaminations() {
+    public List<HealthExaminationsEntity> getHealthExaminations() {
         return healthExaminations;
     }
 
-    public void setHealthExaminations(Object healthExaminations) {
+    public void setHealthExaminations(List<HealthExaminationsEntity> healthExaminations) {
         this.healthExaminations = healthExaminations;
     }
 

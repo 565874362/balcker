@@ -12,7 +12,7 @@ public class CommentForm implements Serializable {
     public CommentForm() {
     }
 
-    public CommentForm(int current, int doctorId, int size) {
+    public CommentForm(int current, String doctorId, int size) {
         this.current = current;
         this.doctorId = doctorId;
         this.size = size;
@@ -26,7 +26,7 @@ public class CommentForm implements Serializable {
 
 
     private int current;
-    private int doctorId;
+    private String doctorId;
     private int size;
 
     public int getCurrent() {
@@ -37,11 +37,11 @@ public class CommentForm implements Serializable {
         this.current = current;
     }
 
-    public int getDoctorId() {
+    public String getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
     }
 

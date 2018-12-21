@@ -32,7 +32,9 @@ import com.luoshihai.xxdialog.DialogViewHolder;
 import com.luoshihai.xxdialog.XXDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -62,6 +64,7 @@ public class AppointmentActivity extends BaseActivity {
     TextView appointmentTvSubmit;
 
     private String mDoctorId;
+    private String mFee;
     private List<DiagnoseEntity.DiagnoseListBean> mDiagnoseList; // 出诊时间
 
     private TextView mTvAMStatus; // 上午有无就诊
@@ -86,8 +89,12 @@ public class AppointmentActivity extends BaseActivity {
 
     @Override
     public void initMember() {
-        if (getIntent().hasExtra("doctorId")) {
-            mDoctorId = (String) getIntent().getSerializableExtra("doctorId");
+        if (getIntent().hasExtra("data")) {
+            Map<String, String> data = new HashMap<>();
+            data = (Map<String, String>) getIntent().getSerializableExtra("data");
+            mDoctorId = data.get("id");
+            mFee = data.get("fee");
+            appointmentTvPrice.setText(Utils.keep2DecimalDigits(mFee));
             getDiagnoseList();
         }
     }
@@ -195,6 +202,13 @@ public class AppointmentActivity extends BaseActivity {
                 timeAdapter.setmPosition(mSelectedPosition); // 默认选中项
                 timeAdapter.setNewData(mDiagnoseList);
 
+                holder.setOnClick(R.id.dialog_iv_close, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                    }
+                });
+
                 if (Utils.isListEmpty(mDiagnoseList)) {
                     LogUtils.e("出诊时间没有拿到···");
                     return;
@@ -214,19 +228,12 @@ public class AppointmentActivity extends BaseActivity {
                     }
                 });
 
-                holder.setOnClick(R.id.dialog_iv_close, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        timeSelectDialog.dismiss();
-                    }
-                });
-
                 holder.setOnClick(R.id.dialog_tv_m_registered, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTimePart = "0";
                         appointmentTvSelectTime.setText(String.format("%s上午", mDiagnoseList.get(mSelectedPosition).getFullDate()));
-                        timeSelectDialog.dismiss();
+                        dismiss();
                     }
                 });
 
@@ -235,7 +242,7 @@ public class AppointmentActivity extends BaseActivity {
                     public void onClick(View v) {
                         mTimePart = "1";
                         appointmentTvSelectTime.setText(String.format("%s下午", mDiagnoseList.get(mSelectedPosition).getFullDate()));
-                        timeSelectDialog.dismiss();
+                        dismiss();
                     }
                 });
 

@@ -120,9 +120,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_dp_16"
-                    android:text="评价（99）"
                     android:textColor="@color/color_black_dark_4b5764"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/text_size_14sp"
+                    tools:text="评价（99）" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/doctor_details_recycler"

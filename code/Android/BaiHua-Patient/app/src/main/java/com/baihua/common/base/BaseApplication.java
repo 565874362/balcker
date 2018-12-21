@@ -46,7 +46,6 @@ public class BaseApplication extends Application {
         Utils.init(this);
         LogUtils.getConfig().setLogSwitch(true);
         setToastProperty();
-        RecordManager.getInstance().init(this, true);
     }
 
 

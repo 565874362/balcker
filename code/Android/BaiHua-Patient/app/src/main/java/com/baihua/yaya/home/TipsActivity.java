@@ -12,6 +12,9 @@ import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.DividerDecoration;
 import com.baihua.yaya.doctor.DoctorDetailsActivity;
 import com.baihua.yaya.doctor.DoctorListAdapter;
+import com.baihua.yaya.doctor.MatchDoctorListAdapter;
+import com.baihua.yaya.entity.MatchDoctorsEntity;
+import com.baihua.yaya.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,7 +34,7 @@ public class TipsActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     private List<String> mList; // 推荐医生信息集合
-    private DoctorListAdapter mAdapter;
+    private MatchDoctorListAdapter mAdapter;
 
     @Override
     public void setLayout() {
@@ -47,6 +50,10 @@ public class TipsActivity extends BaseActivity {
     @Override
     public void initMember() {
         initRecycler();
+        if (getIntent().hasExtra("matchInfo")) {
+            List<MatchDoctorsEntity.MatchDoctorsBean> matchDoctorsBeans = (List<MatchDoctorsEntity.MatchDoctorsBean>) getIntent().getSerializableExtra("matchInfo");
+            mAdapter.setNewData(matchDoctorsBeans);
+        }
     }
 
     private void initRecycler() {
@@ -55,7 +62,7 @@ public class TipsActivity extends BaseActivity {
         DividerDecoration dividerDecoration = new DividerDecoration(Color.parseColor("#f3f3f3"), ConvertUtils.dp2px(1), ConvertUtils.dp2px(12), 0);
         dividerDecoration.setDrawHeaderFooter(true);
         mRecyclerView.addItemDecoration(dividerDecoration);
-        mAdapter = new DoctorListAdapter(new ArrayList<>());
+        mAdapter = new MatchDoctorListAdapter(new ArrayList<>());
         mAdapter.addHeaderView(getTipsHeader());
         mAdapter.addFooterView(getTipsFooter());
         mRecyclerView.setAdapter(mAdapter);
@@ -83,7 +90,8 @@ public class TipsActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(DoctorDetailsActivity.class);
+                MatchDoctorsEntity.MatchDoctorsBean matchDoctorsBean = (MatchDoctorsEntity.MatchDoctorsBean) adapter.getData().get(position);
+                Utils.gotoActivity(TipsActivity.this, DoctorDetailsActivity.class, false, "doctorId", matchDoctorsBean.getId());
             }
         });
     }

@@ -134,7 +134,7 @@
             android:layout_weight="1.5"
             android:background="@android:color/white"
             android:hint="请输入联系电话"
-            android:inputType="text"
+            android:inputType="number"
             android:textColor="@color/color_black_dark_4b5764"
             android:textColorHint="@color/color_gray_light_afb1bd"
             android:textSize="@dimen/text_size_16sp" />

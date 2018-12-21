@@ -27,6 +27,7 @@ import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.DividerDecoration;
 import com.baihua.yaya.decoration.SpaceDecoration;
 import com.baihua.yaya.doctor.AppointmentActivity;
+import com.baihua.yaya.doctor.DoctorDetailsActivity;
 import com.baihua.yaya.entity.PatientListEntity;
 import com.baihua.yaya.entity.VisitDetailsEntity;
 import com.baihua.yaya.rcloud.RCUtils;
@@ -44,8 +45,10 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -115,6 +118,8 @@ public class MyVisitDetailsActivity extends BaseActivity {
 
     private VisitDetailsEntity mVisitDetailsEntity;
     private TextView mTvPrice; // 检查总价
+    private String mDoctorId;
+    private String mFee;
 
     @Override
     public void setLayout() {
@@ -133,17 +138,18 @@ public class MyVisitDetailsActivity extends BaseActivity {
         mAnswerContent = findViewById(R.id.visit_details_answer_content);
         if (getIntent().hasExtra("visit")) {
             mVisitDetails = (PatientListEntity.PageBean.RecordsBean) getIntent().getSerializableExtra("visit");
+            getVisitDetails(String.valueOf(mVisitDetails.getId()));
             setContentText();
-            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
-                initRecycler();
+//            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
+            initRecycler();
             if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
                 initVoiceLayout();
-            if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
-                mDoctorInfo.setVisibility(View.VISIBLE);
-                mAnswerContent.setVisibility(View.VISIBLE);
-                initCheckRecycler();
-                getVisitDetails(String.valueOf(mVisitDetails.getId()));
-            }
+//            if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
+//                mDoctorInfo.setVisibility(View.VISIBLE);
+//                mAnswerContent.setVisibility(View.VISIBLE);
+//                initCheckRecycler();
+//                getVisitDetails(String.valueOf(mVisitDetails.getId()));
+//            }
         }
 
 //        getVisitDetails("");
@@ -181,6 +187,12 @@ public class MyVisitDetailsActivity extends BaseActivity {
                     public void onSuccess(VisitDetailsEntity result) {
                         VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
                         VisitDetailsEntity.InfoBean infoBean = result.getInfo();
+                        if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
+                            mDoctorInfo.setVisibility(View.VISIBLE);
+                            mAnswerContent.setVisibility(View.VISIBLE);
+                            initCheckRecycler();
+//                            getVisitDetails(String.valueOf(mVisitDetails.getId()));
+                        }
                         initDoctorInfo(result);
                         // TODO: 18/12/2018 检查项数据设置
 //                        List<String> checks = Arrays.asList(infoBean.getExaContent())
@@ -201,11 +213,17 @@ public class MyVisitDetailsActivity extends BaseActivity {
     private void initDoctorInfo(VisitDetailsEntity visitDetailsEntity) {
         VisitDetailsEntity.DoctorBean doctorBean = visitDetailsEntity.getDoctor();
         VisitDetailsEntity.InfoBean infoBean = visitDetailsEntity.getInfo();
+
+        mDoctorId = doctorBean.getId();
+        mFee = doctorBean.getRegistrationFee();
+
         Utils.showUserHead(this, itemDoctorIvAvatar, doctorBean.getPhoto());
         itemDoctorTvName.setText(doctorBean.getName());
         itemDoctorTvJob.setText(doctorBean.getPositionName());
         itemDoctorTvHospital.setText(doctorBean.getHosName());
         itemDoctorTvDepartment.setText(doctorBean.getOffName());
+
+        mCheckAdapter.setNewData(visitDetailsEntity.getHealthExaminations());
 
         SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append(infoBean.getResponse()).setFontSize(16, true).create();
         layoutReplyInitialDiagnosis.setText(spannable);
@@ -213,7 +231,25 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutReplyWarmDoctor.setText(spannableWarm);
 
         layoutReplyAdvisory.setText("咨询");
-        layoutReplyVisit.setText(String.format("就诊（%s）", "20.00"));
+        layoutReplyVisit.setText(String.format("就诊（%s）", Utils.keep2DecimalDigits(doctorBean.getRegistrationFee())));
+
+        layoutReplyAdvisory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RCUtils.startConversation(MyVisitDetailsActivity.this, "targetId", "title");
+            }
+        });
+
+        layoutReplyVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.startActivity(AppointmentActivity.class);
+                Map<String, String> data = new HashMap<>();
+                data.put("id", mDoctorId);
+                data.put("fee", mFee);
+                Utils.gotoActivity(MyVisitDetailsActivity.this, AppointmentActivity.class, false, "data", data);
+            }
+        });
 
     }
 
@@ -262,7 +298,7 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutPatientTvGender.setText(CommonUtils.getGender(mVisitDetails.getGender()));
         layoutPatientTvAge.setText(String.format("%s岁", mVisitDetails.getAge()));
         layoutPatientTvDescription.setText(String.format("%s", mVisitDetails.getCharacterDescribe()));
-        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(mVisitDetails.getGmtCreate(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
+        layoutPatientTvDate.setText(DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(mVisitDetails.getGmtModified(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
     }
 
     @Override
@@ -280,19 +316,6 @@ public class MyVisitDetailsActivity extends BaseActivity {
             }
         });
 
-        layoutReplyAdvisory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RCUtils.startConversation(MyVisitDetailsActivity.this, "targetId", "title");
-            }
-        });
-
-        layoutReplyVisit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtils.startActivity(AppointmentActivity.class);
-            }
-        });
 
         playVoiceLayout.setOnClickListener(new View.OnClickListener() {
             @Override

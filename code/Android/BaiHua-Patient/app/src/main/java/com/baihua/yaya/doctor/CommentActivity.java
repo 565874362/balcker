@@ -73,7 +73,7 @@ public class CommentActivity extends BaseActivity {
      */
     private void getDoctorComment() {
         RxHttp.getInstance().getSyncServer()
-                .getDoctorCommentList(new CommentForm(mCurrentPage, Integer.parseInt(mDoctorId), 10))
+                .getDoctorCommentList(new CommentForm(mCurrentPage, String.valueOf(mDoctorId), 10))
                 .compose(RxSchedulers.observableIO2Main(this))
                 .subscribe(new ProgressObserver<CommentEntity>(this) {
                     @Override

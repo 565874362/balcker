@@ -26,7 +26,9 @@ import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SpanUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -66,6 +68,7 @@ public class DoctorDetailsActivity extends BaseActivity {
     private CommentAdapter mAdapter; // 评论适配器
 
     private String mDoctorId;
+    private String mRegisteredFee; // 就诊费用
 
     @Override
     public void setLayout() {
@@ -93,13 +96,18 @@ public class DoctorDetailsActivity extends BaseActivity {
 
     private void getDoctorComment(String doctorId) {
         RxHttp.getInstance().getSyncServer()
-                .getDoctorCommentList(new CommentForm(1, Integer.parseInt(doctorId), 3))
+                .getDoctorCommentList(new CommentForm(1, String.valueOf(doctorId), 3))
                 .compose(RxSchedulers.observableIO2Main(this))
                 .subscribe(new ProgressObserver<CommentEntity>(this) {
                     @Override
                     public void onSuccess(CommentEntity result) {
-                        doctorDetailsTvComment.setText(String.format("评价（%s）", String.valueOf(result.getPage().getTotal())));
-                        mAdapter.setNewData(result.getPage().getRecords());
+                        if (!Utils.isListEmpty(result.getPage().getRecords())) {
+                            doctorDetailsTvComment.setText(String.format("评价（%s）", String.valueOf(result.getPage().getTotal())));
+                            mAdapter.setNewData(result.getPage().getRecords());
+                            mAdapter.addFooterView(getCommentFooterView());
+                        } else {
+                            doctorDetailsTvComment.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
@@ -133,7 +141,6 @@ public class DoctorDetailsActivity extends BaseActivity {
         dividerDecoration.setDrawHeaderFooter(true);
         mRecyclerView.addItemDecoration(dividerDecoration);
         mAdapter = new CommentAdapter(new ArrayList<>());
-        mAdapter.addFooterView(getCommentFooterView());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -156,11 +163,13 @@ public class DoctorDetailsActivity extends BaseActivity {
      */
     private void setContentText(DoctorInfoEntity doctorInfoEntity) {
         DoctorInfoEntity.InfoBean doctor = doctorInfoEntity.getInfo();
+        mRegisteredFee = doctor.getRegistrationFee();
         Utils.showImg(this, doctor.getPhoto(), doctorDetailsImage);
         doctorDetailsTvName.setText(doctor.getName());
         doctorDetailsTvJob.setText(doctor.getPositionName());
         doctorDetailsTvDepartment.setText(doctor.getOffName());
         doctorDetailsTvHospital.setText(doctor.getHosName());
+        doctorDetailsTvVisiting.setText(String.format("就诊（%s）元", Utils.keep2DecimalDigits(doctor.getRegistrationFee()))); // 就诊（20.00元）
         List<DoctorInfoEntity.InfoBean.AdeptEntitiesBean> adeptEntities = doctor.getAdeptEntities();
         for (int i = 0; i < adeptEntities.size(); i++) {
             DoctorInfoEntity.InfoBean.AdeptEntitiesBean adeptEntitiesBean = adeptEntities.get(i);
@@ -190,7 +199,10 @@ public class DoctorDetailsActivity extends BaseActivity {
                 RCUtils.startConversation(this, "targetId", "title");
                 break;
             case R.id.doctor_details_tv_visiting:
-                Utils.gotoActivity(DoctorDetailsActivity.this, AppointmentActivity.class, false, "doctorId", mDoctorId);
+                Map<String, String> data = new HashMap<>();
+                data.put("id", mDoctorId);
+                data.put("fee", mRegisteredFee);
+                Utils.gotoActivity(DoctorDetailsActivity.this, AppointmentActivity.class, false, "data", data);
                 break;
         }
     }

@@ -33,7 +33,7 @@ public class VisitAdapter extends BaseQuickAdapter<PatientListEntity.PageBean.Re
                 .setText(R.id.visit_tv_gender, CommonUtils.getGender(item.getGender()))
                 .setText(R.id.visit_tv_age, String.format("%s岁", item.getAge()))
                 .setText(R.id.visit_tv_description, item.getCharacterDescribe())
-                .setText(R.id.visit_tv_date, DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(item.getGmtCreate(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
+                .setText(R.id.visit_tv_date, DateFormat.format("yyyy-MM-dd hh:mm", TimeUtils.string2Date(item.getGmtModified(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()))));
         // '问诊状态 1 等待抢单 2 已抢单 3 已回复'
         if (Constants.VISIT_STATUS_REPLIED.equals(item.getStatus())) {
             helper.setText(R.id.visit_tv_status, "已解答")

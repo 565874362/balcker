@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.baihua.common.base.BaseApplication;
 import com.baihua.common.base.BaseFragment;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
@@ -26,10 +27,11 @@ import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.SpaceDecoration;
 import com.baihua.yaya.entity.AdEntity;
-import com.baihua.yaya.entity.form.AdForm;
 import com.baihua.yaya.entity.DicEntity;
 import com.baihua.yaya.entity.EmptyEntity;
 import com.baihua.yaya.entity.FileEntity;
+import com.baihua.yaya.entity.MatchDoctorsEntity;
+import com.baihua.yaya.entity.form.AdForm;
 import com.baihua.yaya.entity.form.VisitForm;
 import com.baihua.yaya.my.PhotoViewActivity;
 import com.baihua.yaya.util.CommonUtils;
@@ -114,9 +116,7 @@ public class HomepageFragment extends BaseFragment {
     private boolean isStart = false;
     private boolean isPause = false;
 
-    private String soundPath = String.format(Locale.getDefault(),
-            "%s/Record/com.zlw.main/record_20181128_10_18_04.mp3",
-            Environment.getExternalStorageDirectory().getAbsolutePath());
+    private String soundPath = "";
 
     private int mAmplitude;
 
@@ -152,12 +152,14 @@ public class HomepageFragment extends BaseFragment {
     @Override
     public void initMember() {
 
+        RecordManager.getInstance().init(BaseApplication.instance, true);
+
         getAd();
         getDietDictionary();
         getSleepDictionary();
 //        initBanner();
 
-        RecordManager.getInstance().changeFormat(RecordConfig.RecordFormat.MP3);
+        RecordManager.getInstance().changeFormat(RecordConfig.RecordFormat.WAV);
         String recordDir = String.format(Locale.getDefault(),
                 "%s/Record/com.baihua.yaya/",
                 Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -302,25 +304,6 @@ public class HomepageFragment extends BaseFragment {
     @Override
     public void setListener() {
 
-        // 录音结果监听
-        RecordManager.getInstance().setRecordResultListener(new RecordResultListener() {
-            @Override
-            public void onResult(File file) {
-                LogUtils.e("onResult: " + file.getAbsolutePath());
-                soundPath = file.getAbsolutePath();
-                LogUtils.e("sound length : " + MediaManager.getSoundDuration(soundPath));
-                long voiceLength = MediaManager.getSoundDuration(soundPath);
-                if (3000 <= voiceLength) {
-                    ViewGroup.LayoutParams layoutParams = mPlayVoiceView.getLayoutParams();
-                    layoutParams.width = (int) (mMinItemWidth + (mMaxItemWidth / 60f) * voiceLength / 1000);
-                    mPlayVoiceView.setLayoutParams(layoutParams);
-                    mPlayVoiceView.setVisibility(View.VISIBLE);
-                    mLayoutRecord.setVisibility(View.GONE);
-                }
-            }
-
-        });
-
         // 取消录音
         mCancelRecordVoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,6 +343,25 @@ public class HomepageFragment extends BaseFragment {
             }
         });
 
+        // 录音结果监听
+        RecordManager.getInstance().setRecordResultListener(new RecordResultListener() {
+            @Override
+            public void onResult(File file) {
+                LogUtils.e("onResult: " + file.getAbsolutePath());
+                soundPath = file.getAbsolutePath();
+                LogUtils.e("sound length : " + MediaManager.getSoundDuration(soundPath));
+                long voiceLength = MediaManager.getSoundDuration(soundPath);
+                if (3000 <= voiceLength) {
+                    ViewGroup.LayoutParams layoutParams = mPlayVoiceView.getLayoutParams();
+                    layoutParams.width = (int) (mMinItemWidth + (mMaxItemWidth / 60f) * voiceLength / 1000);
+                    mPlayVoiceView.setLayoutParams(layoutParams);
+                    mPlayVoiceView.setVisibility(View.VISIBLE);
+                    mLayoutRecord.setVisibility(View.GONE);
+                }
+            }
+
+        });
+
         // 声音大小监听
         RecordManager.getInstance().
 
@@ -395,6 +397,7 @@ public class HomepageFragment extends BaseFragment {
 
             @Override
             public void complete(float time) {
+                RecordManager.getInstance().stop();
                 LogUtils.e("complete: " + time);
             }
 
@@ -608,11 +611,12 @@ public class HomepageFragment extends BaseFragment {
         RxHttp.getInstance().getSyncServer()
                 .submitVisit(token, new VisitForm(age, desc, String.valueOf(mDietId), String.valueOf(mGender), images, name, phone, String.valueOf(mSleepId), voicePath))
                 .compose(RxSchedulers.observableIO2Main(getActivity()))
-                .subscribe(new ProgressObserver<EmptyEntity>(getActivity()) {
+                .subscribe(new ProgressObserver<MatchDoctorsEntity>(getActivity()) {
                     @Override
-                    public void onSuccess(EmptyEntity result) {
+                    public void onSuccess(MatchDoctorsEntity result) {
                         toast("提交成功");
-                        ActivityUtils.startActivity(TipsActivity.class);
+                        clearContent();
+                        Utils.gotoActivity(getActivity(), TipsActivity.class, false, "matchInfo", result.getMatchDoctors());
                     }
 
                     @Override
@@ -620,6 +624,29 @@ public class HomepageFragment extends BaseFragment {
 
                     }
                 });
+    }
+
+    /**
+     * 清空内容
+     */
+    private void clearContent() {
+        homeEtName.setText("");
+        homeEtAge.setText("");
+        homeEtMobile.setText("");
+        homeTvSelectDiet.setText("");
+        homeTvSelectSleep.setText("");
+        homeEtDescription.setText("");
+        homeRadioGroup.check(R.id.home_rb_female);
+        if (!TextUtils.isEmpty(soundPath)) {
+            soundPath = "";
+            if (FileUtils.delete(soundPath)) {
+                LogUtils.e("Del record voice file success !!!");
+            }
+            mPlayVoiceView.setVisibility(View.GONE);
+            mLayoutRecord.setVisibility(View.VISIBLE);
+        }
+        mReturnList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void showSleepDialog() {

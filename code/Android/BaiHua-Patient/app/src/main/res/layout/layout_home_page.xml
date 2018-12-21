@@ -266,7 +266,7 @@
         android:background="@android:color/white"
         android:gravity="top|start"
         android:hint="请描述你的问题，包括身体状况、疾病和症状等，医生会根据您的描述给出专业的建议"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:minHeight="120dp"
         android:paddingStart="@dimen/dimen_dp_16"
         android:paddingTop="@dimen/dimen_dp_12"

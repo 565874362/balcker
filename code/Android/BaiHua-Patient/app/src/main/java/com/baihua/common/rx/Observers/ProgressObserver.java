@@ -1,6 +1,7 @@
 package com.baihua.common.rx.Observers;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -30,7 +31,7 @@ public abstract class ProgressObserver<T> extends BaseObserver<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
         if (!d.isDisposed() && mIsShowLoading) {
-            mMaterialDialog = new MaterialDialog.Builder(mContext).content(mLoadingText == null ? ""
+            mMaterialDialog = new MaterialDialog.Builder(mContext).content(TextUtils.isEmpty(mLoadingText) ? "正在加载中..."
                     : mLoadingText).progress(true, 0).build();
             mMaterialDialog.show();
         }

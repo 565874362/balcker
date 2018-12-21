@@ -11,6 +11,7 @@ import com.baihua.yaya.entity.DoctorEntity;
 import com.baihua.yaya.entity.DoctorInfoEntity;
 import com.baihua.yaya.entity.EmptyEntity;
 import com.baihua.yaya.entity.FileEntity;
+import com.baihua.yaya.entity.MatchDoctorsEntity;
 import com.baihua.yaya.entity.PatientListEntity;
 import com.baihua.yaya.entity.RegisteredEntity;
 import com.baihua.yaya.entity.RegisteredListEntity;
@@ -128,7 +129,7 @@ public interface SyncServerService {
      * @return 结果
      */
     @POST("/rest/serinquiry/save")
-    Observable<Response<EmptyEntity>> submitVisit(@Header("token") String token, @Body VisitForm visitForm);
+    Observable<Response<MatchDoctorsEntity>> submitVisit(@Header("token") String token, @Body VisitForm visitForm);
 
     /**
      * 问诊列表
