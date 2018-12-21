@@ -58,6 +58,12 @@ public class PatientInfoFragment extends BaseFragment {
     public void initMember() {
 
         initRecycler();
+//        smartRefreshLayout.autoRefresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         smartRefreshLayout.autoRefresh();
     }
 

@@ -120,6 +120,9 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(TokenEntity result) {
                         LogUtils.e(result.getToken());
                         SPUtils.getInstance("token").put("token", result.getToken());
+                        SPUtils.getInstance("doctor").put("id", result.getInfo().getId());
+                        SPUtils.getInstance("doctor").put("photo", result.getInfo().getPhoto());
+                        SPUtils.getInstance("doctor").put("name", result.getInfo().getName());
                         Utils.gotoActivity(LoginActivity.this, MainActivity.class, true, null, null);
                     }
 

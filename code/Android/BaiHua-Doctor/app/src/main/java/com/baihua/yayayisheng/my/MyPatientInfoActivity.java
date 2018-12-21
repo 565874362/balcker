@@ -119,7 +119,9 @@ public class MyPatientInfoActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Utils.gotoActivity(MyPatientInfoActivity.this, PatientInfoDetailsActivity.class, false, "status", "3");
+//                Utils.gotoActivity(MyPatientInfoActivity.this, PatientInfoDetailsActivity.class, false, "status", "3");
+                PatientListEntity.PageBean.RecordsBean recordsBean = (PatientListEntity.PageBean.RecordsBean) adapter.getData().get(position);
+                Utils.gotoActivity(MyPatientInfoActivity.this, PatientInfoDetailsActivity.class, false, "visit", recordsBean);
             }
         });
 

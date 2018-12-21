@@ -9,6 +9,11 @@ import java.io.Serializable;
  */
 public class ListForm implements Serializable {
 
+    public ListForm(int current, int size) {
+        this.current = current;
+        this.size = size;
+    }
+
     /**
      * current : 1
      * size : 10

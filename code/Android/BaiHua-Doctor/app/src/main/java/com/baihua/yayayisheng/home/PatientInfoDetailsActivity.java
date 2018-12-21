@@ -134,8 +134,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
             mVisitDetails = (PatientListEntity.PageBean.RecordsBean) getIntent().getSerializableExtra("visit");
             getVisitDetails(String.valueOf(mVisitDetails.getId()));
             setContentText();
-            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
-                initRecycler();
+//            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
+            initRecycler();
             if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
                 initVoiceLayout();
 
@@ -181,6 +181,7 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                                 break;
                             case "2": // 待回复
                                 pendingReply();
+                                initCheckRecycler();
                                 getExaminations();
                                 break;
                             case "3": // 已解决
@@ -222,7 +223,7 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                         mExasList = result.getList();
                         List<ExaminationEntity.ListBean> listBeans = result.getList();
                         for (int i = 0; i < listBeans.size(); i++) {
-                            mItems.add(String.format("%s %s", listBeans.get(i).getName(), listBeans.get(i).getPrice()));
+                            mItems.add(String.format("%s %s", listBeans.get(i).getName(), Utils.keep2DecimalDigits(listBeans.get(i).getPrice())));
                         }
                     }
 
@@ -243,6 +244,18 @@ public class PatientInfoDetailsActivity extends BaseActivity {
             SpannableStringBuilder spannable = new SpanUtils().append("初步诊断：").setBold().setFontSize(16, true).append(infoBean.getResponse()).setFontSize(16, true).create();
             layoutReplyInitialDiagnosis.setText(spannable);
         }
+
+        if (!Utils.isListEmpty(visitDetailsEntity.getHealthExaminations())) {
+            List<ExaminationEntity.ListBean> listBeans = new ArrayList<>();
+            for (int i = 0; i < visitDetailsEntity.getHealthExaminations().size(); i++) {
+                ExaminationEntity.ListBean listBean = new ExaminationEntity.ListBean();
+                listBean.setName(visitDetailsEntity.getHealthExaminations().get(i).getName());
+                listBean.setPrice(visitDetailsEntity.getHealthExaminations().get(i).getPrice());
+                listBeans.add(listBean);
+            }
+            mCheckAdapter.setNewData(listBeans);
+        }
+
         if (!TextUtils.isEmpty(infoBean.getAdvice())) {
             layoutReplyWarmDoctor.setVisibility(View.VISIBLE);
             SpannableStringBuilder spannableWarm = new SpanUtils().append("温馨医嘱：").setBold().setFontSize(16, true).append(infoBean.getAdvice()).setFontSize(16, true).create();
@@ -276,11 +289,11 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     }
 
     private View getCheckHeaderView() {
-        return mInflater.inflate(R.layout.header_need_to_check, layoutPatientRecycler, false);
+        return mInflater.inflate(R.layout.header_need_to_check, layoutReplyRecycler, false);
     }
 
     private View getCheckFooterView() {
-        View footer = mInflater.inflate(R.layout.footer_need_to_check, layoutPatientRecycler, false);
+        View footer = mInflater.inflate(R.layout.footer_need_to_check, layoutReplyRecycler, false);
         mTvPrice = (TextView) footer.findViewById(R.id.footer_check_tv_price);
         mTvPrice.setText(String.format("%s元", "00.00"));
         return footer;
@@ -356,6 +369,14 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         // TODO: 20/12/2018 inquiryId
         String advice = CommonUtils.getTextString(layoutReplyWarmDoctor);
         String answer = CommonUtils.getTextString(layoutReplyInitialDiagnosis);
+        if (TextUtils.isEmpty(advice)) {
+            toast("请输入温馨医嘱");
+            return;
+        }
+        if (TextUtils.isEmpty(answer)) {
+            toast("请输入回复内容");
+            return;
+        }
         ResponseForm responseForm = new ResponseForm();
         responseForm.setId(Integer.parseInt(mVisitDetails.getId())); // TODO: 20/12/2018
         responseForm.setAdvice(advice);
@@ -390,6 +411,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String result) {
                         pendingReply();
+                        initCheckRecycler();
+                        getExaminations();
                     }
 
                     @Override
@@ -422,6 +445,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     }
 
     private void pendingReply() {
+        layoutReplyInitialDiagnosis.setVisibility(View.VISIBLE);
+        layoutReplyWarmDoctor.setVisibility(View.VISIBLE);
         mAnswerOrNeedAnswerLayout.setVisibility(View.VISIBLE);
         patientDetailsTvSubmit.setVisibility(View.VISIBLE);
         layoutReplyRightArrow.setVisibility(View.VISIBLE);
@@ -461,7 +486,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                             String price = ends.replaceAll("元", "");
                             total += Double.valueOf(price);
                         }
-                        checkboxDialog.setContent(String.format("共计%s元", total));
+                        checkboxDialog.setContent(String.format("共计%s元", Utils.keep2DecimalDigits(total)));
+                        mTvPrice.setText(String.format("%s元", Utils.keep2DecimalDigits(total)));
                         return true;
                     }
                 })
@@ -470,10 +496,13 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (null == dialog.getSelectedIndices())
                             return;
+                        List<ExaminationEntity.ListBean> checks = new ArrayList<>();
                         for (Integer index :
                                 dialog.getSelectedIndices()) {
                             mResIds.add(mExasList.get(index).getId());
+                            checks.add(mExasList.get(index));
                         }
+                        mCheckAdapter.setNewData(checks);
                     }
                 })
                 .show();

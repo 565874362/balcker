@@ -1,6 +1,7 @@
 package com.baihua.yayayisheng.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class ExaminationEntity implements Serializable {
 
         private int id;
         private String name;
-        private int price;
+        private BigDecimal price;
         private int sort;
         private String gmtCreate;
         private String gmtModified;
@@ -55,11 +56,11 @@ public class ExaminationEntity implements Serializable {
             this.name = name;
         }
 
-        public int getPrice() {
+        public BigDecimal getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(BigDecimal price) {
             this.price = price;
         }
 

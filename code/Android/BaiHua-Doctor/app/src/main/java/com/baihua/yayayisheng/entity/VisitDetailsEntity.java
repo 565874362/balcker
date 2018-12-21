@@ -1,6 +1,7 @@
 package com.baihua.yayayisheng.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Author:byd
@@ -16,7 +17,7 @@ public class VisitDetailsEntity implements Serializable {
      */
 
     private DoctorBean doctor;
-    private Object healthExaminations;
+    private List<HealthExaminationsEntity> healthExaminations;
     private InfoBean info;
 
     public DoctorBean getDoctor() {
@@ -27,11 +28,11 @@ public class VisitDetailsEntity implements Serializable {
         this.doctor = doctor;
     }
 
-    public Object getHealthExaminations() {
+    public List<HealthExaminationsEntity> getHealthExaminations() {
         return healthExaminations;
     }
 
-    public void setHealthExaminations(Object healthExaminations) {
+    public void setHealthExaminations(List<HealthExaminationsEntity> healthExaminations) {
         this.healthExaminations = healthExaminations;
     }
 
@@ -43,7 +44,7 @@ public class VisitDetailsEntity implements Serializable {
         this.info = info;
     }
 
-    public static class DoctorBean {
+    public static class DoctorBean implements Serializable {
         /**
          * id : null
          * name : 李方华
@@ -259,7 +260,7 @@ public class VisitDetailsEntity implements Serializable {
         }
     }
 
-    public static class InfoBean {
+    public static class InfoBean implements Serializable {
         /**
          * id : 1073521292302397442
          * name : 赵冬冬
@@ -484,4 +485,6 @@ public class VisitDetailsEntity implements Serializable {
             this.isDel = isDel;
         }
     }
+
+
 }

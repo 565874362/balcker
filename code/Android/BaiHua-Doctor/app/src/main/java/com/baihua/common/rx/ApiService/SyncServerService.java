@@ -13,11 +13,13 @@ import com.baihua.yayayisheng.entity.FileEntity;
 import com.baihua.yayayisheng.entity.HospitalEntity;
 import com.baihua.yayayisheng.entity.OfficeEntity;
 import com.baihua.yayayisheng.entity.PatientListEntity;
+import com.baihua.yayayisheng.entity.RegisteredListEntity;
 import com.baihua.yayayisheng.entity.TokenEntity;
 import com.baihua.yayayisheng.entity.VerificationEntity;
 import com.baihua.yayayisheng.entity.VisitDetailsEntity;
 import com.baihua.yayayisheng.entity.form.AvatarForm;
 import com.baihua.yayayisheng.entity.form.DiagnoseForm;
+import com.baihua.yayayisheng.entity.form.ListForm;
 import com.baihua.yayayisheng.entity.form.LoginForm;
 import com.baihua.yayayisheng.entity.form.PatientListForm;
 import com.baihua.yayayisheng.entity.form.RegisterForm;
@@ -208,5 +210,13 @@ public interface SyncServerService {
      */
     @POST("/rest/serschedule/addDiagnose")
     Observable<Response<EmptyEntity>> addDiagnose(@Header("token") String token, @Body DiagnoseForm diagnoseForm);
+
+    /**
+     * 医生接诊列表
+     *
+     * @return 结果
+     */
+    @POST("/rest/serregistration/doctorList")
+    Observable<Response<RegisteredListEntity>> getReceptionList(@Header("token") String token, @Body ListForm listForm);
 
 }

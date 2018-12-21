@@ -101,11 +101,6 @@ public class PatientInfoPendingReplyDetailsActivity extends BaseActivity {
         mCheckAdapter.addHeaderView(getCheckHeaderView());
         mCheckAdapter.addFooterView(getCheckFooterView());
         layoutReplyRecycler.setAdapter(mCheckAdapter);
-        mList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            mList.add(i + "");
-        }
-        mCheckAdapter.setNewData(mList);
     }
 
     private View getCheckHeaderView() {
