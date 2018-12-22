@@ -64,14 +64,21 @@ mybatis-plus:
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
 
-baihua:
-  tokenId: token
-  #token过期时间（天）
-  tokenExpireTime: 15
-  #验证码过期时间（秒）
-  captchaExpireTime: 60
-  uploadDirectory: D:\workspace\zhongyue\baihua\code\baihua-medical\files
-  filePrex: http://192.168.2.96:8080
+baihua-rest:
+  token-id: token
+  file-prex: http://192.168.2.96:8080
+  upload-directory: D:\workspace\zhongyue\baihua\code\baihua-medical\files
+  token-expire-time: 15
+  captcha-expire-time: 60
+  rong-yun:
+    app-key: lmxuhwagl54cd
+    app-secret: KFfLyHbaSomZ
+  ali-sms:
+    key-id: LTAI1Div28u7o1f4
+    key-secret: kKXaW7qLmbQu8HEnlh2JMdcgpcTiuo
+    msg-sign-name: 房屋资产管理
+    msg-captcha-tel-code: SMS_150574941
+
 
 
 

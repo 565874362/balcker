@@ -24,5 +24,7 @@ public interface SerInquiryService extends IService<SerInquiryEntity> {
     IPage<SerInquiryEntity> selectDocterIndexPage(Page<SerInquiryEntity> page, Long doctorId);
 
     List<UsDoctorEntity> commit(SerInquiryEntity input);
+
+    boolean aquire(long inquiryId,long doctorId);
 }
 

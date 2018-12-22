@@ -22,7 +22,11 @@
                 ser_inquiry_match
             WHERE
                 doc_id = #{doctorId}
+            AND
+                is_del = 0
         )
+        AND
+           is_del = 0
         ORDER BY
             gmt_modified)
         UNION ALL
@@ -33,7 +37,9 @@
         WHERE
             `status` = 2
         AND
-             doctor_id = #{doctorId}
+            doctor_id = #{doctorId}
+        AND
+            is_del = 0
         ORDER BY
             gmt_modified)
         UNION ALL
@@ -45,6 +51,8 @@
             `status` = 3
         AND
             doctor_id = #{doctorId}
+        AND
+            is_del = 0
         ORDER BY
             gmt_modified DESC)
     </select>
@@ -56,13 +64,17 @@
             FROM
                 ser_inquiry
             WHERE
-               doctor_id = #{doctorId}
+                doctor_id = #{doctorId}
             AND
-               `status` IN (2,3))
+               `status` IN (2,3)
+            AND
+                is_del = 0)
         FROM
             ser_inquiry
         WHERE
             `status` = 1
+        AND
+            is_del = 0
         AND
             id IN (
             SELECT
@@ -71,6 +83,8 @@
                 ser_inquiry_match
             WHERE
                 doc_id = #{doctorId}
+            AND
+                is_del = 0
         )
     </select>
 </mapper>

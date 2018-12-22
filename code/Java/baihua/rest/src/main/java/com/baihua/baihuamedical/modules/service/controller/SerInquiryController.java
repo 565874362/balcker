@@ -29,18 +29,17 @@ import com.baihua.baihuamedical.common.utils.R;
 import com.baihua.baihuamedical.common.validator.ValidatorUtils;
 import com.baihua.baihuamedical.modules.basic.entity.BasHealthExaminationEntity;
 import com.baihua.baihuamedical.modules.basic.service.BasHealthExaminationService;
-import com.baihua.baihuamedical.modules.basic.service.IDoctorMatchService;
 import com.baihua.baihuamedical.modules.login.annotation.LoginDoctor;
 import com.baihua.baihuamedical.modules.login.annotation.LoginPatient;
 import com.baihua.baihuamedical.modules.service.entity.SerInquiryEntity;
 import com.baihua.baihuamedical.modules.service.service.SerInquiryService;
+import com.baihua.baihuamedical.modules.user.entity.UsAccountEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsPatientEntity;
+import com.baihua.baihuamedical.modules.user.service.UsAccountService;
 import com.baihua.baihuamedical.modules.user.service.UsDoctorService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import io.swagger.annotations.Api;
@@ -67,13 +66,13 @@ public class SerInquiryController {
 	private SerInquiryService serInquiryService;
 
 	@Autowired
+	private UsAccountService accountService;
+
+	@Autowired
 	private BasHealthExaminationService healthExaminationService;
 
 	@Autowired
 	private UsDoctorService doctorService;
-
-	@Autowired
-	private IDoctorMatchService keywordService;
 
 
 	@ApiOperation("用户问诊列表 [患者]")
@@ -111,21 +110,14 @@ public class SerInquiryController {
 
 	@ApiOperation("医生接诊 [医生]")
 	@GetMapping("/accept/{inquiryId}")
-	public R accept(@PathVariable("inquiryId") Long inquiryId, @ApiIgnore @LoginPatient UsDoctorEntity doctorEntity) {
-		SerInquiryEntity updater = new SerInquiryEntity();
-		updater.setDoctorId(doctorEntity.getId());
-		updater.setStatus(Constants.InquiryStatus.checked.getCode());
-
-		LambdaUpdateWrapper<SerInquiryEntity> wrapper = new UpdateWrapper<SerInquiryEntity>().lambda()
-				.eq(SerInquiryEntity::getId, inquiryId)
-				.eq(SerInquiryEntity::getStatus, Constants.InquiryStatus.waitcheck.getCode());
-		boolean result = serInquiryService.update(updater, wrapper);
+	public R accept(@PathVariable("inquiryId") Long inquiryId, @ApiIgnore @LoginDoctor UsDoctorEntity doctorEntity) {
+		boolean result = serInquiryService.aquire(inquiryId, doctorEntity.getId());
 		return R.success().addResData("result", result);
 	}
 
 	@ApiOperation("医生回复 [医生]")
 	@PostMapping("/response")
-	public R accept(@RequestBody ResponseInput responseInput, @ApiIgnore @LoginPatient UsDoctorEntity doctorEntity) {
+	public R accept(@RequestBody ResponseInput responseInput, @ApiIgnore @LoginDoctor UsDoctorEntity doctorEntity) {
 		ValidatorUtils.validateEntity(responseInput);
 		SerInquiryEntity serInquiryEntity = new SerInquiryEntity();
 		BeanUtils.copyProperties(responseInput, serInquiryEntity);
@@ -173,10 +165,17 @@ public class SerInquiryController {
 		Map<String, Object> data = new HashMap<>();
 		data.put("info", serInquiry);
 		if (serInquiry.getStatus().intValue() != Constants.InquiryStatus.waitcheck.getCode()) {
-			data.put("doctor", doctorService.getOne(new QueryWrapper<UsDoctorEntity>()
+			UsDoctorEntity doctor = doctorService.getOne(new QueryWrapper<UsDoctorEntity>()
 					.lambda()
-					.select(UsDoctorEntity::getId, UsDoctorEntity::getName, UsDoctorEntity::getGender, UsDoctorEntity::getOffName, UsDoctorEntity::getPhoto, UsDoctorEntity::getPositionName)
-					.eq(UsDoctorEntity::getId, serInquiry.getDoctorId())));
+					.eq(UsDoctorEntity::getId, serInquiry.getDoctorId()));
+			UsAccountEntity account = accountService.getOne(new QueryWrapper<UsAccountEntity>().lambda()
+					.select(UsAccountEntity::getId)
+					.eq(UsAccountEntity::getSId, doctor.getId())
+					.eq(UsAccountEntity::getType, Constants.AccountType.doctor.getCode()));
+			if(account != null){
+				doctor.setAccountId(account.getId());
+			}
+			data.put("doctor", doctor);
 			List<BasHealthExaminationEntity> basHealthExaminationEntities = JSON.parseArray(serInquiry.getExaContent(), BasHealthExaminationEntity.class);
 			data.put("healthExaminations", basHealthExaminationEntities);
 		}
@@ -197,7 +196,6 @@ public class SerInquiryController {
 		List<UsDoctorEntity> matchDoctors = serInquiryService.commit(entity);
 		return R.success().addResData("matchDoctors",matchDoctors);
 	}
-
 
 
 	@ApiModel("添加实体")

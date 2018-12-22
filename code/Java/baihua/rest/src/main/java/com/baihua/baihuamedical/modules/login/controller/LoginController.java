@@ -25,10 +25,13 @@ import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.exception.ParameterException;
 import com.baihua.baihuamedical.common.utils.DateUtils;
 import com.baihua.baihuamedical.common.utils.R;
-import com.baihua.baihuamedical.common.utils.VerificationGenerator;
 import com.baihua.baihuamedical.common.validator.ValidatorUtils;
 import com.baihua.baihuamedical.modules.basic.service.IDoctorMatchService;
+import com.baihua.baihuamedical.modules.basic.service.ISmsService;
+import com.baihua.baihuamedical.modules.login.annotation.LoginIgnore;
 import com.baihua.baihuamedical.modules.service.entity.SerAdeptEntity;
+import com.baihua.baihuamedical.modules.service.entity.SerScheduleEntity;
+import com.baihua.baihuamedical.modules.service.service.SerScheduleService;
 import com.baihua.baihuamedical.modules.sys.entity.SysCaptchaEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsAccountEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
@@ -57,6 +60,8 @@ import lombok.Data;
 @RequestMapping("/rest/login")
 public class LoginController {
 
+	private static final int CAPTCHA_RETRY_TIMES = 3;
+
 	@Autowired
 	private UsAccountService accountService;
 
@@ -70,20 +75,27 @@ public class LoginController {
 	private IDoctorMatchService doctorMatchService;
 
 	@Autowired
+	private SerScheduleService serScheduleService;
+
+	@Autowired
+	private ISmsService smsService;
+
+	@Autowired
 	private ConfigProperties configProperties;
 
 
 	@ApiOperation("发送验证码")
 	@GetMapping("/verification/{phone}")
 	public R sendVerification(@PathVariable String phone) {
-		String verificationCode = VerificationGenerator.get();
-		//TODO
+		String captcha = smsService.getCaptcha();
+		smsService.asycSendSms(phone,captcha,CAPTCHA_RETRY_TIMES);
+
 		SysCaptchaEntity sysCaptchaEntity = new SysCaptchaEntity();
 		sysCaptchaEntity.setUuid(IdWorker.get32UUID());
-		sysCaptchaEntity.setCode(verificationCode);
+		sysCaptchaEntity.setCode(captcha);
 		sysCaptchaEntity.setExpireTime(DateUtils.addDateSeconds(new Date(), configProperties.getCaptchaExpireTime()));
 		accountService.save(sysCaptchaEntity);
-		return R.success().addResData("verificationCode", verificationCode).addResData("captchaId", sysCaptchaEntity.getUuid());
+		return R.success().addResData("verificationCode", captcha).addResData("captchaId", sysCaptchaEntity.getUuid());
 	}
 
 	@ApiOperation("医生注册 [医生]")
@@ -145,6 +157,7 @@ public class LoginController {
 
 	@ApiOperation("医生审核通过 测试用")
 	@PostMapping("/docterChecked/{doctorId}")
+	@LoginIgnore
 	public R docterChecked(@PathVariable("doctorId") Long doctorId){
 		UsDoctorEntity UsDoctorEntity =  new UsDoctorEntity();
 		UsDoctorEntity.setId(doctorId);
@@ -156,6 +169,16 @@ public class LoginController {
 				.eq(UsAccountEntity::getSId, doctorId)
 				.eq(UsAccountEntity::getType, Constants.AccountType.doctor.getCode()));
 		doctorMatchService.updateDoctorInfo(doctorId);
+		return R.success();
+	}
+
+	@ApiOperation("提前时间表 测试用")
+	@PostMapping("/pushSch/{doctorId}")
+	@LoginIgnore
+	public R pushSch(@PathVariable("doctorId") Long doctorId){
+		List<SerScheduleEntity> list = serScheduleService.list(new QueryWrapper<SerScheduleEntity>().lambda().eq(SerScheduleEntity::getDoctorId, doctorId));
+		list.forEach(e -> e.setDate(DateUtils.addDateDays(e.getDate(),-7)));
+		serScheduleService.saveOrUpdateBatch(list);
 		return R.success();
 	}
 

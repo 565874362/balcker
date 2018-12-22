@@ -4,10 +4,10 @@ import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.baihua.baihuamedical.common.utils.LocalParameterUtils;
 import com.baihua.baihuamedical.modules.login.annotation.LoginAccount;
 import com.baihua.baihuamedical.modules.login.interceptor.AuthorizationInterceptor;
 import com.baihua.baihuamedical.modules.user.entity.UsAccountEntity;
@@ -29,6 +29,6 @@ public class LoginAccountHandlerMethodArgumentResolver implements HandlerMethodA
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
                                   NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
-        return LocalParameterUtils.get(AuthorizationInterceptor.ACCOUNT_KEY);
+        return request.getAttribute(AuthorizationInterceptor.ACCOUNT_KEY, RequestAttributes.SCOPE_REQUEST);
     }
 }

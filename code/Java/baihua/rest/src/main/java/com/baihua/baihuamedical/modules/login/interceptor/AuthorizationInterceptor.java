@@ -16,7 +16,6 @@ import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.exception.AccountException;
 import com.baihua.baihuamedical.common.exception.UnauthorizedException;
 import com.baihua.baihuamedical.common.utils.DateUtils;
-import com.baihua.baihuamedical.common.utils.LocalParameterUtils;
 import com.baihua.baihuamedical.modules.login.annotation.LoginIgnore;
 import com.baihua.baihuamedical.modules.user.dao.UsAccountDao;
 import com.baihua.baihuamedical.modules.user.dao.UsTokenDao;
@@ -95,7 +94,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         usTokenEntity.setLastTime(now);
         usTokenEntity.setExpireTime(DateUtils.addDateDays(now,configProperties.getTokenExpireTime()));
         tokenDao.updateById(usTokenEntity);
-        LocalParameterUtils.set(ACCOUNT_KEY,accountEntity);
+        request.setAttribute(ACCOUNT_KEY,accountEntity);
         return true;
     }
 }

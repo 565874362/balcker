@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +30,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import cn.hutool.dfa.SensitiveUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhaodongdong
@@ -38,6 +40,7 @@ import cn.hutool.dfa.SensitiveUtil;
  * @date 2018年12月21日 00:43:52
  */
 @Service
+@Slf4j
 public class DoctorMatchServiceImpl implements IDoctorMatchService {
 
 
@@ -58,11 +61,14 @@ public class DoctorMatchServiceImpl implements IDoctorMatchService {
 	@Autowired
 	private SerAdeptDao serAdeptDao;
 
+	private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
 	/**
 	 * 系统启动时将关键词刷新到缓存，并构建关键词树
 	 */
 	@PostConstruct
 	public void initKeyWordToMem() {
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>开始加载关键词到内存关键词树>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		long current = 1;
 		long size = 500;
 		Page<BasKeywordEntity> basKeywordEntityPage = new Page<>(current, size);
@@ -104,11 +110,12 @@ public class DoctorMatchServiceImpl implements IDoctorMatchService {
 	}
 
 	@Override
-	public synchronized void updateDoctorInfo(Long doctorId) {
+	public void updateDoctorInfo(Long doctorId) {
 		UsDoctorEntity usDoctorEntity = usDoctorDao.selectById(doctorId);
 		List<SerAdeptEntity> serAdeptEntities = serAdeptDao.selectList(new QueryWrapper<SerAdeptEntity>().lambda().eq(SerAdeptEntity::getDocId, doctorId));
 		usDoctorEntity.setAdeptEntities(serAdeptEntities);
 		parseDoctorKeywords(usDoctorEntity);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>解析编号为【{}】的医生信息关联到关键词树>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",usDoctorEntity.getId());
 	}
 
 	@Override
@@ -124,6 +131,7 @@ public class DoctorMatchServiceImpl implements IDoctorMatchService {
 			eachDoctor.setAdeptEntities(doctorAdepts.get(eachDoctor.getId()));
 			parseDoctorKeywords(eachDoctor);
 		});
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>解析所有医生信息关联到关键词树>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	}
 
 	private void parseDoctorKeywords(UsDoctorEntity doctor){

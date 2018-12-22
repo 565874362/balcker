@@ -5,12 +5,12 @@ import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.exception.ParameterException;
-import com.baihua.baihuamedical.common.utils.LocalParameterUtils;
 import com.baihua.baihuamedical.modules.login.annotation.LoginPatient;
 import com.baihua.baihuamedical.modules.login.interceptor.AuthorizationInterceptor;
 import com.baihua.baihuamedical.modules.user.dao.UsPatientDao;
@@ -37,7 +37,7 @@ public class LoginPatientHandlerMethodArgumentResolver implements HandlerMethodA
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
                                   NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
-        UsAccountEntity accountEntity = LocalParameterUtils.get(AuthorizationInterceptor.ACCOUNT_KEY);
+        UsAccountEntity accountEntity = (UsAccountEntity)request.getAttribute(AuthorizationInterceptor.ACCOUNT_KEY, RequestAttributes.SCOPE_REQUEST);
         if(null != accountEntity && accountEntity.getType().intValue() == Constants.AccountType.patient.getCode()){
             return usPatientDao.selectById(accountEntity.getSId());
         }

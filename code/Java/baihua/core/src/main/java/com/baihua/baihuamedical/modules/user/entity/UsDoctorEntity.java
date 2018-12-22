@@ -12,6 +12,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 医生
  * 
@@ -118,6 +121,10 @@ public class UsDoctorEntity implements Serializable {
 	@TableField(exist = false)
 	private List<SerAdeptEntity> adeptEntities;
 
+	@Getter
+	@Setter
+	@TableField(exist = false)
+	private Long accountId;
 
 	@Override
 	public boolean equals(Object o) {

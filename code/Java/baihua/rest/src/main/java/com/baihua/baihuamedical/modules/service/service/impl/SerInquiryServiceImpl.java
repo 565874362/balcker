@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.utils.PageUtils;
 import com.baihua.baihuamedical.common.utils.Query;
 import com.baihua.baihuamedical.modules.basic.service.IDoctorMatchService;
@@ -19,6 +20,8 @@ import com.baihua.baihuamedical.modules.service.service.SerInquiryService;
 import com.baihua.baihuamedical.modules.user.dao.UsDoctorDao;
 import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -79,5 +82,22 @@ public class SerInquiryServiceImpl extends ServiceImpl<SerInquiryDao, SerInquiry
 		serInquiryMatchService.saveBatch(serInquiryMatchEntities);
 
 		return doctorEntities.subList(0,keyword.size() > 3 ? 3 : keyword.size());
+	}
+
+	@Override
+	@Transactional
+	public boolean aquire(long inquiryId, long doctorId) {
+		SerInquiryEntity updater = new SerInquiryEntity();
+		updater.setDoctorId(doctorId);
+		updater.setStatus(Constants.InquiryStatus.checked.getCode());
+
+		LambdaUpdateWrapper<SerInquiryEntity> wrapper = new UpdateWrapper<SerInquiryEntity>().lambda()
+				.eq(SerInquiryEntity::getId, inquiryId)
+				.eq(SerInquiryEntity::getStatus, Constants.InquiryStatus.waitcheck.getCode());
+		int result = baseMapper.update(updater, wrapper);
+		if(result > 0){
+			serInquiryMatchService.remove(new QueryWrapper<SerInquiryMatchEntity>().lambda().eq(SerInquiryMatchEntity::getInquiryId, inquiryId));
+		}
+    	return result == 1;
 	}
 }

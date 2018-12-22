@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baihua.baihuamedical.common.enums.Constants;
 import com.baihua.baihuamedical.common.utils.PageQuery;
 import com.baihua.baihuamedical.common.utils.R;
 import com.baihua.baihuamedical.common.validator.ValidatorUtils;
@@ -28,7 +29,9 @@ import com.baihua.baihuamedical.modules.login.annotation.LoginDoctor;
 import com.baihua.baihuamedical.modules.login.annotation.LoginIgnore;
 import com.baihua.baihuamedical.modules.service.entity.SerAdeptEntity;
 import com.baihua.baihuamedical.modules.service.service.SerAdeptService;
+import com.baihua.baihuamedical.modules.user.entity.UsAccountEntity;
 import com.baihua.baihuamedical.modules.user.entity.UsDoctorEntity;
+import com.baihua.baihuamedical.modules.user.service.UsAccountService;
 import com.baihua.baihuamedical.modules.user.service.UsDoctorService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -53,6 +56,9 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/rest/usdoctor")
 public class UsDoctorController {
+
+    @Autowired
+    private UsAccountService accountService;
 
     @Autowired
     private UsDoctorService usDoctorService;
@@ -100,6 +106,14 @@ public class UsDoctorController {
                     .eq(SerAdeptEntity::getDocId, usDoctor.getId())
                     .orderByAsc(SerAdeptEntity::getOrdered));
             usDoctor.setAdeptEntities(SerAdeptEntitys);
+
+            UsAccountEntity account = accountService.getOne(new QueryWrapper<UsAccountEntity>().lambda()
+                    .select(UsAccountEntity::getId)
+                    .eq(UsAccountEntity::getSId, usDoctor.getId())
+                    .eq(UsAccountEntity::getType, Constants.AccountType.doctor.getCode()));
+            if(account != null){
+                usDoctor.setAccountId(account.getId());
+            }
         }
         return R.success().addResData("info", usDoctor);
     }
