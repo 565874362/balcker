@@ -66,9 +66,6 @@ NSString *const DoctorListInfo = @"/rest/usdoctor/list";
 /** 医生信息*/
 NSString *const DoctorDetailInfo = @"/rest/usdoctor/info";
 
-/** 获取推荐医生*/
-NSString *const getTuiJianDoctorListInfo = @"/rest/usdoctor/list";
-
 //====================================评论================================
 
 /** 根据医生加载评论*/
@@ -128,6 +125,12 @@ NSString *const getGuaHaoDetail = @"/rest/serregistration/info";
 /** 出诊时间表*/
 NSString *const ChuZhenTimeListInfo = @"/rest/serschedule/diagnoseList";
 
+//====================================聊天================================
 
+/** 获取token*/
+NSString *const getToken = @"/rest/chat/token";
+
+/** 获取用户信息*/
+NSString *const getUserInfo = @"/rest/chat/info";
 
 #endif

@@ -55,9 +55,6 @@ typedef void(^cacheMessage)(id responseCache);
 /** 医生信息*/
 + (NSURLSessionTask *)GetDoctorDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
-/** 获取推荐医生*/
-+ (NSURLSessionTask *)postGetTuiJianDoctorListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
-
 //====================================评论================================
 
 /** 根据医生加载评论*/
@@ -112,5 +109,14 @@ typedef void(^cacheMessage)(id responseCache);
 
 /** 出诊时间表*/
 + (NSURLSessionTask *)GetChuZhenTimeListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
+
+//====================================聊天================================
+
+/** 获取token*/
++ (NSURLSessionTask *)GetTokenInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
+/** 获取用户信息*/
++ (NSURLSessionTask *)GetUserDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
 @end

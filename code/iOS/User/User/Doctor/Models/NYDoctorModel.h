@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * gmtCreate;
 @property (nonatomic,copy) NSString * gmtModified;
 @property (nonatomic,copy) NSString * isDel;
+@property (nonatomic,copy) NSString * accountId;
 
 @property (nonatomic,strong) NSArray<NYAdeptEntitiesModel *> * adeptEntities;
 

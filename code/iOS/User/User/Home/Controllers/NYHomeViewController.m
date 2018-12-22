@@ -34,7 +34,7 @@
 #define KChoicePicCount 9  //最多选择多少张照片
 #define KLineShowPicCount 4 //每一行显示多少张照片
 
-
+#import "NYDoctorModel.h"
 @interface NYHomeViewController ()<UITableViewDelegate,UITableViewDataSource,SDCycleScrollViewDelegate,UITextFieldDelegate,UITextViewDelegate,D3RecordDelegate,AVAudioPlayerDelegate,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSMutableArray * _imageUrlStrings; //广告图片数组
@@ -293,7 +293,7 @@
 
 - (void)clickDoneButton:(UIButton *)button
 {
-        
+    
     if (!ISLOGIN) {
         NYLoginViewController * loginVC = [[NYLoginViewController alloc] init];
         NYBaseNavViewController * vc = [[NYBaseNavViewController alloc] initWithRootViewController:loginVC];
@@ -396,9 +396,18 @@
                 [_selectedAssets removeAllObjects];
                 _seletedImgArr = @[_nomalImg];
                 
+                NSArray * listArr = response[@"data"][@"matchDoctors"];
+                
+                NSMutableArray * muArr = [NSMutableArray array];
+                for (NSDictionary *datc in listArr) {
+                    NYDoctorModel *doctorModel = [NYDoctorModel mj_objectWithKeyValues:datc];
+                    [muArr addObject:doctorModel];
+                }
+
                 
                 NYHomeOnlineWenZhenSuccessedViewController * vc = [[NYHomeOnlineWenZhenSuccessedViewController alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
+                vc.dataArray = [muArr copy];
                 [self.navigationController pushViewController:vc animated:YES];
             }else{
                 MYALERT(response[@"msg"]);

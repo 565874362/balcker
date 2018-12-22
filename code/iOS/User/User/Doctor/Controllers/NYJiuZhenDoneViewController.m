@@ -21,6 +21,7 @@
 #import "WXApi.h"
 #import <AlipaySDK/AlipaySDK.h>
 
+#import "NYWenZhenDetailViewController.h"
 @interface NYJiuZhenDoneViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NYYuYueJiuZhenModel * _jiuZhenModel;
@@ -111,6 +112,9 @@
 {
     for (UIViewController * vc in self.navigationController.viewControllers) {
         if ([vc isMemberOfClass:[NYDoctorInfoDetailViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+            break;
+        }else if ([vc isMemberOfClass:[NYWenZhenDetailViewController class]]){
             [self.navigationController popToViewController:vc animated:YES];
             break;
         }

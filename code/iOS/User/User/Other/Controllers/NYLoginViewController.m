@@ -162,6 +162,22 @@
             if (![NSObject isNilOrNull:response[@"data"][@"token"]]) {
                 [UserInfo setToken:response[@"data"][@"token"]];
             }
+            //id
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"id"]]) {
+                [UserInfo setAccount:response[@"data"][@"info"][@"id"]];
+            }
+            //name
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"name"]]) {
+                [UserInfo setName:response[@"data"][@"info"][@"name"]];
+            }else{
+                [UserInfo setName:nil];
+            }
+            //photo
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"photo"]]) {
+                [UserInfo setPic:response[@"data"][@"info"][@"photo"]];
+            }else{
+                [UserInfo setPic:nil];
+            }
 
             
             [weakSelf dismissViewControllerAnimated:YES completion:^{

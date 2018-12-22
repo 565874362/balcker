@@ -50,36 +50,9 @@
     [self.tableView registerClass:[NYDoctorListCell class] forCellReuseIdentifier:@"Cell"];
     [self.tableView registerClass:[NYTiShiSuccessedCell class] forCellReuseIdentifier:@"NYTiShiSuccessedCellID"];
     
-    _dataArray = [NSMutableArray array];
-
-    [self loadData];
     
     [self initBottomUI];
     
-}
-
-#pragma mark - 获取数据
-- (void)loadData
-{
-    NSDictionary * dict = @{@"size":@(10),
-                            @"current":@(1),
-                            };
-    [PPHTTPRequest postGetTuiJianDoctorListInfoWithParameters:dict success:^(id response) {
-        if ([response[@"code"] integerValue] == 0) {
-            NSArray * listArr = response[@"data"][@"page"][@"records"];
-            
-            [_dataArray removeAllObjects];
-            for (NSDictionary *datc in listArr) {
-                NYDoctorModel *doctorModel = [NYDoctorModel mj_objectWithKeyValues:datc];
-                [_dataArray addObject:doctorModel];
-            }
-        }else{
-            MYALERT(@"暂无数据");
-        }
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-        MYALERT(@"获取失败");
-    }];
 }
 
 

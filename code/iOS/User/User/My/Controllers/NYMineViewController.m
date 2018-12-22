@@ -105,8 +105,10 @@
         if ([response[@"code"] integerValue] == 0) {
             if (![NSObject isNilOrNull:response[@"data"][@"photo"]]) {
                 [UserInfo setPic:response[@"data"][@"photo"]];
-                [self.tableView reloadData];
+            }else{
+                [UserInfo setPic:nil];
             }
+            [self.tableView reloadData];
         }
     } failure:^(NSError *error) {
     }];
@@ -153,7 +155,7 @@
     if (section == 0) {
         NYMyHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HeaderViewID"];
         _headerImageView = headerView.headerImg;
-        [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo getPic]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+        [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[UserInfo getPic]] placeholderImage:[UIImage imageNamed:@"no_image"]];
         headerView.clickHeader = ^{
             [weakSelf clickHeaderImg];
         };
@@ -201,7 +203,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [UserInfo setToken:nil];
-
+        [UserInfo setRongYunToken:nil];
+        
         [self.tabBarController setSelectedIndex:0];
         [self.navigationController popToRootViewControllerAnimated:NO];
         

@@ -39,7 +39,7 @@
     _headerImg.clipsToBounds = YES;
     _headerImg.layer.borderColor = RGBA(48, 167, 251, 1).CGColor;
     _headerImg.layer.borderWidth = 2.5;
-    _headerImg.image = [UIImage imageNamed:@"placeholderImage"];
+    _headerImg.image = [UIImage imageNamed:@"no_image"];
     [self addSubview:_headerImg];
     
     _headerImg.sd_layout

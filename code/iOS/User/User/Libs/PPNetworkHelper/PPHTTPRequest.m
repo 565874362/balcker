@@ -51,13 +51,6 @@
     return [self requestWithURL:url parameters:parameters success:success failure:failure];
 }
 
-/** 获取推荐医生*/
-+ (NSURLSessionTask *)postGetTuiJianDoctorListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@", kApiPrefix,getTuiJianDoctorListInfo];
-    return [self postRequestWithURL:url parameters:[parameters mj_JSONString] success:success failure:failure];
-
-}
 //====================================评论================================
 
 /** 根据医生加载评论*/
@@ -166,7 +159,21 @@
     return [self requestWithURL:url parameters:parameters success:success failure:failure];
 }
 
+//====================================聊天================================
 
+/** 获取token*/
++ (NSURLSessionTask *)GetTokenInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure
+{
+    NSString * url = [NSString stringWithFormat:@"%@%@",kApiPrefix,getToken];
+    return [self requestWithURL:url parameters:parameters success:success failure:failure];
+}
+
+/** 获取用户信息*/
++ (NSURLSessionTask *)GetUserDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure
+{
+    NSString * url = [NSString stringWithFormat:@"%@%@/%@",kApiPrefix,getUserInfo,parameters];
+    return [self requestWithURL:url parameters:parameters success:success failure:failure];
+}
 /*
  配置好PPNetworkHelper各项请求参数,封装成一个公共方法,给以上方法调用,
  相比在项目中单个分散的使用PPNetworkHelper/其他网络框架请求,可大大降低耦合度,方便维护

@@ -34,7 +34,7 @@
     [SVProgressHUD setMaximumDismissTimeInterval:1.0];
     [SVProgressHUD setDefaultStyle:(SVProgressHUDStyleDark)];
     
-    [[RCIM sharedRCIM] initWithAppKey:@"kj7swf8o7wzx2"];
+    [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwagl54cd"];
 
     
     self.window.rootViewController = [[NYCustomTabBarViewController alloc] init];
