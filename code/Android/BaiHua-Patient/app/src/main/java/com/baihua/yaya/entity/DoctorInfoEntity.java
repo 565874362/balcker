@@ -69,7 +69,16 @@ public class DoctorInfoEntity implements Serializable {
         private String gmtCreate;
         private String gmtModified;
         private String isDel;
+        private String accountId;
         private List<AdeptEntitiesBean> adeptEntities;
+
+        public String getAccountId() {
+            return accountId;
+        }
+
+        public void setAccountId(String accountId) {
+            this.accountId = accountId;
+        }
 
         public String getId() {
             return id;

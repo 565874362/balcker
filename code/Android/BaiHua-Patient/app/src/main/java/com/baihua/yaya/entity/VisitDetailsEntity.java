@@ -44,7 +44,7 @@ public class VisitDetailsEntity implements Serializable {
         this.info = info;
     }
 
-    public static class DoctorBean {
+    public static class DoctorBean implements Serializable{
         /**
          * id : null
          * name : 李方华
@@ -90,6 +90,15 @@ public class VisitDetailsEntity implements Serializable {
         private String gmtModified;
         private String isDel;
         private String adeptEntities;
+        private String accountId;
+
+        public String getAccountId() {
+            return accountId;
+        }
+
+        public void setAccountId(String accountId) {
+            this.accountId = accountId;
+        }
 
         public String getId() {
             return id;

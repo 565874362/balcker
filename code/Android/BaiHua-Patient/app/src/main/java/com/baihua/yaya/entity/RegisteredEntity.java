@@ -13,13 +13,13 @@ public class RegisteredEntity implements Serializable {
      * registrationId : 1074966923529281500
      */
 
-    private long registrationId;
+    private String registrationId;
 
-    public long getRegistrationId() {
+    public String getRegistrationId() {
         return registrationId;
     }
 
-    public void setRegistrationId(long registrationId) {
+    public void setRegistrationId(String registrationId) {
         this.registrationId = registrationId;
     }
 }

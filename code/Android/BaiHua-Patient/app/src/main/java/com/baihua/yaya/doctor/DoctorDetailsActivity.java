@@ -1,11 +1,13 @@
 package com.baihua.yaya.doctor;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +18,18 @@ import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.DividerDecoration;
+import com.baihua.yaya.entity.AccountEntity;
 import com.baihua.yaya.entity.CommentEntity;
+import com.baihua.yaya.entity.RongCloudToken;
 import com.baihua.yaya.entity.form.CommentForm;
 import com.baihua.yaya.entity.DoctorInfoEntity;
 import com.baihua.yaya.rcloud.RCUtils;
+import com.baihua.yaya.util.CommonUtils;
 import com.baihua.yaya.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.SpanUtils;
 
 import java.util.ArrayList;
@@ -32,6 +39,11 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
+
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 /**
  * Author:byd
@@ -68,6 +80,7 @@ public class DoctorDetailsActivity extends BaseActivity {
     private CommentAdapter mAdapter; // 评论适配器
 
     private String mDoctorId;
+    private String mAccoutId;
     private String mRegisteredFee; // 就诊费用
 
     @Override
@@ -124,6 +137,7 @@ public class DoctorDetailsActivity extends BaseActivity {
                 .subscribe(new ProgressObserver<DoctorInfoEntity>(this) {
                     @Override
                     public void onSuccess(DoctorInfoEntity result) {
+                        mAccoutId = result.getInfo().getAccountId();
                         setContentText(result);
                     }
 
@@ -196,7 +210,7 @@ public class DoctorDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.doctor_details_tv_advisory:
-                RCUtils.startConversation(this, "targetId", "title");
+                RCUtils.startConversation(this, mAccoutId, "患者");
                 break;
             case R.id.doctor_details_tv_visiting:
                 Map<String, String> data = new HashMap<>();
@@ -206,4 +220,5 @@ public class DoctorDetailsActivity extends BaseActivity {
                 break;
         }
     }
+
 }

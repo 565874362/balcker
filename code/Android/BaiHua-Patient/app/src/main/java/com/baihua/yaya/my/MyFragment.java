@@ -2,6 +2,7 @@ package com.baihua.yaya.my;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +13,9 @@ import com.baihua.common.base.BaseFragment;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
+import com.baihua.yaya.MainActivity;
 import com.baihua.yaya.R;
+import com.baihua.yaya.entity.AccountEntity;
 import com.baihua.yaya.entity.AvatarEntity;
 import com.baihua.yaya.entity.FileEntity;
 import com.baihua.yaya.entity.form.AvatarForm;
@@ -36,6 +39,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -141,6 +146,8 @@ public class MyFragment extends BaseFragment {
         CommonUtils.clearToken();
         myTvExitAccount.setVisibility(View.GONE);
         Utils.showUserHead(getActivity(), myIvAvatar, "");
+        if (null != getActivity())
+            ((MainActivity) getActivity()).setCurrentPage(0);
     }
 
     private void showSingleCamera(Activity activity) {

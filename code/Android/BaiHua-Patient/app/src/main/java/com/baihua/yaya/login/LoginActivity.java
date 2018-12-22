@@ -100,13 +100,16 @@ public class LoginActivity extends BaseActivity {
         loginForm.setAccount(registerEtMobileNo.getText().toString().trim());
         loginForm.setCaptchaCode(mCode);
         loginForm.setCaptchaId(mCodeId);
-        RxHttp.getInstance().getSyncServer().login(loginForm)
+        RxHttp.getInstance().getSyncServer()
+                .login(loginForm)
                 .compose(RxSchedulers.observableIO2Main(this))
                 .subscribe(new ProgressObserver<Token>(this) {
                     @Override
                     public void onSuccess(Token result) {
                         LogUtils.e(result.getToken());
                         SPUtils.getInstance("token").put("token", result.getToken());
+//                        getChatToken();
+                        SPUtils.getInstance("account").put("photo", result.getInfo().getPhoto());
                         Utils.gotoActivity(LoginActivity.this, MainActivity.class, true, null, null);
                     }
 

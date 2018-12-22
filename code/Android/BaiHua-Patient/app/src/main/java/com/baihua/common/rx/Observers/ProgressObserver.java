@@ -22,6 +22,10 @@ public abstract class ProgressObserver<T> extends BaseObserver<T> {
         this(context, false, null);
     }
 
+    public ProgressObserver(Context context, boolean isShow) {
+        this(context, isShow, null);
+    }
+
     public ProgressObserver(Context context, boolean isShowLoading, String loadingText) {
         mContext = context;
         mLoadingText = loadingText;

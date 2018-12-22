@@ -125,7 +125,6 @@ public class AppointmentActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 registered(v.getContext());
-                ActivityUtils.startActivity(AppointmentConfirmActivity.class);
             }
         });
 
@@ -169,7 +168,7 @@ public class AppointmentActivity extends BaseActivity {
                     @Override
                     public void onSuccess(RegisteredEntity result) {
                         LogUtils.e(result.getRegistrationId());
-
+                        Utils.gotoActivity(AppointmentActivity.this, AppointmentConfirmActivity.class, true, "registrationId", result.getRegistrationId());
                     }
 
                     @Override

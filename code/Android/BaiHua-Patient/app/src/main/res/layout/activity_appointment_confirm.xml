@@ -1,200 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_above="@+id/tv_submit_registration">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_dp_28">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/confirm_tv_hospital"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/color_black_dark_4b5764"
-                android:textSize="@dimen/text_size_16sp"
-                tools:text="西安儿童医院" />
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_dp_28">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_dp_12"
-                android:gravity="center"
-                android:text="就诊单"
-                android:textColor="@color/color_black_dark_4b5764"
-                android:textSize="@dimen/text_size_16sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/confirm_tv_hospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_16sp"
+                    tools:text="西安儿童医院" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_3"
-                android:layout_marginTop="@dimen/dimen_dp_12"
-                android:background="@color/color_e3e3e3" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_12"
+                    android:gravity="center"
+                    android:text="就诊单"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_16sp"
+                    android:textStyle="bold" />
 
-            <View
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_3"
+                    android:layout_marginTop="@dimen/dimen_dp_12"
+                    android:background="@color/color_e3e3e3" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_1"
+                    android:layout_marginTop="@dimen/dimen_dp_2"
+                    android:layout_marginBottom="@dimen/dimen_dp_12"
+                    android:background="@color/color_e3e3e3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="就诊科室"
+                        android:textColor="@color/color_gray_light_afb1bd"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <TextView
+                        android:id="@+id/visiting_tv_department"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/color_black_dark_4b5764"
+                        android:textSize="@dimen/text_size_16sp"
+                        tools:text="儿科" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_12"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="就诊医生"
+                        android:textColor="@color/color_gray_light_afb1bd"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <TextView
+                        android:id="@+id/visiting_tv_doctor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/color_black_dark_4b5764"
+                        android:textSize="@dimen/text_size_16sp"
+                        tools:text="令狐小影" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_dp_12"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="预约费"
+                        android:textColor="@color/color_gray_light_afb1bd"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <TextView
+                        android:id="@+id/visiting_tv_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/color_red_light_f8f8f9"
+                        android:textSize="@dimen/text_size_16sp"
+                        tools:text="20.0元" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_patient_info" />
+
+            <LinearLayout
+                android:id="@+id/visiting_ll_wechat"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_1"
-                android:layout_marginTop="@dimen/dimen_dp_2"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:layout_marginTop="@dimen/dimen_dp_8"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dimen_dp_12"
+                android:paddingEnd="@dimen/dimen_dp_12">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_dp_10"
+                    android:layout_weight="1"
+                    android:text="微信支付"
+                    android:textColor="@color/color_black_dark_4b5764"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <ImageView
+                    android:id="@+id/iv_wechat"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/radio" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/visiting_ll_alipay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:layout_marginTop="@dimen/dimen_dp_1"
                 android:layout_marginBottom="@dimen/dimen_dp_12"
-                android:background="@color/color_e3e3e3" />
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dimen_dp_12"
+                android:paddingEnd="@dimen/dimen_dp_12">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorPrimary" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_dp_10"
                     android:layout_weight="1"
-                    android:text="就诊科室"
-                    android:textColor="@color/color_gray_light_afb1bd"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <TextView
-                    android:id="@+id/visiting_tv_department"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:text="支付宝支付"
                     android:textColor="@color/color_black_dark_4b5764"
-                    android:textSize="@dimen/text_size_16sp"
-                    tools:text="儿科" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_dp_12"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="就诊医生"
-                    android:textColor="@color/color_gray_light_afb1bd"
                     android:textSize="@dimen/text_size_14sp" />
 
-                <TextView
-                    android:id="@+id/visiting_tv_doctor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@color/color_black_dark_4b5764"
-                    android:textSize="@dimen/text_size_16sp"
-                    tools:text="令狐小影" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_dp_12"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="预约费"
-                    android:textColor="@color/color_gray_light_afb1bd"
-                    android:textSize="@dimen/text_size_14sp" />
-
-                <TextView
-                    android:id="@+id/visiting_tv_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@color/color_red_light_f8f8f9"
-                    android:textSize="@dimen/text_size_16sp"
-                    tools:text="20.0元" />
+                <ImageView
+                    android:id="@+id/iv_alipay"
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/radio" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <include layout="@layout/layout_patient_info" />
+    </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/visiting_ll_wechat"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_dp_50"
-            android:layout_marginTop="@dimen/dimen_dp_8"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/dimen_dp_12"
-            android:paddingEnd="@dimen/dimen_dp_12">
+    <TextView
+        android:id="@+id/tv_submit_registration"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="提交预约"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_16sp" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:src="@color/colorPrimary" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_dp_10"
-                android:layout_weight="1"
-                android:text="微信支付"
-                android:textColor="@color/color_black_dark_4b5764"
-                android:textSize="@dimen/text_size_14sp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/radio" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/visiting_ll_alipay"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_dp_50"
-            android:layout_marginTop="@dimen/dimen_dp_1"
-            android:layout_marginBottom="@dimen/dimen_dp_12"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/dimen_dp_12"
-            android:paddingEnd="@dimen/dimen_dp_12">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:src="@color/colorPrimary" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_dp_10"
-                android:layout_weight="1"
-                android:text="支付宝支付"
-                android:textColor="@color/color_black_dark_4b5764"
-                android:textSize="@dimen/text_size_14sp" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/radio" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</RelativeLayout>

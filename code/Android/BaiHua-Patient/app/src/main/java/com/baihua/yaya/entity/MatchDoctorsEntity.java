@@ -46,7 +46,7 @@ public class MatchDoctorsEntity implements Serializable {
          * adeptEntities : [{"id":1075774356925210636,"name":"小二营养不良","describe":"小儿肠炎，气胸，热伤风，支气管哮喘，心律不齐","ordered":1,"docId":1075774356870684680,"gmtCreate":"2018-12-21 16:26:27","gmtModified":"2018-12-21 16:26:27","isDel":0},{"id":1075774356925210637,"name":"心功能不全","describe":"热感冒，脑损伤，心肌梗死，新生儿肺炎","ordered":2,"docId":1075774356870684680,"gmtCreate":"2018-12-21 16:26:27","gmtModified":"2018-12-21 16:26:27","isDel":0},{"id":1075774356925210638,"name":"高血压","describe":"肺炎，鼻炎，咽炎，","ordered":3,"docId":1075774356870684680,"gmtCreate":"2018-12-21 16:26:27","gmtModified":"2018-12-21 16:26:27","isDel":0}]
          */
 
-        private long id;
+        private String id;
         private String name;
         private int gender;
         private int offId;
@@ -68,11 +68,11 @@ public class MatchDoctorsEntity implements Serializable {
         private int isDel;
         private List<AdeptEntitiesBean> adeptEntities;
 
-        public long getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(long id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -248,20 +248,20 @@ public class MatchDoctorsEntity implements Serializable {
              * isDel : 0
              */
 
-            private long id;
+            private String id;
             private String name;
             private String describe;
             private int ordered;
-            private long docId;
+            private String docId;
             private String gmtCreate;
             private String gmtModified;
             private int isDel;
 
-            public long getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(long id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -289,11 +289,11 @@ public class MatchDoctorsEntity implements Serializable {
                 this.ordered = ordered;
             }
 
-            public long getDocId() {
+            public String getDocId() {
                 return docId;
             }
 
-            public void setDocId(long docId) {
+            public void setDocId(String docId) {
                 this.docId = docId;
             }
 

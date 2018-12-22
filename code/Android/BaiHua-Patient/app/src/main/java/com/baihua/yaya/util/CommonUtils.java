@@ -165,7 +165,7 @@ public class CommonUtils {
     public static File base64ToFile(String base64) {
         File file = null;
         String fileName = String.format(Locale.getDefault(),
-                "%s/Record/com.baihua.yaya/%s.mp3",
+                "%s/Record/com.baihua.yaya/%s.wav",
                 Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis());
         FileOutputStream out = null;
         try {

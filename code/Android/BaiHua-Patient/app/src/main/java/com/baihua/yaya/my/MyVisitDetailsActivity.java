@@ -121,6 +121,8 @@ public class MyVisitDetailsActivity extends BaseActivity {
     private String mDoctorId;
     private String mFee;
 
+    private List<String> images; // 图片文件
+
     @Override
     public void setLayout() {
         setTitle("问诊详情");
@@ -142,8 +144,6 @@ public class MyVisitDetailsActivity extends BaseActivity {
             setContentText();
 //            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
             initRecycler();
-            if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
-                initVoiceLayout();
 //            if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
 //                mDoctorInfo.setVisibility(View.VISIBLE);
 //                mAnswerContent.setVisibility(View.VISIBLE);
@@ -187,17 +187,21 @@ public class MyVisitDetailsActivity extends BaseActivity {
                     public void onSuccess(VisitDetailsEntity result) {
                         VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
                         VisitDetailsEntity.InfoBean infoBean = result.getInfo();
+
+                        if (null != infoBean && !TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
+                            initVoiceLayout();
+                        if (null != infoBean && !TextUtils.isEmpty(infoBean.getImage())) {
+                            images = Arrays.asList(infoBean.getImage().split(","));
+                            mAdapter.setNewData(images);
+                        }
                         if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
                             mDoctorInfo.setVisibility(View.VISIBLE);
                             mAnswerContent.setVisibility(View.VISIBLE);
                             initCheckRecycler();
 //                            getVisitDetails(String.valueOf(mVisitDetails.getId()));
+                            initDoctorInfo(result);
+                            mTvPrice.setText(String.format("%s元", infoBean.getExaFee()));
                         }
-                        initDoctorInfo(result);
-                        // TODO: 18/12/2018 检查项数据设置
-//                        List<String> checks = Arrays.asList(infoBean.getExaContent())
-//                        mCheckAdapter.setNewData();
-                        mTvPrice.setText(String.format("%s元", infoBean.getExaFee()));
                     }
 
                     @Override
@@ -236,7 +240,7 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutReplyAdvisory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RCUtils.startConversation(MyVisitDetailsActivity.this, "targetId", "title");
+                RCUtils.startConversation(MyVisitDetailsActivity.this, doctorBean.getAccountId(), "患者");
             }
         });
 
@@ -288,9 +292,6 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutPatientRecycler.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new PhotoAdapter(new ArrayList<>());
         layoutPatientRecycler.setAdapter(mAdapter);
-
-        List<String> images = Arrays.asList(mVisitDetails.getImage().split(","));
-        mAdapter.setNewData(images);
     }
 
     private void setContentText() {
@@ -306,13 +307,9 @@ public class MyVisitDetailsActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                ActivityUtils.startActivity(PhotoViewActivity.class);
-                // 图片地址合集
-                List<String> mList = new ArrayList<>();
-                mList.add("http://img.hb.aicdn.com/a74dba1791530dcb8dee2a63e539d7920343dd5db9db9-lKWKQn_fw658");
-                mList.add("http://img.hb.aicdn.com/89b64a4fe336383edb977c0bb16ef40c5619bba6e3207-4TUP5A_fw658");
-                mList.add("http://img.hb.aicdn.com/607f122005dc6ac326a4d4613242d783b09dc0676f2af-VLzfQk_fw658");
-                CommonUtils.showPicDialog(view.getContext(), mList, position);
+                if (!Utils.isListEmpty(images)) {
+                    CommonUtils.showPicDialog(view.getContext(), images, position);
+                }
             }
         });
 

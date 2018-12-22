@@ -2,6 +2,7 @@ package com.baihua.common.rx.ApiService;
 
 
 import com.baihua.common.rx.Response;
+import com.baihua.yaya.entity.AccountEntity;
 import com.baihua.yaya.entity.AdEntity;
 import com.baihua.yaya.entity.AvatarEntity;
 import com.baihua.yaya.entity.CommentEntity;
@@ -15,6 +16,8 @@ import com.baihua.yaya.entity.MatchDoctorsEntity;
 import com.baihua.yaya.entity.PatientListEntity;
 import com.baihua.yaya.entity.RegisteredEntity;
 import com.baihua.yaya.entity.RegisteredListEntity;
+import com.baihua.yaya.entity.RegistrationDetailsEntity;
+import com.baihua.yaya.entity.RongCloudToken;
 import com.baihua.yaya.entity.Token;
 import com.baihua.yaya.entity.Verification;
 import com.baihua.yaya.entity.VisitDetailsEntity;
@@ -191,7 +194,7 @@ public interface SyncServerService {
      * @return 结果
      */
     @GET("/rest/serregistration/info/{id}")
-    Observable<Response<RegisteredListEntity>> getRegisteredDetails(@Header("token") String token, @Path("id") String id);
+    Observable<Response<RegistrationDetailsEntity>> getRegisteredDetails(@Header("token") String token, @Path("id") String id);
 
     /**
      * 挂号
@@ -208,4 +211,20 @@ public interface SyncServerService {
      */
     @GET("/rest/serschedule/diagnoseList/{doctorId}")
     Observable<Response<DiagnoseEntity>> getDiagnoseList(@Header("token") String token, @Path("doctorId") String doctorId);
+
+    /**
+     * Token获取
+     *
+     * @return 结果
+     */
+    @GET("/rest/chat/token")
+    Observable<Response<RongCloudToken>> getToken(@Header("token") String token);
+
+    /**
+     * 获取账户信息
+     *
+     * @return 结果
+     */
+    @GET("/rest/chat/info/{accountId}")
+    Observable<Response<AccountEntity>> getAccount(@Header("token") String token, @Path("accountId") String accountId);
 }

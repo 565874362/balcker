@@ -28,7 +28,6 @@ import com.baihua.yaya.R;
 import com.baihua.yaya.decoration.SpaceDecoration;
 import com.baihua.yaya.entity.AdEntity;
 import com.baihua.yaya.entity.DicEntity;
-import com.baihua.yaya.entity.EmptyEntity;
 import com.baihua.yaya.entity.FileEntity;
 import com.baihua.yaya.entity.MatchDoctorsEntity;
 import com.baihua.yaya.entity.form.AdForm;
@@ -375,9 +374,6 @@ public class HomepageFragment extends BaseFragment {
         mRecordVoice.setAudioRecord(new IRecordButton() {
             @Override
             public void ready() {
-                if (!Utils.isLogin(getActivity())) {
-                    Utils.goLogin(getActivity());
-                }
             }
 
             @Override
@@ -611,7 +607,7 @@ public class HomepageFragment extends BaseFragment {
         RxHttp.getInstance().getSyncServer()
                 .submitVisit(token, new VisitForm(age, desc, String.valueOf(mDietId), String.valueOf(mGender), images, name, phone, String.valueOf(mSleepId), voicePath))
                 .compose(RxSchedulers.observableIO2Main(getActivity()))
-                .subscribe(new ProgressObserver<MatchDoctorsEntity>(getActivity()) {
+                .subscribe(new ProgressObserver<MatchDoctorsEntity>(getActivity(), true) {
                     @Override
                     public void onSuccess(MatchDoctorsEntity result) {
                         toast("提交成功");
@@ -728,10 +724,6 @@ public class HomepageFragment extends BaseFragment {
                 public void onClick(View v) {
 
                     if (position == mReturnList.size()) {
-                        if (!Utils.isLogin(getActivity())) {
-                            Utils.goLogin(getActivity());
-                            return;
-                        }
                         // 进入相册 以下是例子：用不到的api可以不写
                         PictureSelector.create(getActivity())
                                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()

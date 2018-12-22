@@ -80,6 +80,7 @@
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!--白色主题样式，，注意每一项都不能少-->
