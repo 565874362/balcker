@@ -10,7 +10,7 @@
 #import "NYBaseNavViewController.h"
 #import "NYLoginViewController.h"
 
-@interface NYAnswerViewController ()<RCIMConnectionStatusDelegate>
+@interface NYAnswerViewController ()<RCIMConnectionStatusDelegate,RCIMUserInfoDataSource>
 
 @end
 
@@ -31,19 +31,40 @@
     
     self.emptyConversationView = emptyV;
     
-//    [RCIM sharedRCIM].userInfoDataSource = self;
-    [[RCIM sharedRCIM]  setConnectionStatusDelegate:self];
+    [RCIM sharedRCIM].userInfoDataSource = self; //设置代理
+    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
 
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"聊天" style:UIBarButtonItemStylePlain target:self action:@selector(clickChatItem:)];
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([UserInfo getRongYunToken].length == 0) {
+        [self getToken];
+    }else{
+        [self connectRongYun];
+    }
+}
+
+#pragma mark - 连接融云
+- (void)connectRongYun{
     //连接融云 --- token从app服务器获取
-    [[RCIM sharedRCIM] connectWithToken:@"28idlA4IWLxs4HbAthAii+NXGmkH/CAVcs6Bdu2XpkENzlLt1PoeiRv+vA0rvzBPp/Biva+10gR3Q63CbSIvLQ=="     success:^(NSString *userId) {
+    [[RCIM sharedRCIM] connectWithToken:[UserInfo getRongYunToken] success:^(NSString *userId) {
         NSLog(@"登陆成功。当前登录的用户ID：%@", userId);
         
-        RCUserInfo * userInfo = [[RCUserInfo alloc] initWithUserId:userId name:@"医生" portrait:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542020711693&di=95bb6baad5a16c7a5d7879b32d77dea5&imgtype=0&src=http%3A%2F%2Fediterupload.eepw.com.cn%2F201809%2F61001537857032.jpg"];
+        RCUserInfo * userInfo = [[RCUserInfo alloc] initWithUserId:userId name:[UserInfo getName] portrait:[UserInfo getPic]];
         
         [[RCIM sharedRCIM] setCurrentUserInfo:userInfo];
         [RCIM sharedRCIM].enableMessageRecall = YES;
         [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;;
-
+        
+        
+        [self refreshConversationTableViewIfNeeded];
+        
     } error:^(RCConnectErrorCode status) {
         NSLog(@"登陆的错误码为:%zi", status);
     } tokenIncorrect:^{
@@ -51,20 +72,39 @@
         //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
         //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
         NSLog(@"token错误");
+        
+        [self getToken];
     }];
 
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"聊天" style:UIBarButtonItemStylePlain target:self action:@selector(clickChatItem:)];
 }
 
-- (void)clickChatItem:(UIBarButtonItem *)item
+#pragma mark - 获取token
+- (void)getToken
 {
-    RCConversationViewController * vc = [[RCConversationViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:@"10003"];
-    vc.displayUserNameInCell = NO;
-    vc.title = @"患者";
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    [PPHTTPRequest GetTokenInfoWithParameters:nil success:^(id response) {
+        
+        if ([response[@"code"] integerValue] == 0) {
+            
+            [UserInfo setRongYunToken:response[@"data"][@"token"]];
+            
+            [self connectRongYun];
+            
+        }else{
+            MYALERT(@"连接融云失败");
+        }
+    } failure:^(NSError *error) {
+        MYALERT(@"连接融云失败");
+    }];
 }
+
+//- (void)clickChatItem:(UIBarButtonItem *)item
+//{
+//    RCConversationViewController * vc = [[RCConversationViewController alloc] initWithConversationType:ConversationType_PRIVATE targetId:@"10003"];
+//    vc.displayUserNameInCell = NO;
+//    vc.title = @"患者";
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
+//}
 
 //- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
 //
@@ -74,11 +114,46 @@
 //
 //
 //}
+
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
     
+    [PPHTTPRequest GetUserDetailInfoWithParameters:userId success:^(id response) {
+        if ([response[@"code"] integerValue] == 0) {
+            
+            NSString * nameString = response[@"data"][@"info"][@"name"];
+            NSString * picString = response[@"data"][@"info"][@"photo"];
+            
+            if ([NSObject isNilOrNull:nameString]) {
+                nameString = @"患者";
+            }
+            
+            if ([NSObject isNilOrNull:picString]) {
+                picString = @"";
+            }
+            
+#warning 先判断本地是否保存该用户信息，再请求APP服务器获取用户信息
+            RCUserInfo * userInfo = [[RCUserInfo alloc] initWithUserId:userId name:nameString portrait:picString];
+            
+            completion(userInfo);
+        }else{
+            //            MYALERT(@"请求失败");
+        }
+    } failure:^(NSError *error) {
+        //        MYALERT(@"请求失败");
+    }];
+}
+
+
 - (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status
 {
     if(status == ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT)
     {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ISLOGIN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [UserInfo setToken:nil];
+        [UserInfo setRongYunToken:nil];
+
         //账号在另外设备登录
         NSLog(@"账号在另外设备上面登录");
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"账号在另外设备上面登录" message:nil preferredStyle:UIAlertControllerStyleAlert];

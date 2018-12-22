@@ -54,6 +54,12 @@
 + (void)setToken:(NSString *)token;
 
 /**
+ 获取 RongYuntoken
+ */
++ (NSString *)getRongYunToken;
++ (void)setRongYunToken:(NSString *)token;
+
+/**
  获取 头像
  */
 + (NSString *)getPic;

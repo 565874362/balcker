@@ -61,7 +61,9 @@
     [self setupRefresh];
     [self.tableView.mj_header beginRefreshing];
 
+    
 }
+
 
 //集成刷新控件
 - (void)setupRefresh{

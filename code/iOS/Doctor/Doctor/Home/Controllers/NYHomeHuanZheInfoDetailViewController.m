@@ -123,7 +123,10 @@
                 _tijiaoButton.hidden = YES;
             }else if ([_model.info.status integerValue] == 2){
                 
-                if ([_model.doctor.id isEqualToString:[UserInfo getAccount]]) { //我抢的单子
+                NSString * str1 = [NSString stringWithFormat:@"%@",_model.doctor.id];
+                NSString * str2 = [NSString stringWithFormat:@"%@",[UserInfo getAccount]];
+
+                if ([str1 isEqualToString:str2]) { //我抢的单子
                     _qiangDanImg.hidden = YES;
                     _tijiaoButton.hidden = NO;
                 }else{
@@ -137,7 +140,10 @@
                 
                 
             }else if([_model.info.status integerValue] == 3){
-                if ([_model.doctor.id isEqualToString:[UserInfo getAccount]]) { //我抢的单子
+                NSString * str1 = [NSString stringWithFormat:@"%@",_model.doctor.id];
+                NSString * str2 = [NSString stringWithFormat:@"%@",[UserInfo getAccount]];
+
+                if ([str1 isEqualToString:str2]) { //我抢的单子
                     _qiangDanImg.hidden = YES;
                     _tijiaoButton.hidden = YES;
                 }else{
@@ -539,6 +545,7 @@
                     return cell;
                 }else{
                     NYAlreadyChoiceCheckCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYAlreadyChoiceCheckCellID"];
+                    cell.huanZheCheckModel = _model.healthExaminations[indexPath.row-2];
                     return cell;
                 }
             }

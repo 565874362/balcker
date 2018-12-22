@@ -8,7 +8,7 @@
 
 #import "NYAlreadyChoiceCheckCell.h"
 #import "NYNeedCheckModel.h"
-
+#import "NYHuanZheDetialCheckModel.h"
 @implementation NYAlreadyChoiceCheckCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -75,5 +75,15 @@
     _priceLB.text = [NSString stringWithFormat:@"%.2f元",[checkModel.price doubleValue]];
 
     
+}
+
+- (void)setHuanZheCheckModel:(NYHuanZheDetialCheckModel *)huanZheCheckModel
+{
+    _huanZheCheckModel = huanZheCheckModel;
+    
+    _typeLB.text = huanZheCheckModel.name;
+    
+    _priceLB.text = [NSString stringWithFormat:@"%.2f元",[huanZheCheckModel.price doubleValue]];
+
 }
 @end

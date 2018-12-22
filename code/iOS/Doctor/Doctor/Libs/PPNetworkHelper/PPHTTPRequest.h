@@ -113,4 +113,13 @@ typedef void(^cacheMessage)(id responseCache);
 
 /** 医生接诊列表*/
 + (NSURLSessionTask *)postDoctorJieZhenListInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
+//====================================聊天================================
+
+/** 获取token*/
++ (NSURLSessionTask *)GetTokenInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
+/** 获取用户信息*/
++ (NSURLSessionTask *)GetUserDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
 @end

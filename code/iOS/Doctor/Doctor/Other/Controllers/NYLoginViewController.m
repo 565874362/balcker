@@ -9,6 +9,7 @@
 #import "NYLoginViewController.h"
 #import "NYCustomTabBarViewController.h"
 #import "NYRegisterViewController.h"
+#import "NYMyInfoDetailModel.h"
 
 @interface NYLoginViewController ()
 {
@@ -174,11 +175,18 @@
             if (![NSObject isNilOrNull:response[@"data"][@"token"]]) {
                 [UserInfo setToken:response[@"data"][@"token"]];
             }
-            
-            if (![NSObject isNilOrNull:response[@"data"][@"doctorId"]]) {
-                [UserInfo setAccount:response[@"data"][@"doctorId"]];
+            //id
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"id"]]) {
+                [UserInfo setAccount:response[@"data"][@"info"][@"id"]];
             }
-
+            //name
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"name"]]) {
+                [UserInfo setName:response[@"data"][@"info"][@"name"]];
+            }
+            //photo
+            if (![NSObject isNilOrNull:response[@"data"][@"info"][@"photo"]]) {
+                [UserInfo setPic:response[@"data"][@"info"][@"photo"]];
+            }
             
             
             [UIApplication sharedApplication].delegate.window.rootViewController = [[NYCustomTabBarViewController alloc] init];

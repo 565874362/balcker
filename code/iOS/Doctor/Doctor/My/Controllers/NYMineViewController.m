@@ -150,7 +150,7 @@
     if (section == 0) {
         NYMyHeaderView * headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HeaderViewID"];
         if (_infoModel) {
-            [headerView.headerImg sd_setImageWithURL:[NSURL URLWithString:_infoModel.photo] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
+            [headerView.headerImg sd_setImageWithURL:[NSURL URLWithString:_infoModel.photo] placeholderImage:[UIImage imageNamed:@"no_image"]];
             headerView.nameLB.text = _infoModel.name;
             headerView.typeLB.text = [NSString stringWithFormat:@"%@ | %@",_infoModel.positionName,_infoModel.offName];
             headerView.leaveLB.text = @"等级";
@@ -197,6 +197,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [UserInfo setToken:nil];
+        [UserInfo setRongYunToken:nil];
         
         [UIApplication sharedApplication].delegate.window.rootViewController = [[NYBaseNavViewController alloc] initWithRootViewController:[[NYLoginViewController alloc] init]];
 

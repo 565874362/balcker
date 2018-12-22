@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class NYNeedCheckModel;
+@class NYHuanZheDetialCheckModel;
 
 @interface NYAlreadyChoiceCheckCell : UITableViewCell
 
@@ -21,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIView * lineView;
 
 @property (nonatomic,strong) NYNeedCheckModel * checkModel;
+
+@property (nonatomic,strong) NYHuanZheDetialCheckModel * huanZheCheckModel;
 
 @end
 

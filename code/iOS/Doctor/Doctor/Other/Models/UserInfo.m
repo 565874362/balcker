@@ -68,6 +68,19 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+/**
+ 获取 RongYuntoken
+ */
++ (NSString *)getRongYunToken
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"RongYuntoken"];
+}
++ (void)setRongYunToken:(NSString *)token
+{
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"RongYuntoken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 + (NSString *)getPic
 {

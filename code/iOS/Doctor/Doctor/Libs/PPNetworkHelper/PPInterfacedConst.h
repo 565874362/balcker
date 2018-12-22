@@ -124,4 +124,13 @@ NSString *const JianKangCheckInfo = @"/rest/bashealthexamination/list";
 /** 医生接诊列表*/
 NSString *const DoctorJieZhenListInfo = @"/rest/serregistration/doctorListRegistration";
 
+
+//====================================聊天================================
+
+/** 获取token*/
+NSString *const getToken = @"/rest/chat/token";
+
+/** 获取用户信息*/
+NSString *const getUserInfo = @"/rest/chat/info";
+
 #endif
