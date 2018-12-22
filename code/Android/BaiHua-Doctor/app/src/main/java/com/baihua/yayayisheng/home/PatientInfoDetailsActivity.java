@@ -116,6 +116,8 @@ public class PatientInfoDetailsActivity extends BaseActivity {
     private List<ExaminationEntity.ListBean> mExasList = new ArrayList<>();
     private List<Integer> mResIds = new ArrayList<>();
 
+    private List<String> images; // 图片文件
+
     @Override
     public void setLayout() {
         setTitle("患者信息");
@@ -136,8 +138,6 @@ public class PatientInfoDetailsActivity extends BaseActivity {
             setContentText();
 //            if (!TextUtils.isEmpty(mVisitDetails.getImage())) // 如果图片不为空则显示图片
             initRecycler();
-            if (!TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
-                initVoiceLayout();
 
         }
 
@@ -176,6 +176,18 @@ public class PatientInfoDetailsActivity extends BaseActivity {
                         mVisitDetailsEntity = result;
                         VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
                         VisitDetailsEntity.InfoBean infoBean = result.getInfo();
+
+                        if (null == infoBean)
+                            return;
+
+                        if (!TextUtils.isEmpty(infoBean.getVoiceDescribe())) // 如果语音描述不为空
+                            initVoiceLayout();
+
+                        if (!TextUtils.isEmpty(infoBean.getImage())) {
+                            images = Arrays.asList(infoBean.getImage().split(","));
+                            mAdapter.setNewData(images);
+                        }
+
                         switch (infoBean.getStatus()) {
                             case "1": // 接诊
                                 break;
@@ -310,9 +322,6 @@ public class PatientInfoDetailsActivity extends BaseActivity {
         layoutPatientRecycler.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new PhotoAdapter(new ArrayList<>());
         layoutPatientRecycler.setAdapter(mAdapter);
-
-        List<String> images = Arrays.asList(mVisitDetails.getImage().split(","));
-        mAdapter.setNewData(images);
     }
 
     /**
@@ -334,12 +343,9 @@ public class PatientInfoDetailsActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                ActivityUtils.startActivity(PhotoViewActivity.class);
-                // 图片地址合集
-                List<String> mList = new ArrayList<>();
-                mList.add("http://img.hb.aicdn.com/a74dba1791530dcb8dee2a63e539d7920343dd5db9db9-lKWKQn_fw658");
-                mList.add("http://img.hb.aicdn.com/89b64a4fe336383edb977c0bb16ef40c5619bba6e3207-4TUP5A_fw658");
-                mList.add("http://img.hb.aicdn.com/607f122005dc6ac326a4d4613242d783b09dc0676f2af-VLzfQk_fw658");
-                CommonUtils.showPicDialog(view.getContext(), mList, position);
+                if (!Utils.isListEmpty(images)) {
+                    CommonUtils.showPicDialog(view.getContext(), images, position);
+                }
             }
         });
     }

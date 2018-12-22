@@ -1,5 +1,6 @@
 package com.baihua.yayayisheng.login;
 
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +12,11 @@ import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.MainActivity;
 import com.baihua.yayayisheng.R;
+import com.baihua.yayayisheng.entity.RongCloudToken;
 import com.baihua.yayayisheng.entity.form.LoginForm;
 import com.baihua.yayayisheng.entity.TokenEntity;
 import com.baihua.yayayisheng.entity.VerificationEntity;
+import com.baihua.yayayisheng.rcloud.RCUtils;
 import com.baihua.yayayisheng.util.CommonUtils;
 import com.baihua.yayayisheng.util.Utils;
 import com.baihua.yayayisheng.widget.ValidateCodeView;
@@ -23,6 +26,7 @@ import com.blankj.utilcode.util.SPUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Author:byd

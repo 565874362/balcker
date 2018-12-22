@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
 import com.baihua.yayayisheng.R;
+import com.baihua.yayayisheng.entity.DoctorRegistrationListEntity;
+import com.baihua.yayayisheng.util.CommonUtils;
+import com.blankj.utilcode.util.TimeUtils;
 
 import butterknife.BindView;
 
@@ -31,6 +34,8 @@ public class MyVisitingDetailsActivity extends BaseActivity {
     @BindView(R.id.visiting_tv_pay_time)
     TextView visitingTvPayTime;
 
+    private DoctorRegistrationListEntity.PageBean.RecordsBean recordsBean;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_my_visiting_details);
@@ -43,15 +48,19 @@ public class MyVisitingDetailsActivity extends BaseActivity {
 
     @Override
     public void initMember() {
-        setContentText();
+        if (getIntent().hasExtra("registration")) {
+            recordsBean = (DoctorRegistrationListEntity.PageBean.RecordsBean) getIntent().getSerializableExtra("registration");
+            setContentText();
+        }
     }
 
     private void setContentText() {
-        visitingTvName.setText("令狐小影");
-        visitingTvAge.setText(String.format("%s岁", "5"));
-        visitingTvGender.setText("男");
-        visitingTvMobile.setText("199****9999");
-        visitingTvTime.setText(DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()));
+        visitingTvName.setText(recordsBean.getName());
+        visitingTvAge.setText(String.format("%s岁", recordsBean.getAge()));
+        visitingTvGender.setText(CommonUtils.getGender(recordsBean.getGender()));
+        visitingTvMobile.setText(recordsBean.getPhone());
+        visitingTvTime.setText(recordsBean.getVisitTime());
+        // TODO: 22/12/2018 欠缺支付信息 
         visitingTvPayMethod.setText("支付宝支付");
         visitingTvPayTotal.setText(String.format("%s元", "100.00"));
         visitingTvPayTime.setText(DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()));

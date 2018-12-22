@@ -37,6 +37,8 @@ public class PatientInfoFragment extends BaseFragment {
     private List<String> mList;
     private PatientInfoAdapter mAdapter;
 
+    private boolean mIsNeedRefresh;
+
     private int mCurrentPage = 1;
 
     @Override
@@ -58,13 +60,14 @@ public class PatientInfoFragment extends BaseFragment {
     public void initMember() {
 
         initRecycler();
-//        smartRefreshLayout.autoRefresh();
+        smartRefreshLayout.autoRefresh();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        smartRefreshLayout.autoRefresh();
+        if (mIsNeedRefresh)
+            smartRefreshLayout.autoRefresh();
     }
 
     /**
@@ -127,6 +130,7 @@ public class PatientInfoFragment extends BaseFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mIsNeedRefresh = true;
                 PatientListEntity.PageBean.RecordsBean recordsBean = (PatientListEntity.PageBean.RecordsBean) adapter.getData().get(position);
                 Utils.gotoActivity(getActivity(), PatientInfoDetailsActivity.class, false, "visit", recordsBean);
             }

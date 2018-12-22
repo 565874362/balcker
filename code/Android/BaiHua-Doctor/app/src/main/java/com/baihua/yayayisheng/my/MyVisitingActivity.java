@@ -11,6 +11,7 @@ import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.decoration.SpaceDecoration;
+import com.baihua.yayayisheng.entity.DoctorRegistrationListEntity;
 import com.baihua.yayayisheng.entity.RegisteredListEntity;
 import com.baihua.yayayisheng.entity.form.ListForm;
 import com.baihua.yayayisheng.util.CommonUtils;
@@ -66,10 +67,10 @@ public class MyVisitingActivity extends BaseActivity {
         RxHttp.getInstance().getSyncServer()
                 .getReceptionList(CommonUtils.getToken(), new ListForm(mCurrentPage, 10))
                 .compose(RxSchedulers.observableIO2Main(this))
-                .subscribe(new ProgressObserver<RegisteredListEntity>(this) {
+                .subscribe(new ProgressObserver<DoctorRegistrationListEntity>(this) {
 
                     @Override
-                    public void onSuccess(RegisteredListEntity result) {
+                    public void onSuccess(DoctorRegistrationListEntity result) {
                         // TODO: 21/12/2018
                         Utils.finishRefreshAndLoadMore(smartRefreshLayout);
                         Utils.cancelLoadMore(smartRefreshLayout, result.getPage().getCurrent(), result.getPage().getPages());
@@ -122,7 +123,8 @@ public class MyVisitingActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(MyVisitingDetailsActivity.class);
+                DoctorRegistrationListEntity.PageBean.RecordsBean recordsBean = (DoctorRegistrationListEntity.PageBean.RecordsBean) adapter.getData().get(position);
+                Utils.gotoActivity(MyVisitingActivity.this, MyVisitingDetailsActivity.class, false, "registration", recordsBean);
             }
         });
 

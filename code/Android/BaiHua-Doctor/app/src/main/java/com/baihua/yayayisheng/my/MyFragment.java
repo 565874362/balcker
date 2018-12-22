@@ -12,6 +12,7 @@ import com.baihua.common.base.BaseFragment;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
+import com.baihua.yayayisheng.MainActivity;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.entity.AvatarEntity;
 import com.baihua.yayayisheng.entity.DoctorInfoEntity;
@@ -179,6 +180,8 @@ public class MyFragment extends BaseFragment {
         CommonUtils.clearToken();
         myTvExitAccount.setVisibility(View.GONE);
         Utils.showUserHead(getActivity(), myIvAvatar, "");
+        ActivityUtils.finishAllActivities();
+        Utils.goLogin(getActivity());
     }
 
     private void showSingleCamera(Activity activity) {

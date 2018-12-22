@@ -2,11 +2,13 @@ package com.baihua.common.rx.ApiService;
 
 
 import com.baihua.common.rx.Response;
+import com.baihua.yayayisheng.entity.AccountEntity;
 import com.baihua.yayayisheng.entity.AvatarEntity;
 import com.baihua.yayayisheng.entity.DiagnoseDateEntity;
 import com.baihua.yayayisheng.entity.DiagnoseDateListEntity;
 import com.baihua.yayayisheng.entity.DicEntity;
 import com.baihua.yayayisheng.entity.DoctorInfoEntity;
+import com.baihua.yayayisheng.entity.DoctorRegistrationListEntity;
 import com.baihua.yayayisheng.entity.EmptyEntity;
 import com.baihua.yayayisheng.entity.ExaminationEntity;
 import com.baihua.yayayisheng.entity.FileEntity;
@@ -14,6 +16,7 @@ import com.baihua.yayayisheng.entity.HospitalEntity;
 import com.baihua.yayayisheng.entity.OfficeEntity;
 import com.baihua.yayayisheng.entity.PatientListEntity;
 import com.baihua.yayayisheng.entity.RegisteredListEntity;
+import com.baihua.yayayisheng.entity.RongCloudToken;
 import com.baihua.yayayisheng.entity.TokenEntity;
 import com.baihua.yayayisheng.entity.VerificationEntity;
 import com.baihua.yayayisheng.entity.VisitDetailsEntity;
@@ -216,7 +219,23 @@ public interface SyncServerService {
      *
      * @return 结果
      */
-    @POST("/rest/serregistration/doctorList")
-    Observable<Response<RegisteredListEntity>> getReceptionList(@Header("token") String token, @Body ListForm listForm);
+    @POST("/rest/serregistration/doctorListRegistration")
+    Observable<Response<DoctorRegistrationListEntity>> getReceptionList(@Header("token") String token, @Body ListForm listForm);
+
+    /**
+     * Token获取
+     *
+     * @return 结果
+     */
+    @GET("/rest/chat/token")
+    Observable<Response<RongCloudToken>> getToken(@Header("token") String token);
+
+    /**
+     * 获取账户信息
+     *
+     * @return 结果
+     */
+    @GET("/rest/chat/info/{accountId}")
+    Observable<Response<AccountEntity>> getAccount(@Header("token") String token, @Path("accountId") String accountId);
 
 }

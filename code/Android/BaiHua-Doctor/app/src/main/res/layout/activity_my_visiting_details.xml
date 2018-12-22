@@ -227,7 +227,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textColor="@color/color_black_dark_4b5764"
+                android:textColor="@color/color_red_light_f8f8f9"
                 android:textSize="@dimen/text_size_16sp"
                 tools:text="20.00元" />
 
