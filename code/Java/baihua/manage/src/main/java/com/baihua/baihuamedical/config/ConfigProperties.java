@@ -17,7 +17,13 @@ import lombok.Data;
 @Data
 public class ConfigProperties {
 
+	private String tokenId;
+
 	private String filePrex;
+
+	private Integer tokenExpireTime;
+
+	private Integer captchaExpireTime;
 
 	private String uploadDirectory;
 

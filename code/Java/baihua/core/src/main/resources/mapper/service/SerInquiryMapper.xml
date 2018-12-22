@@ -87,4 +87,80 @@
                 is_del = 0
         )
     </select>
+    <select id="queryInquiry" resultType="java.util.Map">
+        SELECT
+	ud.id AS doctorid,
+	ud.`name` AS doctorname,
+	bo.`name` AS officename,
+	sq.gender,
+	bh.`name` AS hospitalname,
+	sq.gmt_create
+FROM
+	ser_inquiry sq,
+	us_doctor ud,
+	bas_office bo,
+	bas_hospital bh
+<where>
+	sq.doctor_id = ud.id
+AND ud.hos_id = bh.id
+AND ud.hos_id = bh.id
+    AND sq.`status` = 3
+    AND sq.is_del = 0
+
+        <if test="officeid != null">
+            AND bo.id = #{officeid}
+        </if>
+        <if test="patientid != null">
+            AND sq.patient_id = #{patientid}
+        </if>
+        <if test="hospitalNname != null">
+            AND bh.`name` LIKE CONCAT('%',#{hospitalNname},'%')
+        </if>
+        <if test="startDate != null and startDate!=null">
+            AND sq.gmt_create BETWEEN #{startDate}
+            AND #{endDate}
+        </if>
+      </where>
+    </select>
+    <select id="queryInquiryTotal" resultType="java.lang.Long">
+        SELECT
+	COUNT(*)
+FROM
+	(
+		SELECT
+			ud.id AS doctorid,
+			ud.`name` AS doctorname,
+			bo.`name` AS officename,
+			sq.gender,
+			bh.`name` AS hospitalname,
+			sq.gmt_create
+		FROM
+			ser_inquiry sq,
+			us_doctor ud,
+			bas_office bo,
+			bas_hospital bh
+        <where>
+            sq.doctor_id = ud.id
+            AND ud.hos_id = bh.id
+            AND ud.hos_id = bh.id
+            AND sq.`status` = 3
+            AND sq.is_del = 0
+
+            <if test="officeid != null">
+                AND bo.id = #{officeid}
+            </if>
+            <if test="patientid != null">
+                AND sq.patient_id = #{patientid}
+            </if>
+            <if test="hospitalNname != null">
+                AND bh.`name` LIKE CONCAT('%',#{hospitalNname},'%')
+            </if>
+            <if test="startDate != null and startDate!=null">
+                AND sq.gmt_create BETWEEN #{startDate}
+                AND #{endDate}
+            </if>
+        </where>
+
+) total
+    </select>
 </mapper>

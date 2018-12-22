@@ -16,17 +16,26 @@
 
 package com.baihua.baihuamedical.modules.sys.form;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+
+import javax.validation.constraints.NotEmpty;
+
 /**
  * 登录表单
  *
  * @author Mark sunlightcs@gmail.com
  * @since 2.0.0 2018-01-25
  */
+@ApiModel("登录参数")
 public class SysLoginForm {
+    @NotEmpty
+    @ApiModelProperty("用户名")
     private String username;
+    @NotEmpty
+    @ApiModelProperty("密码")
     private String password;
-    private String captcha;
-    private String uuid;
 
     public String getUsername() {
         return username;
@@ -44,19 +53,4 @@ public class SysLoginForm {
         this.password = password;
     }
 
-    public String getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 }
