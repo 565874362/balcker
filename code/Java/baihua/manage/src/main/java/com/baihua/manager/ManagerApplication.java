@@ -1,13 +1,9 @@
 package com.baihua.manager;
 
-import java.util.Set;
-
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * @author zhaodongdong
@@ -17,15 +13,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2018年12月14日 13:43:25
  */
 @SpringBootApplication(scanBasePackages = "com.baihua")
-public class ManagerApplication implements ServletContainerInitializer {
+public class ManagerApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ManagerApplication.class);
 	}
 
 	@Override
-	public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
-		SpringApplication.run(ManagerApplication.class);
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(ManagerApplication.class);
 	}
+
 }
 
