@@ -3,7 +3,9 @@ package com.baihua.manager.modules.user.controller;
 import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.common.validator.ValidatorUtils;
+import com.baihua.core.modules.service.entity.SerInquiryEntity;
 import com.baihua.core.modules.user.entity.UsPatientEntity;
+import com.baihua.manager.modules.service.service.SerInquiryService;
 import com.baihua.manager.modules.user.service.UsPatientService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,10 +15,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.Arrays;
 
+import java.util.Arrays;
+import java.util.Map;
 
 
 /**
@@ -28,10 +32,13 @@ import java.util.Arrays;
  */
 @Api(tags ="后台患者")
 @RestController
-@RequestMapping("/sys/patient")
+@RequestMapping("/user/patient")
 public class UsPatientController {
     @Autowired
     private UsPatientService usPatientService;
+
+    @Autowired
+    private SerInquiryService inquiryService;
 
    /* @ApiOperation("获取图片")
     @GetMapping("/photo")
@@ -59,27 +66,33 @@ public class UsPatientController {
     @ApiOperation("后台患者列表")
     @PostMapping("/list")
     public R list(@RequestBody PatientSearchInput patientSearchInput){
-        ValidatorUtils.validateEntity(patientSearchInput);
-        LambdaQueryWrapper<UsPatientEntity> queryWrapper = new QueryWrapper<UsPatientEntity>().lambda()
-                .between(UsPatientEntity::getGmtCreate,patientSearchInput.getStartDate(),patientSearchInput.getEndsDate());
-        IPage content = usPatientService.page(patientSearchInput.getPage(), queryWrapper);
-        return R.success().addResData("page", content);
+        IPage<Map<String,Object>>  page=  usPatientService.queryList(patientSearchInput.getPage(),patientSearchInput.getStartDate(),patientSearchInput.getEndsDate());
+        return R.success().addResData("page", page);
     }
 
-/*
-    @ApiOperation("后台患者管理列表 [患者]")
-    @PostMapping("/patientList")
-    public R userList(@RequestBody PageQuery<SerInquiryEntity> pageQuery, @ApiIgnore @LoginPatient UsPatientEntity patientEntity) {
-        ValidatorUtils.validateEntity(pageQuery);
-        LambdaQueryWrapper<SerInquiryEntity> queryWrapper = new QueryWrapper<SerInquiryEntity>().lambda()
-                .eq(SerInquiryEntity::getPatientId, patientEntity.getId())
-                .select(SerInquiryEntity::getId, SerInquiryEntity::getName, SerInquiryEntity::getAge, SerInquiryEntity::getCharacterDescribe, SerInquiryEntity::getGender, SerInquiryEntity::getStatus, SerInquiryEntity::getGmtModified)
-                .orderByDesc(SerInquiryEntity::getGmtModified);
-        IPage content = serInquiryService.page(pageQuery.getPage(), queryWrapper);
-        return R.success().addResData("page", content);
+    /**
+     * 后台患者状态修改
+     */
+    @ApiOperation("后台患者状态修改")
+    @PostMapping("/updateIsdel")
+    public R updateIsdel(@PathVariable UpdateIsDelInput updateIsDelInput){
+        UsPatientEntity usPatientEntity = new UsPatientEntity();
+        usPatientEntity.setId(updateIsDelInput.getPatientId());
+        usPatientEntity.setIsDel(updateIsDelInput.getState());
+        usPatientService.updateById(usPatientEntity);
+        return R.success();
     }
-*/
-
+    /**
+     * 后台患者删除
+     */
+    @ApiOperation("后台患者删除")
+    @PostMapping("/delPatient")
+    public R delPatient(@PathVariable UpdateIsDelInput updateIsDelInput){
+       LambdaQueryWrapper<SerInquiryEntity> batchquery = new LambdaQueryWrapper<SerInquiryEntity>()
+               .eq(SerInquiryEntity::getPatientId,updateIsDelInput.getPatientId());
+                inquiryService.remove(batchquery);
+        return R.success();
+    }
     /**
      * 信息
      */
@@ -121,13 +134,23 @@ public class UsPatientController {
 
     @ApiModel("查询参数")
     @Data
-    private static class PatientSearchInput extends PageQuery<UsPatientEntity>{
+    private static class PatientSearchInput extends PageQuery<UsPatientEntity> {
 
         @ApiModelProperty("开始时间")
         private String startDate;
 
         @ApiModelProperty("结束时间")
         private String endsDate;
+    }
+    @ApiModel("患者状态修改")
+    @Data
+    private static class UpdateIsDelInput{
+
+        @ApiModelProperty("患者id")
+        private Long patientId;
+
+        @ApiModelProperty("状态")
+        private Integer state;
     }
 
 }

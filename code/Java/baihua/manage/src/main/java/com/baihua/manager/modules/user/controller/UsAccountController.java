@@ -8,7 +8,6 @@ import com.baihua.core.common.utils.PageUtils;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.modules.user.entity.UsAccountEntity;
 import com.baihua.manager.modules.user.service.UsAccountService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ import java.util.Map;
  * @date 2018-12-06 10:17:17
  */
 @RestController
-@RequestMapping("/rest/usaccount")
+@RequestMapping("/user/usaccount")
 public class UsAccountController {
 
     @Autowired

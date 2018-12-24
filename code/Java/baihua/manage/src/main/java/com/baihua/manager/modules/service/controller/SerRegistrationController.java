@@ -9,7 +9,9 @@ import com.baihua.core.modules.service.entity.SerRegistrationEntity;
 import com.baihua.manager.modules.service.service.SerRegistrationService;
 import com.baihua.core.modules.user.entity.UsDoctorEntity;
 import com.baihua.manager.modules.user.service.UsDoctorService;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -63,6 +65,19 @@ public class SerRegistrationController {
     public R save(@RequestBody SerRegistrationEntity serRegistration){
         serRegistrationService.save(serRegistration);
         return R.success();
+    }
+
+    /**
+     * 对应医生挂号列表
+     */
+    @PostMapping("/queryDoctor")
+    @ApiOperation("对应医生挂号列表")
+    public R queryDoctor(@RequestBody QueryByDoctor queryByDoctor){
+        LambdaQueryWrapper<SerRegistrationEntity> queryWrapper = new LambdaQueryWrapper<SerRegistrationEntity>()
+                .eq(SerRegistrationEntity::getDoctorId,queryByDoctor.getDoctorId())
+                .in(SerRegistrationEntity::getStatus,2,3);
+        IPage content = serRegistrationService.page(queryByDoctor.getPage(), queryWrapper);
+        return R.success().addResData("data",content);
     }
 
     /**
@@ -124,6 +139,12 @@ public class SerRegistrationController {
          */
         @ApiModelProperty("医生编号")
         @NotNull(message = "医生编号不能为空")
+        private Long doctorId;
+    }
+    @ApiModel("挂号输入")
+    @Data
+    private static  class  QueryByDoctor extends PageQuery<SerRegistrationEntity>{
+        @ApiModelProperty("医生编号")
         private Long doctorId;
     }
 

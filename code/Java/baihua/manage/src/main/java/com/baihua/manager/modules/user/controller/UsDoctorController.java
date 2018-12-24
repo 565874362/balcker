@@ -1,41 +1,36 @@
 package com.baihua.manager.modules.user.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.baihua.core.common.enums.Constants;
 import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.common.validator.ValidatorUtils;
+
+import com.baihua.core.modules.basic.service.IDoctorMatchService;
 import com.baihua.core.modules.service.entity.SerAdeptEntity;
-import com.baihua.core.modules.user.entity.UsDoctorEntity;
 import com.baihua.manager.modules.service.service.SerAdeptService;
+import com.baihua.core.modules.user.entity.UsAccountEntity;
+import com.baihua.core.modules.user.entity.UsDoctorEntity;
 import com.baihua.manager.modules.user.service.UsAccountService;
 import com.baihua.manager.modules.user.service.UsDoctorService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -45,9 +40,9 @@ import lombok.Data;
  * @email 2977260348@qq.com
  * @date 2018-12-06 10:17:17
  */
-@Api(tags = "医生")
+@Api(tags = "后台医生")
 @RestController
-@RequestMapping("/rest/usdoctor")
+@RequestMapping("/user/usdoctor")
 public class UsDoctorController {
 
     @Autowired
@@ -59,27 +54,20 @@ public class UsDoctorController {
     @Autowired
     private UsAccountService usAccountService;
 
+    @Autowired
+    private IDoctorMatchService doctorMatchService;
+
     /**
-     * 列表
+     * 后台医生列表
      */
-    @ApiOperation("医生列表")
+    @ApiOperation("后台医生列表")
     @PostMapping("/list")
-    public R list(@RequestBody QueryInput queryInput){
-        ValidatorUtils.validateEntity(queryInput);
+    public R list(@RequestBody QueryDoctorInput doctorInput){
         LambdaQueryWrapper<UsDoctorEntity> queryWrapper = new QueryWrapper<UsDoctorEntity>().lambda();
-        queryWrapper.like(!StringUtils.isEmpty(queryInput.getSearch()), UsDoctorEntity::getMajor, queryInput.getSearch())
-         .or().like(!StringUtils.isEmpty(queryInput.getSearch()), UsDoctorEntity::getOffName, queryInput.getSearch())
-         .or().like(!StringUtils.isEmpty(queryInput.getSearch()), UsDoctorEntity::getHosName, queryInput.getSearch());
-        IPage<UsDoctorEntity> page = usDoctorService.page(queryInput.getPage(), queryWrapper);
-        List<Long> doctorIds = page.getRecords().stream().map((e) -> e.getId()).collect(Collectors.toList());
-        if(doctorIds != null && !doctorIds.isEmpty()){
-            List<SerAdeptEntity> SerAdeptEntitys = adeptService.list(new QueryWrapper<SerAdeptEntity>().lambda()
-                    .select(SerAdeptEntity::getName,SerAdeptEntity::getDocId)
-                    .in(SerAdeptEntity::getDocId, doctorIds)
-                    .orderByAsc(SerAdeptEntity::getOrdered));
-            Map<Long, List<SerAdeptEntity>> adeptEntitiesByDoctorId = SerAdeptEntitys.stream().collect(Collectors.groupingBy(SerAdeptEntity::getDocId));
-            page.getRecords().forEach(e -> e.setAdeptEntities(adeptEntitiesByDoctorId.get(e.getId())));
-        }
+        queryWrapper.eq(UsDoctorEntity::getStatus, doctorInput.getSta())
+         .or().like(!StringUtils.isEmpty(doctorInput.getHosname()), UsDoctorEntity::getHosName, doctorInput.getHosname())
+                .or().between(!StringUtils.isEmpty(doctorInput.getStartDate()),UsDoctorEntity::getGmtCreate,doctorInput.getStartDate(),doctorInput.getEndDate());
+        IPage<UsDoctorEntity> page = usDoctorService.page(doctorInput.getPage(), queryWrapper);
         return R.success().addResData("page", page);
     }
 
@@ -100,16 +88,34 @@ public class UsDoctorController {
         }
         return R.success().addResData("info", usDoctor);
     }
+    /**
+     * 后台医生审核
+     */
+    @ApiOperation("后台医生审核")
+    @GetMapping("/check/{id}")
+    public R check(@PathVariable("id") Long id){
+        UsDoctorEntity usDoctorEntity = new UsDoctorEntity();
+        usDoctorEntity.setId(id);
+        usDoctorEntity.setStatus(Constants.DoctorStatus.checked.getCode());
+        usDoctorService.updateById(usDoctorEntity);
+        UsAccountEntity usAccountEntity = new UsAccountEntity();
+        usAccountEntity.setStatus(Constants.AccountStatus.normal.getCode());
+        usAccountService.update(usAccountEntity,new QueryWrapper<UsAccountEntity>().lambda()
+            .eq(UsAccountEntity::getSId,id)
+            .eq(UsAccountEntity::getType,Constants.AccountType.doctor));
+        doctorMatchService.updateDoctorInfo(id);
+        return R.success();
+    }
 
 
-   /* *//**
+   /**
      *
-     *//*
+     */
     @ApiOperation("医生信息编辑 [医生]")
     @PostMapping("/update")
-    public R update(@RequestBody DoctorUpdater doctorUpdater, @LoginDoctor UsDoctorEntity doctorEntity){
-        ValidatorUtils.validateEntity(doctorUpdater);
-        BeanUtils.copyProperties(doctorUpdater,doctorEntity);
+    public R update(@RequestBody DoctorUpdater doctorUpdater){
+        UsDoctorEntity usDoctorEntity = usDoctorService.getById(doctorUpdater.getId());
+        BeanUtils.copyProperties(doctorUpdater,usDoctorEntity);
         List<Adept> adepts = doctorUpdater.getAdepts();
         List<SerAdeptEntity> serAdeptEntities = new ArrayList<>();
         Iterator<Adept> iterator = adepts.iterator();
@@ -124,19 +130,19 @@ public class UsDoctorController {
             serAdeptEntities.add(serAdeptEntity);
         }
 
-        doctorEntity.setId(doctorEntity.getId());
-        usDoctorService.update(doctorEntity,serAdeptEntities);
+        usDoctorEntity.setId(usDoctorEntity.getId());
+        usDoctorService.update(usDoctorEntity,serAdeptEntities);
         return R.success();
     }
 
-    *//**
+    /**
      * 保存
-     *//*
+     */
     @RequestMapping("/save")
     public R save(@RequestBody UsDoctorEntity usDoctor){
         usDoctorService.save(usDoctor);
         return R.success();
-    }*/
+    }
 
     /**
      * 删除
@@ -149,9 +155,15 @@ public class UsDoctorController {
 
     @ApiModel("查询参数")
     @Data
-    private static class QueryInput extends PageQuery<UsDoctorEntity> {
-        @ApiModelProperty("查询参数")
-        private String search;
+    private static class QueryDoctorInput extends PageQuery<UsDoctorEntity> {
+        @ApiModelProperty("医生状态")
+        private Integer sta;
+        @ApiModelProperty("单位名称")
+        private String hosname;
+        @ApiModelProperty("查询开始时间")
+        private String startDate;
+        @ApiModelProperty("查询结束时间")
+        private String endDate;
     }
 
 
@@ -159,35 +171,35 @@ public class UsDoctorController {
     @Data
     private static class DoctorUpdater {
         /**
+         * 医生ID
+         */
+        @ApiModelProperty("医生ID")
+        private long id;
+        /**
          * 名称
          */
         @ApiModelProperty("姓名")
-        @NotEmpty(message = "姓名不能为空")
         private String name;
         /**
          * 性别:1 男 0 女
          */
         @ApiModelProperty("性别 1 男 0 女")
-        @NotNull(message = "性别不能为空")
         private Integer gender;
         /**
          * 科室编号
          */
         @ApiModelProperty("科室编号")
-        @NotNull(message = "科室编号不能为空")
         private Long offId;
         /**
          * 科室名称
          */
         @ApiModelProperty("科室名称")
-        @NotEmpty(message = "科室名称不能为空")
         private String offName;
 
         /**
          * 职位编号
          */
         @ApiModelProperty("职位编号")
-        @NotNull(message = "职位编号不能为空")
         private Long positionId;
         /**
          * 职位名称
@@ -199,41 +211,34 @@ public class UsDoctorController {
          * 医院编号
          */
         @ApiModelProperty("医院编号")
-        @NotNull(message = "医院编号不能为空")
         private Long hosId;
         /**
          * 医院名称
          */
         @ApiModelProperty("医院名称")
-        @NotEmpty(message = "医院名称不能为空")
         private String hosName;
         /**
          * 个人照片
          */
         @ApiModelProperty("个人照片")
-        @NotEmpty(message = "个人照片不能为空")
         private String photo;
         /**
          * 医师资格证
          */
         @ApiModelProperty("医师资格证")
-        @NotEmpty(message = "医师资格证不能为空")
         private String physicianLicence;
         /**
          * 身份证 正反以,分割
          */
         @ApiModelProperty("身份证")
-        @NotEmpty(message = "身份证不能为空")
         private String identityCard;
         /**
          * 挂号费
          */
         @ApiModelProperty("挂号费")
-        @NotNull(message = "挂号费不能为空")
         private BigDecimal registrationFee;
 
         @ApiModelProperty("擅长")
-        @NotNull(message = "擅长不能为空")
         private List<Adept> adepts = new ArrayList<>();
     }
 

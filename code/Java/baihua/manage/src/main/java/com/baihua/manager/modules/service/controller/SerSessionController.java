@@ -1,15 +1,12 @@
 package com.baihua.manager.modules.service.controller;
 
-import com.baihua.core.common.utils.PageUtils;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.modules.service.entity.SerSessionEntity;
 import com.baihua.manager.modules.service.service.SerSessionService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 /**
@@ -25,16 +22,6 @@ public class SerSessionController {
     @Autowired
     private SerSessionService serSessionService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = serSessionService.queryPage(params);
-
-        return R.success().addResData("page", page);
-    }
 
 
     /**

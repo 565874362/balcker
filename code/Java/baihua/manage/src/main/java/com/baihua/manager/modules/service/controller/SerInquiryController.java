@@ -7,8 +7,8 @@ import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.modules.basic.entity.BasHealthExaminationEntity;
 import com.baihua.core.modules.service.entity.SerInquiryEntity;
-import com.baihua.manager.modules.service.service.SerInquiryService;
 import com.baihua.core.modules.user.entity.UsDoctorEntity;
+import com.baihua.manager.modules.service.service.SerInquiryService;
 import com.baihua.manager.modules.user.service.UsDoctorService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 
@@ -32,7 +31,7 @@ import java.util.*;
  */
 @Api(tags = "后台问诊")
 @RestController
-@RequestMapping("/sys/serinquiry")
+@RequestMapping("/service/serinquiry")
 public class SerInquiryController {
 
 	@Autowired
@@ -51,7 +50,7 @@ public class SerInquiryController {
     @ApiOperation("后台患者查看")
 	@PostMapping("/list")
 	public R list(@RequestBody QueryInquiry queryInquiry) {
-		IPage<Map<String,Object>> list= serInquiryService.queryInquiry(queryInquiry.getPage(),queryInquiry.getOfficeid(),queryInquiry.getOfficeid(),queryInquiry.getHospitalName(),queryInquiry.getStartDate(),queryInquiry.getEndDate());
+    	IPage<Map<String,Object>> list= serInquiryService.queryInquiry(queryInquiry.getPage(),queryInquiry.getOfficeid(),queryInquiry.getOfficeid(),queryInquiry.getHospitalName(),queryInquiry.getStartDate(),queryInquiry.getEndDate());
 		return R.success().addResData("page", list);
 	}
 
