@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2018年12月22日 15:42:46
  */
 @Configuration
-@ComponentScan("com.baihua.baihuamedical")
+@ComponentScan("com.baihua")
 @EnableAsync
 @Slf4j
 public class TaskExcutorConfig implements AsyncConfigurer {
