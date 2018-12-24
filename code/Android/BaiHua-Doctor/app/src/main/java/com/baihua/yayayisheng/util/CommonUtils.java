@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Author:byd
@@ -161,9 +160,7 @@ public class CommonUtils {
      */
     public static File base64ToFile(String base64) {
         File file = null;
-        String fileName = String.format(Locale.getDefault(),
-                "%s/Record/com.baihua.yaya/%s.mp3",
-                Environment.getExternalStorageDirectory().getAbsolutePath(), System.currentTimeMillis());
+        String fileName = String.format("/Record/com.baihua.yaya/%s.mp3", System.currentTimeMillis());
         FileOutputStream out = null;
         try {
             // 解码，然后将字节转换为文件
