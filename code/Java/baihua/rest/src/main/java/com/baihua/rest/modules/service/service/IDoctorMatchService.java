@@ -1,4 +1,4 @@
-package com.baihua.core.modules.basic.service;
+package com.baihua.rest.modules.service.service;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public interface IDoctorMatchService {
 	 * @param oldBasKeywordEntity
 	 * @param newBasKeywordEntity
 	 */
-	void updateKeyWord(BasKeywordEntity oldBasKeywordEntity,BasKeywordEntity newBasKeywordEntity);
+	void updateKeyWord(BasKeywordEntity oldBasKeywordEntity, BasKeywordEntity newBasKeywordEntity);
 
 	/**
 	 * 更新医生信息

@@ -1,35 +1,41 @@
 package com.baihua.manager.modules.user.controller;
 
-import com.baihua.core.common.enums.Constants;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.common.validator.ValidatorUtils;
-
-import com.baihua.core.modules.basic.service.IDoctorMatchService;
 import com.baihua.core.modules.service.entity.SerAdeptEntity;
-import com.baihua.manager.modules.service.service.SerAdeptService;
-import com.baihua.core.modules.user.entity.UsAccountEntity;
 import com.baihua.core.modules.user.entity.UsDoctorEntity;
+import com.baihua.manager.modules.service.service.SerAdeptService;
 import com.baihua.manager.modules.user.service.UsAccountService;
 import com.baihua.manager.modules.user.service.UsDoctorService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
 
 
 /**
@@ -52,9 +58,6 @@ public class UsDoctorController {
 
     @Autowired
     private UsAccountService usAccountService;
-
-    @Autowired
-    private IDoctorMatchService doctorMatchService;
 
     /**
      * 列表
@@ -96,24 +99,6 @@ public class UsDoctorController {
             usDoctor.setAdeptEntities(SerAdeptEntitys);
         }
         return R.success().addResData("info", usDoctor);
-    }
-    /**
-     * 后台医生审核
-     */
-    @ApiOperation("后台医生审核")
-    @GetMapping("/check/{id}")
-    public R check(@PathVariable("id") Long id){
-        UsDoctorEntity usDoctorEntity = new UsDoctorEntity();
-        usDoctorEntity.setId(id);
-        usDoctorEntity.setStatus(Constants.DoctorStatus.checked.getCode());
-        usDoctorService.updateById(usDoctorEntity);
-        UsAccountEntity usAccountEntity = new UsAccountEntity();
-        usAccountEntity.setStatus(Constants.AccountStatus.normal.getCode());
-        usAccountService.update(usAccountEntity,new QueryWrapper<UsAccountEntity>().lambda()
-            .eq(UsAccountEntity::getSId,id)
-            .eq(UsAccountEntity::getType,Constants.AccountType.doctor));
-        doctorMatchService.updateDoctorInfo(id);
-        return R.success();
     }
 
 

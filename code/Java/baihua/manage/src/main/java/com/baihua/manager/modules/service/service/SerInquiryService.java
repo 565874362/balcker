@@ -1,12 +1,12 @@
 package com.baihua.manager.modules.service.service;
 
+import java.util.Map;
+
 import com.baihua.core.common.utils.PageUtils;
 import com.baihua.core.modules.service.entity.SerInquiryEntity;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.Map;
 
 /**
  * 问诊
@@ -20,8 +20,6 @@ public interface SerInquiryService extends IService<SerInquiryEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     IPage<SerInquiryEntity> selectDocterIndexPage(Page<SerInquiryEntity> page, Long doctorId);
-
-    void commit(SerInquiryEntity input);
 
     IPage<Map<String,Object>> queryInquiry(Page<SerInquiryEntity> page, long officeid, long patientid,String hospitalNname,  String startDate, String endDate);
 }
