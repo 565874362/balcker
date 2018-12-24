@@ -1,19 +1,25 @@
 package com.baihua.yaya.doctor;
 
+import android.Manifest;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baihua.common.Constants;
 import com.baihua.common.base.BaseActivity;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.R;
 import com.baihua.yaya.entity.RegistrationDetailsEntity;
-import com.baihua.yaya.entity.VisitDetailsEntity;
+import com.baihua.yaya.helper.DialogHelper;
+import com.baihua.yaya.pay.JPay;
 import com.baihua.yaya.util.CommonUtils;
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.PermissionUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -127,8 +133,81 @@ public class AppointmentConfirmActivity extends BaseActivity {
                 setSelectedBg();
                 break;
             case R.id.tv_submit_registration: // 提交预约
+                if (isWechat) { // 微信支付
+                    payWithWechat();
+                } else {
+                    // 支付宝 如果您的应用已经升级 targetSdk 到 23 及以上，则需要在运行时向用户申请 WRITE_EXTERNAL_STORAGE 和 READ_PHONE_STATE 这两项权限。
+                    if (!PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)) {
+                        PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.PHONE)
+                                .rationale(new PermissionUtils.OnRationaleListener() {
+                                    @Override
+                                    public void rationale(ShouldRequest shouldRequest) {
+                                        DialogHelper.showRationaleDialog(shouldRequest);
+                                    }
+                                })
+                                .callback(new PermissionUtils.FullCallback() {
+                                    @Override
+                                    public void onGranted(List<String> permissionsGranted) {
+                                        payWithAlipay();
+                                    }
+
+                                    @Override
+                                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                                        if (!permissionsDeniedForever.isEmpty()) {
+                                            DialogHelper.showOpenAppSettingDialog();
+                                        }
+                                    }
+                                }).request();
+                    } else {
+                        payWithAlipay();
+                    }
+                }
                 break;
         }
+    }
+
+    /**
+     * 微信支付
+     */
+    private void payWithWechat() {
+        JPay.getIntance(AppointmentConfirmActivity.this).toPay(JPay.PayMode.WXPAY, "", new JPay.JPayListener() {
+            @Override
+            public void onPaySuccess() {
+                LogUtils.e("支付成功");
+            }
+
+            @Override
+            public void onPayError(int error_code, String message) {
+                LogUtils.e("支付失败>" + error_code + " " + message);
+            }
+
+            @Override
+            public void onPayCancel() {
+                LogUtils.e("取消了支付");
+            }
+        });
+    }
+
+    /**
+     * 支付宝支付
+     */
+    private void payWithAlipay() {
+        JPay.getIntance(AppointmentConfirmActivity.this).toPay(JPay.PayMode.ALIPAY, "", new JPay.JPayListener() {
+            @Override
+            public void onPaySuccess() {
+                LogUtils.e("支付成功");
+            }
+
+            @Override
+            public void onPayError(int error_code, String message) {
+                LogUtils.e("支付失败>" + error_code + " " + message);
+            }
+
+            @Override
+            public void onPayCancel() {
+                LogUtils.e("取消了支付");
+            }
+        });
     }
 
     private void setSelectedBg() {

@@ -10,9 +10,16 @@
     <!--网络权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--录音权限-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--支付宝权限 android.permission.INTERNET
+                    android.permission.ACCESS_NETWORK_STATE
+                    android.permission.ACCESS_WIFI_STATE
+                    android.permission.READ_PHONE_STATE
+                    android.permission.WRITE_EXTERNAL_STORAGE-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.baihua.common.base.BaseApplication"
@@ -100,7 +107,14 @@
         <activity
             android:name=".doctor.DoctorSearchActivity"
             android:windowSoftInputMode="adjustPan" />
+        <!--微信支付回调-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!--录音服务-->
         <service
             android:name="com.zlw.main.recorderlib.recorder.RecordService"
             android:enabled="true"

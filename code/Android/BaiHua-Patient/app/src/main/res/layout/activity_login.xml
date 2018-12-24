@@ -63,7 +63,7 @@
                 android:textSize="@dimen/text_size_16sp"
                 app:mPreStr=""
                 app:mSuffixStr="秒后重新发送"
-                app:mTotalSeconds="10" />
+                app:mTotalSeconds="60" />
 
         </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.baihua.yaya.home;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
@@ -32,6 +33,7 @@ import com.baihua.yaya.entity.FileEntity;
 import com.baihua.yaya.entity.MatchDoctorsEntity;
 import com.baihua.yaya.entity.form.AdForm;
 import com.baihua.yaya.entity.form.VisitForm;
+import com.baihua.yaya.helper.DialogHelper;
 import com.baihua.yaya.my.PhotoViewActivity;
 import com.baihua.yaya.util.CommonUtils;
 import com.baihua.yaya.util.Utils;
@@ -39,11 +41,13 @@ import com.baihua.yaya.view.recorder.IRecordButton;
 import com.baihua.yaya.view.recorder.MediaManager;
 import com.baihua.yaya.view.recorder.RecordButton;
 import com.baihua.yaya.widget.GlideImageLoader;
+import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.luck.picture.lib.PictureSelector;
@@ -150,6 +154,28 @@ public class HomepageFragment extends BaseFragment {
 
     @Override
     public void initMember() {
+
+        if (!PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
+            PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE)
+                    .rationale(new PermissionUtils.OnRationaleListener() {
+                        @Override
+                        public void rationale(ShouldRequest shouldRequest) {
+                            DialogHelper.showRationaleDialog(shouldRequest);
+                        }
+                    }).callback(new PermissionUtils.FullCallback() {
+                @Override
+                public void onGranted(List<String> permissionsGranted) {
+
+                }
+
+                @Override
+                public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                    if (!permissionsDeniedForever.isEmpty()) {
+                        DialogHelper.showOpenAppSettingDialog();
+                    }
+                }
+            }).request();
+        }
 
         RecordManager.getInstance().init(BaseApplication.instance, true);
 
@@ -374,6 +400,7 @@ public class HomepageFragment extends BaseFragment {
         mRecordVoice.setAudioRecord(new IRecordButton() {
             @Override
             public void ready() {
+
             }
 
             @Override
@@ -626,6 +653,7 @@ public class HomepageFragment extends BaseFragment {
      * 清空内容
      */
     private void clearContent() {
+
         homeEtName.setText("");
         homeEtAge.setText("");
         homeEtMobile.setText("");
@@ -634,8 +662,8 @@ public class HomepageFragment extends BaseFragment {
         homeEtDescription.setText("");
         homeRadioGroup.check(R.id.home_rb_female);
         if (!TextUtils.isEmpty(soundPath)) {
-            soundPath = "";
             if (FileUtils.delete(soundPath)) {
+                soundPath = "";
                 LogUtils.e("Del record voice file success !!!");
             }
             mPlayVoiceView.setVisibility(View.GONE);

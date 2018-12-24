@@ -1,5 +1,6 @@
 package com.baihua.yaya.view.recorder;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
@@ -13,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blankj.utilcode.constant.PermissionConstants;
-import com.blankj.utilcode.util.PermissionUtils;
 import com.baihua.yaya.R;
 import com.baihua.yaya.helper.DialogHelper;
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -235,75 +236,75 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        if (!PermissionUtils.isGranted(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE)) {
-            PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE)
-                    .rationale(new PermissionUtils.OnRationaleListener() {
-                        @Override
-                        public void rationale(ShouldRequest shouldRequest) {
-                            DialogHelper.showRationaleDialog(shouldRequest);
-                        }
-                    }).callback(new PermissionUtils.FullCallback() {
-                @Override
-                public void onGranted(List<String> permissionsGranted) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN: // 按下按钮
-                            getParent().requestDisallowInterceptTouchEvent(true);
-                            try {
-                                if (recordState != RECORD_ON) {
-                                    showVoiceDialog(0);
-                                    downY = event.getY();
-                                    if (mAudioRecorder != null) {
-                                        mAudioRecorder.ready();
-                                        recordState = RECORD_ON;
-                                        mAudioRecorder.start();
-                                        callRecordTimeThread();
-                                    }
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN: // 按下按钮
+                getParent().requestDisallowInterceptTouchEvent(true);
+                if (!PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
+                    PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.MICROPHONE)
+                            .rationale(new PermissionUtils.OnRationaleListener() {
+                                @Override
+                                public void rationale(ShouldRequest shouldRequest) {
+                                    DialogHelper.showRationaleDialog(shouldRequest);
                                 }
-                            } catch (Exception e) {
-                                Toast.makeText(mContext, "请检查录音权限是否开启", Toast.LENGTH_SHORT)
-                                        .show();
-                                mRecordDialog.dismiss();
-                                e.printStackTrace();
-                            }
+                            }).callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(List<String> permissionsGranted) {
 
-                            break;
-                        case MotionEvent.ACTION_MOVE: // 滑动手指
-                            float moveY = event.getY();
-                            if (downY - moveY > 50) {
-                                isCanceled = true;
-                                showVoiceDialog(1);
-                                mAudioRecorder.pause();
+                        }
+
+                        @Override
+                        public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                            if (!permissionsDeniedForever.isEmpty()) {
+                                DialogHelper.showOpenAppSettingDialog();
                             }
-                            if (downY - moveY < 20) {
-                                isCanceled = false;
-                                showVoiceDialog(0);
-                                mAudioRecorder.resume();
+                        }
+                    }).request();
+                } else {
+                    try {
+                        if (recordState != RECORD_ON) {
+                            showVoiceDialog(0);
+                            downY = event.getY();
+                            if (mAudioRecorder != null) {
+                                mAudioRecorder.ready();
+                                recordState = RECORD_ON;
+                                mAudioRecorder.start();
+                                callRecordTimeThread();
                             }
-                            break;
-                        case MotionEvent.ACTION_UP: // 松开手指
-                            if (recordState == RECORD_ON) {
-                                stopRecord();
-                            }
-                            getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                        //避免第一次录音询问权限时，影响触摸效果
-                        case MotionEvent.ACTION_CANCEL:
-                            if (recordState == RECORD_ON) {
-                                stopRecord();
-                            }
-                            getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
+                        }
+                    } catch (Exception e) {
+//                    Toast.makeText(mContext, "请检查录音权限是否开启", Toast.LENGTH_SHORT)
+//                            .show();
+                        mRecordDialog.dismiss();
+                        e.printStackTrace();
                     }
                 }
-
-                @Override
-                public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
-                    if (!permissionsDeniedForever.isEmpty()) {
-                        DialogHelper.showOpenAppSettingDialog();
-                    }
+                break;
+            case MotionEvent.ACTION_MOVE: // 滑动手指
+                float moveY = event.getY();
+                if (downY - moveY > 50) {
+                    isCanceled = true;
+                    showVoiceDialog(1);
+                    mAudioRecorder.pause();
                 }
-            }).request();
+                if (downY - moveY < 20) {
+                    isCanceled = false;
+                    showVoiceDialog(0);
+                    mAudioRecorder.resume();
+                }
+                break;
+            case MotionEvent.ACTION_UP: // 松开手指
+                if (recordState == RECORD_ON) {
+                    stopRecord();
+                }
+                getParent().requestDisallowInterceptTouchEvent(false);
+                break;
+            //避免第一次录音询问权限时，影响触摸效果
+            case MotionEvent.ACTION_CANCEL:
+                if (recordState == RECORD_ON) {
+                    stopRecord();
+                }
+                getParent().requestDisallowInterceptTouchEvent(false);
+                break;
         }
 
 

@@ -19,8 +19,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  */
 
 public class RxHttp {
-    private final String BASE_URL = "http://192.168.2.96:8080/";
-//    private final String BASE_URL = "http://192.168.2.44:8080/";
+//    private final String BASE_URL = "http://192.168.2.96:8080/";
+    private final String BASE_URL = "http://47.99.243.241/";
     private Map<String, Retrofit> mRetrofitMap = new HashMap<>();
 
     private RxHttp() {

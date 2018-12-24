@@ -158,13 +158,13 @@ public class MyVisitDetailsActivity extends BaseActivity {
     /**
      * 设置语音信息
      */
-    private void initVoiceLayout() {
+    private void initVoiceLayout(String voice) {
         playVoiceLayout.setVisibility(View.VISIBLE);
         mMaxItemWidth = (int) (ScreenUtils.getScreenWidth() * 0.7f);
         mMinItemWidth = (int) (ScreenUtils.getScreenWidth() * 0.15f);
         mAnimDrawable = (AnimationDrawable) ivPlayVoiceAnim.getDrawable();
 
-        mVoice = CommonUtils.base64ToFile(mVisitDetails.getVoiceDescribe());
+        mVoice = CommonUtils.base64ToFile(voice);
         long voiceLength = MediaManager.getSoundDuration(mVoice.getAbsolutePath());
         if (3000 <= voiceLength) {
             ViewGroup.LayoutParams layoutParams = playVoiceLayout.getLayoutParams();
@@ -188,13 +188,16 @@ public class MyVisitDetailsActivity extends BaseActivity {
                         VisitDetailsEntity.DoctorBean doctorBean = result.getDoctor();
                         VisitDetailsEntity.InfoBean infoBean = result.getInfo();
 
-                        if (null != infoBean && !TextUtils.isEmpty(mVisitDetails.getVoiceDescribe())) // 如果语音描述不为空
-                            initVoiceLayout();
-                        if (null != infoBean && !TextUtils.isEmpty(infoBean.getImage())) {
+                        if (null == infoBean)
+                            return;
+
+                        if (!TextUtils.isEmpty(infoBean.getVoiceDescribe())) // 如果语音描述不为空
+                            initVoiceLayout(infoBean.getVoiceDescribe());
+                        if (!TextUtils.isEmpty(infoBean.getImage())) {
                             images = Arrays.asList(infoBean.getImage().split(","));
                             mAdapter.setNewData(images);
                         }
-                        if (Constants.VISIT_STATUS_REPLIED.equals(mVisitDetails.getStatus())) { // 已回复的
+                        if (Constants.VISIT_STATUS_REPLIED.equals(infoBean.getStatus())) { // 已回复的
                             mDoctorInfo.setVisibility(View.VISIBLE);
                             mAnswerContent.setVisibility(View.VISIBLE);
                             initCheckRecycler();

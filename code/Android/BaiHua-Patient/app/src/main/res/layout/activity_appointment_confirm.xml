@@ -144,10 +144,10 @@
                 android:paddingEnd="@dimen/dimen_dp_12">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimary" />
+                    android:src="@drawable/ic_pay_wechat" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -179,10 +179,10 @@
                 android:paddingEnd="@dimen/dimen_dp_12">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimary" />
+                    android:src="@drawable/ic_pay_alipay" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -196,7 +196,7 @@
                 <ImageView
                     android:id="@+id/iv_alipay"
                     android:layout_width="24dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_24"
                     android:scaleType="centerCrop"
                     android:src="@drawable/radio" />
 
