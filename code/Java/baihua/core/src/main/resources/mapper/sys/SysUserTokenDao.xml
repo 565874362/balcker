@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.baihua.baihuamedical.modules.sys.dao.SysUserTokenDao">
+<mapper namespace="com.baihua.core.modules.sys.dao.SysUserTokenDao">
 
-	<select id="queryByToken" resultType="com.baihua.baihuamedical.modules.sys.entity.SysUserTokenEntity">
+	<select id="queryByToken" resultType="com.baihua.core.modules.sys.entity.SysUserTokenEntity">
 		select * from sys_user_token where token = #{value}
 	</select>
 </mapper>

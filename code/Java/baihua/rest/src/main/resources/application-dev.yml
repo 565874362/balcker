@@ -32,7 +32,22 @@ spring:
                     config:
                         multi-statement-allow: true
 
+baihua-rest:
+    token-id: token
+    file-prex: http://192.168.2.96:8080
+    upload-directory: D:\workspace\zhongyue\baihua\code\Java\baihua\files
+    token-expire-time: 15
+    captcha-expire-time: 60
+    rong-yun:
+        app-key: lmxuhwagl54cd
+        app-secret: KFfLyHbaSomZ
+    ali-sms:
+        key-id: LTAI1Div28u7o1f4
+        key-secret: kKXaW7qLmbQu8HEnlh2JMdcgpcTiuo
+        msg-sign-name: 房屋资产管理
+        msg-captcha-tel-code: SMS_150574941
+
 logging:
-    file: baihua-rest.log
-    path: log
+    file: rest.log
+    path: D:\workspace\zhongyue\baihua\code\Java\baihua\log
 
