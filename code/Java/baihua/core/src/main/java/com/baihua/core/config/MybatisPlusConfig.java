@@ -16,6 +16,7 @@
 
 package com.baihua.core.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +31,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
  * @since 2.0.0 2018-02-05
  */
 @Configuration
+@MapperScan("com.baihua.core.modules.*.dao")
 public class MybatisPlusConfig {
 
     /**

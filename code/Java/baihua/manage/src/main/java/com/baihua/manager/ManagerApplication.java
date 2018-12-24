@@ -6,7 +6,6 @@ import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,8 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Package com.baihua.baihuamedical
  * @date 2018年12月14日 13:43:25
  */
-@SpringBootApplication
-@MapperScan("com.baihua.core")
+@SpringBootApplication(scanBasePackages = "com.baihua")
 public class ManagerApplication implements ServletContainerInitializer {
 
 	public static void main(String[] args) {
