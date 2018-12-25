@@ -59,7 +59,7 @@ public class TokenEntity implements Serializable {
          * adeptEntities : null
          */
 
-        private long id;
+        private String id;
         private String name;
         private int gender;
         private int offId;
@@ -81,11 +81,11 @@ public class TokenEntity implements Serializable {
         private int isDel;
         private Object adeptEntities;
 
-        public long getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(long id) {
+        public void setId(String id) {
             this.id = id;
         }
 

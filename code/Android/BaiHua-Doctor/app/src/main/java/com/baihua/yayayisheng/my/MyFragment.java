@@ -2,6 +2,7 @@ package com.baihua.yayayisheng.my;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,17 +13,18 @@ import com.baihua.common.base.BaseFragment;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
-import com.baihua.yayayisheng.MainActivity;
 import com.baihua.yayayisheng.R;
 import com.baihua.yayayisheng.entity.AvatarEntity;
 import com.baihua.yayayisheng.entity.DoctorInfoEntity;
 import com.baihua.yayayisheng.entity.FileEntity;
 import com.baihua.yayayisheng.entity.form.AvatarForm;
+import com.baihua.yayayisheng.rcloud.RCUtils;
 import com.baihua.yayayisheng.util.CommonUtils;
 import com.baihua.yayayisheng.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -37,6 +39,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -153,7 +156,7 @@ public class MyFragment extends BaseFragment {
         }
         switch (view.getId()) {
             case R.id.my_iv_avatar:
-                showSingleCamera(getActivity());
+//                showSingleCamera(getActivity());
                 break;
             case R.id.my_ll_patient_info:
                 ActivityUtils.startActivity(MyPatientInfoActivity.class);

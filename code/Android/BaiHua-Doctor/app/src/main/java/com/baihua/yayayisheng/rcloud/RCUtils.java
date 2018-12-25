@@ -2,6 +2,7 @@ package com.baihua.yayayisheng.rcloud;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baihua.common.rx.Observers.ProgressObserver;
@@ -68,18 +69,17 @@ public class RCUtils {
                      *                 "令狐小影",
                      *                 Uri.parse("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541485393251&di=0bee903f56c4375f4174fcc2509669b7&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F908fa0ec08fa513dde0e76f8376d55fbb2fbd974.jpg"))
                      */
-                    String photo = SPUtils.getInstance("doctor").getString("photo", "");
-                    String name = SPUtils.getInstance("doctor").getString("photo", "");
-                    LogUtils.e(photo);
-                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, "患者", Uri.parse(photo)));
+//                    String photo = SPUtils.getInstance("doctor").getString("photo", "");
+//                    String name = SPUtils.getInstance("doctor").getString("name", "");
+//                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(userid, name, Uri.parse(photo)));
                     /**
                      * 设置消息体内是否携带用户信息。
                      *
                      * @param state 是否携带用户信息，true 携带，false 不携带。
                      */
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+//                    RongIM.getInstance().setMessageAttachedUserInfo(true);
 
-                    setUserInfo(context);
+//                    setUserInfo(context);
 
                 }
 
@@ -93,44 +93,6 @@ public class RCUtils {
                 }
             });
         }
-    }
-
-    static UserInfo userInfo;
-
-    private static void setUserInfo(Context context) {
-        /**
-         * 设置用户信息的提供者，供 RongIM 调用获取用户名称和头像信息。
-         *
-         * @param userInfoProvider 用户信息提供者。
-         * @param isCacheUserInfo  设置是否由 IMKit 来缓存用户信息。<br>
-         *                         如果 App 提供的 UserInfoProvider
-         *                         每次都需要通过网络请求用户数据，而不是将用户数据缓存到本地内存，会影响用户信息的加载速度；<br>
-         *                         此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。
-         * @see UserInfoProvider
-         */
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-
-            @Override
-            public UserInfo getUserInfo(String userId) {
-
-                RxHttp.getInstance().getSyncServer()
-                        .getAccount(CommonUtils.getToken(), userId)
-                        .compose(RxSchedulers.observableIO2Main(context))
-                        .subscribe(new ProgressObserver<AccountEntity>(context) {
-                            @Override
-                            public void onSuccess(AccountEntity result) {
-                                userInfo = new UserInfo(result.getInfo().getAccountId(), result.getInfo().getName(), Uri.parse(result.getInfo().getPhoto()));
-                            }
-
-                            @Override
-                            public void onFailure(Throwable e, String errorMsg) {
-                                LogUtils.e(errorMsg);
-                            }
-                        });
-                return userInfo;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
-            }
-
-        }, true);
     }
 
     /**
@@ -161,5 +123,15 @@ public class RCUtils {
     public static void startConversation(Context context, String targetId, String title) {
         RongIM.getInstance().startConversation(context, Conversation.ConversationType.PRIVATE, targetId, title);
     }
+
+    /**
+     * 刷新用户缓存数据。
+     *
+     * @param userInfo 需要更新的用户缓存数据。
+     */
+    public static void refreshUserInfo(UserInfo userInfo) {
+        RongIM.getInstance().refreshUserInfoCache(userInfo);
+    }
+
 
 }

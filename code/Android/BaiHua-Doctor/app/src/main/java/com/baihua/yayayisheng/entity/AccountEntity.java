@@ -23,7 +23,7 @@ public class AccountEntity implements Serializable {
         this.info = info;
     }
 
-    public static class InfoBean implements Serializable{
+    public static class InfoBean implements Serializable {
         /**
          * name : 牛医生
          * photo : http://192.168.2.96:8080/files/1545383805554/201812211716440.png
@@ -31,15 +31,6 @@ public class AccountEntity implements Serializable {
 
         private String name;
         private String photo;
-        private String accountId;
-
-        public String getAccountId() {
-            return accountId;
-        }
-
-        public void setAccountId(String accountId) {
-            this.accountId = accountId;
-        }
 
         public String getName() {
             return name;

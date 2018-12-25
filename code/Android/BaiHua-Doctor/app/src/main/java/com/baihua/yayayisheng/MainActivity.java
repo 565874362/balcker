@@ -1,12 +1,16 @@
 package com.baihua.yayayisheng;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,6 +19,7 @@ import com.baihua.common.base.BaseActivity;
 import com.baihua.common.rx.Observers.ProgressObserver;
 import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
+import com.baihua.yayayisheng.entity.AccountEntity;
 import com.baihua.yayayisheng.entity.RongCloudToken;
 import com.baihua.yayayisheng.home.PatientInfoFragment;
 import com.baihua.yayayisheng.my.MyFragment;
@@ -22,12 +27,16 @@ import com.baihua.yayayisheng.rcloud.RCUtils;
 import com.baihua.yayayisheng.util.CommonUtils;
 import com.baihua.yayayisheng.util.Utils;
 import com.baihua.yayayisheng.widget.MyPagerAdapter;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity {
 
@@ -80,10 +89,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initMember() {
 
-        if (Utils.isLogin(this)) {
-            getChatToken();
-        }
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTvTitle = findViewById(R.id.toolbar_tv_title);
 
@@ -124,6 +129,56 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        if (Utils.isLogin(this)) {
+            getChatToken();
+            String id = SPUtils.getInstance("doctor").getString("id", "");
+            String name = SPUtils.getInstance("doctor").getString("name", "");
+            String photo = SPUtils.getInstance("doctor").getString("photo", "");
+            RCUtils.refreshUserInfo(new UserInfo(id, name, Uri.parse(photo)));
+            setUserInfo(this);
+        }
+    }
+
+    UserInfo userInfo;
+
+    private void setUserInfo(Context context) {
+        /**
+         * 设置用户信息的提供者，供 RongIM 调用获取用户名称和头像信息。
+         *
+         * @param userInfoProvider 用户信息提供者。
+         * @param isCacheUserInfo  设置是否由 IMKit 来缓存用户信息。<br>
+         *                         如果 App 提供的 UserInfoProvider
+         *                         每次都需要通过网络请求用户数据，而不是将用户数据缓存到本地内存，会影响用户信息的加载速度；<br>
+         *                         此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。
+         * @see UserInfoProvider
+         */
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            @Override
+            public UserInfo getUserInfo(String userId) {
+
+                if (TextUtils.isEmpty(userId))
+                    return userInfo;
+
+                RxHttp.getInstance().getSyncServer()
+                        .getAccount(CommonUtils.getToken(), userId)
+                        .compose(RxSchedulers.observableIO2Main(context))
+                        .subscribe(new ProgressObserver<AccountEntity>(context) {
+                            @Override
+                            public void onSuccess(AccountEntity result) {
+                                userInfo = new UserInfo(userId, TextUtils.isEmpty(result.getInfo().getName()) ? "患者" : result.getInfo().getName(), Uri.parse(result.getInfo().getPhoto()));
+                            }
+
+                            @Override
+                            public void onFailure(Throwable e, String errorMsg) {
+                                LogUtils.e(errorMsg);
+                            }
+                        });
+                return userInfo;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+            }
+
+        }, true);
     }
 
     /**
@@ -187,6 +242,14 @@ public class MainActivity extends BaseActivity {
 //        transaction.add(R.id.rong_content, fragment);
 //        transaction.commit();
         return fragment;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }
