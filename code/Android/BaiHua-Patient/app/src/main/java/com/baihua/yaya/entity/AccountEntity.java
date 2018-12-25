@@ -31,15 +31,6 @@ public class AccountEntity implements Serializable {
 
         private String name;
         private String photo;
-        private String accountId;
-
-        public String getAccountId() {
-            return accountId;
-        }
-
-        public void setAccountId(String accountId) {
-            this.accountId = accountId;
-        }
 
         public String getName() {
             return name;

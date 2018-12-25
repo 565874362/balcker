@@ -81,6 +81,7 @@ public class DoctorDetailsActivity extends BaseActivity {
 
     private String mDoctorId;
     private String mAccoutId;
+    private String mDoctorName;
     private String mRegisteredFee; // 就诊费用
 
     @Override
@@ -117,7 +118,9 @@ public class DoctorDetailsActivity extends BaseActivity {
                         if (!Utils.isListEmpty(result.getPage().getRecords())) {
                             doctorDetailsTvComment.setText(String.format("评价（%s）", String.valueOf(result.getPage().getTotal())));
                             mAdapter.setNewData(result.getPage().getRecords());
-                            mAdapter.addFooterView(getCommentFooterView());
+                            if (result.getPage().getRecords().size() > 3) { // 显示查看更多
+                                mAdapter.addFooterView(getCommentFooterView());
+                            }
                         } else {
                             doctorDetailsTvComment.setVisibility(View.GONE);
                         }
@@ -138,6 +141,7 @@ public class DoctorDetailsActivity extends BaseActivity {
                     @Override
                     public void onSuccess(DoctorInfoEntity result) {
                         mAccoutId = result.getInfo().getAccountId();
+                        mDoctorName = result.getInfo().getName();
                         setContentText(result);
                     }
 
@@ -210,7 +214,7 @@ public class DoctorDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.doctor_details_tv_advisory:
-                RCUtils.startConversation(this, mAccoutId, "患者");
+                RCUtils.startConversation(this, mAccoutId, mDoctorName);
                 break;
             case R.id.doctor_details_tv_visiting:
                 Map<String, String> data = new HashMap<>();

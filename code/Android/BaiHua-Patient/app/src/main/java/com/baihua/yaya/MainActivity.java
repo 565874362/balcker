@@ -1,5 +1,6 @@
 package com.baihua.yaya;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -27,6 +29,7 @@ import com.baihua.yaya.rcloud.RCUtils;
 import com.baihua.yaya.util.CommonUtils;
 import com.baihua.yaya.widget.MyPagerAdapter;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 
 import java.util.ArrayList;
@@ -93,10 +96,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initMember() {
 
-        if (com.baihua.yaya.util.Utils.isLogin(this)) {
-            getChatToken();
-        }
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTvTitle = findViewById(R.id.toolbar_tv_title);
 
@@ -141,6 +140,55 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
+        if (com.baihua.yaya.util.Utils.isLogin(this)) {
+            getChatToken();
+            String id = SPUtils.getInstance("account").getString("id", "");
+            RCUtils.refreshUserInfo(new UserInfo(id, "患者", Uri.parse(""))); // 主要是更新患者的名字
+            setUserInfo(this);
+        }
+
+    }
+
+    UserInfo userInfo;
+
+    private void setUserInfo(Context context) {
+        /**
+         * 设置用户信息的提供者，供 RongIM 调用获取用户名称和头像信息。
+         *
+         * @param userInfoProvider 用户信息提供者。
+         * @param isCacheUserInfo  设置是否由 IMKit 来缓存用户信息。<br>
+         *                         如果 App 提供的 UserInfoProvider
+         *                         每次都需要通过网络请求用户数据，而不是将用户数据缓存到本地内存，会影响用户信息的加载速度；<br>
+         *                         此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。
+         * @see UserInfoProvider
+         */
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            @Override
+            public UserInfo getUserInfo(String userId) {
+
+                if (TextUtils.isEmpty(userId))
+                    return userInfo;
+
+                RxHttp.getInstance().getSyncServer()
+                        .getAccount(CommonUtils.getToken(), userId)
+                        .compose(RxSchedulers.observableIO2Main(context))
+                        .subscribe(new ProgressObserver<AccountEntity>(context) {
+                            @Override
+                            public void onSuccess(AccountEntity result) {
+                                userInfo = new UserInfo(userId, result.getInfo().getName(), Uri.parse(result.getInfo().getPhoto()));
+                            }
+
+                            @Override
+                            public void onFailure(Throwable e, String errorMsg) {
+                                LogUtils.e(errorMsg);
+                            }
+                        });
+                return userInfo;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+            }
+
+        }, true);
     }
 
     /**

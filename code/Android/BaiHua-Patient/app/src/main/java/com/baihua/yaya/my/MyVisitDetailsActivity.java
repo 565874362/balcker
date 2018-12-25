@@ -243,7 +243,7 @@ public class MyVisitDetailsActivity extends BaseActivity {
         layoutReplyAdvisory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RCUtils.startConversation(MyVisitDetailsActivity.this, doctorBean.getAccountId(), "患者");
+                RCUtils.startConversation(MyVisitDetailsActivity.this, doctorBean.getAccountId(), doctorBean.getName());
             }
         });
 

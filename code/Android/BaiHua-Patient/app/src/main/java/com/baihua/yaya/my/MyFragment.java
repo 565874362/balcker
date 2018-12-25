@@ -25,6 +25,7 @@ import com.baihua.yaya.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -242,6 +243,9 @@ public class MyFragment extends BaseFragment {
      */
     private void uploadAvatar(String s) {
         Utils.showUserHead(getActivity(), myIvAvatar, s);
+        String id = SPUtils.getInstance("account").getString("id", "");
+        RCUtils.refreshUserInfo(new UserInfo(id, "患者", Uri.parse(s)));
+
         RxHttp.getInstance().getSyncServer()
                 .setAvatar(CommonUtils.getToken(), new AvatarForm(s))
                 .compose(RxSchedulers.observableIO2Main(getActivity()))
@@ -257,4 +261,5 @@ public class MyFragment extends BaseFragment {
                     }
                 });
     }
+
 }

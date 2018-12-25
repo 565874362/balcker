@@ -76,6 +76,8 @@ public class AppointmentConfirmActivity extends BaseActivity {
         if (getIntent().hasExtra("registrationId")) {
             String registrationId = (String) getIntent().getSerializableExtra("registrationId");
             getRegisteredDetails(registrationId);
+            ivWechat.setImageResource(R.drawable.radio_fille);
+            ivAlipay.setImageResource(R.drawable.radio);
         }
 
     }

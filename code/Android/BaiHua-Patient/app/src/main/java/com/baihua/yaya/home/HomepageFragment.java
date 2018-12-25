@@ -587,7 +587,7 @@ public class HomepageFragment extends BaseFragment {
             RxHttp.getInstance().getSyncServer()
                     .upLoadFile(token, partMap)
                     .compose(RxSchedulers.observableIO2Main(getActivity()))
-                    .subscribe(new ProgressObserver<FileEntity>(getActivity()) {
+                    .subscribe(new ProgressObserver<FileEntity>(getActivity(), true, "正在上传图片...") {
                         @Override
                         public void onSuccess(FileEntity result) {
                             LogUtils.e(result.getUrls());

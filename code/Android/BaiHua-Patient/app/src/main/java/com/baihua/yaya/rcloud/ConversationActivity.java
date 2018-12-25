@@ -23,7 +23,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         String title = getIntent().getData().getQueryParameter("title");
         if (TextUtils.isEmpty(title))
-            mTvTitle.setText("Hello,Lucky");
+            mTvTitle.setText("吖吖医疗");
         else
             mTvTitle.setText(title);
 

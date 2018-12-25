@@ -109,7 +109,10 @@ public class LoginActivity extends BaseActivity {
                         LogUtils.e(result.getToken());
                         SPUtils.getInstance("token").put("token", result.getToken());
 //                        getChatToken();
-                        SPUtils.getInstance("account").put("photo", result.getInfo().getPhoto());
+                        if (null != result.getInfo()) {
+                            SPUtils.getInstance("account").put("id", result.getInfo().getId());
+                            SPUtils.getInstance("account").put("photo", result.getInfo().getPhoto());
+                        }
                         Utils.gotoActivity(LoginActivity.this, MainActivity.class, true, null, null);
                     }
 
