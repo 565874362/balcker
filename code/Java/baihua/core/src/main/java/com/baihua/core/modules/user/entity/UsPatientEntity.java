@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+
+import javax.xml.transform.Result;
 
 /**
  * 患者
@@ -17,6 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * @date 2018-12-06 10:17:17
  */
 @TableName("us_patient")
+@ApiModel(value = "患者")
 public class UsPatientEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

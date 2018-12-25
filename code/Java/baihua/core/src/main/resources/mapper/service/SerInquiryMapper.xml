@@ -116,7 +116,7 @@ AND ud.hos_id = bh.id
         <if test="hospitalNname != null">
             AND bh.`name` LIKE CONCAT('%',#{hospitalNname},'%')
         </if>
-        <if test="startDate != null and startDate!=null">
+        <if test="startDate != null and startDate!=''">
             AND sq.gmt_create BETWEEN #{startDate}
             AND #{endDate}
         </if>
@@ -155,7 +155,7 @@ FROM
             <if test="hospitalNname != null">
                 AND bh.`name` LIKE CONCAT('%',#{hospitalNname},'%')
             </if>
-            <if test="startDate != null and startDate!=null">
+            <if test="startDate != null and startDate!=''">
                 AND sq.gmt_create BETWEEN #{startDate}
                 AND #{endDate}
             </if>
@@ -163,4 +163,62 @@ FROM
 
 ) total
     </select>
+    <select id="inqueryList" resultType="java.util.Map">
+        SELECT
+        si.id as inquiryid,
+        up.`name`,
+        si.gender,
+        si.age,
+        si.character_describe,
+        si.gmt_create
+        FROM
+        ser_inquiry si,
+        us_patient up
+        <where>
+            si.patient_id = up.id
+            <if test="gender != null">
+            and si.gender = #{gender}
+            </if>
+            <if test="startDate != null and startDate!=''">
+                AND si.gmt_create BETWEEN #{startDate}
+                AND #{endDate}
+            </if>
+        </where>
+    </select>
+    <select id="inqueryListTotal" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM
+        (
+        SELECT
+        si.id as inquiryid,
+        up.`name`,
+        si.gender,
+        si.age,
+        si.character_describe,
+        si.gmt_create
+        FROM
+        ser_inquiry si,
+        us_patient up
+        <where>
+            si.patient_id = up.id
+            <if test="gender !=null">
+                and si.gender = #{gender}
+            </if>
+            <if test="startDate != null and startDate!=''">
+                AND si.gmt_create BETWEEN #{startDate}
+                AND #{endDate}
+            </if>
+        </where>
+
+        ) total
+    </select>
+    <delete id="delById">
+        DELETE
+FROM
+	ser_inquiry
+WHERE
+	ser_inquiry.id =#{id}
+    </delete>
+
 </mapper>

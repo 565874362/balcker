@@ -2,6 +2,7 @@ package com.baihua.manager.modules.service.service;
 
 import com.baihua.core.common.utils.PageUtils;
 import com.baihua.core.modules.service.entity.SerRegistrationEntity;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;
@@ -18,6 +19,8 @@ public interface SerRegistrationService extends IService<SerRegistrationEntity> 
     PageUtils queryPage(Map<String, Object> params);
 
     void registrate(SerRegistrationEntity serRegistrationEntity);
+
+    IPage<Map<String,Object>> registList(IPage<SerRegistrationEntity> page,Long boid,Integer gender,Integer status,String startDate,String endDate);
 
 }
 

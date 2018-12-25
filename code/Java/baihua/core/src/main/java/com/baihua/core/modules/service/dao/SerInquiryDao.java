@@ -27,4 +27,10 @@ public interface SerInquiryDao extends BaseMapper<SerInquiryEntity> {
 	long queryInquiryTotal(@Param("officeid") long officeid, @Param("patientid") long patientid,@Param("hospitalNname") String hospitalNname, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	IPage<Map<String,Object>> queryInquiry(Page<SerInquiryEntity> page,@Param("officeid") long officeid, @Param("patientid") long patientid,@Param("hospitalNname") String hospitalNname, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+	long inqueryListTotal(@Param("gender") Integer gender, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+	IPage<Map<String,Object>> inqueryList(@Param("page") Page<SerInquiryEntity> page,@Param("gender") Integer gender, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+	void delById(@Param("id") Long id);
 }

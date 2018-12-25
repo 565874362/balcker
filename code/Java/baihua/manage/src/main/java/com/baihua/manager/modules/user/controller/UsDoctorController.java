@@ -3,7 +3,6 @@ package com.baihua.manager.modules.user.controller;
 import com.baihua.core.common.enums.Constants;
 import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
-import com.baihua.core.common.validator.ValidatorUtils;
 
 import com.baihua.core.modules.basic.service.IDoctorMatchService;
 import com.baihua.core.modules.service.entity.SerAdeptEntity;
@@ -20,17 +19,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 /**
@@ -42,7 +38,7 @@ import java.util.stream.Collectors;
  */
 @Api(tags = "后台医生")
 @RestController
-@RequestMapping("/user/usdoctor")
+@RequestMapping("/sys/usdoctor")
 public class UsDoctorController {
 
     @Autowired
@@ -61,13 +57,13 @@ public class UsDoctorController {
      * 后台医生列表
      */
     @ApiOperation("后台医生列表")
-    @PostMapping("/list")
-    public R list(@RequestBody QueryDoctorInput doctorInput){
+    @PostMapping("/querylist")
+    public R querylist(@RequestBody FindInput findInput){
         LambdaQueryWrapper<UsDoctorEntity> queryWrapper = new QueryWrapper<UsDoctorEntity>().lambda();
-        queryWrapper.eq(UsDoctorEntity::getStatus, doctorInput.getSta())
-         .or().like(!StringUtils.isEmpty(doctorInput.getHosname()), UsDoctorEntity::getHosName, doctorInput.getHosname())
-                .or().between(!StringUtils.isEmpty(doctorInput.getStartDate()),UsDoctorEntity::getGmtCreate,doctorInput.getStartDate(),doctorInput.getEndDate());
-        IPage<UsDoctorEntity> page = usDoctorService.page(doctorInput.getPage(), queryWrapper);
+        queryWrapper.eq(UsDoctorEntity::getStatus, findInput.getState())
+         .or().like(!StringUtils.isEmpty(findInput.getHosname()), UsDoctorEntity::getHosName, findInput.getHosname())
+                .or().between(!StringUtils.isEmpty(findInput.getStartDate()),UsDoctorEntity::getGmtCreate,findInput.getStartDate(),findInput.getEndDate());
+        IPage<UsDoctorEntity> page = usDoctorService.page(findInput.getPage(), queryWrapper);
         return R.success().addResData("page", page);
     }
 
@@ -153,11 +149,12 @@ public class UsDoctorController {
         return R.success();
     }
 
-    @ApiModel("查询参数")
+
+    @ApiModel("查询")
     @Data
-    private static class QueryDoctorInput extends PageQuery<UsDoctorEntity> {
+    private static class FindInput extends PageQuery<UsDoctorEntity>{
         @ApiModelProperty("医生状态")
-        private Integer sta;
+        private Integer state;
         @ApiModelProperty("单位名称")
         private String hosname;
         @ApiModelProperty("查询开始时间")

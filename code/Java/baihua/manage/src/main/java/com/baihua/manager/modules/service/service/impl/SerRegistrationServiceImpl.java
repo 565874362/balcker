@@ -30,6 +30,9 @@ public class SerRegistrationServiceImpl extends ServiceImpl<SerRegistrationDao, 
 	@Autowired
 	private UsDoctorDao doctorDao;
 
+	@Autowired
+	private SerRegistrationDao registrationDao;
+
 	@Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SerRegistrationEntity> page = this.page(
@@ -66,5 +69,11 @@ public class SerRegistrationServiceImpl extends ServiceImpl<SerRegistrationDao, 
 		doctorDao.updateById(doctorEntity);
 		serRegistrationEntity.setStatus(Constants.RegistrationStatus.unpaid.getCode());
 		baseMapper.insert(serRegistrationEntity);
+	}
+
+	@Override
+	public IPage<Map<String, Object>> registList(IPage<SerRegistrationEntity> page, Long boid, Integer gender, Integer status, String startDate, String endDate) {
+		page.setTotal(registrationDao.registListTotal(boid,gender,status,startDate,endDate));
+		return registrationDao.registList(page,boid,gender,status,startDate,endDate);
 	}
 }

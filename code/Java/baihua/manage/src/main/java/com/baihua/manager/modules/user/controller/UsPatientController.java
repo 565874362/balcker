@@ -4,8 +4,10 @@ import com.baihua.core.common.utils.PageQuery;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.common.validator.ValidatorUtils;
 import com.baihua.core.modules.service.entity.SerInquiryEntity;
+import com.baihua.core.modules.user.entity.UsAccountEntity;
 import com.baihua.core.modules.user.entity.UsPatientEntity;
 import com.baihua.manager.modules.service.service.SerInquiryService;
+import com.baihua.manager.modules.user.service.UsAccountService;
 import com.baihua.manager.modules.user.service.UsPatientService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -39,6 +41,9 @@ public class UsPatientController {
 
     @Autowired
     private SerInquiryService inquiryService;
+
+    @Autowired
+    private UsAccountService usAccountService;
 
    /* @ApiOperation("获取图片")
     @GetMapping("/photo")
@@ -74,12 +79,13 @@ public class UsPatientController {
      * 后台患者状态修改
      */
     @ApiOperation("后台患者状态修改")
-    @PostMapping("/updateIsdel")
-    public R updateIsdel(@PathVariable UpdateIsDelInput updateIsDelInput){
-        UsPatientEntity usPatientEntity = new UsPatientEntity();
-        usPatientEntity.setId(updateIsDelInput.getPatientId());
-        usPatientEntity.setIsDel(updateIsDelInput.getState());
-        usPatientService.updateById(usPatientEntity);
+    @GetMapping("/updateIsdel/{patientid}/{state}")
+    public R updateIsdel(@PathVariable Long patientid,Integer state){
+        LambdaQueryWrapper<UsAccountEntity> queryWrapper = new LambdaQueryWrapper<UsAccountEntity>()
+                .eq(UsAccountEntity::getSId,patientid);
+        UsAccountEntity usAccountEntity = usAccountService.getOne(queryWrapper);
+        usAccountEntity.setStatus(state);
+        usAccountService.updateById(usAccountEntity);
         return R.success();
     }
     /**
@@ -149,8 +155,6 @@ public class UsPatientController {
         @ApiModelProperty("患者id")
         private Long patientId;
 
-        @ApiModelProperty("状态")
-        private Integer state;
     }
 
 }

@@ -10,8 +10,10 @@ import com.baihua.core.modules.service.entity.SerInquiryEntity;
 import com.baihua.core.modules.user.entity.UsDoctorEntity;
 import com.baihua.manager.modules.service.service.SerInquiryService;
 import com.baihua.manager.modules.user.service.UsDoctorService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,9 +47,9 @@ public class SerInquiryController {
 
 
 	/**
-	 * 后台患者查看
+	 * 患者会话历史
 	 */
-    @ApiOperation("后台患者查看")
+    @ApiOperation("患者会话历史")
 	@PostMapping("/list")
 	public R list(@RequestBody QueryInquiry queryInquiry) {
     	IPage<Map<String,Object>> list= serInquiryService.queryInquiry(queryInquiry.getPage(),queryInquiry.getOfficeid(),queryInquiry.getOfficeid(),queryInquiry.getHospitalName(),queryInquiry.getStartDate(),queryInquiry.getEndDate());
@@ -77,7 +79,15 @@ public class SerInquiryController {
 		return R.success().addResData(data);
 	}
 
-
+	/**
+	 * 病情列表
+	 */
+	@ApiOperation("病情列表")
+	@PostMapping("/inqueryList")
+	public R inqueryList(@RequestBody InquiryListInput listInput) {
+		IPage<Map<String,Object>> list = serInquiryService.inqueryList(listInput.getPage(),listInput.getGender(),listInput.getStartDate(),listInput.getEndDate());
+		return R.success().addResData("data",list);
+	}
 
 	/**
 	 * 修改
@@ -91,9 +101,10 @@ public class SerInquiryController {
 	/**
 	 * 删除
 	 */
-	@RequestMapping("/delete")
-	public R delete(@RequestBody Long[] ids) {
-		serInquiryService.removeByIds(Arrays.asList(ids));
+	@ApiOperation("问诊删除")
+	@GetMapping("/delete/{id}")
+	public R delete(@PathVariable Long id) {
+		serInquiryService.delById(id);
 		return R.success();
 	}
 
@@ -128,5 +139,27 @@ public class SerInquiryController {
 		 */
 		@ApiModelProperty("结束时间")
 		private String endDate;
+	}
+
+	@ApiModel("病情列表查看")
+	@Data
+	private static class InquiryListInput extends PageQuery<SerInquiryEntity> {
+		/**
+		 * 患者性别
+		 */
+		@ApiModelProperty("患者性别")
+		private Integer gender;
+
+		/**
+		 * 开始时间
+		 */
+		@ApiModelProperty("开始时间")
+		private String startDate;
+		/**
+		 * 结束时间
+		 */
+		@ApiModelProperty("结束时间")
+		private String endDate;
+
 	}
 }

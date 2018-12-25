@@ -5,10 +5,11 @@ import com.baihua.core.common.utils.PageUtils;
 import com.baihua.core.common.utils.R;
 import com.baihua.core.modules.service.entity.SerCommentEntity;
 import com.baihua.manager.modules.service.service.SerCommentService;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,15 @@ public class SerCommentController {
         PageUtils page = serCommentService.queryPage(params);
         return R.success().addResData("page", page);
     }
-
+    /**
+     * 评论列表
+     */
+    @ApiOperation("评论列表")
+    @PostMapping("/commentlist")
+    public R commentlist(@RequestBody CommentInput commentInput){
+        IPage<Map<String,Object>> list = serCommentService.commentlist(commentInput.getPage(),commentInput.getOffid(),commentInput.getHosname(),commentInput.getStartDate(),commentInput.getEndDate());
+        return R.success().addResData("data",list);
+    }
 
     /**
      * 信息
@@ -100,5 +109,18 @@ public class SerCommentController {
         @NotEmpty(message = "评论信息不能为空")
         private String content;
 
+    }
+
+    @Data
+    @ApiModel("评论列表参数")
+    private static class CommentInput extends PageQuery<SerCommentEntity>{
+        @ApiModelProperty("科室id")
+        private long offid;
+        @ApiModelProperty("单位名称")
+        private String hosname;
+        @ApiModelProperty("开始时间")
+        private String startDate;
+        @ApiModelProperty("开始时间")
+        private String endDate;
     }
 }

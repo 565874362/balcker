@@ -7,7 +7,6 @@ import com.baihua.core.modules.service.entity.SerInquiryEntity;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
 /**
  * 问诊
  *
@@ -22,5 +21,9 @@ public interface SerInquiryService extends IService<SerInquiryEntity> {
     IPage<SerInquiryEntity> selectDocterIndexPage(Page<SerInquiryEntity> page, Long doctorId);
 
     IPage<Map<String,Object>> queryInquiry(Page<SerInquiryEntity> page, long officeid, long patientid,String hospitalNname,  String startDate, String endDate);
+
+    IPage<Map<String,Object>> inqueryList(Page<SerInquiryEntity> page,Integer gender, String startDate, String endDate);
+
+    void delById(Long id);
 }
 

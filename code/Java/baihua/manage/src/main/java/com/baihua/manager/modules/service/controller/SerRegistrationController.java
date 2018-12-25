@@ -79,13 +79,33 @@ public class SerRegistrationController {
         IPage content = serRegistrationService.page(queryByDoctor.getPage(), queryWrapper);
         return R.success().addResData("data",content);
     }
-
     /**
-     * 删除
+     * 后台挂号列表
      */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-        serRegistrationService.removeByIds(Arrays.asList(ids));
+    @ApiOperation("后台挂号列表")
+    @PostMapping("/registList")
+    public R registList(@RequestBody RegistListInput registListInput){
+        IPage<Map<String,Object>> querylist = serRegistrationService.registList(registListInput.getPage(),registListInput.getBoid(),registListInput.getGender(),registListInput.getStatus(),registListInput.getStartDate(),registListInput.getEndDate());
+        return R.success().addResData("data",querylist);
+    }
+    /**
+     * 后台接诊（修改状态）
+     */
+    @ApiOperation("后台接诊（修改状态）")
+    @GetMapping("/updateState/{id}")
+    public R updateState(@PathVariable Long id){
+        SerRegistrationEntity registrationEntity = serRegistrationService.getById(id);
+        registrationEntity.setStatus(Constants.RegistrationStatus.reception.getCode());
+        serRegistrationService.updateById(registrationEntity);
+        return R.success();
+    }
+    /**
+     * 挂号删除
+     */
+    @ApiOperation("挂号删除")
+    @RequestMapping("/delete/{id}")
+    public R delete(@PathVariable Long id){
+        serRegistrationService.removeById(id);
         return R.success();
     }
 
@@ -150,5 +170,20 @@ public class SerRegistrationController {
 
     @ApiModel("患者挂号列表")
     private static class PatientListInput extends PageQuery<SerRegistrationEntity> {
+    }
+    @ApiModel("挂号列表条件")
+    @Data
+    private static  class  RegistListInput extends PageQuery<SerRegistrationEntity>{
+        @ApiModelProperty("科室id")
+        private long boid;
+        @ApiModelProperty("性别")
+        private Integer gender;
+        @ApiModelProperty("状态")
+        private Integer status;
+        @ApiModelProperty("开始时间")
+        private String startDate;
+        @ApiModelProperty("结束时间")
+        private String endDate;
+
     }
 }

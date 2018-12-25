@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baihua.core.modules.user.dao.UsPatientDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.baihua.core.modules.user.entity.UsPatientEntity" id="usPatientMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="photo" column="photo"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="isDel" column="is_del"/>
+    </resultMap>
+
+    <select id="queryList" resultType="java.util.Map">
+          SELECT
+	ua.account AS patientphone,
+	up.id AS upid,
+	ua.gmt_create,
+	ua.`status`
+FROM
+	us_patient up,
+	us_account ua
+<where>
+	up.id = ua.s_id
+    <if test="startDate != null and startDate!=''">
+        AND up.gmt_create BETWEEN #{startDate}
+        AND #{endDate}
+    </if>
+</where>
+        </select>
+    <select id="queryListTotal" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM
+        (
+        SELECT
+        ua.account AS patientphone,
+        up.id AS upid,
+        ua.gmt_create,
+        ua.`status`
+        FROM
+        us_patient up,
+        us_account ua
+        <where>
+            up.id = ua.s_id
+            <if test="startDate != null and startDate!=''">
+                AND up.gmt_create BETWEEN #{startDate}
+                AND #{endDate}
+            </if>
+        </where>
+
+        ) total
+    </select>
+</mapper>

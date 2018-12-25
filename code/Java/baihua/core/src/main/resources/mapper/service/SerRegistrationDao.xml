@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baihua.core.modules.service.dao.SerRegistrationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.baihua.core.modules.service.entity.SerRegistrationEntity" id="serRegistrationMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="phone" column="phone"/>
+        <result property="visitTime" column="visit_time"/>
+        <result property="timePart" column="time_part"/>
+        <result property="patientId" column="patient_id"/>
+        <result property="doctorId" column="doctor_id"/>
+        <result property="scheduleId" column="schedule_id"/>
+        <result property="fee" column="fee"/>
+        <result property="status" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="isDel" column="is_del"/>
+    </resultMap>
+    <select id="registList" resultType="java.util.Map">
+        SELECT
+	sr.id,
+    up.`name` as upname,
+	sr.gender,
+	sr.age,
+    bo.`name` as boname,
+	sr.phone,
+    sr.fee,
+	sr.gmt_modified,
+	sr.gmt_create,
+	sr.`status`
+FROM
+    ser_registration sr,
+	us_doctor ud,
+	us_patient up,
+	bas_office bo
+<where>
+	sr.doctor_id = ud.id
+AND sr.patient_id = up.id
+AND ud.off_id = bo.id
+<if test="boid!=null and boid!=''">
+and bo.id=#{boid}
+</if>
+    <if test="gender!=null and gender!=''">
+        and sr.gender=#{gender}
+    </if>
+    <if test="status!=null and status!=''">
+        AND sr.`status` = #{status}
+    </if>
+    <if test="startDate!=null and startDate!=''">
+        and sr.gmt_create BETWEEN #{startDate} and #{endDate}
+    </if>
+    order by sr.gmt_create desc
+</where>
+    </select>
+    <select id="registListTotal" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM(
+        SELECT
+        sr.id,
+        up.`name` as upname,
+        sr.gender,
+        sr.age,
+        bo.`name` as boname,
+        sr.phone,
+        sr.fee,
+        sr.gmt_modified,
+        sr.gmt_create,
+        sr.`status`
+        FROM
+        ser_registration sr,
+        us_doctor ud,
+        us_patient up,
+        bas_office bo
+        <where>
+            sr.doctor_id = ud.id
+            AND sr.patient_id = up.id
+            AND ud.off_id = bo.id
+            <if test="boid!=null and boid!=''">
+                and bo.id=#{boid}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and sr.gender=#{gender}
+            </if>
+            <if test="status!=null and status!=''">
+                AND sr.`status` = #{status}
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and sr.gmt_create BETWEEN #{startDate} and #{endDate}
+            </if>
+        </where>)
+total
+
+    </select>
+
+
+</mapper>
