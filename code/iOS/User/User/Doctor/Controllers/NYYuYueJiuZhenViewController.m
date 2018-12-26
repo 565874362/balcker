@@ -223,7 +223,8 @@
             cell.inputTF.placeholder = @"请输入实际年龄";
             cell.inputTF.keyboardType = UIKeyboardTypePhonePad;
             _ageTF = cell.inputTF;
-            _ageTF.delegate = nil;
+            _ageTF.delegate = self;
+            _ageTF.maxLength = 2;
             return cell;
         }else if (indexPath.row == 2){
             NYRegisterChoiceSexCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYChoiceSexCellID"];
@@ -246,7 +247,8 @@
             cell.inputTF.placeholder = @"请输入联系电话";
             cell.inputTF.keyboardType = UIKeyboardTypePhonePad;
             _phoneTF = cell.inputTF;
-            _phoneTF.delegate = nil;
+            _phoneTF.delegate = self;
+            _phoneTF.maxLength = 11;
             return cell;
         }
     }else if (indexPath.section == 1){
@@ -286,29 +288,93 @@
     [_ageTF resignFirstResponder];
     [_phoneTF resignFirstResponder];
     
-    WEAKSELF
-    [PPHTTPRequest GetChuZhenTimeListInfoWithParameters:self.doctorID success:^(id response) {
-        [SVProgressHUD dismiss];
-        if ([response[@"code"] integerValue] == 0) {
-            NSArray * listArr = response[@"data"][@"diagnoseList"];
-            
-            [_dataArray removeAllObjects];
-            for (NSDictionary *datc in listArr) {
-                NYJiuZhenTimeModel * timeModel = [NYJiuZhenTimeModel mj_objectWithKeyValues:datc];
-                [_dataArray addObject:timeModel];
+    if (textField == _timeTF) {
+        WEAKSELF
+        [PPHTTPRequest GetChuZhenTimeListInfoWithParameters:self.doctorID success:^(id response) {
+            [SVProgressHUD dismiss];
+            if ([response[@"code"] integerValue] == 0) {
+                NSArray * listArr = response[@"data"][@"diagnoseList"];
+                
+                [_dataArray removeAllObjects];
+                for (NSDictionary *datc in listArr) {
+                    NYJiuZhenTimeModel * timeModel = [NYJiuZhenTimeModel mj_objectWithKeyValues:datc];
+                    [_dataArray addObject:timeModel];
+                }
+                
+                [self initTimeView];
+            }else{
+                MYALERT(response[@"msg"]);
             }
-            
-            [self initTimeView];
-        }else{
-            MYALERT(response[@"msg"]);
-        }
-    } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        MYALERT(@"请求失败");
-    }];
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            MYALERT(@"请求失败");
+        }];
+    }else if (textField == _ageTF || textField == _phoneTF){
+        return YES;
+    }
+    
     
     return NO;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //如果是限制只能输入数字的文本框
+    if (_ageTF == textField) {
+        return [self validateNumber1:string];
+    }else if (_phoneTF == textField){
+        return [self validateNumber2:string];
+    }
+    //否则返回yes,不限制其他textfield
+    return YES;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber1:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_ageTF.text.length == 0 && [number isEqualToString:@"0"]) {
+        res = NO;
+    }
+    
+    
+    return res;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber2:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_phoneTF.text.length == 0 && ![number isEqualToString:@"1"]) {
+        res = NO;
+    }
+    
+    return res;
+}
+
 
 #pragma mark - 初始化选择时间view
 - (void)initTimeView

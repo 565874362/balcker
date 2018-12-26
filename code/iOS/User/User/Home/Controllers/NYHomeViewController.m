@@ -145,6 +145,8 @@
     
     [self setupRefresh];
     [self.tableView.mj_header beginRefreshing];
+    
+    [self checkVersion];
 
 }
 
@@ -521,10 +523,14 @@
             NYHomeNameAndAgeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeNameAndAgeCellID"];
             self.nameTF = cell.nameTF;
             self.ageTF = cell.ageTF;
+            self.ageTF.maxLength = 2;
+            self.ageTF.delegate = self;
             return cell;
         }else if (indexPath.row == 1){
             NYHomeSexAndPhoneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYHomeSexAndPhoneCellID"];
             self.phoneTF = cell.phoneTF;
+            self.phoneTF.delegate = self;
+            self.phoneTF.maxLength = 11;
             cell.clickManButton = ^(RankButton * _Nonnull setBtn) {
                 _sex = 1;
                 if (!setBtn.isSelected) {
@@ -751,8 +757,68 @@
             MYALERT(@"请求失败");
         }];
 
+    }else if (textField == self.ageTF || textField == self.phoneTF){
+        return YES;
     }
     return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //如果是限制只能输入数字的文本框
+    if (self.ageTF == textField) {
+        return [self validateNumber1:string];
+    }else if (self.phoneTF == textField){
+        return [self validateNumber2:string];
+    }
+    //否则返回yes,不限制其他textfield
+    return YES;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber1:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_ageTF.text.length == 0 && [number isEqualToString:@"0"]) {
+        res = NO;
+    }
+
+    
+    return res;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber2:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_phoneTF.text.length == 0 && ![number isEqualToString:@"1"]) {
+        res = NO;
+    }
+
+    return res;
 }
 
 
@@ -927,5 +993,54 @@
         [SVProgressHUD dismiss];
     }];
 }
+
+
+#pragma mark - 检查版本号
+- (void)checkVersion
+{
+    // 获取本地版本号
+    NSString * currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    // 网络请求获取最新版本
+    [PPHTTPRequest getCheckAppVersionWithParameters:nil success:^(id response) {
+        NSArray * results = response[@"results"];
+        if (results && results.count>0)
+        {
+            NSDictionary * dic = results.firstObject;
+            NSString * lineVersion = dic[@"version"];//版本号
+            NSString * releaseNotes = dic[@"releaseNotes"];//更新说明
+            //NSString * trackViewUrl = dic[@"trackViewUrl"];//链接
+            //把版本号转换成数值
+            NSArray * array1 = [currentVersion componentsSeparatedByString:@"."];
+            NSInteger currentVersionInt = 0;
+            if (array1.count == 3)//默认版本号1.0.0类型
+            {
+                currentVersionInt = [array1[0] integerValue]*100 + [array1[1] integerValue]*10 + [array1[2] integerValue];
+            }
+            NSArray * array2 = [lineVersion componentsSeparatedByString:@"."];
+            NSInteger lineVersionInt = 0;
+            if (array2.count == 3)
+            {
+                lineVersionInt = [array2[0] integerValue]*100 + [array2[1] integerValue]*10 + [array2[2] integerValue];
+            }
+            if (lineVersionInt > currentVersionInt)//线上版本大于本地版本
+            {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@%@",@"发现新版本",lineVersion] message:releaseNotes preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction * ok = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+                UIAlertAction * update = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //跳转到App Store
+                    NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id%@?mt=8",BaiHuaAppID];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+                }];
+                [alert addAction:ok];
+                [alert addAction:update];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"版本更新出错，%@",error.description);
+    }];
+    
+}
+
 
 @end

@@ -119,4 +119,8 @@ typedef void(^cacheMessage)(id responseCache);
 /** 获取用户信息*/
 + (NSURLSessionTask *)GetUserDetailInfoWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
 
+
+/** 检查版本号*/
++ (NSURLSessionTask *)getCheckAppVersionWithParameters:(id)parameters success:(PPRequestSuccess)success failure:(PPRequestFailure)failure;
+
 @end

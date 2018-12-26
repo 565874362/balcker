@@ -30,6 +30,8 @@
 #import "UserInfo.h"
 #import "NSObject+HaiTian.h"
 
+#define BaiHuaAppID   @"1444988015"
+
 
 #define NYScreenW   [UIScreen mainScreen].bounds.size.width
 #define NYScreenH   [UIScreen mainScreen].bounds.size.height

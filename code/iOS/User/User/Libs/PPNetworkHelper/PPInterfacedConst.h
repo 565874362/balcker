@@ -29,7 +29,7 @@
 
 #if DevelopSever
 /** 东东开发地址*/
-NSString *const kApiPrefix = @"http://192.168.2.96:8080";
+NSString *const kApiPrefix = @"http://47.99.243.241";
 #elif TestSever
 /** 黄明超服务*/
 NSString *const kApiPrefix = @"http://192.168.2.72:8080/soma-api";

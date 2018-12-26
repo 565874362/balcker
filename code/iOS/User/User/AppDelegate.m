@@ -25,7 +25,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     //    向微信终端注册ID
-    [WXApi registerApp:@"wxeb7ece9a7fb2f868"];
+    [WXApi registerApp:@"wxcbf0e0b617e1a39b"];
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:MAINCOLOR];
@@ -34,7 +34,7 @@
     [SVProgressHUD setMaximumDismissTimeInterval:1.0];
     [SVProgressHUD setDefaultStyle:(SVProgressHUDStyleDark)];
     
-    [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwagl54cd"];
+    [[RCIM sharedRCIM] initWithAppKey:@"k51hidwqk4l4b"];
 
     
     self.window.rootViewController = [[NYCustomTabBarViewController alloc] init];

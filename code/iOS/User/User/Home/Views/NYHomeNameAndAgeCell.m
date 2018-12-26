@@ -89,7 +89,7 @@
     //姓名输入
     _ageTF = [[HHTextField alloc] init];
     _ageTF.returnKeyType = UIReturnKeyDone;
-    _ageTF.keyboardType = UIKeyboardTypeNumberPad;
+    _ageTF.keyboardType = UIKeyboardTypePhonePad;
     _ageTF.textColor = COLOR_BIG;
     [bgView2 addSubview:_ageTF];
     
