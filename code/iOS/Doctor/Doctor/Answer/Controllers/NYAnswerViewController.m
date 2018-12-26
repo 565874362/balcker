@@ -25,7 +25,7 @@
     self.showConnectingStatusOnNavigatorBar = YES;
     
     UIView * emptyV = [[UIView alloc] init];
-    emptyV.backgroundColor = [UIColor purpleColor];
+    emptyV.backgroundColor = [UIColor clearColor];
     emptyV.frame = CGRectMake(0, 0, 100, 100);
     emptyV.center = CGPointMake(self.view.center.x, self.view.center.y-32);
     

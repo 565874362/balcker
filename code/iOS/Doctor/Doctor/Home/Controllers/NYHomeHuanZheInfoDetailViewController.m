@@ -204,7 +204,14 @@
     [PPHTTPRequest GetDoctorClickJieZhenInfoWithParameters:_model.info.id success:^(id response) {
         [SVProgressHUD dismiss];
         if ([response[@"code"] integerValue] == 0) {
+            
             [self loadData];
+            
+            if (_clickQiangDanSuccessed) {
+                _clickQiangDanSuccessed();
+            }
+            
+            
         }else{
             MYALERT(@"请求失败");
         }
@@ -293,6 +300,11 @@
             MYALERT(@"提交成功");
             [self loadData];
             [weakSelf.tableView reloadData];
+            
+            if (_TiJiaoSuccessed) {
+                _TiJiaoSuccessed();
+            }
+            
         }else{
             MYALERT(response[@"msg"]);
         }

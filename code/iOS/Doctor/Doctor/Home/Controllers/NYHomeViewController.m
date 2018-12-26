@@ -44,8 +44,9 @@
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.emptyDataSetSource = self;
         _tableView.emptyDataSetDelegate = self;
-
-    }
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight = 0;
+        _tableView.estimatedSectionFooterHeight = 0;    }
     return _tableView;
 }
 
@@ -61,7 +62,7 @@
     [self setupRefresh];
     [self.tableView.mj_header beginRefreshing];
 
-    
+    [self checkVersion];
 }
 
 
@@ -192,6 +193,14 @@
     NYHomeListModel * model = _dataArray[indexPath.section];
     vc.detailID = model.id;
     vc.hidesBottomBarWhenPushed = YES;
+    vc.clickQiangDanSuccessed = ^{
+        model.status = @"2";
+        [self.tableView reloadData];
+    };
+    vc.TiJiaoSuccessed = ^{
+        model.status = @"3";
+        [self.tableView reloadData];
+    };
     [self.navigationController pushViewController:vc animated:YES];
     
 }
@@ -212,6 +221,55 @@
 - (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView
 {
     return YES;
+}
+
+
+
+#pragma mark - 检查版本号
+- (void)checkVersion
+{
+    // 获取本地版本号
+    NSString * currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    // 网络请求获取最新版本
+    [PPHTTPRequest getCheckAppVersionWithParameters:nil success:^(id response) {
+        NSArray * results = response[@"results"];
+        if (results && results.count>0)
+        {
+            NSDictionary * dic = results.firstObject;
+            NSString * lineVersion = dic[@"version"];//版本号
+            NSString * releaseNotes = dic[@"releaseNotes"];//更新说明
+            //NSString * trackViewUrl = dic[@"trackViewUrl"];//链接
+            //把版本号转换成数值
+            NSArray * array1 = [currentVersion componentsSeparatedByString:@"."];
+            NSInteger currentVersionInt = 0;
+            if (array1.count == 3)//默认版本号1.0.0类型
+            {
+                currentVersionInt = [array1[0] integerValue]*100 + [array1[1] integerValue]*10 + [array1[2] integerValue];
+            }
+            NSArray * array2 = [lineVersion componentsSeparatedByString:@"."];
+            NSInteger lineVersionInt = 0;
+            if (array2.count == 3)
+            {
+                lineVersionInt = [array2[0] integerValue]*100 + [array2[1] integerValue]*10 + [array2[2] integerValue];
+            }
+            if (lineVersionInt > currentVersionInt)//线上版本大于本地版本
+            {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@%@",@"发现新版本",lineVersion] message:releaseNotes preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction * ok = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+                UIAlertAction * update = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //跳转到App Store
+                    NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id%@?mt=8",BaiHuaAppID];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+                }];
+                [alert addAction:ok];
+                [alert addAction:update];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"版本更新出错，%@",error.description);
+    }];
+    
 }
 
 @end

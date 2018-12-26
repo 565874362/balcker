@@ -531,7 +531,8 @@
             cell.typeLB.text = @"预约费";
             cell.inputTF.placeholder = @"请输入预约费金额";
             _priceTF = cell.inputTF;
-            _priceTF.keyboardType = UIKeyboardTypeNumberPad;
+            _priceTF.keyboardType = UIKeyboardTypeDecimalPad;
+            _priceTF.delegate = self;
             return cell;
         }
     }else if (indexPath.section == 3){//擅长1
@@ -651,6 +652,8 @@
             NYRegisterInputPhoneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NYRegisterPhoneCellID"];
             _phoneTF = cell.phoneTF;
             _phoneTF.keyboardType = UIKeyboardTypePhonePad;
+            _phoneTF.delegate = self;
+            _phoneTF.maxLength = 11;
             _codeButton = cell.codeButton;
             cell.clickGetCodeButton = ^{
                 [weakSelf sendCode:_codeButton];
@@ -668,6 +671,8 @@
             cell.inputTF.placeholder = @"请输入短信验证码";
             _codeTF = cell.inputTF;
             _codeTF.keyboardType = UIKeyboardTypePhonePad;
+            _codeTF.delegate = self;
+            _codeTF.maxLength = 6;
             return cell;
         }
     }
@@ -814,10 +819,101 @@
             [SVProgressHUD dismiss];
             MYALERT(@"请求失败");
         }];
+    }else if (textField == _phoneTF || textField == _codeTF || textField == _priceTF){
+        return YES;
     }
     
     return NO;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //如果是限制只能输入数字的文本框
+    if (_phoneTF == textField) {
+        return [self validateNumber1:string];
+    }else if (_codeTF == textField){
+        return [self validateNumber2:string];
+    }else if (_priceTF == textField){
+        // 1 不能直接输入小数点
+        if ( [textField.text isEqualToString:@""] && [string isEqualToString:@"."] )  return NO;
+        
+        // 2 输入框第一个字符为“0”时候，第二个字符如果不是“.”,那么文本框内的显示内容就是新输入的字符[textField.text length] == 1  防止例如0.5会变成5
+        NSRange zeroRange = [textField.text rangeOfString:@"0"];
+        if(zeroRange.length == 1 && [textField.text length] == 1 && ![string isEqualToString:@"."]){
+            textField.text = string;
+            return NO;
+        }
+        // 3 保留两位小数
+        NSUInteger remain = 2;
+        NSRange pointRange = [textField.text rangeOfString:@"."];
+        
+        // 拼接输入的最后一个字符
+        NSString *tempStr = [textField.text stringByAppendingString:string];
+        NSUInteger strlen = [tempStr length];
+        
+        // 输入框内存在小数点， 不让再次输入“.” 或者 总长度-包括小数点之前的长度>remain 就不能再输入任何字符
+        if(pointRange.length > 0 &&([string isEqualToString:@"."] || strlen - (pointRange.location + 1) > remain))
+            return NO;
+        
+        // 4 小数点已经存在情况下可以输入的字符集  and 小数点还不存在情况下可以输入的字符集
+        NSCharacterSet *numbers = (pointRange.length > 0)?[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] : [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
+        
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        NSString *buffer;
+        // 判断string在不在numbers的字符集合内
+        BOOL scan = [scanner scanCharactersFromSet:numbers intoString:&buffer];
+        
+        if ( !scan && ([string length] != 0) )  // 包括输入空格scan为NO， 点击删除键[string length]为0
+        {
+            return NO;
+        }
+        
+    }
+    //否则返回yes,不限制其他textfield
+    return YES;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber1:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_phoneTF.text.length == 0 && ![number isEqualToString:@"1"]) {
+        res = NO;
+    }
+    
+    return res;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber2:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    return res;
+}
+
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

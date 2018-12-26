@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) NSString * detailID;
 
+@property (nonatomic,copy) void(^clickQiangDanSuccessed)(void);
+
+@property (nonatomic,copy) void(^TiJiaoSuccessed)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

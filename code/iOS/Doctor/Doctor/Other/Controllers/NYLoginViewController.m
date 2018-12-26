@@ -11,11 +11,11 @@
 #import "NYRegisterViewController.h"
 #import "NYMyInfoDetailModel.h"
 
-@interface NYLoginViewController ()
+@interface NYLoginViewController ()<UITextFieldDelegate>
 {
-    UITextField * _codeTF;
+    HHTextField * _codeTF;
     JKCountDownButton * _codeButton;
-    UITextField * _phoneTF;
+    HHTextField * _phoneTF;
     
     NSString * _captchaId;
 
@@ -71,10 +71,12 @@
     .rightSpaceToView(codeButton, 5);
     
     //手机号输入框
-    UITextField * phoneTF = [[UITextField alloc] init];
+    HHTextField * phoneTF = [[HHTextField alloc] init];
 //    phoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    phoneTF.keyboardType = UIKeyboardTypeNumberPad;
+    phoneTF.keyboardType = UIKeyboardTypePhonePad;
     _phoneTF = phoneTF;
+    _phoneTF.delegate  =self;
+    _phoneTF.maxLength = 11;
     [bgView1 addSubview:phoneTF];
     phoneTF.sd_layout
     .leftSpaceToView(bgView1, 15)
@@ -96,10 +98,12 @@
     .heightIs(50);
 
     //验证码输入
-    UITextField * codeTF = [[UITextField alloc] init];
+    HHTextField * codeTF = [[HHTextField alloc] init];
     codeTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    codeTF.keyboardType = UIKeyboardTypeNumberPad;
+    codeTF.keyboardType = UIKeyboardTypePhonePad;
     _codeTF = codeTF;
+    _codeTF.delegate = self;
+    _codeTF.maxLength = 6;
     [bgView2 addSubview:codeTF];
     codeTF.sd_layout
     .leftSpaceToView(bgView2, 15)
@@ -228,6 +232,8 @@
         if ([response[@"code"] integerValue] == 0) {
             [SVProgressHUD showSuccessWithStatus:@"验证码已发送"];
             
+            NSLog(@"%@",response);
+            
             _captchaId = response[@"data"][@"captchaId"]; //验证码编号
 
             // 发送验证码
@@ -251,4 +257,58 @@
     }];
 
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    //如果是限制只能输入数字的文本框
+    if (_phoneTF == textField) {
+        return [self validateNumber1:string];
+    }else if (_codeTF == textField){
+        return [self validateNumber2:string];
+    }
+    //否则返回yes,不限制其他textfield
+    return YES;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber1:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    if (_phoneTF.text.length == 0 && ![number isEqualToString:@"1"]) {
+        res = NO;
+    }
+    
+    return res;
+}
+
+#pragma mark - 只能输入数字
+- (BOOL)validateNumber2:(NSString*)number {
+    
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    
+    return res;
+}
+
 @end
