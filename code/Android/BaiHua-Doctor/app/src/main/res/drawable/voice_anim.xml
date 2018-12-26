@@ -3,15 +3,15 @@
     android:oneshot="false">
 
     <item
-        android:drawable="@drawable/icon_voice_level_three"
+        android:drawable="@drawable/ic_voice_anim_3"
         android:duration="200" />
 
     <item
-        android:drawable="@drawable/icon_voice_level_two"
+        android:drawable="@drawable/ic_voice_anim_2"
         android:duration="200" />
 
     <item
-        android:drawable="@drawable/icon_voice_level_one"
+        android:drawable="@drawable/ic_voice_anim_1"
         android:duration="200" />
 
 </animation-list>

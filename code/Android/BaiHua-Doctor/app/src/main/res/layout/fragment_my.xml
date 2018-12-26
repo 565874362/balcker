@@ -15,8 +15,24 @@
             android:id="@+id/my_ll_patient_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/my_bj"
+            android:gravity="center|center_vertical"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/fake_statusbar_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_view_height"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical"
+                android:text="我的中心"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/my_iv_avatar"
@@ -201,15 +217,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp_44"
             android:layout_marginStart="@dimen/dimen_dp_8"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/dimen_dp_8"
             android:layout_marginBottom="@dimen/dimen_dp_16"
             android:background="@drawable/shape_for_blue_button_bg"
             android:gravity="center"
             android:text="退出当前账户"
-            android:visibility="gone"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_18sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -24,6 +24,7 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.baihua.common.ibase.ICreateTemplate;
 import com.baihua.yayayisheng.R;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
@@ -34,7 +35,7 @@ import butterknife.ButterKnife;
  *
  * @author gang
  */
-public abstract class BaseActivity extends AppCompatActivity implements ICreateTemplate {
+public abstract class BaseActivity extends RxAppCompatActivity implements ICreateTemplate {
 
     protected LayoutInflater mInflater;
     protected View mRoot;

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
@@ -21,6 +22,7 @@ import com.baihua.common.rx.RxHttp;
 import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yayayisheng.entity.AccountEntity;
 import com.baihua.yayayisheng.entity.RongCloudToken;
+import com.baihua.yayayisheng.helper.BottomNavigationViewHelper;
 import com.baihua.yayayisheng.home.PatientInfoFragment;
 import com.baihua.yayayisheng.my.MyFragment;
 import com.baihua.yayayisheng.rcloud.RCUtils;
@@ -29,6 +31,7 @@ import com.baihua.yayayisheng.util.Utils;
 import com.baihua.yayayisheng.widget.MyPagerAdapter;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,7 @@ public class MainActivity extends BaseActivity {
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private TextView mTvTitle;
+    private View mCommonToolbar;
     //    private final String mToken = "m6NyhEntPhr+8SLY4HKyOCWFNPp3rcEzhezI19eSKNO3gowaBR4T+GbdIi8hNJvFOTl1j0TMcuRIh/n5qpk2FzWkCtUUZ9Yz";
     private final String mToken = "AqCvJEZPW1ExNlBCH9po8ooO90bGELzks3KYn7rZSAOHpTHzGTJM7fhq3e4Bg0VN7WnnKzVIE1m0KyIWSFBPyWb2IY9643Nz";
 
@@ -55,19 +59,22 @@ public class MainActivity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             if (!Utils.isLogin(MainActivity.this)) {
                 Utils.goLogin(MainActivity.this);
-                return true;
+                return false;
             }
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTvTitle.setText(R.string.title_home_title);
+                    mCommonToolbar.setVisibility(View.VISIBLE);
                     mViewPager.setCurrentItem(0, false);
                     return true;
                 case R.id.navigation_dashboard:
                     mTvTitle.setText(R.string.title_consulting_title);
+                    mCommonToolbar.setVisibility(View.VISIBLE);
                     mViewPager.setCurrentItem(1, false);
                     return true;
                 case R.id.navigation_notifications:
                     mTvTitle.setText(R.string.title_mine_title);
+                    mCommonToolbar.setVisibility(View.GONE);
                     mViewPager.setCurrentItem(2, false);
                     return true;
             }
@@ -89,6 +96,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initMember() {
 
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+
+        mCommonToolbar = findViewById(R.id.common_toolbar);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTvTitle = findViewById(R.id.toolbar_tv_title);
 
@@ -100,6 +111,7 @@ public class MainActivity extends BaseActivity {
         }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mViewPager = findViewById(R.id.view_pager);
@@ -120,8 +132,12 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
-                if (Utils.isLogin(MainActivity.this))
-                    navigation.getMenu().getItem(i).setChecked(true);
+                if (i == 2) { // 因为个人页面图片延伸到状态栏 所以自定义了
+                    mCommonToolbar.setVisibility(View.GONE);
+                } else {
+                    mCommonToolbar.setVisibility(View.VISIBLE);
+                }
+                navigation.getMenu().getItem(i).setChecked(true);
             }
 
             @Override
@@ -138,6 +154,15 @@ public class MainActivity extends BaseActivity {
             RCUtils.refreshUserInfo(new UserInfo(id, name, Uri.parse(photo)));
             setUserInfo(this);
         }
+
+        checkAppVersion();
+    }
+
+    /**
+     * app 版本檢測
+     */
+    private void checkAppVersion() {
+        // TODO: 25/12/2018  MarketUtils.launchAppDetail(BuildConfig.APPLICATION_ID, "");
     }
 
     UserInfo userInfo;

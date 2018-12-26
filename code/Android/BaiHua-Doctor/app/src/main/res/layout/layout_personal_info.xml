@@ -397,6 +397,7 @@
                 android:background="@drawable/shape_for_dash_button_bg"
                 android:gravity="center|center_vertical"
                 android:padding="@dimen/dimen_dp_10"
+                android:textSize="@dimen/text_size_16sp"
                 android:text="@string/login_upload_yourself_photo" />
 
         </LinearLayout>
@@ -430,6 +431,7 @@
                 android:background="@drawable/shape_for_dash_button_bg"
                 android:gravity="center|center_vertical"
                 android:padding="@dimen/dimen_dp_10"
+                android:textSize="@dimen/text_size_16sp"
                 android:text="@string/login_add_doctors_qualification_certificate" />
 
         </LinearLayout>
@@ -481,6 +483,7 @@
                 android:layout_marginTop="@dimen/dimen_dp_16"
                 android:background="@drawable/shape_for_dash_button_bg"
                 android:gravity="center|center_vertical"
+                android:textSize="@dimen/text_size_16sp"
                 android:padding="@dimen/dimen_dp_10"
                 android:text="@string/login_upload_the_front_photo_of_id_card" />
 
@@ -515,6 +518,7 @@
                 android:background="@drawable/shape_for_dash_button_bg"
                 android:gravity="center|center_vertical"
                 android:padding="@dimen/dimen_dp_10"
+                android:textSize="@dimen/text_size_16sp"
                 android:text="@string/login_upload_the_back_photo_of_id_card" />
 
         </LinearLayout>
