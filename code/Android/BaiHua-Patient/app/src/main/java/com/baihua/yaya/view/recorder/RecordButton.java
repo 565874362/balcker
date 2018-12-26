@@ -188,9 +188,9 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
                 {
                     try {
                         Thread.sleep(100);
-                        recodeTime += 0.1;
                         // 获取音量，更新dialog
                         if (!isCanceled) {
+                            recodeTime += 0.1;
                             voiceValue = mAudioRecorder.getAmplitude();
                             recordHandler.sendEmptyMessage(1);
                         }
@@ -290,6 +290,9 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
                     isCanceled = false;
                     showVoiceDialog(0);
                     mAudioRecorder.resume();
+                }
+                if (recodeTime >= MAX_RECORD_TIME) {
+                    mRecordDialog.dismiss();
                 }
                 break;
             case MotionEvent.ACTION_UP: // 松开手指

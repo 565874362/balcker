@@ -47,7 +47,7 @@ public class MyVisitActivity extends BaseActivity {
 
     @Override
     public void setLayout() {
-        setTitle("问诊");
+        setTitle("我的问诊");
         setContentView(R.layout.activity_my_visit);
     }
 

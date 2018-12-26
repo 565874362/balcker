@@ -61,17 +61,17 @@
 
     <RelativeLayout
         android:id="@+id/play_voice_layout"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:background="@drawable/shape_voice_bg"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_play_voice_anim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_dp_24"
+            android:layout_height="@dimen/dimen_dp_16"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dimen_dp_16"
+            android:layout_marginStart="@dimen/dimen_dp_4"
             android:src="@drawable/voice_anim" />
 
         <TextView

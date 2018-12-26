@@ -2,21 +2,21 @@ package com.baihua.common.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.baihua.common.ibase.ICreateTemplate;
 import com.baihua.yaya.R;
+import com.blankj.utilcode.util.ToastUtils;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseFragment extends Fragment implements ICreateTemplate {
+public abstract class BaseFragment extends RxFragment implements ICreateTemplate {
     public View mRootView;
     protected boolean isPrepared = false;
     Unbinder unbinder;

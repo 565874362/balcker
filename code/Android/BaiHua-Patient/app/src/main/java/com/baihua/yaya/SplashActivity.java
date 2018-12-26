@@ -37,10 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 getWindow().setFlags(
                         WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-                if (TextUtils.isEmpty(SPUtils.getInstance("token").getString("token", "")))
-                    Utils.gotoActivity(SplashActivity.this, LoginActivity.class, true, null, null);
-                else
-                    Utils.gotoActivity(SplashActivity.this, MainActivity.class, true, null, null);
+                Utils.gotoActivity(SplashActivity.this, MainActivity.class, true, null, null);
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

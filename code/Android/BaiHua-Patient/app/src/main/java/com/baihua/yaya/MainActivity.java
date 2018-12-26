@@ -1,11 +1,15 @@
 package com.baihua.yaya;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,6 +18,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.baihua.common.base.BaseActivity;
@@ -23,6 +29,7 @@ import com.baihua.common.rx.RxSchedulers;
 import com.baihua.yaya.doctor.DoctorListFragment;
 import com.baihua.yaya.entity.AccountEntity;
 import com.baihua.yaya.entity.RongCloudToken;
+import com.baihua.yaya.helper.BottomNavigationViewHelper;
 import com.baihua.yaya.home.HomepageFragment;
 import com.baihua.yaya.my.MyFragment;
 import com.baihua.yaya.rcloud.RCUtils;
@@ -31,6 +38,7 @@ import com.baihua.yaya.widget.MyPagerAdapter;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +55,7 @@ public class MainActivity extends BaseActivity {
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
+    private View mCommonToolbar;
 
     private TextView mTvTitle;
     //    private final String mToken = "m6NyhEntPhr+8SLY4HKyOCWFNPp3rcEzhezI19eSKNO3gowaBR4T+GbdIi8hNJvFOTl1j0TMcuRIh/n5qpk2FzWkCtUUZ9Yz";
@@ -66,13 +75,16 @@ public class MainActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTvTitle.setText(R.string.title_homepage);
+                    mCommonToolbar.setVisibility(View.VISIBLE);
                     mViewPager.setCurrentItem(0, false);
                     return true;
                 case R.id.navigation_dashboard:
+                    mCommonToolbar.setVisibility(View.VISIBLE);
                     mTvTitle.setText(R.string.title_doctor);
                     mViewPager.setCurrentItem(1, false);
                     return true;
                 case R.id.navigation_notifications:
+                    mCommonToolbar.setVisibility(View.GONE);
                     mTvTitle.setText(R.string.title_mine);
                     mViewPager.setCurrentItem(2, false);
                     return true;
@@ -88,6 +100,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
     }
 
+
     @Override
     public void setHandler() {
 
@@ -96,6 +109,9 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initMember() {
 
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+
+        mCommonToolbar = findViewById(R.id.common_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTvTitle = findViewById(R.id.toolbar_tv_title);
 
@@ -111,6 +127,7 @@ public class MainActivity extends BaseActivity {
 
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
@@ -132,6 +149,11 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
+                if (i == 2) { // 因为个人页面图片延伸到状态栏 所以自定义了
+                    mCommonToolbar.setVisibility(View.GONE);
+                } else {
+                    mCommonToolbar.setVisibility(View.VISIBLE);
+                }
                 navigation.getMenu().getItem(i).setChecked(true);
             }
 
@@ -148,6 +170,15 @@ public class MainActivity extends BaseActivity {
             setUserInfo(this);
         }
 
+        checkAppVersion();
+
+    }
+
+    /**
+     * app 版本檢測
+     */
+    private void checkAppVersion() {
+        // TODO: 25/12/2018  MarketUtils.launchAppDetail(BuildConfig.APPLICATION_ID, "");
     }
 
     UserInfo userInfo;

@@ -25,6 +25,8 @@ public class MyAppointmentAdapter extends BaseQuickAdapter<RegisteredListEntity.
     @Override
     protected void convert(BaseViewHolder helper, RegisteredListEntity.PageBean.RecordsBean item) {
         RegisteredListEntity.PageBean.RecordsBean.DoctorBean doctorBean = item.getDoctor();
+        if (null == doctorBean)
+            return;
         helper.setText(R.id.item_my_appointment_tv_doctor_name, String.format("%s（%s）", doctorBean.getName(), doctorBean.getOffName()))
                 .setText(R.id.item_my_appointment_tv_doctor_price, String.format("%s元", Utils.keep2DecimalDigits(doctorBean.getRegistrationFee())))
                 .setText(R.id.item_my_appointment_visiting_tv_time, String.format("%s %s", item.getVisitTime(), CommonUtils.getTimePartString(item.getTimePart()))) // 时间区间   0 上午 1 下午

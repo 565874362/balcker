@@ -14,6 +14,7 @@ import com.baihua.yaya.doctor.DoctorDetailsActivity;
 import com.baihua.yaya.doctor.DoctorListAdapter;
 import com.baihua.yaya.doctor.MatchDoctorListAdapter;
 import com.baihua.yaya.entity.MatchDoctorsEntity;
+import com.baihua.yaya.my.MyVisitActivity;
 import com.baihua.yaya.util.Utils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ConvertUtils;
@@ -75,7 +76,7 @@ public class TipsActivity extends BaseActivity {
         tvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Utils.gotoActivity(TipsActivity.this, MyVisitActivity.class, true, null, null);
             }
         });
         return footer;

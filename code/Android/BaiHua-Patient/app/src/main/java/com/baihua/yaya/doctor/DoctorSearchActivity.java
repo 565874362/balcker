@@ -156,7 +156,8 @@ public class DoctorSearchActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ActivityUtils.startActivity(DoctorDetailsActivity.class);
+                DoctorEntity.PageBean.RecordsBean recordsBean = (DoctorEntity.PageBean.RecordsBean) adapter.getData().get(position);
+                Utils.gotoActivity(DoctorSearchActivity.this, DoctorDetailsActivity.class, false, "doctorId", recordsBean.getId());
             }
         });
     }

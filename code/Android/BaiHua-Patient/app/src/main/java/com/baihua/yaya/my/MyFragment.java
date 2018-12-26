@@ -1,10 +1,15 @@
 package com.baihua.yaya.my;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +45,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 import okhttp3.MediaType;
@@ -55,7 +61,7 @@ import static android.app.Activity.RESULT_OK;
 public class MyFragment extends BaseFragment {
 
     @BindView(R.id.my_iv_avatar)
-    ImageView myIvAvatar;
+    CircleImageView myIvAvatar;
     @BindView(R.id.my_ll_visiting)
     LinearLayout myLlVisting;
     @BindView(R.id.my_ll_my_registered)
@@ -69,7 +75,27 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public int setRootView() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && null != getActivity()) {
+//            // 设置状态栏透明
+//            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //  设置根布局的参数
+//            //将根rootView直接顶上去，和状态栏的顶部对齐。
+//            ViewGroup rootView = (ViewGroup) ((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0);
+//            ViewCompat.setFitsSystemWindows(rootView, false);
+//            rootView.setClipToPadding(true);
+//        }
+
         return R.layout.fragment_my;
+    }
+
+    //得到系统statusbar的高度
+    public int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     @Override
@@ -88,6 +114,7 @@ public class MyFragment extends BaseFragment {
         if (Utils.isLogin(getActivity())) {
             myTvExitAccount.setVisibility(View.VISIBLE);
         }
+
     }
 
     /**

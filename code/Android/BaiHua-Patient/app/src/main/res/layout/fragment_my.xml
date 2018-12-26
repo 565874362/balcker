@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
@@ -14,18 +15,35 @@
             android:id="@+id/my_ll_patient_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/my_bj"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <View
+                android:id="@+id/fake_statusbar_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_view_height"
+                android:background="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical"
+                android:text="我的中心"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/my_iv_avatar"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen_dp_16"
                 android:layout_marginBottom="@dimen/dimen_dp_16"
                 android:scaleType="centerCrop"
-                android:src="@drawable/no_image" />
+                android:src="@drawable/no_image"
+                app:civ_border_color="#24A5FF"
+                app:civ_border_width="2dp" />
 
 
         </LinearLayout>
@@ -86,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_dp_12"
                 android:layout_weight="1"
-                android:text="我的挂号"
+                android:text="预约就诊"
                 android:textColor="@color/color_black_dark_4b5764"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -120,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_dp_12"
                 android:layout_weight="1"
-                android:text="我的问答"
+                android:text="我的咨询"
                 android:textColor="@color/color_black_dark_4b5764"
                 android:textSize="@dimen/text_size_16sp" />
 
@@ -143,9 +161,9 @@
             android:background="@drawable/shape_for_blue_button_bg"
             android:gravity="center"
             android:text="退出当前账户"
-            android:visibility="gone"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_18sp" />
+            android:textSize="@dimen/text_size_18sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -333,6 +333,7 @@ public class HomepageFragment extends BaseFragment {
         mCancelRecordVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MediaManager.release();
                 if (FileUtils.delete(soundPath)) {
                     LogUtils.e("Del record voice file success !!!");
                 }
@@ -372,7 +373,7 @@ public class HomepageFragment extends BaseFragment {
         RecordManager.getInstance().setRecordResultListener(new RecordResultListener() {
             @Override
             public void onResult(File file) {
-                LogUtils.e("onResult: " + file.getAbsolutePath());
+                 LogUtils.e("onResult: " + file.getAbsolutePath());
                 soundPath = file.getAbsolutePath();
                 LogUtils.e("sound length : " + MediaManager.getSoundDuration(soundPath));
                 long voiceLength = MediaManager.getSoundDuration(soundPath);
@@ -634,7 +635,7 @@ public class HomepageFragment extends BaseFragment {
         RxHttp.getInstance().getSyncServer()
                 .submitVisit(token, new VisitForm(age, desc, String.valueOf(mDietId), String.valueOf(mGender), images, name, phone, String.valueOf(mSleepId), voicePath))
                 .compose(RxSchedulers.observableIO2Main(getActivity()))
-                .subscribe(new ProgressObserver<MatchDoctorsEntity>(getActivity(), true) {
+                .subscribe(new ProgressObserver<MatchDoctorsEntity>(getActivity()) {
                     @Override
                     public void onSuccess(MatchDoctorsEntity result) {
                         toast("提交成功");

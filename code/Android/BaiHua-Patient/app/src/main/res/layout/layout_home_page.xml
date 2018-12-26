@@ -311,7 +311,7 @@
 
         <FrameLayout
             android:id="@+id/play_voice_layout"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:layout_marginStart="@dimen/dimen_dp_12"
             android:layout_marginTop="@dimen/dimen_dp_16"
@@ -320,17 +320,16 @@
             android:visibility="gone">
 
             <RelativeLayout
-
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/iv_play_voice_anim"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_dp_24"
+                    android:layout_height="@dimen/dimen_dp_16"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dimen_dp_10"
+                    android:layout_marginStart="@dimen/dimen_dp_4"
                     android:layout_marginEnd="@dimen/dimen_dp_10"
                     android:src="@drawable/voice_anim" />
 
@@ -342,8 +341,8 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginStart="@dimen/dimen_dp_10"
-                android:layout_marginEnd="@dimen/dimen_dp_10"
-                android:src="@drawable/shut_down" />
+                android:layout_marginEnd="@dimen/dimen_dp_4"
+                android:src="@drawable/voice_delete" />
 
         </FrameLayout>
 
